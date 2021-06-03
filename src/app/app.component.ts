@@ -23,13 +23,13 @@ export class AppComponent implements OnInit {
       window.scrollTo(0, 0);
     });
     this.authService.currentUser.subscribe(x => this.currentUser = x);
-    this.bnIdle.startWatching(30).subscribe((isTimedOut: boolean) => {
+    /*this.bnIdle.startWatching(30).subscribe((isTimedOut: boolean) => {
       if (isTimedOut) {
         console.log('session expired');
         this.authService.applicationBackend_logout(this.currentUser.userId);
         this.router.navigate(['/auth/login']);
       }
-    });
+    });*/
   }
   
 

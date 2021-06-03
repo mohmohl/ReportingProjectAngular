@@ -89,7 +89,6 @@ export class AdminComponent implements OnInit {
     }];
     var menuItemList:MenuItem[];
     const menuMap = new Map(Object.entries(this.currentUser.menuItem));
-    console.log('from map '+menuMap);
     menuMap.forEach((value, key) => {  
       const menuItemList: MenuItem[] = value;
       if(key == "No_Category"){
@@ -113,8 +112,7 @@ export class AdminComponent implements OnInit {
       };
       
         menuItemList.forEach(e =>{
-          console.log("sub = "+e.url1)
-          var sub_item = {
+           var sub_item = {
             state: e.url1,
             name: e.menu_name
           };
@@ -214,7 +212,6 @@ export class AdminComponent implements OnInit {
   }
   logout() {
     this.authenticationService.applicationBackend_logout(this.currentUser.userId);
-    //this.authenticationService.logout();
-    this.router.navigate(['/auth/login']);
+   
 }
 }

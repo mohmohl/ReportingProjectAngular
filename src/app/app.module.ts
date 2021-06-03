@@ -13,7 +13,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from 'src/helpers/jwt.interceptor';
 import { ErrorInterceptor } from 'src/helpers/error.interceptor';
-import { SearchPDFComponent } from './views/search-pdf/search-pdf.component';
 import { BnNgIdleService } from 'bn-ng-idle';
 
 
@@ -24,7 +23,6 @@ import { BnNgIdleService } from 'bn-ng-idle';
     TitleComponent,
     BreadcrumbsComponent,
     AuthComponent
-    
     
   ],
   imports: [

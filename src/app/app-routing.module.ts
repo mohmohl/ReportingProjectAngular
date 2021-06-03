@@ -44,9 +44,18 @@ const routes: Routes = [
       }, {
         path: 'map',
         loadChildren: () => import('./map/google-map/google-map.module').then(m => m.GoogleMapModule),
-      }, {
+      },
+     {
         path: 'simple-page',
         loadChildren: () => import('./simple-page/simple-page.module').then(m => m.SimplePageModule)
+      }, 
+      {
+        path: 'search-user',
+        loadChildren: () => import('./views/UserAccount/search-user/search-user.module').then(m => m.SearchUserModule)
+      }, 
+      {
+        path: 'user-registration/:userId',
+        loadChildren: () => import('./views/UserAccount/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
       },
       {
         path: 'welcome',
