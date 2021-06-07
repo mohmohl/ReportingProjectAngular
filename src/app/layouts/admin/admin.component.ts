@@ -169,7 +169,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  searchFriendList(event) {
+  /*searchFriendList(event) {
     const search = (this.search_friends.nativeElement.value).toLowerCase();
     let search_input: string;
     let search_parent: any;
@@ -202,7 +202,7 @@ export class AdminComponent implements OnInit {
     } else {
       this.verticalNavType = this.verticalNavType === 'expanded' ? 'offcanvas' : 'expanded';
     }
-  }
+  }*/
   onMobileMenu() {
     this.isCollapsedMobile = this.isCollapsedMobile === 'yes-block' ? 'no-block' : 'yes-block';
   }
