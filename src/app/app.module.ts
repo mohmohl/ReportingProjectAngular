@@ -23,7 +23,6 @@ import { BnNgIdleService } from 'bn-ng-idle';
     TitleComponent,
     BreadcrumbsComponent,
     AuthComponent
-    
   ],
   imports: [
     BrowserModule,
