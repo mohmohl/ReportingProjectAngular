@@ -185,7 +185,7 @@ export class AdminComponent implements OnInit {
         search_parent.classList.remove('show');
       }
     });
-  }
+  }*/
 
   toggleChat() {
     this.chatToggle = this.chatToggle === 'out' ? 'in' : 'out';
@@ -202,7 +202,7 @@ export class AdminComponent implements OnInit {
     } else {
       this.verticalNavType = this.verticalNavType === 'expanded' ? 'offcanvas' : 'expanded';
     }
-  }*/
+  }
   onMobileMenu() {
     this.isCollapsedMobile = this.isCollapsedMobile === 'yes-block' ? 'no-block' : 'yes-block';
   }
