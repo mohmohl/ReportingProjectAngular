@@ -7,5 +7,6 @@ export class User {
     password: string;
     token?: string;
     role: string[];
+    permissionList: string[];
     menuItem = new Map();
 }

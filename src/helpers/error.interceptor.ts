@@ -14,8 +14,8 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (err.status === 401) {
                 // auto logout if 401 response returned from api
                 console.log(">>>>> 401")
-                console.log("error exception >> "+err.error.message);
-                error = err.error.message;
+                console.log("error exception >> "+err.error.exception);
+                error = err.error.exception;
                 this.authenticationService.logout();
 
             }

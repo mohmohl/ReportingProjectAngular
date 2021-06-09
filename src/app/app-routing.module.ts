@@ -50,6 +50,10 @@ const routes: Routes = [
         loadChildren: () => import('./simple-page/simple-page.module').then(m => m.SimplePageModule)
       }, 
       {
+        path: 'access-denied',
+        loadChildren: () => import('./views/access-denied/access-denied.module').then(m => m.AccessDeniedModule)
+      }, 
+      {
         path: 'search-user',
         loadChildren: () => import('./views/UserAccount/search-user/search-user.module').then(m => m.SearchUserModule)
       }, 

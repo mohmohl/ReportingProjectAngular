@@ -44,12 +44,14 @@ export class AppComponent implements OnInit {
     });
 
     /*this.bnIdle.startWatching(30).subscribe((isTimedOut: boolean) => {
+
       if (isTimedOut) {
         console.log('session expired');
-        this.authService.applicationBackend_logout(this.currentUser.userId);
-        this.router.navigate(['/auth/login']);
-      }
-    });*/
+        this.authService.applicationBackend_logout(this.authService.currentUserValue.userId);
+        }
+      
+    });
+ 
   }
 
 }
