@@ -165,7 +165,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  searchFriendList(event) {
+  /*searchFriendList(event) {
     const search = (this.search_friends.nativeElement.value).toLowerCase();
     let search_input: string;
     let search_parent: any;
@@ -181,7 +181,7 @@ export class AdminComponent implements OnInit {
         search_parent.classList.remove('show');
       }
     });
-  }
+  }*/
 
   toggleChat() {
     this.chatToggle = this.chatToggle === 'out' ? 'in' : 'out';
