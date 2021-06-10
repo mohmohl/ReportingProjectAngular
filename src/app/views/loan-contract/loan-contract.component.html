@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5> Search Loan Contract Number </h5>
+            </div>
+            <div class="card-body">
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-danger">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="form-group row">
+
+                        <label class="col-sm-2 col-form-label"> Contract No </label>
+                        <div class="col-sm-3">
+                            <input type="text" formControlName="contractno" class="form-control">
+                            <code *ngIf="error">{{error}}</code>
+                        </div>
+
+                        <label class="col-sm-2 col-form-label"> Keyword </label>
+                        <div class="col-sm-3">
+                            <input type="text" formControlName="keyword" class="form-control">
+                            <code *ngIf="error">{{error}}</code>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5> Loan Contract Data </h5>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    <div *ngIf="loading" class="d-flex justify-content-center">
+                        <div class="spinner-border spinner-border-sm text-warning"></div>
+                        <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                    </div>
+
+                    <table class="table table table-hover" id="export-table">
+                        <thead>
+                            <tr class="text-uppercase">
+                                <th> # </th>
+                                <th> Contract Number </th>
+                                <th> Account Number </th>
+                                <th> NRC Number </th>
+                                <th> Full Name </th>
+                                <th> Keyword </th>
+                                <th> Documents </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of data_list;let i = index">
+                                <td> {{i+1}} </td>
+                                <td> {{data.contract_no}} </td>
+                                <td> {{data.ac_no}} </td>
+                                <td> {{data.nrc}} </td>
+                                <td> {{data.full_name}} </td>
+                                <td> {{data.search_keyword}} </td>
+                                <td>
+                                    <span *ngFor="let document of data.fileNameAsList">
+                                        <a (click)="view(data.contract_no,document)">
+                                            {{document}}
+                                        </a>
+                                        <br>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

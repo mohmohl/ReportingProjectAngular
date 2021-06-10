@@ -22,8 +22,7 @@ import { BnNgIdleService } from 'bn-ng-idle';
     AdminComponent,
     TitleComponent,
     BreadcrumbsComponent,
-    AuthComponent
-  ],
+    AuthComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -34,7 +33,7 @@ import { BnNgIdleService } from 'bn-ng-idle';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    BnNgIdleService
+    BnNgIdleService,
   ],
   bootstrap: [AppComponent]
 })
