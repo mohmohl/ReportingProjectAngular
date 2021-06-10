@@ -1,7 +1,7 @@
-import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {state, style, transition, animate, trigger, AUTO_STYLE} from '@angular/animations';
+import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { state, style, transition, animate, trigger, AUTO_STYLE } from '@angular/animations';
 import 'rxjs/add/operator/filter';
-import {Menu, MenuItems} from '../../shared/menu-items/menu-items';
+import { Menu, MenuItems } from '../../shared/menu-items/menu-items';
 import { AuthenticationService } from 'src/services/AuthenticationService';
 import { Router } from '@angular/router';
 import { User } from 'src/models/User';
@@ -63,22 +63,22 @@ export class AdminComponent implements OnInit {
   isCollapsedMobile = 'no-block';
   toggleOn = true;
   windowWidth: number;
-  @ViewChild('searchFriends', /* TODO: add static flag */ {static: false}) search_friends: ElementRef;
-  @ViewChild('toggleButton', /* TODO: add static flag */ {static: false}) toggle_button: ElementRef;
-  @ViewChild('sideMenu', /* TODO: add static flag */ {static: false}) side_menu: ElementRef;
+  @ViewChild('searchFriends', /* TODO: add static flag */ { static: false }) search_friends: ElementRef;
+  @ViewChild('toggleButton', /* TODO: add static flag */ { static: false }) toggle_button: ElementRef;
+  @ViewChild('sideMenu', /* TODO: add static flag */ { static: false }) side_menu: ElementRef;
 
   config: any;
   currentUser: User;
-  menuItems:Menu[];
-  constructor(public menu: MenuItems,private router: Router,private authenticationService: AuthenticationService) {
+  menuItems: Menu[];
+  constructor(public menu: MenuItems, private router: Router, private authenticationService: AuthenticationService) {
     const scrollHeight = window.screen.height - 150;
     this.innerHeight = scrollHeight + 'px';
     this.windowWidth = window.innerWidth;
     this.setMenuAttributs(this.windowWidth);
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-     this.menuItems = [{
-      label : 'Reporting',
-      main : [
+    this.menuItems = [{
+      label: 'Reporting',
+      main: [
         {
           state: 'simple-page',
           name: 'Simple Page',
@@ -87,12 +87,12 @@ export class AdminComponent implements OnInit {
         }
       ]
     }];
-    var menuItemList:MenuItem[];
+    var menuItemList: MenuItem[];
     const menuMap = new Map(Object.entries(this.currentUser.menuItem));
-    menuMap.forEach((value, key) => {  
+    menuMap.forEach((value, key) => {
       const menuItemList: MenuItem[] = value;
-      if(key == "No_Category"){
-        menuItemList.forEach(e =>{
+      if (key == "No_Category") {
+        menuItemList.forEach(e => {
           var item = {
             state: e.url1,
             name: e.menu_name,
@@ -100,35 +100,31 @@ export class AdminComponent implements OnInit {
             icon: 'ti-layout-sidebar-left'
           };
           this.menuItems[0].main.push(item);
-      });
-    }
-    else{
-      var mitem = {
-        state: '',
-        name: menuItemList[0].category_name,
-        type: 'sub',
-        icon: 'ti-direction-alt',
-        children: []
-      };
-      
-        menuItemList.forEach(e =>{
-           var sub_item = {
+        });
+      }
+      else {
+        var mitem = {
+          state: '',
+          name: menuItemList[0].category_name,
+          type: 'sub',
+          icon: 'ti-direction-alt',
+          children: []
+        };
+
+        menuItemList.forEach(e => {
+          var sub_item = {
             state: e.url1,
             name: e.menu_name
           };
           mitem.children.push(sub_item);
-      });
-      this.menuItems[0].main.push(mitem); 
-  } 
-});
+        });
+        this.menuItems[0].main.push(mitem);
+      }
+    });
     //console.log("menu serve data = "+JSON.stringify(this.currentUser.menuItem));
-    
-    
-    
-    
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onClickedOutside(e: Event) {
     if (this.windowWidth < 768 && this.toggleOn && this.verticalNavType !== 'offcanvas') {
@@ -174,7 +170,7 @@ export class AdminComponent implements OnInit {
     let search_input: string;
     let search_parent: any;
     const friendList = document.querySelectorAll('.userlist-box .media-body .chat-header');
-    Array.prototype.forEach.call(friendList, function(elements, index) {
+    Array.prototype.forEach.call(friendList, function (elements, index) {
       search_input = (elements.innerHTML).toLowerCase();
       search_parent = (elements.parentNode).parentNode;
       if (search_input.indexOf(search) !== -1) {
@@ -210,8 +206,9 @@ export class AdminComponent implements OnInit {
   onScroll(event) {
     this.isScrolled = false;
   }
+
   logout() {
     this.authenticationService.applicationBackend_logout(this.currentUser.userId);
-   
-}
+  }
+
 }
