@@ -5,10 +5,7 @@
                 <h5> Search Loan Contract Number </h5>
             </div>
             <div class="card-body">
-                <div *ngIf="loading" class="d-flex justify-content-center">
-                    <div class="spinner-border spinner-border-sm text-warning"></div>
-                    <span class="text-danger">&nbsp;&nbsp;&nbsp;Loading...</span>
-                </div>
+                <!--Loading -->
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <div class="form-group row">
 
@@ -25,7 +22,7 @@
                         </div>
 
                         <div class="col-sm-2">
-                            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                            <button type="submit" class="btn btn-primary btn-sm" [disabled]="disabled">Search</button>
                         </div>
                     </div>
                 </form>

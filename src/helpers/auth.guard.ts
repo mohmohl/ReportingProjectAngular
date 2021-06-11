@@ -11,21 +11,20 @@ export class AuthGuard implements CanActivate {
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const currentUser = this.authenticationService.currentUserValue;
-        console.log("permission >>>> ...."+this.authenticationService.permission);
-        console.log("current url >>>> ...."+state.url);
-        console.log("permission check>>>> ...."+this.authenticationService.permission.indexOf(state.url));
+        let currentUser = this.authenticationService.currentUserValue;
+        console.log("permission >>>> ...." + this.authenticationService.permission);
+        console.log("current url >>>> ...." + state.url);
+        console.log("permission check>>>> ...."+ this.authenticationService.permission.indexOf(state.url));
         if (currentUser) {
-             if(this.authenticationService.permission.indexOf(state.url) == -1){
+            if (this.authenticationService.permission.indexOf(state.url) == -1) {
                 this.router.navigate(['/access-denied']);
                 return false;
-             }
+            }
             // logged in so return true
             return true;
         }
-
-        // not logged in so redirect to login page with the return url
         this.router.navigate(['/auth/login'], { queryParams: { returnUrl: state.url } });
         return false;
+        // not logged in so redirect to login page with the return url
     }
 }
