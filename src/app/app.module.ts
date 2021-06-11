@@ -15,6 +15,10 @@ import { JwtInterceptor } from 'src/helpers/jwt.interceptor';
 import { ErrorInterceptor } from 'src/helpers/error.interceptor';
 import { SearchPDFComponent } from './views/search-pdf/search-pdf.component';
 import { BnNgIdleService } from 'bn-ng-idle';
+import { CcsoutwardComponent } from './views/ccs-report/ccsoutward/ccsoutward.component';
+import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import { CCSReportService } from '../services/CCSReportService';
+ 
 
 
 @NgModule({
@@ -23,20 +27,22 @@ import { BnNgIdleService } from 'bn-ng-idle';
     AdminComponent,
     TitleComponent,
     BreadcrumbsComponent,
-    AuthComponent
-    
-    
+    AuthComponent 
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    CCSReportService,
     BnNgIdleService
   ],
   bootstrap: [AppComponent]

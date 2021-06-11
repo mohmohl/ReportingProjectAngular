@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-sm-12">
+      <div class="card">
+          <div class="card-header">
+            <h5>CCS Inward Search</h5>
+          </div>
+          <div class="card-body">
+              <div *ngIf="loading" class="d-flex justify-content-center">
+                  <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-danger">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+              <form [formGroup]="form" (ngSubmit)="submit(form.value)">
+                <div class="container-fluid">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-md-2 col-form-label">From Date</label>
+                    <mat-form-field class="col-sm-12 col-md-3">
+                      <input matInput [matDatepicker]="picker" formControlName="fromdate">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <div class="col-sm-0 col-md-7"></div>
+                  </div>
+
+                  <div class="form-group row">
+                  <label class="col-sm-12 col-md-2 col-form-label">To Date</label>
+                  <mat-form-field class="col-sm-12 col-md-3">
+                    <input [ngClass]="{'large-combo':scrWidth>deviceSmall}" matInput [matDatepicker]="todatepicker" formControlName="todate">
+                    <mat-datepicker-toggle matSuffix [for]="todatepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #todatepicker></mat-datepicker>
+                  </mat-form-field>
+                  <div class="col-sm-0 col-md-7"></div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-md-2  col-form-label">Transition Name</label>
+                    <div>
+                    <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="ccsTranCode" class="form-control" >
+                      <option value="{{item.tran_code}}" *ngFor='let item of ccsTranList'>{{item.tran_name}}</option>
+                    </select>
+                    <div class="col-sm-0 col-md-7"></div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-md-2  col-form-label">Bank Name</label>
+                    <div>
+                    <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="bankCode" class="form-control" >
+                      <option class="col-sm-2 col-md-2" value="{{item.bank_code}}" *ngFor='let item of bankList'>{{item.bank_name}}</option>
+                    </select>
+                    <div class="col-sm-0 col-md-7"></div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-md-2  col-form-label">Transition Status</label>
+                    <div>
+                    <select  [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="statusCode" class="form-control" >
+                      <option value="{{item.status_id}}" *ngFor='let item of ccsStatusList'>{{item.status_name}}</option>
+                    </select>
+                    <div class="col-sm-0 col-md-7"></div>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-md-2  col-form-label">Export File Option</label>
+                    <div>
+                    <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="exportOption" class="form-control">
+                      <option value="excel">Excel</option>
+                      <option value="pdf">PDF</option>
+                    </select>
+                    <div class="col-sm-0 col-md-7"></div>
+                  </div>
+                  </div>
+
+                  <div class="form-group row">
+                  <div class="col-sm-2">
+                      <button type="submit" class="btn btn-primary btn-sm">Export</button>
+                  </div>
+                </div>
+              </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>

@@ -23,6 +23,7 @@ import {ClickOutsideModule} from 'ng-click-outside';
 import {SpinnerComponent} from './spinner/spinner.component';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {NotificationsService} from 'angular2-notifications';
+import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -41,6 +42,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       AgmCoreModule.forRoot({apiKey: 'AIzaSyCE0nvTeHBsiQIrbpMVTe489_O5mwyqofk'}),
       ClickOutsideModule,
       PerfectScrollbarModule,
+      MatInputModule,
+      MatDatepickerModule,
+      MatNativeDateModule,
   ],
   declarations: [
       AccordionAnchorDirective,

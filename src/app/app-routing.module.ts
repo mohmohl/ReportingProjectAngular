@@ -55,6 +55,14 @@ const routes: Routes = [
       {
         path: 'searchPDF',
         loadChildren: () => import('./views/search-pdf/search-pdf.module').then(m => m.SearchPDFModule)
+      },
+      {
+        path: 'ccsoutward',
+        loadChildren: () => import('./views/ccs-report/ccsoutward/ccs-outward.module').then(m => m.CCSOutwardModule)
+      },
+      {
+         path: 'ccsinward',
+         loadChildren: () => import('./views/ccs-report/ccsinward/ccs-inward.module').then(m => m.CCSInwardModule)
       }
     ]
   },
