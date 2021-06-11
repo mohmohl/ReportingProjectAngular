@@ -31,6 +31,16 @@ export class AppComponent implements OnInit {
     });
  
   }
-  
+  // Keep me Signed in
+  public doUnload(): void {
+    this.doBeforeUnload();
+  }
+
+  // Keep me Signed in
+  public doBeforeUnload(): void {
+    // Clear localStorage
+    alert("asdasdasd");
+    //localStorage.removeItem("username_key");
+  }
 
 }

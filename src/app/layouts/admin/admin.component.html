@@ -215,13 +215,8 @@
                     </div>
                   </li>
                 </ul>
-              </li>
-              <li class="header-notification">
-                <a href="javascript:;" (click)="toggleChat()" class="displayChatbox">
-                  <i class="ti-comments"></i>
-                  <span class="badge">9</span>
-                </a>
               </li>-->
+              
               <li class="user-profile header-notification">
                 <a><!--assets/images/MABImage/user.png assets/images/user.png-->
                   <img src="assets/images/MABImage/user1.png" style="width:30px" alt="User-Profile-Image">
@@ -248,18 +243,23 @@
                     <a [routerLink]="['/advance/notifications']">
                       <i class="ti-email"></i> My Messages
                     </a>
-                  </li>
-                  <li>
-                    <a [routerLink]="['/authentication/lock-screen']" target="_blank">
-                      <i class="ti-lock"></i> Lock Screen
-                    </a>
                   </li>-->
                   <li>
+                    <a [routerLink]="['/change-password']">
+                      <i class="ti-settings"></i> Change Password
+                    </a>
+                  </li>
+                  <li>
                     <a (click)="logout()" style="cursor: pointer;">
-                      <i class="icofont icofont-logout"></i> Logout
+                      <i class="ti-power-off"></i> Logout
                     </a>
                   </li>
                 </ul>
+              </li>
+              <li class="header-notification">
+                <a (click)="logout()" style="cursor: pointer;color:maroon;" class="displayChatbox">
+                  <i class="ti-power-off"></i>
+                </a>
               </li>
             </ul>
           </div>

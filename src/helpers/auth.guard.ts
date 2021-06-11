@@ -15,6 +15,7 @@ export class AuthGuard implements CanActivate {
         console.log("permission >>>> ...."+this.authenticationService.permission);
         console.log("current url >>>> ...."+state.url);
         console.log("permission check>>>> ...."+this.authenticationService.permission.indexOf(state.url));
+        console.log("currentUser check>>>>"+currentUser);
         if (currentUser) {
              if(this.authenticationService.permission.indexOf(state.url) == -1){
                 this.router.navigate(['/access-denied']);

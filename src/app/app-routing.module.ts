@@ -66,8 +66,8 @@ const routes: Routes = [
         loadChildren: () => import('./views/welcome/welcome.module').then(m => m.WelcomeModule)
       },
       {
-        path: 'searchPDF',
-        loadChildren: () => import('./views/search-pdf/search-pdf.module').then(m => m.SearchPDFModule)
+        path: 'bank-statement',
+        loadChildren: () => import('./views/BankStatement/bank-statement.module').then(m => m.BankStatementModule)
       }
     ]
   },
