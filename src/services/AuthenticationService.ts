@@ -12,25 +12,25 @@ export class AuthenticationService {
 
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
-    public permission:string[];
+    public permission: string[];
     constructor(private http: HttpClient, private router: Router) {
 
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
-        //for permission list
-        this.permission = [];
-        this.permission.push("/simple-page");
-        this.permission.push("/access-denied");
-        if(this.currentUserSubject.value != null){
-        const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
-        console.log("Menu = "+menuMap);
-        menuMap.forEach((value, key) => {  
-            const menuList: MenuItem[] = value;
-            menuList.forEach(e =>{
-            this.permission.push("/"+e.url1);
-            });
-        });
-    }
+        // //for permission list
+        // this.permission = [];
+        // this.permission.push("/simple-page");
+        // this.permission.push("/access-denied");
+        // if (this.currentUserSubject.value != null) {
+        //     const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
+        //     console.log("Menu = " + menuMap);
+        //     menuMap.forEach((value, key) => {
+        //         const menuList: MenuItem[] = value;
+        //         menuList.forEach(e => {
+        //             this.permission.push("/" + e.url1);
+        //         });
+        //     });
+        // }
     }
 
     public get currentUserValue(): User {
@@ -44,12 +44,29 @@ export class AuthenticationService {
     }
 
     login(userId: string, password: string) {
+        
         var username = userId;
         return this.http.post<any>(`${environment.baseUrl}/authenticate`, { userId, username, password })
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
+                
+                //for permission list
+                this.permission = [];
+                this.permission.push("/simple-page");
+                this.permission.push("/access-denied");
+                if (this.currentUserSubject.value != null) {
+                    const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
+                    console.log("Menu = " + menuMap);
+                    menuMap.forEach((value, key) => {
+                        const menuList: MenuItem[] = value;
+                        menuList.forEach(e => {
+                            this.permission.push("/" + e.url1);
+                        });
+                    });
+                }
+
                 return user;
             }));
     }
