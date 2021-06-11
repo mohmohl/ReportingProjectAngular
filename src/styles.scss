@@ -11302,6 +11302,7 @@ body {
 
 .col-form-label {
   font-size: 14px;
+  padding-left: 0px;
 }
 
 .select2-container {
@@ -28014,4 +28015,19 @@ body {
   }
 }
 
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+//style add by YYA
+div{
+  .mat-form-field-infix{
+    padding:0px !important;
+  }
+  .mat-form-field{
+    padding:0px !important;
+  }
+}
 

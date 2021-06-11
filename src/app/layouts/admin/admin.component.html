@@ -278,6 +278,7 @@
             <div>
               <div *ngFor="let asideItems of menuItems">
                 <div class="pcoded-navigatio-lavel" menu-title-theme="theme5" >{{asideItems.label}}</div>
+                
                 <ul class="pcoded-item pcoded-left-item" item-border="none" item-border-style="solid" subitem-border="solid" *ngFor="let asideItem of asideItems.main" appAccordionLink group="{{asideItem.state}}">
                   <li [routerLinkActive]="['active']" *ngIf="asideItem.type === 'external'" appAccordionLink group="{{asideItem.state}}">
                     <a href="{{asideItem.external}}" target="{{asideItem.target ? '_blank' : '_self'}}" appAccordionToggle>

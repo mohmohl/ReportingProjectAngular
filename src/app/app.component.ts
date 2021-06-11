@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
     });
 
     this.authService.currentUser.subscribe(x => this.currentUser = x);
+
     let context = this;
     window.addEventListener("beforeunload", function (e) {
       e = e || window.event;
@@ -43,12 +44,10 @@ export class AppComponent implements OnInit {
     });
 
     this.bnIdle.startWatching(3600).subscribe((isTimedOut: boolean) => {
-
       if (isTimedOut) {
         console.log('Application session expired');
         this.authService.applicationBackend_logout(this.authService.currentUserValue.userId);
       }
-
     });
 
   }

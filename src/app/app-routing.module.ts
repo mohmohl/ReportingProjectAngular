@@ -65,9 +65,17 @@ const routes: Routes = [
         loadChildren: () => import('./views/welcome/welcome.module').then(m => m.WelcomeModule)
       },
       {
+        path: 'ccsoutward',
+        loadChildren: () => import('./views/ccs-report/ccsoutward/ccs-outward.module').then(m => m.CCSOutwardModule)
+      },
+      {
+         path: 'ccsinward',
+         loadChildren: () => import('./views/ccs-report/ccsinward/ccs-inward.module').then(m => m.CCSInwardModule)
+      },
+      {
         path: 'bank-statement',
         loadChildren: () => import('./views/BankStatement/bank-statement.module').then(m => m.BankStatementModule)
-          },
+      },
       {
         path: 'loanContract',
         loadChildren: () => import('./views/loan-contract/loan-contract.module').then(m => m.LoanContractModule),canActivate:[AuthGuard]
