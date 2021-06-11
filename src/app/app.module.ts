@@ -13,7 +13,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from 'src/helpers/jwt.interceptor';
 import { ErrorInterceptor } from 'src/helpers/error.interceptor';
-import { SearchPDFComponent } from './views/search-pdf/search-pdf.component';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { CcsoutwardComponent } from './views/ccs-report/ccsoutward/ccsoutward.component';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
@@ -28,7 +27,7 @@ import { CCSReportService } from '../services/CCSReportService';
     TitleComponent,
     BreadcrumbsComponent,
     AuthComponent 
-  ],
+ ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -44,7 +43,7 @@ import { CCSReportService } from '../services/CCSReportService';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     CCSReportService,
     BnNgIdleService
-  ],
+ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -25,7 +25,6 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
-     
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
@@ -44,17 +43,26 @@ const routes: Routes = [
       }, {
         path: 'map',
         loadChildren: () => import('./map/google-map/google-map.module').then(m => m.GoogleMapModule),
-      }, {
+      },
+     {
         path: 'simple-page',
-        loadChildren: () => import('./simple-page/simple-page.module').then(m => m.SimplePageModule)
+        loadChildren: () => import('./simple-page/simple-page.module').then(m => m.SimplePageModule), canActivate:[AuthGuard]
+      }, 
+      {
+        path: 'access-denied',
+        loadChildren: () => import('./views/access-denied/access-denied.module').then(m => m.AccessDeniedModule)
+      }, 
+      {
+        path: 'search-user',
+        loadChildren: () => import('./views/UserAccount/search-user/search-user.module').then(m => m.SearchUserModule),canActivate:[AuthGuard]
+      }, 
+      {
+        path: 'user-registration/:userId',
+        loadChildren: () => import('./views/UserAccount/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
       },
       {
         path: 'welcome',
         loadChildren: () => import('./views/welcome/welcome.module').then(m => m.WelcomeModule)
-      },
-      {
-        path: 'searchPDF',
-        loadChildren: () => import('./views/search-pdf/search-pdf.module').then(m => m.SearchPDFModule)
       },
       {
         path: 'ccsoutward',
@@ -63,6 +71,14 @@ const routes: Routes = [
       {
          path: 'ccsinward',
          loadChildren: () => import('./views/ccs-report/ccsinward/ccs-inward.module').then(m => m.CCSInwardModule)
+      },
+      {
+        path: 'bank-statement',
+        loadChildren: () => import('./views/BankStatement/bank-statement.module').then(m => m.BankStatementModule)
+      },
+      {
+        path: 'loanContract',
+        loadChildren: () => import('./views/loan-contract/loan-contract.module').then(m => m.LoanContractModule),canActivate:[AuthGuard]
       }
     ]
   },
