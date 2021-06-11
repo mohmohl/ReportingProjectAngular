@@ -25,7 +25,6 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
-     
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
@@ -47,7 +46,7 @@ const routes: Routes = [
       },
      {
         path: 'simple-page',
-        loadChildren: () => import('./simple-page/simple-page.module').then(m => m.SimplePageModule)
+        loadChildren: () => import('./simple-page/simple-page.module').then(m => m.SimplePageModule), canActivate:[AuthGuard]
       }, 
       {
         path: 'access-denied',
@@ -55,7 +54,7 @@ const routes: Routes = [
       }, 
       {
         path: 'search-user',
-        loadChildren: () => import('./views/UserAccount/search-user/search-user.module').then(m => m.SearchUserModule)
+        loadChildren: () => import('./views/UserAccount/search-user/search-user.module').then(m => m.SearchUserModule),canActivate:[AuthGuard]
       }, 
       {
         path: 'user-registration/:userId',
@@ -68,6 +67,10 @@ const routes: Routes = [
       {
         path: 'bank-statement',
         loadChildren: () => import('./views/BankStatement/bank-statement.module').then(m => m.BankStatementModule)
+          },
+      {
+        path: 'loanContract',
+        loadChildren: () => import('./views/loan-contract/loan-contract.module').then(m => m.LoanContractModule),canActivate:[AuthGuard]
       }
     ]
   },
