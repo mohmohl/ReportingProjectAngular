@@ -36,22 +36,22 @@ export class AppComponent implements OnInit {
       if (e.isTrusted) {
         //e.returnValue = 'Sure?';
         let currentUser: User = JSON.parse(localStorage.getItem('currentUser'));
-        console.log("currentUser" + currentUser);
         if (currentUser) {
           context.authService.applicationBackend_logout(currentUser.userId);
         }
       }
     });
 
-    /*this.bnIdle.startWatching(30).subscribe((isTimedOut: boolean) => {
+    this.bnIdle.startWatching(3600).subscribe((isTimedOut: boolean) => {
 
-   if (isTimedOut) {
-     console.log('session expired');
-     this.authService.applicationBackend_logout(this.authService.currentUserValue.userId);
-     }
-   
- });
- 
-}*/
+      if (isTimedOut) {
+        console.log('Application session expired');
+        this.authService.applicationBackend_logout(this.authService.currentUserValue.userId);
+      }
+
+    });
+
   }
 }
+
+

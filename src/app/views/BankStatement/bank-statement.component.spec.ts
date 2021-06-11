@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchPDFComponent } from './search-pdf.component';
+import { BankStatementComponent } from './bank-statement.component';
 
-describe('SearchPDFComponent', () => {
-  let component: SearchPDFComponent;
-  let fixture: ComponentFixture<SearchPDFComponent>;
+describe('BankStatementComponent', () => {
+  let component: BankStatementComponent;
+  let fixture: ComponentFixture<BankStatementComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchPDFComponent ]
+      declarations: [ BankStatementComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchPDFComponent);
+    fixture = TestBed.createComponent(BankStatementComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

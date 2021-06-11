@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+              <h5>Search Account Number</h5>
+            </div>
+            <div class="card-body">
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Account No</label>
+                        <div class="col-sm-3">
+                          <input type="text" formControlName="accno" class="form-control">
+                          <code *ngIf="error">{{error}}</code>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Pass Date
+                       
+                          <input type="checkbox" (change)="passOnChange($event.target.checked)" checked class="styled">
+                      
+                      </label>
+                      <div *ngIf="passDate" class="col-sm-3">
+                        <select class="form-control" formControlName="years" id="exampleFormControlSelect1">
+                          <option selected>-- Select --</option>
+                          <option *ngFor="let y of yearList" value="{{y.file_path}}">{{ y.pass_years}}</option>
+                        </select>
+                      </div>
+                      <div *ngIf="!passDate" class="col-sm-3">
+                        <input type="date" formControlName="fromDate" class="form-control">
+                      </div>
+                      <label  *ngIf="!passDate" class="col-form-label">-</label>
+                      <div *ngIf="!passDate" class="col-sm-3">
+                        <input type="date" formControlName="toDate" class="form-control">
+                      </div>
+                  </div>
+                      <div class="form-group row">
+                        <div class="col-sm-1">
+                          <button type="submit" class="btn btn-primary btn-sm">Print</button>
+                        </div>
+                      </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+  
