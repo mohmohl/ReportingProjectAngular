@@ -17,20 +17,20 @@ export class AuthenticationService {
 
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
-        // //for permission list
-        // this.permission = [];
-        // this.permission.push("/simple-page");
-        // this.permission.push("/access-denied");
-        // if (this.currentUserSubject.value != null) {
-        //     const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
-        //     console.log("Menu = " + menuMap);
-        //     menuMap.forEach((value, key) => {
-        //         const menuList: MenuItem[] = value;
-        //         menuList.forEach(e => {
-        //             this.permission.push("/" + e.url1);
-        //         });
-        //     });
-        // }
+        //for permission list
+        this.permission = [];
+        this.permission.push("/simple-page");
+        this.permission.push("/access-denied");
+        if (this.currentUserSubject.value != null) {
+            const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
+            console.log("Menu = " + menuMap);
+            menuMap.forEach((value, key) => {
+                const menuList: MenuItem[] = value;
+                menuList.forEach(e => {
+                    this.permission.push("/" + e.url1);
+                });
+            });
+        }
     }
 
     public get currentUserValue(): User {
