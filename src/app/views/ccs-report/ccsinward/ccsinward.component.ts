@@ -7,6 +7,9 @@ import { EBA_BANK } from 'src/models/EBA_BANK';
 import { CCS_TRAN } from 'src/models/CCS_TRAN';
 import { CCS_STATUS } from 'src/models/CCS_STATUS';
 import { HostListener } from "@angular/core";
+import { CCS_Inward } from 'src/models/CCS_Inward';
+import { DatePipe } from '@angular/common';
+import { ResponseEntity } from 'src/models/ResponseEntity';
 
 @Component({
   selector: 'app-ccsinward',
@@ -27,6 +30,11 @@ export class CcsinwardComponent implements OnInit {
   bankList:EBA_BANK[]=[];
   ccsTranList:CCS_TRAN[]=[];
   ccsStatusList:CCS_STATUS[]=[];
+  ccsInwardList: CCS_Inward[]=[];
+
+  public startCount:number=0;
+
+  searchData: CCS_REPORT=null;
 
   constructor(private service: CCSReportService) {
     //trigger screen width
@@ -99,57 +107,78 @@ export class CcsinwardComponent implements OnInit {
   }
 
   submit(formdata: CCS_REPORT) { 
-    console.log("-----Submit Export-----");
+    this.loading = true;
+    this.startCount=0;
     if (this.form.invalid) {
       this.error = "Please provide required fields";
       return;
-    }  
-    if(formdata.exportOption=='pdf'){
-        this.service.exportCCSInwardPdf(formdata).pipe(
-          map((data: any) => {
-            let blob = new Blob([data], {
-              type: 'application/pdf'
-            });
-            var link = document.createElement('a');
-            debugger;
-            link.href = window.URL.createObjectURL(blob);
-            link.download = 'CCS_Inward.pdf';
-            link.target = '_blank';
-            link.click();
-            window.URL.revokeObjectURL(link.href);
-          })).subscribe(
-            res => {
-              this.loading = false;
-            },
-            error => {
-              this.loading = false;
-              this.error="Cannot export excel (Internal Server Error)";
-              console.log(error);
-            });
-    }else if(formdata.exportOption=='excel'){
-        console.log("excel")
-        this.error='';
-        this.loading = true;
-        this.service.exportCCSInwardExcel(formdata)
-          .pipe(
-            map((data: any) => {
-            let blob = new Blob([data], {
-                type: 'application/octet-stream' 
-            });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = "CCS_Inward.xlsx";
-            link.click();
-            console.log("Finish >>>")
-          }))
-          .subscribe((res)=>{
-            this.loading = false;
-          },(error) => {
-            this.loading = false;
-            this.error="Cannot export excel (Internal Server Error)";
-            console.log(error);
-          });
     }
+     
+    var buttonName = document.activeElement.getAttribute("Name");
+     
+    if(buttonName==='export'){
+      this.loading = true;
+            if(formdata.exportOption=='pdf'){
+              this.service.exportCCSInwardPdf(formdata).pipe(
+                map((data: any) => {
+                  let blob = new Blob([data], {
+                    type: 'application/pdf'
+                  });
+                  var link = document.createElement('a');
+                  debugger;
+                  link.href = window.URL.createObjectURL(blob);
+                  link.download = 'CCS_Inward.pdf';
+                  link.target = '_blank';
+                  link.click();
+                  window.URL.revokeObjectURL(link.href);
+                })).subscribe(
+                  res => {
+                    this.loading = false;
+                  },
+                  error => {
+                    this.loading = false;
+                    this.error="Cannot export excel (Internal Server Error)";
+                    console.log(error);
+                  });
+          }else if(formdata.exportOption=='excel'){
+              console.log("excel")
+              this.error='';
+              this.loading = true;
+              this.service.exportCCSInwardExcel(formdata)
+                .pipe(
+                  map((data: any) => {
+                  let blob = new Blob([data], {
+                      type: 'application/octet-stream' 
+                  });
+                  var link = document.createElement('a');
+                  link.href = window.URL.createObjectURL(blob);
+                  link.download = "CCS_Inward.xlsx";
+                  link.click();
+                  console.log("Finish >>>")
+                }))
+                .subscribe((res)=>{
+                  this.loading = false;
+                },(error) => {
+                  this.loading = false;
+                  this.error="Cannot export excel (Internal Server Error)";
+                  console.log(error);
+                });
+          }
+    }else if(buttonName==='search'){
+        console.log("-----Submit Search-----");
+        this.searchData=formdata;
+        //call service
+        this.service.getCCSInwardWeb(formdata).subscribe((res:ResponseEntity)=>{
+          this.loading = false;
+          this.ccsInwardList=res.ccsinwards;
+        },(error)=>{
+          this.loading = false;
+          this.error="(Internal Server Error)";
+          console.log(error);
+        });
+    }
+
+    
   }
 
   @HostListener('window:resize', ['$event'])
