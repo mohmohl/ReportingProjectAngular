@@ -17,7 +17,8 @@ import { BnNgIdleService } from 'bn-ng-idle';
 import { CcsoutwardComponent } from './views/ccs-report/ccsoutward/ccsoutward.component';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { CCSReportService } from '../services/CCSReportService';
- 
+import { FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { CCSReportService } from '../services/CCSReportService';
     AdminComponent,
     TitleComponent,
     BreadcrumbsComponent,
-    AuthComponent 
+    AuthComponent
  ],
   imports: [
     BrowserModule,
@@ -37,6 +38,7 @@ import { CCSReportService } from '../services/CCSReportService';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    FormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

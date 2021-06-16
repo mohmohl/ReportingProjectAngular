@@ -8,7 +8,7 @@ import { CCS_REPORT } from 'src/models/CCS_REPORT';
 })
 export class CCSReportService {
 
-  pdfheaders = new HttpHeaders({ 'Content-Type': 'application/pdf', 'Accept': 'application/pdf', });
+  pdfheaders = new HttpHeaders({ 'Content-Type': 'application/pdf', 'Accept': 'application/pdf' });
 
   constructor(private http: HttpClient) {
   }
@@ -19,14 +19,14 @@ export class CCSReportService {
   }
 
   public exportCCSOutwardPdf(searchbody: CCS_REPORT) {
-    debugger;
-    // let accParam = new HttpParams().set('accountNo', accNo);
-    // return this.http.get(this.api,{params:accParam});
-    let fromdate_str: string = searchbody.fromdate.getFullYear() + '-' + (searchbody.fromdate.getMonth() + 1) + '-' + searchbody.fromdate.getDate();
-    let todate_str: string = searchbody.todate.getFullYear() + '-' + (searchbody.todate.getMonth() + 1) + '-' + searchbody.todate.getDate();
+      
+    let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
+    let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
+ 
+
     let requestbody = {
-      fromdate: fromdate_str,
-      todate: todate_str,
+      fromdate: fromDateStr,
+      todate: toDateStr,
       status_type:searchbody.statusCode,
       transition_name:searchbody.ccsTranCode,
       bank_name:searchbody.bankCode
@@ -36,11 +36,14 @@ export class CCSReportService {
   }
 
   public exportCCSInwardPdf(searchbody: CCS_REPORT) {
-    let fromdate_str: string = searchbody.fromdate.getFullYear() + '-' + (searchbody.fromdate.getMonth() + 1) + '-' + searchbody.fromdate.getDate();
-    let todate_str: string = searchbody.todate.getFullYear() + '-' + (searchbody.todate.getMonth() + 1) + '-' + searchbody.todate.getDate();
+    
+    let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
+    let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
+ 
+
     let requestbody = {
-      fromdate: fromdate_str,
-      todate: todate_str,
+      fromdate: fromDateStr,
+      todate: toDateStr,
       status_type:searchbody.statusCode,
       transition_name:searchbody.ccsTranCode,
       bank_name:searchbody.bankCode
@@ -51,11 +54,14 @@ export class CCSReportService {
 
 
   public exportCCSOutwardExcel(searchbody: CCS_REPORT) {
-    let fromdate_str: string = searchbody.fromdate.getFullYear() + '-' + (searchbody.fromdate.getMonth() + 1) + '-' + searchbody.fromdate.getDate();
-    let todate_str: string = searchbody.todate.getFullYear() + '-' + (searchbody.todate.getMonth() + 1) + '-' + searchbody.todate.getDate();
+    
+    let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
+    let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
+ 
+
     let requestbody = {
-      fromdate: fromdate_str,
-      todate: todate_str,
+      fromdate: fromDateStr,
+      todate: toDateStr,
       status_type:searchbody.statusCode,
       transition_name:searchbody.ccsTranCode,
       bank_name:searchbody.bankCode
@@ -65,16 +71,70 @@ export class CCSReportService {
   }
 
   public exportCCSInwardExcel(searchbody: CCS_REPORT) {
-    let fromdate_str: string = searchbody.fromdate.getFullYear() + '-' + (searchbody.fromdate.getMonth() + 1) + '-' + searchbody.fromdate.getDate();
-    let todate_str: string = searchbody.todate.getFullYear() + '-' + (searchbody.todate.getMonth() + 1) + '-' + searchbody.todate.getDate();
+    
+    let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
+    let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
+ 
+
     let requestbody = {
-      fromdate: fromdate_str,
-      todate: todate_str,
+      fromdate: fromDateStr,
+      todate: toDateStr,
       status_type:searchbody.statusCode,
       transition_name:searchbody.ccsTranCode,
       bank_name:searchbody.bankCode
     }
     var api = environment.baseUrl + '/export/excel/ccsinward';
     return this.http.post<any>(`${api}`, requestbody, { responseType: 'arraybuffer' as 'json' });
+  }
+
+
+  public getCCSOutwardWebFirstPage(searchbody: CCS_REPORT): Observable<any>{
+  
+    let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
+    let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
+ 
+
+    let requestbody = {
+      fromdate: fromDateStr,
+      todate: toDateStr,
+      status_type:searchbody.statusCode,
+      transition_name:searchbody.ccsTranCode,
+      bank_name:searchbody.bankCode
+    }
+    var api = environment.baseUrl + `/ccs/outward`;
+    return this.http.post<any>(`${api}`, requestbody, { responseType: "json"});
+  }
+
+  public getCCSOutwardWeb(searchbody: CCS_REPORT): Observable<any>{
+
+    debugger;
+    let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
+    let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
+ 
+
+    let requestbody = {
+      fromdate: fromDateStr,
+      todate: toDateStr,
+      status_type:searchbody.statusCode,
+      transition_name:searchbody.ccsTranCode,
+      bank_name:searchbody.bankCode
+    }
+    var api = environment.baseUrl + `/ccs/outward`;
+    return this.http.post<any>(`${api}`, requestbody, { responseType: "json"});
+  }
+
+  public getCCSInwardWeb(searchbody: CCS_REPORT): Observable<any>{
+   let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
+   let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
+
+    let requestbody = {
+      fromdate: fromDateStr,
+      todate: toDateStr,
+      status_type:searchbody.statusCode,
+      transition_name:searchbody.ccsTranCode,
+      bank_name:searchbody.bankCode
+    }
+    var api = environment.baseUrl + `/ccs/inward`;
+    return this.http.post<any>(`${api}`, requestbody, { responseType: "json"});
   }
 }

@@ -5,6 +5,7 @@ import { CCSOutwardRoutingModule} from './ccs-outward-routing.module';
 import {CcsoutwardComponent } from './ccsoutward.component';
 import {SharedModule} from '../../../shared/shared.module';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angul
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    FormsModule
   ],
   declarations: [
       CcsoutwardComponent

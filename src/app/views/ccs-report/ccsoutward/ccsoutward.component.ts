@@ -5,13 +5,19 @@ import { CCSReportService } from '../../../../services/CCSReportService';
 import { map } from 'rxjs/operators';
 import { EBA_BANK } from 'src/models/EBA_BANK';
 import { CCS_TRAN } from 'src/models/CCS_TRAN';
+import { CCS_Outward } from 'src/models/CCS_Outward';
 import { CCS_STATUS } from 'src/models/CCS_STATUS';
 import { HostListener } from "@angular/core";
+import { Router } from '@angular/router';
+import { ResponseEntity} from 'src/models/ResponseEntity';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-ccsoutward',
   templateUrl: './ccsoutward.component.html',
-  styleUrls: ['./ccsoutward.component.css']
+  styleUrls: ['./ccsoutward.component.css'],
+  providers: [DatePipe
+  ]
 })
 export class CcsoutwardComponent implements OnInit {
 
@@ -25,12 +31,17 @@ export class CcsoutwardComponent implements OnInit {
   form = null;
   error = '';
   loading = false;
+  count:number=1;
   bankList:EBA_BANK[]=[];
   ccsTranList:CCS_TRAN[]=[];
   ccsStatusList:CCS_STATUS[]=[];
+  ccsOutwardList: CCS_Outward[]=[];
 
-  constructor(private service: CCSReportService) {
+  public startCount:number=0;
 
+  searchData: CCS_REPORT=null;
+
+  constructor(private service: CCSReportService,private router: Router,private datePipe: DatePipe) {
     //prepare combo
     this.ccsTranList=[
       {tran_code:"ALL",tran_name:"ALL"},
@@ -54,9 +65,10 @@ export class CcsoutwardComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    debugger;
     //trigger screen width
     this.getScreenSize();
+    let todaydateStr=`${new Date().getMonth() + 1}-${new Date().getDate()}-${new Date().getFullYear()}`;
 
     //Create Form
     this.form = new FormGroup({
@@ -100,63 +112,98 @@ export class CcsoutwardComponent implements OnInit {
     });//end of ccs bank api fetching
   }
 
-  submit(formdata: CCS_REPORT) { 
-    console.log("-----Submit Export-----");
+  submit(formdata: CCS_REPORT) {
+    this.loading = true;
+    this.startCount=0;
     if (this.form.invalid) {
       this.error = "Please provide required fields";
       return;
-    }  
-    if(formdata.exportOption=='pdf'){
-        this.service.exportCCSOutwardPdf(formdata).pipe(
-          map((data: any) => {
-            let blob = new Blob([data], {
-              type: 'application/pdf'
-            });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = 'CCS_Outward.pdf';
-            link.target = '_blank';
-            link.click();
-            window.URL.revokeObjectURL(link.href);
-          })).subscribe(
-            res => {
+    } 
+    
+    var buttonName = document.activeElement.getAttribute("Name");
+    if(buttonName==='export'){
+            console.log("-----Submit Export-----");
+            
+            if(formdata.exportOption=='pdf'){
+                this.service.exportCCSOutwardPdf(formdata).pipe(
+                  map((data: any) => {
+                    let blob = new Blob([data], {
+                      type: 'application/pdf'
+                    });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'CCS_Outward.pdf';
+                    link.target = '_blank';
+                    link.click();
+                    window.URL.revokeObjectURL(link.href);
+                  })).subscribe(
+                    res => {
+                      this.loading = false;
+                    },
+                    error => {
+                      this.loading = false;
+                      this.error="Cannot export excel (Internal Server Error)";
+                      console.log(error);
+                    });
+            }else if(formdata.exportOption=='excel'){
+                console.log("excel")
+                this.error='';
+                this.loading = true;
+                this.service.exportCCSOutwardExcel(formdata)
+                  .pipe(
+                    map((data: any) => {
+                    let blob = new Blob([data], {
+                        type: 'application/octet-stream' 
+                    });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = "CCS_Outward.xlsx";
+                    link.click();
+                    console.log("Finish >>>")
+                  }))
+                  .subscribe((res)=>{
+                    this.loading = false;
+                  },(error) => {
+                    this.loading = false;
+                    this.error="Cannot export excel (Internal Server Error)";
+                    console.log(error);
+                  });
+            }
+    }else if(buttonName==='search'){
+      console.log("-----Submit Search-----");
+            this.searchData=formdata;
+            //call service
+            this.service.getCCSOutwardWeb(formdata).subscribe((res:ResponseEntity)=>{
               this.loading = false;
-            },
-            error => {
+              this.ccsOutwardList=res.ccsoutwards;
+            },(error)=>{
               this.loading = false;
-              this.error="Cannot export excel (Internal Server Error)";
+              this.error="(Internal Server Error)";
               console.log(error);
             });
-    }else if(formdata.exportOption=='excel'){
-        console.log("excel")
-        this.error='';
-        this.loading = true;
-        this.service.exportCCSOutwardExcel(formdata)
-          .pipe(
-            map((data: any) => {
-            let blob = new Blob([data], {
-                type: 'application/octet-stream' 
-            });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = "CCS_Outward.xlsx";
-            link.click();
-            console.log("Finish >>>")
-          }))
-          .subscribe((res)=>{
-            this.loading = false;
-          },(error) => {
-            this.loading = false;
-            this.error="Cannot export excel (Internal Server Error)";
-            console.log(error);
-          });
     }
+
+    
   }//end of submit
 
   @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
           this.scrHeight = window.innerHeight;
           this.scrWidth = window.innerWidth;
-    }
-}
+  }
 
+  searchBtnOnClick(formdata: CCS_REPORT){
+    this.searchData=formdata;
+    //call service
+    this.service.getCCSOutwardWeb(formdata).subscribe((res:ResponseEntity)=>{ 
+      this.ccsOutwardList=res.ccsoutwards;
+    },(error)=>{
+      this.loading = false;
+      this.error="(Internal Server Error)";
+      console.log(error);
+    });
+    
+  }
+
+}
+  

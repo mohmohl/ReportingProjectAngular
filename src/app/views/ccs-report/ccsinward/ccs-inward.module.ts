@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { CCSInwardRoutingModule} from './ccs-inward-routing.module';
 import {CcsinwardComponent } from './ccsinward.component';
@@ -13,7 +13,7 @@ import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angul
     SharedModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule,
+    MatNativeDateModule
   ],
   declarations: [
     CcsinwardComponent
