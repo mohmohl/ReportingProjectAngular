@@ -181,7 +181,7 @@ const MENUITEMS = [
       }, 
       {
         state: 'simple-page',
-        name: 'Simple Page',
+        name: 'Welcome Page',
         type: 'link',
         icon: 'ti-layout-sidebar-left'
       },

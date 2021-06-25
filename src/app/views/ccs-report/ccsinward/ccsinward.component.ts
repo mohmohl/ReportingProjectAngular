@@ -43,22 +43,25 @@ export class CcsinwardComponent implements OnInit {
     //prepare combo
     this.ccsTranList=[
       {tran_code:"ALL",tran_name:"ALL"},
-      {tran_code:"CCT010",tran_name:"Customer Credit Transfer(Priority)"},
-      {tran_code:"CCT011",tran_name:"Customer Credit Transfer(LSF)"},
-      {tran_code:"CCT012",tran_name:"Customer Credit Transfer(ACH Bulk Payment)"},
-      {tran_code:"CCT013",tran_name:"Customer Credit Transfer(ACH Fast Payment)"}
+      //{tran_code:"CCT010",tran_name:"Customer Credit Transfer(Priority)"},
+      //{tran_code:"CCT011",tran_name:"Customer Credit Transfer(LSF)"},
+      //{tran_code:"CCT012",tran_name:"Customer Credit Transfer(ACH Bulk Payment)"},
+      //{tran_code:"CCT013",tran_name:"Customer Credit Transfer(ACH Fast Payment)"}
     ];
 
     //prepare combo
     this.ccsStatusList=[
       {status_id:"ALL",status_name:"ALL"},
-      {status_id:"A",status_name:"A - Approved"},
-      {status_id:"CBMRE",status_name:"CBM - Rejected Messages"},
-      {status_id:"F",status_name:"F - Transaction input fail"},
-      {status_id:"FRC",status_name:"Failed Reverse at CBS"},
-      {status_id:"REVERSAL",status_name:"Reversal sent to CBM"},
-      {status_id:"SCMBN",status_name:"SCMBN - Sent to CBMNet"},
-      {status_id:"SRC",status_name:"Reverse at CBS"}
+      //{status_id:"A",status_name:"A - Approved"},
+      {status_id:"SC",status_name:"Core Banking Success"},
+      //{status_id:"CBMRE",status_name:"CBM - Rejected Messages"},
+      {status_id:"F",status_name:"Inward Failed"},
+      {status_id:"FRC",status_name:"Outward Reversal Failed"},
+      //{status_id:"REVERSAL",status_name:"Reversal sent to CBM"},
+      //{status_id:"SCMBN",status_name:"SCMBN - Sent to CBMNet"},
+      {status_id:"SRC",status_name:"Outward Reversal Success"},
+      {status_id:"FCBS",status_name:"Inward Failed & Reversal"}
+      
     ];
   }
 
@@ -127,7 +130,7 @@ export class CcsinwardComponent implements OnInit {
                   var link = document.createElement('a');
                   debugger;
                   link.href = window.URL.createObjectURL(blob);
-                  link.download = 'CCS_Inward.pdf';
+                  link.download = 'RTGS_Inward.pdf';
                   link.target = '_blank';
                   link.click();
                   window.URL.revokeObjectURL(link.href);
@@ -152,7 +155,7 @@ export class CcsinwardComponent implements OnInit {
                   });
                   var link = document.createElement('a');
                   link.href = window.URL.createObjectURL(blob);
-                  link.download = "CCS_Inward.xlsx";
+                  link.download = "RTGS_Inward.xlsx";
                   link.click();
                   console.log("Finish >>>")
                 }))

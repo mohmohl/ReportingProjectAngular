@@ -9,9 +9,9 @@ const routes: Routes = [
     component: SimplePageComponent,
     canActivate: [AuthGuard],
     data: {
-      breadcrumb: 'Sample Page',
+      breadcrumb: 'Welcome Page',
       icon: 'icofont icofont-file-document bg-c-pink',
-      breadcrumb_caption: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit - Sample Page',
+      breadcrumb_caption: 'Welcome Page',
       status: true
     }
   }

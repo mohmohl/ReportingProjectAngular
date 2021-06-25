@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-12">
-          <app-card [title]="'CCS Inward Search'" [classHeader]="true" [blockClass]="'table-border-style'">
+          <app-card [title]="'RTGS Inward Search'" [classHeader]="true" [blockClass]="'table-border-style'">
             <div class="card-body">
 
               <div *ngIf="loading" class="d-flex justify-content-center">
@@ -82,7 +82,7 @@
             </div>
           </app-card>
 
-          <app-card [title]="'CCS Inward List'" [classHeader]="true" [blockClass]="'table-border-style'">
+          <app-card [title]="'RTGS Inward List'" [classHeader]="true" [blockClass]="'table-border-style'">
                 <div class="table-responsive" *ngIf="ccsInwardList?.length">
                   <table class="table table table-hover">
                     <thead>
@@ -92,6 +92,7 @@
                         <th scope="col">CPN</th>
                         <th scope="col">Contract No</th>
                         <th scope="col">Drawee Bank</th>
+                        <th scope="col">Type</th>
                         <th scope="col">Beneficiary Acc</th>
                         <th scope="col">Beneficiary Name</th>
                         <th scope="col">Remittee Acc</th>
@@ -113,17 +114,18 @@
                         <td scope="col">{{item.cpn}}</td>
                         <td scope="col">{{item.contract_no}}</td>
                         <td scope="col">{{item.drawee_bank}}</td>
-                        <th scope="col">{{item.benificiary_acc}}</th>
-                        <th scope="col">{{item.benificiary_name}}</th>
-                        <th scope="col">{{item.remittee_acc}}</th>
-                        <th scope="col">{{item.remittee_name}}</th>
-                        <th scope="col">{{item.fee_amt}}</th>
-                        <th scope="col">{{item.commission_amt}}</th>
-                        <th scope="col">{{item.cash_amt}}</th>
-                        <th scope="col">{{item.transfer_amt}}</th>
-                        <th scope="col">{{item.total_amt}}</th>
-                        <th scope="col">{{item.status}}</th>
-                        <th scope="col">{{item.remark}}</th>
+                        <td scope="col">{{item.type}}</td>
+                        <td scope="col">{{item.benificiary_acc}}</td>
+                        <td scope="col">{{item.benificiary_name}}</td>
+                        <td scope="col">{{item.remittee_acc}}</td>
+                        <td scope="col">{{item.remittee_name}}</td>
+                        <td scope="col">{{item.fee_amt}}</td>
+                        <td scope="col">{{item.commission_amt}}</td>
+                        <td scope="col">{{item.cash_amt}}</td>
+                        <td scope="col">{{item.transfer_amt}}</td>
+                        <td scope="col">{{item.total_amt}}</td>
+                        <td scope="col">{{item.status}}</td>
+                        <td scope="col">{{item.remark}}</td>
                       </tr>
                     </tbody>
                   </table>
