@@ -31,17 +31,17 @@ export class AppComponent implements OnInit {
 
     this.authService.currentUser.subscribe(x => this.currentUser = x);
 
-    let context = this;
-    window.addEventListener("beforeunload", function (e) {
-      e = e || window.event;
-      if (e.isTrusted) {
-        //e.returnValue = 'Sure?';
-        let currentUser: User = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser) {
-          context.authService.applicationBackend_logout(currentUser.userId);
-        }
-      }
-    });
+    // let context = this;
+    // window.addEventListener("beforeunload", function (e) {
+    //   e = e || window.event;
+    //   if (e.isTrusted) {
+    //     //e.returnValue = 'Sure?';
+    //     let currentUser: User = JSON.parse(localStorage.getItem('currentUser'));
+    //     if (currentUser) {
+    //       context.authService.applicationBackend_logout(currentUser.userId);
+    //     }
+    //   }
+    // });
 
     this.bnIdle.startWatching(3600).subscribe((isTimedOut: boolean) => {
       if (isTimedOut) {
