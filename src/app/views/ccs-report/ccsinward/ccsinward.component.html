@@ -1,14 +1,13 @@
 <div class="row">
   <div class="col-sm-12">
-      <div class="card">
-          <div class="card-header">
-            <h5>CCS Inward Search</h5>
-          </div>
-          <div class="card-body">
+          <app-card [title]="'RTGS Inward Search'" [classHeader]="true" [blockClass]="'table-border-style'">
+            <div class="card-body">
+
               <div *ngIf="loading" class="d-flex justify-content-center">
-                  <div class="spinner-border spinner-border-sm text-warning"></div>
-                    <span class="text-danger">&nbsp;&nbsp;&nbsp;Loading...</span>
-                </div>
+                <div class="spinner-border spinner-border-sm text-warning"></div>
+                  <span class="text-danger">&nbsp;&nbsp;&nbsp;Loading...</span>
+              </div>
+
               <form [formGroup]="form" (ngSubmit)="submit(form.value)">
                 <div class="container-fluid">
                   <div class="form-group row">
@@ -73,13 +72,70 @@
                   </div>
 
                   <div class="form-group row">
-                  <div class="col-sm-2">
-                      <button type="submit" class="btn btn-primary btn-sm">Export</button>
+                  <div class="col-sm-12 col-md-6">
+                      <button type="submit" name="export" class="btn btn-primary btn-sm">Export</button>
+                      <button type="submit" name="search" class="btn btn-primary btn-sm">Search</button>
                   </div>
                 </div>
               </div>
               </form>
-          </div>
-      </div>
+            </div>
+          </app-card>
+
+          <app-card [title]="'RTGS Inward List'" [classHeader]="true" [blockClass]="'table-border-style'">
+                <div class="table-responsive" *ngIf="ccsInwardList?.length">
+                  <table class="table table table-hover">
+                    <thead>
+                      <tr> 
+                         <th scope="col">#</th> 
+                        <th scope="col">Date</th>
+                        <th scope="col">CPN</th>
+                        <th scope="col">Contract No</th>
+                        <th scope="col">Drawee Bank</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Beneficiary Acc</th>
+                        <th scope="col">Beneficiary Name</th>
+                        <th scope="col">Remittee Acc</th>
+                        <th scope="col">Remittee Name</th>
+                        <th scope="col">Fee Amt</th>
+                        <th scope="col">Commission</th>
+                        <th scope="col">Cash Amt</th>
+                        <th scope="col">Transfer Amt</th>
+                        <th scope="col">Total Amt</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Remark</th>
+                      </tr>
+                    </thead>
+
+                    <tbody> 
+                      <tr class="table-active" *ngFor="let item of ccsInwardList | slice:0; let i = index"> 
+                        <td scope="col">{{startCount + (i + 1) }}</td>
+                        <td scope="col">{{item.date | date: "MM/dd/yyyy hh:mm:ss"}}</td>
+                        <td scope="col">{{item.cpn}}</td>
+                        <td scope="col">{{item.contract_no}}</td>
+                        <td scope="col">{{item.drawee_bank}}</td>
+                        <td scope="col">{{item.type}}</td>
+                        <td scope="col">{{item.benificiary_acc}}</td>
+                        <td scope="col">{{item.benificiary_name}}</td>
+                        <td scope="col">{{item.remittee_acc}}</td>
+                        <td scope="col">{{item.remittee_name}}</td>
+                        <td scope="col">{{item.fee_amt}}</td>
+                        <td scope="col">{{item.commission_amt}}</td>
+                        <td scope="col">{{item.cash_amt}}</td>
+                        <td scope="col">{{item.transfer_amt}}</td>
+                        <td scope="col">{{item.total_amt}}</td>
+                        <td scope="col">{{item.status}}</td>
+                        <td scope="col">{{item.remark}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+          </app-card>
   </div>
-</div>
+</div>  
+
+
+
+
+
+

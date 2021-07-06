@@ -8,9 +8,9 @@ const routes: Routes = [
       component: CcsinwardComponent,
       canActivate: [AuthGuard],
       data: {
-        breadcrumb: 'CCS Inward',
+        breadcrumb: 'RTGS Inward',
         icon: 'icofont icofont-file-document bg-c-pink',
-        breadcrumb_caption: 'CCS Inward Report',
+        breadcrumb_caption: 'RTGS Inward Report',
         status: true
       }
     }
