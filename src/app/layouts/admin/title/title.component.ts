@@ -23,7 +23,7 @@ export class TitleComponent implements OnInit {
             }
           });
         } while (currentRoute);
-        this.titleService.setTitle( title + ' | Mash Able Angular 5+');
+        this.titleService.setTitle( title + ' | MAB');
       });
   }
 
