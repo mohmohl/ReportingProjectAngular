@@ -1,52 +1,63 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DateAdapter} from '@angular/material/core';
-
-import { map } from 'rxjs/operators';
-
 import { CCS_REPORT } from 'src/models/CCS_REPORT';
+import { CCSReportService } from '../../../../services/CCSReportService';
+import { map } from 'rxjs/operators';
 import { EBA_BANK } from 'src/models/EBA_BANK';
-import { CCS_TRAN } from 'src/models/CCS_TRAN';
-import { CCS_Outward } from 'src/models/CCS_Outward';
-import { CCS_STATUS } from 'src/models/CCS_STATUS';
+import { ACH_TRAN } from 'src/models/ACH_TRAN';
+import { ACH_Outward } from 'src/models/ACH_Outward';
+import { ACH_STATUS } from 'src/models/ACH_STATUS';
 import { HostListener } from "@angular/core";
 import { Router } from '@angular/router';
 import { ResponseEntity } from 'src/models/ResponseEntity';
+import { DatePipe } from '@angular/common';
 
-import { CCSReportService } from '../../../../services/CCSReportService';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
 
 @Component({
-  selector: 'app-ccsoutward',
-  templateUrl: './ccsoutward.component.html',
-  styleUrls: ['./ccsoutward.component.css'],
+  selector: 'app-achoutward',
+  templateUrl: './achoutward.component.html',
+  styleUrls: ['./achoutward.component.css'],
+  providers: [DatePipe]
 })
-export class CcsoutwardComponent implements OnInit {
+export class AchoutwardComponent implements OnInit {
 
-  //deviceSmall=768;//in pixel
-  //refer: https://www.angularjswiki.com/angular/how-to-add-a-class-based-on-condition-in-angular/
   deviceSmall = 458;
   scrHeight: Number;
   scrWidth: Number;
+
 
   form = null;
   error = '';
   loading = false;
   count: number = 1;
   bankList: EBA_BANK[] = [];
-  ccsTranList: CCS_TRAN[] = [];
-  ccsStatusList: CCS_STATUS[] = [];
-  ccsOutwardList: CCS_Outward[] = [];
+  achTranList: ACH_TRAN[] = [];
+  achStatusList: ACH_STATUS[] = [];
+  achOutwardList: ACH_Outward[] = [];
 
   public startCount: number = 0;
 
-  searchData: CCS_REPORT = null;
+  searchData: CCS_REPORT = null
 
   constructor(private service: CCSReportService, private router: Router, private dateAdapter: DateAdapter<Date>) {
-    
+
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
-    
+
     //prepare combo
-    this.ccsTranList = [
+    this.achTranList = [
       { tran_code: "ALL", tran_name: "ALL" },
       // {tran_code:"CCT010",tran_name:"Customer Credit Transfer(Priority)"},
       // {tran_code:"CCT011",tran_name:"Customer Credit Transfer(LSF)"},
@@ -55,7 +66,7 @@ export class CcsoutwardComponent implements OnInit {
     ];
 
     //prepare combo
-    this.ccsStatusList = [
+    this.achStatusList = [
       { status_id: "ALL", status_name: "ALL" },
       { status_id: "CBMRE", status_name: "Failed" },
       // {status_id:"N",status_name:"N - New"},
@@ -129,14 +140,14 @@ export class CcsoutwardComponent implements OnInit {
       console.log("-----Submit Export-----");
 
       if (formdata.exportOption == 'pdf') {
-        this.service.exportCCSOutwardPdf(formdata).pipe(
+        this.service.exportACHOutwardPdf(formdata).pipe(
           map((data: any) => {
             let blob = new Blob([data], {
               type: 'application/pdf'
             });
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = 'RTGS_Outward.pdf';
+            link.download = 'ACH_Outward.pdf';
             link.target = '_blank';
             link.click();
             window.URL.revokeObjectURL(link.href);
@@ -153,7 +164,7 @@ export class CcsoutwardComponent implements OnInit {
         console.log("excel")
         this.error = '';
         this.loading = true;
-        this.service.exportCCSOutwardExcel(formdata)
+        this.service.exportACHOutwardExcel(formdata)
           .pipe(
             map((data: any) => {
               let blob = new Blob([data], {
@@ -161,7 +172,7 @@ export class CcsoutwardComponent implements OnInit {
               });
               var link = document.createElement('a');
               link.href = window.URL.createObjectURL(blob);
-              link.download = "RTGS_Outward.xlsx";
+              link.download = "ACH_Outward.xlsx";
               link.click();
               console.log("Finish >>>")
             }))
@@ -177,9 +188,9 @@ export class CcsoutwardComponent implements OnInit {
       console.log("-----Submit Search-----");
       this.searchData = formdata;
       //call service
-      this.service.getCCSOutwardWeb(formdata).subscribe((res: ResponseEntity) => {
+      this.service.getACHOutwardWeb(formdata).subscribe((res: ResponseEntity) => {
         this.loading = false;
-        this.ccsOutwardList = res.ccsoutwards;
+        this.achOutwardList = res.achoutwards;
       }, (error) => {
         this.loading = false;
         this.error = "(Internal Server Error)";
@@ -187,8 +198,7 @@ export class CcsoutwardComponent implements OnInit {
       });
     }
 
-
-  }//end of submit
+  }
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
@@ -200,7 +210,7 @@ export class CcsoutwardComponent implements OnInit {
     this.searchData = formdata;
     //call service
     this.service.getACHOutwardWeb(formdata).subscribe((res: ResponseEntity) => {
-      this.ccsOutwardList = res.ccsoutwards;
+      this.achOutwardList = res.achoutwards;
     }, (error) => {
       this.loading = false;
       this.error = "(Internal Server Error)";
@@ -209,5 +219,5 @@ export class CcsoutwardComponent implements OnInit {
 
   }
 
-}
 
+}
