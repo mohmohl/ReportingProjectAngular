@@ -1,13 +1,13 @@
-  <div class="row">
+<div class="row">
     <div class="col-sm-12">
-            <app-card [title]="'RTGS Outward Search'" [classHeader]="true" [blockClass]="'table-border-style'">
+            <app-card [title]="'ACH Inward Search'" [classHeader]="true" [blockClass]="'table-border-style'">
               <div class="card-body">
-
+  
                 <div *ngIf="loading" class="d-flex justify-content-center">
                   <div class="spinner-border spinner-border-sm text-warning"></div>
                     <span class="text-danger">&nbsp;&nbsp;&nbsp;Loading...</span>
                 </div>
-
+  
                 <form [formGroup]="form" (ngSubmit)="submit(form.value)">
                   <div class="container-fluid">
                     <div class="form-group row">
@@ -34,7 +34,7 @@
                       <label class="col-sm-12 col-md-2  col-form-label">Transition Name</label>
                       <div>
                       <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="ccsTranCode" class="form-control" >
-                        <option value="{{item.tran_code}}" *ngFor='let item of ccsTranList'>{{item.tran_name}}</option>
+                        <option value="{{item.tran_code}}" *ngFor='let item of achTranList'>{{item.tran_name}}</option>
                       </select>
                       <div class="col-sm-0 col-md-7"></div>
                       </div>
@@ -54,7 +54,7 @@
                       <label class="col-sm-12 col-md-2  col-form-label">Transition Status</label>
                       <div>
                       <select  [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="statusCode" class="form-control" >
-                        <option value="{{item.status_id}}" *ngFor='let item of ccsStatusList'>{{item.status_name}}</option>
+                        <option value="{{item.status_id}}" *ngFor='let item of achStatusList'>{{item.status_name}}</option>
                       </select>
                       <div class="col-sm-0 col-md-7"></div>
                       </div>
@@ -81,39 +81,51 @@
                 </form>
               </div>
             </app-card>
-
-            <app-card [title]="'RTGS Outward List'" [classHeader]="true" [blockClass]="'table-border-style'">
-                  <div class="table-responsive" *ngIf="ccsOutwardList?.length">
+  
+            <app-card [title]="'RTGS Inward List'" [classHeader]="true" [blockClass]="'table-border-style'">
+                  <div class="table-responsive" *ngIf="achInwardList?.length">
                     <table class="table table table-hover">
                       <thead>
                         <tr> 
-                           <th scope="col">#</th>
+                           <th scope="col">#</th> 
                           <th scope="col">Date</th>
                           <th scope="col">CPN</th>
                           <th scope="col">Contract No</th>
-                          <th scope="col">Business</th>
                           <th scope="col">Drawee Bank</th>
                           <th scope="col">Type</th>
-                          <th scope="col">Core Banking Status</th>
-                          <th scope="col">CCS Status</th>
-                          <th scope="col">CBM Status</th>
-                          <th scope="col">Other Bank Status</th>
+                          <th scope="col">Beneficiary Acc</th>
+                          <th scope="col">Beneficiary Name</th>
+                          <th scope="col">Remittee Acc</th>
+                          <th scope="col">Remittee Name</th>
+                          <th scope="col">Fee Amt</th>
+                          <th scope="col">Commission</th>
+                          <th scope="col">Cash Amt</th>
+                          <th scope="col">Transfer Amt</th>
+                          <th scope="col">Total Amt</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Remark</th>
                         </tr>
                       </thead>
-
+  
                       <tbody> 
-                        <tr class="table-active" *ngFor="let item of ccsOutwardList  | slice:0; let i = index"> 
+                        <tr class="table-active" *ngFor="let item of achInwardList | slice:0; let i = index"> 
                           <td scope="col">{{startCount + (i + 1) }}</td>
                           <td scope="col">{{item.date | date: "dd/MM/yyyy hh:mm:ss"}}</td>
                           <td scope="col">{{item.cpn}}</td>
                           <td scope="col">{{item.contract_no}}</td>
-                          <td scope="col">{{item.business_id}}</td>
                           <td scope="col">{{item.drawee_bank}}</td>
                           <td scope="col">{{item.type}}</td>
-                          <td scope="col">{{item.core_banking_status}}</td>
-                          <td scope="col">{{item.ccs_status}}</td>
-                          <td scope="col">{{item.cbm_status}}</td>
-                          <td scope="col">{{item.other_bank_status}}</td>
+                          <td scope="col">{{item.benificiary_acc}}</td>
+                          <td scope="col">{{item.benificiary_name}}</td>
+                          <td scope="col">{{item.remittee_acc}}</td>
+                          <td scope="col">{{item.remittee_name}}</td>
+                          <td scope="col">{{item.fee_amt}}</td>
+                          <td scope="col">{{item.commission_amt}}</td>
+                          <td scope="col">{{item.cash_amt}}</td>
+                          <td scope="col">{{item.transfer_amt}}</td>
+                          <td scope="col">{{item.total_amt}}</td>
+                          <td scope="col">{{item.status}}</td>
+                          <td scope="col">{{item.remark}}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -121,9 +133,10 @@
             </app-card>
     </div>
   </div>  
-
-
-
-
-
+  
+  
+  
+  
+  
+  
   
