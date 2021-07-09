@@ -9,9 +9,9 @@ const routes: Routes = [
       component: MpuistComponent,
       canActivate: [AuthGuard],
       data: {
-        breadcrumb: 'MPU IST',
+        breadcrumb: 'MPU SETTLEMENT',
         icon: 'icofont icofont-file-document bg-c-pink',
-        breadcrumb_caption: 'MPU IST',
+        breadcrumb_caption: 'MPU SETTLEMENT',
         status: true
       }
     }

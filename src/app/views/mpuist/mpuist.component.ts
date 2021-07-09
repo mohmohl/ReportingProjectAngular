@@ -26,6 +26,7 @@ export class MpuistComponent implements OnInit {
   showPreview:Boolean=false;
   message:String=null;
   success:Boolean=false;
+  loading = false;
 
   public startCount:number=0;
 
@@ -60,6 +61,7 @@ export class MpuistComponent implements OnInit {
 }
 
   submit(){
+    this.loading = true;
     var buttonName = document.activeElement.getAttribute("Name");
 
     if(buttonName==='validate'){
@@ -72,10 +74,12 @@ export class MpuistComponent implements OnInit {
          this.fileValid=res.valid;
          this.message=res.message;
          this.success=res.valid;
+         this.loading = false;
         },
         (err)=>{
           console.log(err)
           this.fileValid=false;
+          this.loading = false;
         }
       );
     }else if(buttonName==='preview'){
@@ -90,6 +94,7 @@ export class MpuistComponent implements OnInit {
       this.service.previewFile(formData,filetype).subscribe((res:MPUDataValidatePreviewResponse)=>{
          this.fileValid=res.valid;
          this.success=res.valid;
+         this.loading = false;
          if(res.valid){
            switch(filetype){
              case 'INC_01C':{
@@ -139,6 +144,7 @@ export class MpuistComponent implements OnInit {
         (err)=>{
           this.fileValid=false;
           console.log(err);
+          this.loading = false;
         }
       );
     }else if(buttonName==='save'){
@@ -154,10 +160,12 @@ export class MpuistComponent implements OnInit {
           this.success=false;
         }
         this.fileValid=false;
+        this.loading = false;
       },
       (err)=>{
         console.log(err);
         this.fileValid=false;
+        this.loading = false;
       });
     }
     
