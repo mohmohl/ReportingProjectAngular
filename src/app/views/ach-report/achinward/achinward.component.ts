@@ -6,24 +6,21 @@ import { map } from 'rxjs/operators';
 
 import { CCS_REPORT } from 'src/models/CCS_REPORT';
 import { EBA_BANK } from 'src/models/EBA_BANK';
-import { CCS_TRAN } from 'src/models/CCS_TRAN';
-import { CCS_Outward } from 'src/models/CCS_Outward';
-import { CCS_STATUS } from 'src/models/CCS_STATUS';
+import { ACH_TRAN } from 'src/models/ACH_TRAN';
+import { ACH_STATUS } from 'src/models/ACH_STATUS';
 import { HostListener } from "@angular/core";
-import { Router } from '@angular/router';
+import { ACH_Inward } from 'src/models/ACH_Inward';
 import { ResponseEntity } from 'src/models/ResponseEntity';
 
 import { CCSReportService } from '../../../../services/CCSReportService';
 
 @Component({
-  selector: 'app-ccsoutward',
-  templateUrl: './ccsoutward.component.html',
-  styleUrls: ['./ccsoutward.component.css'],
+  selector: 'app-achinward',
+  templateUrl: './achinward.component.html',
+  styleUrls: ['./achinward.component.css'],
 })
-export class CcsoutwardComponent implements OnInit {
+export class AchinwardComponent implements OnInit {
 
-  //deviceSmall=768;//in pixel
-  //refer: https://www.angularjswiki.com/angular/how-to-add-a-class-based-on-condition-in-angular/
   deviceSmall = 458;
   scrHeight: Number;
   scrWidth: Number;
@@ -31,48 +28,47 @@ export class CcsoutwardComponent implements OnInit {
   form = null;
   error = '';
   loading = false;
-  count: number = 1;
   bankList: EBA_BANK[] = [];
-  ccsTranList: CCS_TRAN[] = [];
-  ccsStatusList: CCS_STATUS[] = [];
-  ccsOutwardList: CCS_Outward[] = [];
+  achTranList: ACH_TRAN[] = [];
+  achStatusList: ACH_STATUS[] = [];
+  achInwardList: ACH_Inward[] = [];
 
   public startCount: number = 0;
 
   searchData: CCS_REPORT = null;
 
-  constructor(private service: CCSReportService, private router: Router, private dateAdapter: DateAdapter<Date>) {
-    
+  constructor(private service: CCSReportService, private dateAdapter: DateAdapter<Date>) {
+
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
-    
+    //trigger screen width
+    this.getScreenSize();
+
     //prepare combo
-    this.ccsTranList = [
+    this.achTranList = [
       { tran_code: "ALL", tran_name: "ALL" },
-      // {tran_code:"CCT010",tran_name:"Customer Credit Transfer(Priority)"},
-      // {tran_code:"CCT011",tran_name:"Customer Credit Transfer(LSF)"},
-      // {tran_code:"CCT012",tran_name:"Customer Credit Transfer(ACH Bulk Payment)"},
-      // {tran_code:"CCT013",tran_name:"Customer Credit Transfer(ACH Fast Payment)"}
+      //{tran_code:"CCT010",tran_name:"Customer Credit Transfer(Priority)"},
+      //{tran_code:"CCT011",tran_name:"Customer Credit Transfer(LSF)"},
+      //{tran_code:"CCT012",tran_name:"Customer Credit Transfer(ACH Bulk Payment)"},
+      //{tran_code:"CCT013",tran_name:"Customer Credit Transfer(ACH Fast Payment)"}
     ];
 
     //prepare combo
-    this.ccsStatusList = [
+    this.achStatusList = [
       { status_id: "ALL", status_name: "ALL" },
-      { status_id: "CBMRE", status_name: "Failed" },
-      // {status_id:"N",status_name:"N - New"},
-      // {status_id:"CBMRE",status_name:"CBM - Rejected Messages"},
-      // {status_id:"F",status_name:"F - Transaction input fail"},
-      // {status_id:"FRC",status_name:"Failed Reverse at CBS"},
-      // {status_id:"REVERSAL",status_name:"Reversal sent to CBM"},
-      // {status_id:"SCMBN",status_name:"SCMBN - Sent to CBMNet"},
-      // {status_id:"SRC",status_name:"Reverse at CBS"}
+      //{status_id:"A",status_name:"A - Approved"},
+      { status_id: "SC", status_name: "Core Banking Success" },
+      //{status_id:"CBMRE",status_name:"CBM - Rejected Messages"},
+      { status_id: "F", status_name: "Inward Failed" },
+      { status_id: "FRC", status_name: "Outward Reversal Failed" },
+      //{status_id:"REVERSAL",status_name:"Reversal sent to CBM"},
+      //{status_id:"SCMBN",status_name:"SCMBN - Sent to CBMNet"},
+      { status_id: "SRC", status_name: "Outward Reversal Success" },
+      { status_id: "FCBS", status_name: "Inward Failed & Reversal" }
+
     ];
   }
 
   ngOnInit() {
-    debugger;
-    //trigger screen width
-    this.getScreenSize();
-    let todaydateStr = `${new Date().getMonth() + 1}-${new Date().getDate()}-${new Date().getFullYear()}`;
 
     //Create Form
     this.form = new FormGroup({
@@ -93,7 +89,7 @@ export class CcsoutwardComponent implements OnInit {
         status: "-",
         regcbmcode: "-"
       };
-
+      debugger;
       if (res.length == 0) {
         this.bankList.push(dump);
       } else {
@@ -113,7 +109,7 @@ export class CcsoutwardComponent implements OnInit {
       };
       this.bankList[0] = dump;
       console.log(error);
-    });//end of ccs bank api fetching
+    });//end of ach bank api fetching
   }
 
   submit(formdata: CCS_REPORT) {
@@ -125,18 +121,19 @@ export class CcsoutwardComponent implements OnInit {
     }
 
     var buttonName = document.activeElement.getAttribute("Name");
-    if (buttonName === 'export') {
-      console.log("-----Submit Export-----");
 
+    if (buttonName === 'export') {
+      this.loading = true;
       if (formdata.exportOption == 'pdf') {
-        this.service.exportCCSOutwardPdf(formdata).pipe(
+        this.service.exportACHInwardPdf(formdata).pipe(
           map((data: any) => {
             let blob = new Blob([data], {
               type: 'application/pdf'
             });
             var link = document.createElement('a');
+            debugger;
             link.href = window.URL.createObjectURL(blob);
-            link.download = 'RTGS_Outward.pdf';
+            link.download = 'RTGS_Inward.pdf';
             link.target = '_blank';
             link.click();
             window.URL.revokeObjectURL(link.href);
@@ -153,7 +150,7 @@ export class CcsoutwardComponent implements OnInit {
         console.log("excel")
         this.error = '';
         this.loading = true;
-        this.service.exportCCSOutwardExcel(formdata)
+        this.service.exportACHInwardExcel(formdata)
           .pipe(
             map((data: any) => {
               let blob = new Blob([data], {
@@ -161,7 +158,7 @@ export class CcsoutwardComponent implements OnInit {
               });
               var link = document.createElement('a');
               link.href = window.URL.createObjectURL(blob);
-              link.download = "RTGS_Outward.xlsx";
+              link.download = "RTGS_Inward.xlsx";
               link.click();
               console.log("Finish >>>")
             }))
@@ -176,38 +173,22 @@ export class CcsoutwardComponent implements OnInit {
     } else if (buttonName === 'search') {
       console.log("-----Submit Search-----");
       this.searchData = formdata;
+      console.log ("this.searchData" +JSON.stringify(this.searchData));
       //call service
-      this.service.getCCSOutwardWeb(formdata).subscribe((res: ResponseEntity) => {
+      this.service.getACHInwardWeb(formdata).subscribe((res: ResponseEntity) => {
         this.loading = false;
-        this.ccsOutwardList = res.ccsoutwards;
+        this.achInwardList = res.achinwards;
       }, (error) => {
         this.loading = false;
         this.error = "(Internal Server Error)";
         console.log(error);
       });
     }
-
-
-  }//end of submit
+  }
 
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
     this.scrHeight = window.innerHeight;
     this.scrWidth = window.innerWidth;
   }
-
-  searchBtnOnClick(formdata: CCS_REPORT) {
-    this.searchData = formdata;
-    //call service
-    this.service.getACHOutwardWeb(formdata).subscribe((res: ResponseEntity) => {
-      this.ccsOutwardList = res.ccsoutwards;
-    }, (error) => {
-      this.loading = false;
-      this.error = "(Internal Server Error)";
-      console.log(error);
-    });
-
-  }
-
 }
-

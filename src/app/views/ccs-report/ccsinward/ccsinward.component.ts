@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CCS_REPORT } from 'src/models/CCS_REPORT';
-import { CCSReportService } from '../../../../services/CCSReportService';
+import { DateAdapter} from '@angular/material/core';
+
 import { map } from 'rxjs/operators';
+
+import { CCS_REPORT } from 'src/models/CCS_REPORT';
 import { EBA_BANK } from 'src/models/EBA_BANK';
 import { CCS_TRAN } from 'src/models/CCS_TRAN';
 import { CCS_STATUS } from 'src/models/CCS_STATUS';
 import { HostListener } from "@angular/core";
 import { CCS_Inward } from 'src/models/CCS_Inward';
-import { DatePipe } from '@angular/common';
 import { ResponseEntity } from 'src/models/ResponseEntity';
+
+import { CCSReportService } from '../../../../services/CCSReportService';
 
 @Component({
   selector: 'app-ccsinward',
@@ -36,7 +39,10 @@ export class CcsinwardComponent implements OnInit {
 
   searchData: CCS_REPORT=null;
 
-  constructor(private service: CCSReportService) {
+  constructor(private service: CCSReportService, private dateAdapter: DateAdapter<Date>) {
+
+    this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
+    
     //trigger screen width
     this.getScreenSize();
 
@@ -179,8 +185,6 @@ export class CcsinwardComponent implements OnInit {
           console.log(error);
         });
     }
-
-    
   }
 
   @HostListener('window:resize', ['$event'])

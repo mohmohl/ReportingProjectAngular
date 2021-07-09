@@ -17,12 +17,12 @@ import { ContractInfo } from 'src/models/contractInfo';
 export class LoanContractComponent implements OnInit {
 
   loading = false;
+  disabled = false;
   contract_no: string;
   keyword: string;
   error = '';
   blob: any;
-  disabled = false;
-
+  
   form = new FormGroup({
     contractno: new FormControl(''),
     keyword: new FormControl('')

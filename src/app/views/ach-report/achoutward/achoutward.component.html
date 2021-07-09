@@ -1,6 +1,6 @@
-  <div class="row">
+<div class="row">
     <div class="col-sm-12">
-            <app-card [title]="'RTGS Outward Search'" [classHeader]="true" [blockClass]="'table-border-style'">
+            <app-card [title]="'ACH Outward Search'" [classHeader]="true" [blockClass]="'table-border-style'">
               <div class="card-body">
 
                 <div *ngIf="loading" class="d-flex justify-content-center">
@@ -34,7 +34,7 @@
                       <label class="col-sm-12 col-md-2  col-form-label">Transition Name</label>
                       <div>
                       <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="ccsTranCode" class="form-control" >
-                        <option value="{{item.tran_code}}" *ngFor='let item of ccsTranList'>{{item.tran_name}}</option>
+                        <option value="{{item.tran_code}}" *ngFor='let item of achTranList'>{{item.tran_name}}</option>
                       </select>
                       <div class="col-sm-0 col-md-7"></div>
                       </div>
@@ -54,7 +54,7 @@
                       <label class="col-sm-12 col-md-2  col-form-label">Transition Status</label>
                       <div>
                       <select  [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="statusCode" class="form-control" >
-                        <option value="{{item.status_id}}" *ngFor='let item of ccsStatusList'>{{item.status_name}}</option>
+                        <option value="{{item.status_id}}" *ngFor='let item of achStatusList'>{{item.status_name}}</option>
                       </select>
                       <div class="col-sm-0 col-md-7"></div>
                       </div>
@@ -82,8 +82,8 @@
               </div>
             </app-card>
 
-            <app-card [title]="'RTGS Outward List'" [classHeader]="true" [blockClass]="'table-border-style'">
-                  <div class="table-responsive" *ngIf="ccsOutwardList?.length">
+            <app-card [title]="'ACH Outward List'" [classHeader]="true" [blockClass]="'table-border-style'">
+                  <div class="table-responsive" *ngIf="achOutwardList?.length">
                     <table class="table table table-hover">
                       <thead>
                         <tr> 
@@ -95,14 +95,14 @@
                           <th scope="col">Drawee Bank</th>
                           <th scope="col">Type</th>
                           <th scope="col">Core Banking Status</th>
-                          <th scope="col">CCS Status</th>
+                          <th scope="col">ACH Status</th>
                           <th scope="col">CBM Status</th>
                           <th scope="col">Other Bank Status</th>
                         </tr>
                       </thead>
 
                       <tbody> 
-                        <tr class="table-active" *ngFor="let item of ccsOutwardList  | slice:0; let i = index"> 
+                        <tr class="table-active" *ngFor="let item of achOutwardList  | slice:0; let i = index"> 
                           <td scope="col">{{startCount + (i + 1) }}</td>
                           <td scope="col">{{item.date | date: "dd/MM/yyyy hh:mm:ss"}}</td>
                           <td scope="col">{{item.cpn}}</td>
@@ -127,3 +127,4 @@
 
 
   
+

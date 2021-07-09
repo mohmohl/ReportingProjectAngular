@@ -73,6 +73,14 @@ const routes: Routes = [
          loadChildren: () => import('./views/ccs-report/ccsinward/ccs-inward.module').then(m => m.CCSInwardModule),canActivate:[AuthGuard]
       },
       {
+        path: 'achoutward',
+        loadChildren: () => import('./views/ach-report/achoutward/ach-outward.module').then(m => m.ACHOutwardModule)
+      },
+      {
+         path: 'achinward',
+         loadChildren: () => import('./views/ach-report/achinward/ach-inward.module').then(m => m.ACHInwardModule)
+      },
+      {
         path: 'bank-statement',
         loadChildren: () => import('./views/BankStatement/bank-statement.module').then(m => m.BankStatementModule)
       },
