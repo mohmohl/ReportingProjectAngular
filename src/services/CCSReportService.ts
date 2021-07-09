@@ -19,11 +19,9 @@ export class CCSReportService {
   }
 
   public exportCCSOutwardPdf(searchbody: CCS_REPORT) {
-      
     let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
     let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
  
-
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
@@ -36,11 +34,9 @@ export class CCSReportService {
   }
 
   public exportCCSInwardPdf(searchbody: CCS_REPORT) {
-    
     let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
     let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
  
-
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
@@ -54,10 +50,8 @@ export class CCSReportService {
 
 
   public exportCCSOutwardExcel(searchbody: CCS_REPORT) {
-    
     let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
     let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
- 
 
     let requestbody = {
       fromdate: fromDateStr,
@@ -70,12 +64,10 @@ export class CCSReportService {
     return this.http.post<any>(`${api}`, requestbody, { responseType: 'arraybuffer' as 'json' });
   }
 
-  public exportCCSInwardExcel(searchbody: CCS_REPORT) {
-    
+  public exportCCSInwardExcel(searchbody: CCS_REPORT) { 
     let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
     let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
  
-
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
@@ -89,11 +81,9 @@ export class CCSReportService {
 
 
   public getCCSOutwardWebFirstPage(searchbody: CCS_REPORT): Observable<any>{
-  
     let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
     let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
  
-
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
@@ -106,12 +96,9 @@ export class CCSReportService {
   }
 
   public getCCSOutwardWeb(searchbody: CCS_REPORT): Observable<any>{
-
-    debugger;
     let fromDateStr=`${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth()+1}-${searchbody.fromdate.getDate()}`;
     let toDateStr=`${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth()+1}-${searchbody.todate.getDate()}`;
  
-
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,

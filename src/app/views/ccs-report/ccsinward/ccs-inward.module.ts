@@ -5,6 +5,7 @@ import { CCSInwardRoutingModule} from './ccs-inward-routing.module';
 import {CcsinwardComponent } from './ccsinward.component';
 import {SharedModule} from '../../../shared/shared.module';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import { CCSReportService } from 'src/services/CCSReportService';
 
 @NgModule({
   imports: [
@@ -17,6 +18,9 @@ import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angul
   ],
   declarations: [
     CcsinwardComponent
+  ],
+  providers:[
+    CCSReportService
   ]
 })
 export class CCSInwardModule { }

@@ -1,0 +1,391 @@
+<div class="row">
+    <div class="col-sm-12">
+        <app-card [title]="'MPU IST Data Import'" [classHeader]="true" [blockClass]="'table-border-style'">
+            <div class="card-body">
+
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-danger">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+
+                <form [formGroup]="mpuform" (ngSubmit)="submit()" enctype="multipart/form-data;utf-8">
+                    <div class="container-fluid">
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">File Upload</label>
+                            <input type="file" [ngClass]="{'large-combo':scrWidth>deviceSmall}" style="height:45px;" class="col-sm-12 col-md-3" formControlName="uploadfile" (change)="onFileChange($event)" class="form-control" >
+                              <div *ngIf="mpuform.get('uploadfile').invalid && mpuform.get('uploadfile').touched">
+                                <div *ngIf="mpuform.get('uploadfile').errors.required" style="color:red">&nbsp;&nbsp;Please select</div>
+                              </div>
+                            
+                            <div class="col-sm-0 col-md-7"></div>
+                            
+                        </div>
+                        
+
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label">File Type</label>
+                            <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="fileType" (change)="onFileTypeChange($event)" class="form-control" >
+                                <option value="{{item}}" *ngFor='let item of fileTypeList'>{{item}}</option>
+                            </select>
+                            <div *ngIf="mpuform.get('fileType').invalid && mpuform.get('fileType').touched">
+                                <div *ngIf="mpuform.get('fileType').errors.selectSomething" style="color:red">&nbsp;&nbsp;Please select valid file type</div>
+                            </div>
+                            <div class="col-sm-0 col-md-7"></div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-12 col-md-6">
+                                <button [disabled]="mpuform.get('fileType').invalid || mpuform.get('uploadfile').invalid" type="submit" name="validate" class="btn btn-primary btn-sm" style='margin-top:5px;'>Validate</button>
+                                <button [disabled]="!fileValid" type="submit" name="preview" class="btn btn-primary btn-sm" style='margin-top:5px;'>Preview</button>
+                                <button [disabled]="!fileValid" type="submit" name="save" class="btn btn-primary btn-sm" style='margin-top:5px;'>Submit</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                          <div class="col-sm-12 col-md-6">
+                            <div *ngIf='message!=null' [ngClass]="{'success-msg':success==true,'error-msg':success==false}">
+                              {{message}}
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </app-card>
+
+        <app-card *ngIf="showPreview" [title]="previewTitle" [classHeader]="true" [blockClass]="'table-border-style'">
+            <p>&nbsp;&nbsp;File Name: {{previewFileName}}</p>
+            <div class="table-responsive" *ngIf="previewData.inc_01c?.length && fileValid">
+              <table class="table table table-hover">
+                <thead>
+                  <tr> 
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">PAN</th>
+                    <th scope="col">Authorization No</th>
+                    <th scope="col">System Trace No</th>
+                    <th scope="col">Retrieval Ref No</th>
+                    <th scope="col">Merchant Category Code</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Issuing Bank</th>
+                    <th scope="col">Service Fee Receivable</th>
+                    <th scope="col">Service Fee Payable</th>
+                    <th scope="col">Transition Amount</th>
+                  </tr>
+                </thead>
+                <tbody> 
+                  <tr class="table-active" *ngFor="let item of previewData.inc_01c | slice:0; let i = index"> 
+                    <td scope="col">{{startCount + (i + 1) }}</td>
+                    <td scope="col">{{item.date}}</td>
+                    <td scope="col">{{item.pan}}</td>
+                    <td scope="col">{{item.authorization}}</td>
+                    <td scope="col">{{item.systemTraceNo}}</td>
+                    <td scope="col">{{item.retrievalRefNo}}</td>
+                    <td scope="col">{{item.mcc}}</td>
+                    <td scope="col">{{item.location}}</td>
+                    <td scope="col">{{item.issuingBank}}</td>
+                    <td scope="col">{{item.serviceFeeReceivable}}</td>
+                    <td scope="col">{{item.serviceFeePayable}}</td>
+                    <td scope="col">{{item.tranAmount}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-responsive" *ngIf="previewData.inc_01r?.length && fileValid">
+                <table class="table table table-hover">
+                  <thead>
+                    <tr> 
+                      <th scope="col">#</th>
+                      <th scope="col">Date</th>
+                      <th scope="col">Reject Code</th>
+                      <th scope="col">Card No</th>
+                      <th scope="col">Currency Code</th>
+                      <th scope="col">Auth Code </th>
+                      <th scope="col">Transition Date</th>
+                      <th scope="col">Retrieval Ref No</th>
+                      <th scope="col">Merchant Category Code</th>
+                      <th scope="col">TID</th>
+                      <th scope="col">Merchant Name</th>
+                      <th scope="col">Transition Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody> 
+                    <tr class="table-active" *ngFor="let item of previewData.inc_01r | slice:0; let i = index"> 
+                      <td scope="col">{{startCount + (i + 1) }}</td>
+                      <td scope="col">{{item.date}}</td>
+                      <td scope="col">{{item.rejectCode}}</td>
+                      <td scope="col">{{item.cardNo}}</td>
+                      <td scope="col">{{item.currencyCode}}</td>
+                      <td scope="col">{{item.authCode}}</td>
+                      <td scope="col">{{item.traxDate}}</td>
+                      <td scope="col">{{item.reterivalRefNo}}</td>
+                      <td scope="col">{{item.merchantCategoryCode}}</td>
+                      <td scope="col">{{item.tid}}</td>
+                      <td scope="col">{{item.merchantName}}</td>
+                      <td scope="col">{{item.traxAmount}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="table-responsive" *ngIf="previewData.inc_01s?.length && fileValid">
+                <table class="table table table-hover">
+                  <thead>
+                    <tr> 
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Institution Code</th>
+                        <th scope="col">Transition Count</th>
+                        <th scope="col">Sign</th>
+                        <th scope="col">Acquire Amount</th>
+                        <th scope="col">Sign</th>
+                        <th scope="col">Acquire Fee</th>
+                        <th scope="col">Sign</th>
+                        <th scope="col">Net Amount</th>
+                        <th scope="col">Sign</th>
+                        <th scope="col">Net Fee</th>
+                        <th scope="col">Settlement Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody> 
+                    <tr class="table-active" *ngFor="let item of previewData.inc_01s | slice:0; let i = index"> 
+                      <td scope="col">{{startCount + (i + 1) }}</td>
+                      <td scope="col">{{item.date}}</td>
+                      <td scope="col">{{item.institutionCode}}</td>
+                      <td scope="col">{{item.traxCount}}</td>
+                      <td scope="col">{{item.sign1}}</td>
+                      <td scope="col">{{item.acquirerAmt}}</td>
+                      <td scope="col">{{item.sign2}}</td>
+                      <td scope="col">{{item.acquirerFee}}</td>
+                      <td scope="col">{{item.sign3}}</td>
+                      <td scope="col">{{item.netAmount}}</td>
+                      <td scope="col">{{item.sign4}}</td>
+                      <td scope="col">{{item.netFee}}</td>
+                      <td scope="col">{{item.settlementAmount}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="table-responsive" *ngIf="previewData.inc_11c?.length && fileValid">
+                <table class="table table table-hover">
+                  <thead>
+                    <tr> 
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Card No</th>
+                        <th scope="col">Currency Code</th>
+                        <th scope="col">Auth Code</th>
+                        <th scope="col">Transition Date</th>
+                        <th scope="col">Retrieval Ref No</th>
+                        <th scope="col">Institution Code</th>
+                        <th scope="col">TID</th>
+                        <th scope="col">Merchant Name</th>
+                        <th scope="col">Service Fee</th>
+                        <th scope="col">Transition Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody> 
+                    <tr class="table-active" *ngFor="let item of previewData.inc_11c | slice:0; let i = index"> 
+                      <td scope="col">{{startCount + (i + 1) }}</td>
+                      <td scope="col">{{item.reportDate}}</td>
+                      <td scope="col">{{item.cardNumber}}</td>
+                      <td scope="col">{{item.currencyCode}}</td>
+                      <td scope="col">{{item.authCode}}</td>
+                      <td scope="col">{{item.traxDate}}</td>
+                      <td scope="col">{{item.reterivalRefNo}}</td>
+                      <td scope="col">{{item.institutionCode}}</td>
+                      <td scope="col">{{item.tid}}</td>
+                      <td scope="col">{{item.merchantName}}</td>
+                      <td scope="col">{{item.serviceFee}}</td>
+                      <td scope="col">{{item.traxAmount}}</td> 
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="table-responsive" *ngIf="previewData.inc_11s?.length && fileValid">
+                <table class="table table table-hover">
+                  <thead>
+                    <tr> 
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Currency Code</th>
+                        <th scope="col">Transition Count</th>
+                        <th scope="col">Sign</th>
+                        <th scope="col">Issuer Amount</th>
+                        <th scope="col">Sign</th>
+                        <th scope="col">Issuer Fee</th>
+                        <th scope="col">Settlement Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody> 
+                    <tr class="table-active" *ngFor="let item of previewData.inc_11s | slice:0; let i = index"> 
+                      <td scope="col">{{startCount + (i + 1) }}</td>
+                      <td scope="col">{{item.date}}</td>
+                      <td scope="col">{{item.currencyCode}}</td>
+                      <td scope="col">{{item.traxCount}}</td>
+                      <td scope="col">{{item.sign1}}</td>
+                      <td scope="col">{{item.issuerAmt}}</td>
+                      <td scope="col">{{item.sign2}}</td>
+                      <td scope="col">{{item.issuerFee}}</td>
+                      <td scope="col">{{item.settlementAmount}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="table-responsive" *ngIf="previewData.ind_01acom?.length && fileValid">
+                <table class="table table table-hover">
+                  <thead>
+                    <tr> 
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Card No</th>
+                        <th scope="col">Issuer Bank</th>
+                        <th scope="col">Auth No</th>
+                        <th scope="col">Retrieval Ref No</th>
+                        <th scope="col">Transition Time</th>
+                        <th scope="col">Terminal Type</th>
+                        <th scope="col">Service Fee Receivable</th>
+                        <th scope="col">Settlement Amount</th>
+                        <th scope="col">Transition Amount</th> 
+                    </tr>
+                  </thead>
+                  <tbody> 
+                    <tr class="table-active" *ngFor="let item of previewData.ind_01acom | slice:0; let i = index"> 
+                      <td scope="col">{{startCount + (i + 1) }}</td>
+                      <td scope="col">{{item.reportDate}}</td>
+                      <td scope="col">{{item.cardNumber}}</td>
+                      <td scope="col">{{item.issuerBank}}</td>
+                      <td scope="col">{{item.authNo}}</td>
+                      <td scope="col">{{item.retrievalRefNo}}</td>
+                      <td scope="col">{{item.transactionTime}}</td>
+                      <td scope="col">{{item.terminalType}}</td>
+                      <td scope="col">{{item.serviceFeeReceivable}}</td>
+                      <td scope="col">{{item.settlementAmount}}</td>
+                      <td scope="col">{{item.transactionAmount}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="table-responsive" *ngIf="previewData.ind_01icom?.length && fileValid">
+                <table class="table table table-hover">
+                  <thead>
+                    <tr> 
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Card No</th>
+                        <th scope="col">Beneficiary Bank</th>
+                        <th scope="col">Auth No</th>
+                        <th scope="col">Retrieval Ref No</th>
+                        <th scope="col">Transition Time</th>
+                        <th scope="col">Terminal Type</th>
+                        <th scope="col">System Trace No</th>
+                        <th scope="col">Total Commission</th>
+                        <th scope="col">Transition Amount</th>
+                        <th scope="col">Settlement Amount</th> 
+                    </tr>
+                  </thead>
+                  <tbody> 
+                    <tr class="table-active" *ngFor="let item of previewData.ind_01icom | slice:0; let i = index"> 
+                      <td scope="col">{{startCount + (i + 1) }}</td>
+                      <td scope="col">{{item.reportDate}}</td>
+                      <td scope="col">{{item.cardNumber}}</td>
+                      <td scope="col">{{item.beneficiaryBank}}</td>
+                      <td scope="col">{{item.authNo}}</td>
+                      <td scope="col">{{item.retrievalRefNo}}</td>
+                      <td scope="col">{{item.transactionTime}}</td>
+                      <td scope="col">{{item.terminalType}}</td>
+                      <td scope="col">{{item.systemTraceNo}}</td>
+                      <td scope="col">{{item.totalCommission}}</td>
+                      <td scope="col">{{item.traxAmount}}</td>
+                      <td scope="col">{{item.settlementAmount}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="table-responsive" *ngIf="previewData.ind_01ierr?.length && fileValid">
+                <table class="table table table-hover">
+                  <thead>
+                    <tr> 
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Local Transition Time</th>
+                        <th scope="col">Card No</th>
+                        <th scope="col">Acquire Instruction Code</th>
+                        <th scope="col">Issuer Bank Code</th>
+                        <th scope="col">Authorization No</th>
+                        <th scope="col">Retrieval Ref No</th>
+                        <th scope="col">Transition Amount</th>
+                        <th scope="col">Service Fee Payable</th>
+                    </tr>
+                  </thead>
+                  <tbody> 
+                    <tr class="table-active" *ngFor="let item of previewData.ind_01ierr | slice:0; let i = index"> 
+                      <td scope="col">{{startCount + (i + 1) }}</td>
+                      <td scope="col">{{item.date}}</td>
+                      <td scope="col">{{item.localTrn}}</td>
+                      <td scope="col">{{item.cardNo}}</td>
+                      <td scope="col">{{item.acqInstitutionCode}}</td>
+                      <td scope="col">{{item.issueBankCode}}</td>
+                      <td scope="col">{{item.authorizationNumber}}</td>
+                      <td scope="col">{{item.reterivalRefNo}}</td>
+                      <td scope="col">{{item.transactionAmt}}</td>
+                      <td scope="col">{{item.serviceFeeReceivable}}</td> 
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="table-responsive" *ngIf="previewData.ind_01scom?.length && fileValid">
+                <table class="table table table-hover">
+                  <thead>
+                    <tr> 
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Institution Code</th>
+                        <th scope="col">Sign</th>
+                        <th scope="col">Acquirer Amt</th>
+                        <th scope="col">Sign</th>
+                        <th scope="col">Acquirer Fee</th>
+                        <th scope="col">Sign</th>
+                        <th scope="col">Issuer Amt</th>
+                        <th scope="col">Sign</th>
+                        <th scope="col">Issuer Fee</th> 
+                        <th scope="col">Sign</th>
+                        <th scope="col">Net Amt</th>
+                        <th scope="col">Sign</th>
+                        <th scope="col">Net Fee</th>
+                        <th scope="col">Settlement Amt</th> 
+                    </tr>
+                  </thead>
+                  <tbody> 
+                    <tr class="table-active" *ngFor="let item of previewData.ind_01scom | slice:0; let i = index"> 
+                      <td scope="col">{{startCount + (i + 1) }}</td>
+                      <td scope="col">{{item.date}}</td>
+                      <td scope="col">{{item.institutionCode}}</td>
+                      <td scope="col">{{item.sign1}}</td>
+                      <td scope="col">{{item.acquirerAmt}}</td>
+                      <td scope="col">{{item.sign2}}</td>
+                      <td scope="col">{{item.acquirerFee}}</td>
+                      <td scope="col">{{item.sign3}}</td>
+                      <td scope="col">{{item.issuerAmt}}</td>
+                      <td scope="col">{{item.sign4}}</td> 
+                      <td scope="col">{{item.issuerFee}}</td>
+                      <td scope="col">{{item.sign5}}</td>
+                      <td scope="col">{{item.netAmount}}</td>
+                      <td scope="col">{{item.sign6}}</td>
+                      <td scope="col">{{item.netFee}}</td>
+                      <td scope="col">{{item.settlementAmount}}</td> 
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+      </app-card>
+
+    </div>
+</div>
