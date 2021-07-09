@@ -66,11 +66,11 @@ const routes: Routes = [
       },
       {
         path: 'ccsoutward',
-        loadChildren: () => import('./views/ccs-report/ccsoutward/ccs-outward.module').then(m => m.CCSOutwardModule)
+        loadChildren: () => import('./views/ccs-report/ccsoutward/ccs-outward.module').then(m => m.CCSOutwardModule),canActivate:[AuthGuard]
       },
       {
          path: 'ccsinward',
-         loadChildren: () => import('./views/ccs-report/ccsinward/ccs-inward.module').then(m => m.CCSInwardModule)
+         loadChildren: () => import('./views/ccs-report/ccsinward/ccs-inward.module').then(m => m.CCSInwardModule),canActivate:[AuthGuard]
       },
       {
         path: 'achoutward',
@@ -87,6 +87,10 @@ const routes: Routes = [
       {
         path: 'loanContract',
         loadChildren: () => import('./views/loan-contract/loan-contract.module').then(m => m.LoanContractModule),canActivate:[AuthGuard]
+      },
+      {
+        path: 'mpuist',
+        loadChildren: () => import('./views/mpuist/mpuist.module').then(m => m.MPUISTModule),canActivate:[AuthGuard]
       }
     ]
   },

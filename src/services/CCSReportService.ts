@@ -58,7 +58,6 @@ export class CCSReportService {
     let fromDateStr = `${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth() + 1}-${searchbody.fromdate.getDate()}`;
     let toDateStr = `${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth() + 1}-${searchbody.todate.getDate()}`;
 
-
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
@@ -75,7 +74,6 @@ export class CCSReportService {
     let fromDateStr = `${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth() + 1}-${searchbody.fromdate.getDate()}`;
     let toDateStr = `${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth() + 1}-${searchbody.todate.getDate()}`;
 
-
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
@@ -90,9 +88,9 @@ export class CCSReportService {
 
   public exportCCSOutwardExcel(searchbody: CCS_REPORT) {
 
+
     let fromDateStr = `${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth() + 1}-${searchbody.fromdate.getDate()}`;
     let toDateStr = `${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth() + 1}-${searchbody.todate.getDate()}`;
-
 
     let requestbody = {
       fromdate: fromDateStr,
@@ -143,7 +141,6 @@ export class CCSReportService {
 
     let fromDateStr = `${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth() + 1}-${searchbody.fromdate.getDate()}`;
     let toDateStr = `${searchbody.todate.getFullYear()}-${searchbody.todate.getMonth() + 1}-${searchbody.todate.getDate()}`;
-
 
     let requestbody = {
       fromdate: fromDateStr,

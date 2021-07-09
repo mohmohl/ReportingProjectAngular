@@ -1,0 +1,19 @@
+.large-combo{
+    width:283px;
+}
+
+.btn{
+    margin-right: 5px;
+}
+
+ .table{
+     font-size:10px;
+ }
+
+.success-msg{
+    color:green;
+}
+
+.error-msg{
+    color:red;
+}

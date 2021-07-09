@@ -92,7 +92,6 @@ export class CcsinwardComponent implements OnInit {
         status: "-",
         regcbmcode: "-" 
       };
-    debugger;
       if(res.length==0){
         this.bankList.push(dump);
       }else{

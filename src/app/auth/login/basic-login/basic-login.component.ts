@@ -38,6 +38,7 @@ export class BasicLoginComponent implements OnInit {
       this.error = "User Name and Password are required";
       return;
   }
+  debugger;
   this.error="";
   this.userId = this.form.get(["userId"])!.value;
   this.user_password= this.form.get(["password"])!.value;
