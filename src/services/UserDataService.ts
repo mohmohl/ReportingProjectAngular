@@ -13,9 +13,8 @@ import { AuthenticationService } from "./AuthenticationService";
   
   
     public getFcubUserData(user_id:string): Observable<any>{
-      var api = environment.baseUrl+'/getFcubActiveUser?userId='+user_id;
-     
-       return this.http.post<any>(`${environment.baseUrl}`+'/getFcubActiveUser?userId='+user_id,{ title: 'Transaction Data' });
+      
+       return this.http.post<any>(`${environment.baseUrl}`+'/fun-api/getFcubActiveUser?userId='+user_id,{ title: 'Transaction Data' });
   }
 
   public createApplicationAccount(user_id: string, password: string,menuId:string[]) {

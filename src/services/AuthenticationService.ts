@@ -34,6 +34,8 @@ export class AuthenticationService {
     }
 
     public get currentUserValue(): User {
+        var u:User = this.currentUserSubject.value;
+        console.log("refresh u="+u);
         return this.currentUserSubject.value;
     }
 
@@ -44,7 +46,7 @@ export class AuthenticationService {
     }
 
     login(userId: string, password: string) {
-        
+        localStorage.removeItem('currentUser');
         var username = userId;
         return this.http.post<any>(`${environment.baseUrl}/authenticate`, { userId, username, password })
             .pipe(map(user => {
@@ -57,6 +59,7 @@ export class AuthenticationService {
                 this.permission.push("/simple-page");
                 this.permission.push("/access-denied");
                 if (this.currentUserSubject.value != null) {
+                    this.currentUserValue;
                     const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
                     console.log("Menu = " + menuMap);
                     menuMap.forEach((value, key) => {

@@ -2310,3 +2310,22 @@ agm-map, vector_map {
 .pcoded .pcoded-navbar[active-item-theme=theme4] .pcoded-item > li.active > a:before{
   border-left-color: #fcd703 !important;
 }
+.col-form-label {
+  font-size: 12px !important;
+}
+.form-control {
+  font-size: 12px !important;
+}
+.pcoded .pcoded-navbar .pcoded-item > li > a {
+  font-size: 12px !important;
+}
+.pcoded[theme-layout=vertical] .pcoded-navbar .pcoded-item > li > a{
+  padding: 7px 10px !important;
+}
+
+.pcoded .pcoded-navbar .pcoded-item .pcoded-hasmenu .pcoded-submenu li > a{
+  font-size: 12px !important;
+}
+.pcoded[theme-layout=vertical] .pcoded-navbar .pcoded-item .pcoded-hasmenu .pcoded-submenu li > a {
+  padding: 5px 10px !important;
+}
