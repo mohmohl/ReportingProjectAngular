@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { PassYears } from 'src/models/PassYears';
-import { SearchPDFService } from 'src/services/BankStatementService';
+import { BankStatementService } from 'src/services/BankStatementService';
 
 @Component({
   selector: 'app-bank-statement',
@@ -24,10 +24,10 @@ export class BankStatementComponent implements OnInit {
     fromDate: new FormControl('',),
     toDate: new FormControl('',),
   });
-  constructor(private pdfAPIService: SearchPDFService) { }
+  constructor(private bankStatementAPIService: BankStatementService) { }
 
   ngOnInit() {
-    this.pdfAPIService.getYearsList().subscribe((res: PassYears[]) => {
+    this.bankStatementAPIService.getYearsList().subscribe((res: PassYears[]) => {
       this.yearList = res;
     });
   }
@@ -50,7 +50,7 @@ export class BankStatementComponent implements OnInit {
     this.acc_no = this.form.get(["accno"])!.value;
     if (this.passDate) {
       this.filePath = this.form.get(["years"])!.value;
-      this.pdfAPIService.searchPassBankStatement(this.acc_no, this.filePath)
+      this.bankStatementAPIService.searchPassBankStatement(this.acc_no, this.filePath)
         .pipe(
           map((data: any) => {
             let blob = new Blob([data], {
@@ -75,7 +75,7 @@ export class BankStatementComponent implements OnInit {
     else {
       this.fromDate = this.form.get(["fromDate"])!.value;
       this.toDate = this.form.get(["toDate"])!.value;
-      this.pdfAPIService.createBankStatement(this.acc_no, this.fromDate, this.toDate)
+      this.bankStatementAPIService.createBankStatement(this.acc_no, this.fromDate, this.toDate)
         .pipe(
           map((data: any) => {
             let blob = new Blob([data], {
