@@ -16,11 +16,13 @@ export class BankStatementComponent implements OnInit {
   fromDate: Date;
   toDate: Date;
   filePath: string;
+  fileType: string;
   yearList: PassYears[] = [];
   error = '';
   form = new FormGroup({
     accno: new FormControl('', Validators.required),
     years: new FormControl('',),
+    fileType: new FormControl('pdf', Validators.required),
     fromDate: new FormControl('',),
     toDate: new FormControl('',),
   });
@@ -45,12 +47,13 @@ export class BankStatementComponent implements OnInit {
       return;
     }
     this.loading = true;
-
+console.log("fileType = "+this.form.get(["fileType"])!.value)
     this.error = "";
     this.acc_no = this.form.get(["accno"])!.value;
+    this.fileType = this.form.get(["fileType"])!.value;
     if (this.passDate) {
       this.filePath = this.form.get(["years"])!.value;
-      this.bankStatementAPIService.searchPassBankStatement(this.acc_no, this.filePath)
+      this.bankStatementAPIService.searchPassBankStatement(this.acc_no, this.filePath, this.fileType)
         .pipe(
           map((data: any) => {
             let blob = new Blob([data], {
@@ -75,7 +78,7 @@ export class BankStatementComponent implements OnInit {
     else {
       this.fromDate = this.form.get(["fromDate"])!.value;
       this.toDate = this.form.get(["toDate"])!.value;
-      this.bankStatementAPIService.createBankStatement(this.acc_no, this.fromDate, this.toDate)
+      this.bankStatementAPIService.createBankStatement(this.acc_no,this.fileType, this.fromDate, this.toDate)
         .pipe(
           map((data: any) => {
             let blob = new Blob([data], {

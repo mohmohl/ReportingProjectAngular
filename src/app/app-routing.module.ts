@@ -45,7 +45,7 @@ const routes: Routes = [
         loadChildren: () => import('./map/google-map/google-map.module').then(m => m.GoogleMapModule),
       },
      {
-        path: 'simple-page',
+        path: 'home',
         loadChildren: () => import('./simple-page/simple-page.module').then(m => m.SimplePageModule), canActivate:[AuthGuard]
       }, 
       {

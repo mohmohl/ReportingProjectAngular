@@ -27,7 +27,7 @@ export class BasicLoginComponent implements OnInit {
 
   ngOnInit() {
     document.querySelector('body').setAttribute('themebg-pattern', 'theme1');
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/simple-page';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
     const currentUser = this.authenticationService.currentUserValue;
     if(currentUser){
     this.router.navigate([this.returnUrl]);
