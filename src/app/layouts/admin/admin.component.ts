@@ -83,8 +83,8 @@ export class AdminComponent implements OnInit {
       label: 'Reporting',
       main: [
         {
-          state: 'simple-page',
-          name: 'Simple Page',
+          state: 'home',
+          name: 'Home',
           type: 'link',
           icon: 'ti-layout-sidebar-left'
         }

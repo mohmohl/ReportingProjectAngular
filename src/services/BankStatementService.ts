@@ -23,25 +23,25 @@ import { AuthenticationService } from 'src/services/AuthenticationService';
 
     public getYearsList():Observable<any>{
   
-      var api = environment.baseUrl+'/fun-api/getPassYearList';
+      var api = environment.baseUrl+'/bankStatement/getPassYearList';
       return this.http.get<any>(`${api}`);
      
   }
 
-    public searchPassBankStatement(accNo:string,filePath:string){
+    public searchPassBankStatement(accNo:string,filePath:string,fileType:string){
         let accParam = new HttpParams().set('accountNo', accNo);
         // return this.http.get(this.api,{params:accParam});
-        var api = environment.baseUrl+'/searchPassBankStatement?accountNo='+accNo+"&filePath="+filePath;
+        var api = environment.baseUrl+'/bankStatement/searchPassBankStatement?accountNo='+accNo+"&filePath="+filePath+"&fileType="+fileType;
           return this.http.get<any>(`${api}`, {responseType: 'arraybuffer' as 'json'});
        
     }
 
-    public createBankStatement(accNo:string,fromDate:Date,toDate:Date){
+    public createBankStatement(accNo:string,fileType:string,fromDate:Date,toDate:Date){
       console.log("accountNo= "+accNo);
       console.log("fromDate= "+fromDate);
       console.log("toDate= "+toDate);
       // return this.http.get(this.api,{params:accParam});
-      var api = environment.baseUrl+"/getBankStatement?accountNo="+accNo+"&fromDate="+fromDate+"&toDate="+toDate;
+      var api = environment.baseUrl+"/bankStatement/getBankStatement?accountNo="+accNo+"&fileType="+fileType+"&fromDate="+fromDate+"&toDate="+toDate;
         return this.http.get<any>(`${api}`, {responseType: 'arraybuffer' as 'json'});
      
   } 
