@@ -14,13 +14,19 @@ import { AuthenticationService } from "./AuthenticationService";
   
     public getFcubUserData(user_id:string): Observable<any>{
       
-       return this.http.post<any>(`${environment.baseUrl}`+'/fun-api/getFcubActiveUser?userId='+user_id,{ title: 'Transaction Data' });
+       return this.http.post<any>(`${environment.baseUrl}`+'/user/getFcubActiveUser?userId='+user_id,{ title: 'Transaction Data' });
   }
 
   public createApplicationAccount(user_id: string, password: string,menuId:string[]) {
     var createdUserId = this.authenticationService.currentUserValue.userId;
-    return this.http.post(`${environment.baseUrl}/createApplicationAccount`, { user_id, password,menuId,createdUserId });
+    return this.http.post(`${environment.baseUrl}/user/createApplicationAccount`, { user_id, password,menuId,createdUserId });
 
 }
+  public changePassword(password: string,newpassword:string) {
+    var createdUserId = this.authenticationService.currentUserValue.userId;
+    var user_id =createdUserId;
+    return this.http.post<any>(`${environment.baseUrl}/user/changePassword`, { user_id, password,newpassword,createdUserId});
+
+  }
  
   }

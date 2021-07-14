@@ -19,7 +19,8 @@ export class AuthenticationService {
         this.currentUser = this.currentUserSubject.asObservable();
         //for permission list
         this.permission = [];
-        this.permission.push("/simple-page");
+        this.permission.push("/home");
+        this.permission.push("/change-password");
         this.permission.push("/access-denied");
         if (this.currentUserSubject.value != null) {
             const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
@@ -48,7 +49,7 @@ export class AuthenticationService {
     login(userId: string, password: string) {
         localStorage.removeItem('currentUser');
         var username = userId;
-        return this.http.post<any>(`${environment.baseUrl}/authenticate`, { userId, username, password })
+        return this.http.post<any>(`${environment.baseUrl}/user/authenticate`, { userId, username, password })
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(user));
@@ -56,7 +57,8 @@ export class AuthenticationService {
                 
                 //for permission list
                 this.permission = [];
-                this.permission.push("/simple-page");
+                this.permission.push("/home");
+                this.permission.push("/change-password");
                 this.permission.push("/access-denied");
                 if (this.currentUserSubject.value != null) {
                     this.currentUserValue;
@@ -80,7 +82,7 @@ export class AuthenticationService {
     }
 
     applicationBackend_logout(userId: string) {
-        var url = "/authenticate_logout?userId=" + userId;
+        var url = "/user/authenticate_logout?userId=" + userId;
         this.http.get(`${environment.baseUrl}` + url, { responseType: 'text' }).subscribe(res => {
 
             // remove user from local storage to log user out

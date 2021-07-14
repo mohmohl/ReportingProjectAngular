@@ -47,7 +47,6 @@ export class BankStatementComponent implements OnInit {
       return;
     }
     this.loading = true;
-console.log("fileType = "+this.form.get(["fileType"])!.value)
     this.error = "";
     this.acc_no = this.form.get(["accno"])!.value;
     this.fileType = this.form.get(["fileType"])!.value;

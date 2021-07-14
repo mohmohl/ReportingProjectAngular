@@ -17,10 +17,10 @@ export class AuthGuard implements CanActivate {
         console.log("permission check>>>> ...."+ this.authenticationService.permission.indexOf(state.url));
         console.log("currentUser check>>>>"+currentUser);
         if (currentUser) {
-            // if (this.authenticationService.permission.indexOf(state.url) == -1) {
-            //     this.router.navigate(['/access-denied']);
-            //     return false;
-            // }
+             if (this.authenticationService.permission.indexOf(state.url) == -1) {
+                 this.router.navigate(['/access-denied']);
+                 return false;
+             }
             // logged in so return true
             return true;
         }
