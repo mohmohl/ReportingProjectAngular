@@ -61,6 +61,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/UserAccount/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
       },
       {
+        path: 'change-password',
+        loadChildren: () => import('./views/change-password/change-password.module').then(m => m.ChangePasswordModule)
+      },
+      {
         path: 'welcome',
         loadChildren: () => import('./views/welcome/welcome.module').then(m => m.WelcomeModule)
       },

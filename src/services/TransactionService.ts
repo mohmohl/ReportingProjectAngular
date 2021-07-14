@@ -16,7 +16,7 @@ import { Observable } from "rxjs";
     }
     public getTestingData(){
        
-         return this.http.get(`${environment.baseUrl}`+'/hello_welcome',{responseType: 'text'});
+         return this.http.get(`${environment.baseUrl}`+'/welcome',{responseType: 'text'});
     }
 
     public getTransctionData(): Observable<any>{
