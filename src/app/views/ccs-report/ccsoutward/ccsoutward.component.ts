@@ -69,7 +69,6 @@ export class CcsoutwardComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
     //trigger screen width
     this.getScreenSize();
     let todaydateStr = `${new Date().getMonth() + 1}-${new Date().getDate()}-${new Date().getFullYear()}`;

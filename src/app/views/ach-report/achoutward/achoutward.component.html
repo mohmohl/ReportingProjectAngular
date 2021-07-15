@@ -87,17 +87,27 @@
                     <table class="table table table-hover">
                       <thead>
                         <tr> 
-                           <th scope="col">#</th>
+                          <th scope="col">#</th>
                           <th scope="col">Date</th>
                           <th scope="col">CPN</th>
                           <th scope="col">Contract No</th>
                           <th scope="col">Business</th>
                           <th scope="col">Drawee Bank</th>
                           <th scope="col">Type</th>
+                          <th scope="col">Beneficiary Acc</th>
+                          <th scope="col">Beneficiary Name</th>
+                        <th scope="col">Remittee Acc</th>
+                        <th scope="col">Remittee Name</th>
+                        <th scope="col">Fee Amt</th>
+                        <th scope="col">Commission</th>
+                        <th scope="col">Remit Amt (Cash)</th>
+                        <th scope="col">Remit Amt (Transfer)</th>
+                        <th scope="col">CBM Processing Amt</th>
                           <th scope="col">Core Banking Status</th>
-                          <th scope="col">ACH Status</th>
+                          <th scope="col">CCS Status</th>
                           <th scope="col">CBM Status</th>
                           <th scope="col">Other Bank Status</th>
+                          <th scope="col">Remark</th>
                         </tr>
                       </thead>
 
@@ -110,10 +120,20 @@
                           <td scope="col">{{item.business_id}}</td>
                           <td scope="col">{{item.drawee_bank}}</td>
                           <td scope="col">{{item.type}}</td>
+                          <td scope="col">{{item.benificiary_acc}}</td>
+                          <td scope="col">{{item.benificiary_name}}</td>
+                          <td scope="col">{{item.remittee_acc}}</td>
+                          <td scope="col">{{item.remittee_name}}</td>
+                          <td scope="col">{{item.fee_amt}}</td>
+                          <td scope="col">{{item.commission_amt}}</td>
+                          <td scope="col">{{item.cash_amt}}</td>
+                          <td scope="col">{{item.transfer_amt}}</td>
+                          <td scope="col">{{item.total_amt}}</td>
                           <td scope="col">{{item.core_banking_status}}</td>
                           <td scope="col">{{item.ccs_status}}</td>
                           <td scope="col">{{item.cbm_status}}</td>
                           <td scope="col">{{item.other_bank_status}}</td>
+                          <td scope="col">{{item.remark}}</td>
                         </tr>
                       </tbody>
                     </table>

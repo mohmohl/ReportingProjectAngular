@@ -4,6 +4,7 @@ import { environment } from "src/environments/environment";
 import { Observable } from "rxjs";
 import { CCS_REPORT } from 'src/models/CCS_REPORT';
 import { ACH_REPORT } from "src/models/ACH_REPORT";
+import { CCSStatus } from 'src/models/CCSStatus';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +13,48 @@ export class CCSReportService {
   pdfheaders = new HttpHeaders({ 'Content-Type': 'application/pdf', 'Accept': 'application/pdf' });
 
   constructor(private http: HttpClient) {
+  }
+
+  private renderCCSStatus(status_code:String):CCSStatus{
+    let status:CCSStatus=new CCSStatus();
+    switch(status_code){
+      case 'ALL':{
+        status.status_code='ALL';
+        status.description='ALL';
+        break;
+      }
+      case 'CBMRE':{
+        status.status_code='CBMRE';
+        status.description='Failed';
+        break;
+      }
+      case 'SC':{
+        status.status_code='SC';
+        status.description='Core Banking Success';
+        break;
+      }
+      case 'F':{
+        status.status_code='F';
+        status.description='Inward Failed';
+        break;
+      }
+      case 'FRC':{
+        status.status_code='FRC';
+        status.description='Outward Reversal Failed';
+        break;
+      }
+      case 'SRC':{
+        status.status_code='SRC';
+        status.description='Outward Reversal Success';
+        break;
+      }
+      case 'FCBS':{
+        status.status_code='FCBS';
+        status.description='Inward Failed & Reversal';
+        break;
+      }
+    }
+    return status;
   }
 
   public getEBABankList(): Observable<any> {
@@ -28,7 +71,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -45,7 +88,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -61,7 +104,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -77,7 +120,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -95,7 +138,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -112,7 +155,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -129,7 +172,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -145,7 +188,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -163,7 +206,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -181,7 +224,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -199,7 +242,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -214,7 +257,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -230,7 +273,7 @@ export class CCSReportService {
     let requestbody = {
       fromdate: fromDateStr,
       todate: toDateStr,
-      status_type: searchbody.statusCode,
+      status: this.renderCCSStatus(searchbody.statusCode),
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
