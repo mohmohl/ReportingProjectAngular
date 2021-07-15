@@ -11,7 +11,7 @@ import { BankStatementService } from 'src/services/BankStatementService';
 })
 export class BankStatementComponent implements OnInit {
   loading = false;
-  passDate = true;
+  passDate = false;
   acc_no: string;
   fromDate: Date;
   toDate: Date;
@@ -29,7 +29,9 @@ export class BankStatementComponent implements OnInit {
   constructor(private bankStatementAPIService: BankStatementService) { }
 
   ngOnInit() {
+    this.loading = true;
     this.bankStatementAPIService.getYearsList().subscribe((res: PassYears[]) => {
+      this.loading = false;
       this.yearList = res;
     });
   }
@@ -50,18 +52,29 @@ export class BankStatementComponent implements OnInit {
     this.error = "";
     this.acc_no = this.form.get(["accno"])!.value;
     this.fileType = this.form.get(["fileType"])!.value;
+    var appfiletype ='';
+    if(this.fileType ==="excel"){
+      appfiletype = "application/vnd.ms-excel";
+    }
+    else{
+      appfiletype = "application/pdf";
+    }
     if (this.passDate) {
       this.filePath = this.form.get(["years"])!.value;
       this.bankStatementAPIService.searchPassBankStatement(this.acc_no, this.filePath, this.fileType)
         .pipe(
           map((data: any) => {
             let blob = new Blob([data], {
-              type: 'application/pdf'
+              type: appfiletype
             });
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            // link.download = 'samplePDFFile.pdf';
-            link.target = '_blank';
+            if(this.fileType ==="excel"){
+            link.download = 'BankStatememnt.xlsx';
+            }else{
+              link.target = '_blank';
+            }
+            
             link.click();
             window.URL.revokeObjectURL(link.href);
             this.loading = false;
@@ -85,8 +98,11 @@ export class BankStatementComponent implements OnInit {
             });
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            // link.download = 'samplePDFFile.pdf';
-            link.target = '_blank';
+            if(this.fileType ==="excel"){
+              link.download = 'BankStatememnt.xlsx';
+              }else{
+                link.target = '_blank';
+              }
             link.click();
             window.URL.revokeObjectURL(link.href);
             this.loading = false;

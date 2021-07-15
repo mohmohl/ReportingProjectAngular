@@ -21,6 +21,7 @@ export class AuthenticationService {
         this.permission = [];
         this.permission.push("/home");
         this.permission.push("/change-password");
+        this.permission.push("/user-registration/**");
         this.permission.push("/access-denied");
         if (this.currentUserSubject.value != null) {
             const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
@@ -59,6 +60,7 @@ export class AuthenticationService {
                 this.permission = [];
                 this.permission.push("/home");
                 this.permission.push("/change-password");
+                this.permission.push("/user-registration/**");
                 this.permission.push("/access-denied");
                 if (this.currentUserSubject.value != null) {
                     this.currentUserValue;

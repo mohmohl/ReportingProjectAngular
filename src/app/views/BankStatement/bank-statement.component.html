@@ -18,10 +18,11 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-sm-2 col-form-label"> Pass Date
-                          <input type="checkbox" (change)="passOnChange($event.target.checked)" checked class="styled">
+                      
+                      <label class="col-sm-2 col-form-label">  Date
+                          <input type="checkbox" (change)="passOnChange($event.target.checked)" class="styled">
                       </label>
-
+                      
                       <div *ngIf="passDate" class="col-sm-3">
                         <select class="form-control" formControlName="years" id="exampleFormControlSelect1">
                           <option value="" selected>-- Select --</option>
@@ -42,8 +43,8 @@
                         <div class="col-sm-3">
                           <input type="radio" formControlName="fileType" value="pdf" />
                           <label class="col-sm-3 col-form-label">PDF</label>
-                         <!--<input type="radio"  formControlName="fileType" value="excel" />
-                          <label class="col-sm-3 col-form-label">Excel</label>-->
+                         <input type="radio"  formControlName="fileType" value="excel" />
+                          <label class="col-sm-3 col-form-label">Excel</label>
                         </div>
                   </div>
                       <div class="form-group row">

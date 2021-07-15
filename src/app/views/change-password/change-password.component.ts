@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
-import { ChangePasswordResponse } from 'src/models/ChangePasswordResponse';
+import { AppUserResponse } from 'src/models/AppUserResponse';
 import { UserDataService } from 'src/services/UserDataService';
 
 @Component({
@@ -15,7 +15,7 @@ export class ChangePasswordComponent implements OnInit {
   error='';
   old_pass_error='';
   pass_error='';
-  response:ChangePasswordResponse;
+  response:AppUserResponse;
   form = new FormGroup({
     oldPassword: new FormControl('', Validators.required),
     newPassword: new FormControl('', Validators.required),

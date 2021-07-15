@@ -19,7 +19,7 @@
               </div>
               <hr/>
               <div class="input-group">
-                <input type="text" formControlName="userId" class="form-control" placeholder="User Name">
+                <input type="text" (change)="onChange($event)" formControlName="userId" class="form-control" placeholder="User Name">
                 <span class="md-line"></span>
               </div>
               <div class="input-group">
