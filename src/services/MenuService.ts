@@ -12,7 +12,7 @@ import { Observable } from "rxjs";
   
   
     public getMenuData(): Observable<any>{
-      var api = environment.baseUrl+'/getmenuListData';
+      var api = environment.baseUrl+'/menu/getmenuListData';
      
        return this.http.get<any>(api);
   }

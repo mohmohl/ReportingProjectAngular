@@ -45,7 +45,7 @@ const routes: Routes = [
         loadChildren: () => import('./map/google-map/google-map.module').then(m => m.GoogleMapModule),
       },
      {
-        path: 'simple-page',
+        path: 'home',
         loadChildren: () => import('./simple-page/simple-page.module').then(m => m.SimplePageModule), canActivate:[AuthGuard]
       }, 
       {
@@ -59,6 +59,10 @@ const routes: Routes = [
       {
         path: 'user-registration/:userId',
         loadChildren: () => import('./views/UserAccount/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
+      },
+      {
+        path: 'change-password',
+        loadChildren: () => import('./views/change-password/change-password.module').then(m => m.ChangePasswordModule)
       },
       {
         path: 'welcome',
@@ -101,7 +105,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{useHash:true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

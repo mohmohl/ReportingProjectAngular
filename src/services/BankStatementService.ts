@@ -2,36 +2,46 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders,HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { environment } from "src/environments/environment";
 import { Observable } from "rxjs";
+import { AuthenticationService } from 'src/services/AuthenticationService';
 @Injectable({
     providedIn: 'root'
   })
-  export class SearchPDFService {
+  export class BankStatementService {
    
     headers = new HttpHeaders({'Content-Type':'application/pdf','Accept': 'application/pdf',});
-    constructor(private http: HttpClient) { 
+    httpOptions:any;
+    constructor(private http: HttpClient,private authenticationService: AuthenticationService) { 
+     console.log("befor check = "+this.authenticationService.currentUserValue.token);
+      this.httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json' ,
+          'Authorization': 'Bearer '+this.authenticationService.currentUserValue.token ,
+          'Accept' : 'application/json'
+        })
+      };
     }
 
     public getYearsList():Observable<any>{
   
-      var api = environment.baseUrl+'/getPassYearList';
+      var api = environment.baseUrl+'/bankStatement/getPassYearList';
       return this.http.get<any>(`${api}`);
      
   }
 
-    public searchPassBankStatement(accNo:string,filePath:string){
+    public searchPassBankStatement(accNo:string,filePath:string,fileType:string){
         let accParam = new HttpParams().set('accountNo', accNo);
         // return this.http.get(this.api,{params:accParam});
-        var api = environment.baseUrl+'/searchPassBankStatement?accountNo='+accNo+"&filePath="+filePath;
+        var api = environment.baseUrl+'/bankStatement/searchPassBankStatement?accountNo='+accNo+"&filePath="+filePath+"&fileType="+fileType;
           return this.http.get<any>(`${api}`, {responseType: 'arraybuffer' as 'json'});
        
     }
 
-    public createBankStatement(accNo:string,fromDate:Date,toDate:Date){
+    public createBankStatement(accNo:string,fileType:string,fromDate:Date,toDate:Date){
       console.log("accountNo= "+accNo);
       console.log("fromDate= "+fromDate);
       console.log("toDate= "+toDate);
       // return this.http.get(this.api,{params:accParam});
-      var api = environment.baseUrl+"/getBankStatement?accountNo="+accNo+"&fromDate="+fromDate+"&toDate="+toDate;
+      var api = environment.baseUrl+"/bankStatement/getBankStatement?accountNo="+accNo+"&fileType="+fileType+"&fromDate="+fromDate+"&toDate="+toDate;
         return this.http.get<any>(`${api}`, {responseType: 'arraybuffer' as 'json'});
      
   } 

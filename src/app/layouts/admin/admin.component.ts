@@ -69,6 +69,7 @@ export class AdminComponent implements OnInit {
 
   config: any;
   currentUser: User;
+  userName : string;
   menuItems: Menu[];
   constructor(public menu: MenuItems, private router: Router, private authenticationService: AuthenticationService) {
     const scrollHeight = window.screen.height - 150;
@@ -76,12 +77,14 @@ export class AdminComponent implements OnInit {
     this.windowWidth = window.innerWidth;
     this.setMenuAttributs(this.windowWidth);
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.userName = this.currentUser.username;
+    console.log("current user = "+this.userName);
     this.menuItems = [{
       label: 'Reporting',
       main: [
         {
-          state: 'simple-page',
-          name: 'Simple Page',
+          state: 'home',
+          name: 'Home',
           type: 'link',
           icon: 'ti-layout-sidebar-left'
         }
@@ -124,7 +127,11 @@ export class AdminComponent implements OnInit {
     //console.log("menu serve data = "+JSON.stringify(this.currentUser.menuItem));
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.userName = this.currentUser.username;
+    console.log("current user = "+this.userName);
+   }
 
   onClickedOutside(e: Event) {
     if (this.windowWidth < 768 && this.toggleOn && this.verticalNavType !== 'offcanvas') {
