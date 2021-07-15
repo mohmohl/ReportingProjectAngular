@@ -14,7 +14,7 @@ import { AuthenticationService } from "./AuthenticationService";
   
     public getFcubUserData(user_id:string): Observable<any>{
       
-       return this.http.post<any>(`${environment.baseUrl}`+'/user/getFcubActiveUser?userId='+user_id,{ title: 'Transaction Data' });
+       return this.http.post<any>(`${environment.baseUrl}`+'/user/getFcubActiveUser?userId='+user_id,{ title: 'Fcubs user Data' });
   }
 
   public createApplicationAccount(user_id: string, password: string,menuId:string[]) {
@@ -28,5 +28,8 @@ import { AuthenticationService } from "./AuthenticationService";
     return this.http.post<any>(`${environment.baseUrl}/user/changePassword`, { user_id, password,newpassword,createdUserId});
 
   }
- 
+  public getMobileLoginUserData(phoneNo:string): Observable<any>{
+      
+    return this.http.post<any>(`${environment.baseUrl}`+'/smsAuthenticate/sendingSMSData/'+phoneNo,{ title: 'Mobile Login Data' });
+}
   }
