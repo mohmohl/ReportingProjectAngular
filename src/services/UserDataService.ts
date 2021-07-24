@@ -32,4 +32,13 @@ import { AuthenticationService } from "./AuthenticationService";
       
     return this.http.post<any>(`${environment.baseUrl}`+'/smsAuthenticate/sendingSMSData/'+phoneNo,{ title: 'Mobile Login Data' });
 }
+
+public checkUserForRegistration(userId:string): Observable<any>{
+      
+  return this.http.post<any>(`${environment.baseUrl}`+'/smsAuthenticate/checkNewUserAndSendingSMSData/'+userId,{ title: 'Check User' });
+}
+public forgotPassword(userId:string): Observable<any>{
+      
+  return this.http.post<any>(`${environment.baseUrl}`+'/smsAuthenticate/forgotPasswordSendingSMSData/'+userId,{ title: 'Forgot Password' });
+}
   }

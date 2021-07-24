@@ -17,6 +17,10 @@ const routes: Routes = [
       {
         path: 'registration',
         loadChildren: () => import('./registration/basic-reg/basic-reg.module').then(m => m.BasicRegModule)
+      },
+      {
+        path: 'forgot-password',
+        loadChildren: () => import('./forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule)
       }
     ]
   }
