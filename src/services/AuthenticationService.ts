@@ -65,7 +65,6 @@ export class AuthenticationService {
                 if (this.currentUserSubject.value != null) {
                     this.currentUserValue;
                     const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
-                    console.log("Menu = " + menuMap);
                     menuMap.forEach((value, key) => {
                         const menuList: MenuItem[] = value;
                         menuList.forEach(e => {
