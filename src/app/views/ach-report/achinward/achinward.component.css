@@ -5,3 +5,8 @@
 .btn{
     margin-right: 5px;
 }
+
+.nu-table-body {
+    overflow-y:auto !important;
+    max-height:300px !important;
+}

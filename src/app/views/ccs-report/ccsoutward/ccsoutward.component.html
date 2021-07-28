@@ -1,149 +1,191 @@
-  <div class="row">
-    <div class="col-sm-12">
-            <app-card [title]="'RTGS Outward Search'" [classHeader]="true" [blockClass]="'table-border-style'">
-              <div class="card-body">
+<div class="row">
+  <div class="col-sm-12">
+    <app-card [title]="'RTGS Outward Search'" [classHeader]="true" [blockClass]="'table-border-style'">
+      <div class="card-body">
 
-                <div *ngIf="loading" class="d-flex justify-content-center">
-                  <div class="spinner-border spinner-border-sm text-warning"></div>
-                    <span class="text-danger">&nbsp;&nbsp;&nbsp;Loading...</span>
-                </div>
+        <div *ngIf="loading" class="d-flex justify-content-center">
+          <div class="spinner-border spinner-border-sm text-warning"></div>
+          <span class="text-danger">&nbsp;&nbsp;&nbsp;Loading...</span>
+        </div>
 
-                <form [formGroup]="form" (ngSubmit)="submit(form.value)">
-                  <div class="container-fluid">
-                    <div class="form-group row">
-                      <label class="col-sm-12 col-md-2 col-form-label">From Date</label>
-                      <mat-form-field class="col-sm-12 col-md-3">
-                        <input matInput [matDatepicker]="picker" formControlName="fromdate">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field>
-                      <div class="col-sm-0 col-md-7"></div>
-                    </div>
-  
-                    <div class="form-group row">
-                    <label class="col-sm-12 col-md-2 col-form-label">To Date</label>
-                    <mat-form-field class="col-sm-12 col-md-3">
-                      <input [ngClass]="{'large-combo':scrWidth>deviceSmall}" matInput [matDatepicker]="todatepicker" formControlName="todate">
-                      <mat-datepicker-toggle matSuffix [for]="todatepicker"></mat-datepicker-toggle>
-                      <mat-datepicker #todatepicker></mat-datepicker>
-                    </mat-form-field>
-                    <div class="col-sm-0 col-md-7"></div>
-                    </div>
-  
-                    <div class="form-group row">
-                      <label class="col-sm-12 col-md-2  col-form-label">Transition Name</label>
-                      <div>
-                      <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="ccsTranCode" class="form-control" >
-                        <option value="{{item.tran_code}}" *ngFor='let item of ccsTranList'>{{item.tran_name}}</option>
-                      </select>
-                      <div class="col-sm-0 col-md-7"></div>
-                      </div>
-                    </div>
-  
-                    <div class="form-group row">
-                      <label class="col-sm-12 col-md-2  col-form-label">Bank Name</label>
-                      <div>
-                      <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="bankCode" class="form-control" >
-                        <option class="col-sm-2 col-md-2" value="{{item.bank_code}}" *ngFor='let item of bankList'>{{item.bank_name}}</option>
-                      </select>
-                      <div class="col-sm-0 col-md-7"></div>
-                      </div>
-                    </div>
-  
-                    <div class="form-group row">
-                      <label class="col-sm-12 col-md-2  col-form-label">Transition Status</label>
-                      <div>
-                      <select  [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="statusCode" class="form-control" >
-                        <option value="{{item.status_id}}" *ngFor='let item of ccsStatusList'>{{item.status_name}}</option>
-                      </select>
-                      <div class="col-sm-0 col-md-7"></div>
-                      </div>
-                    </div>
-  
-                    <div class="form-group row">
-                      <label class="col-sm-12 col-md-2  col-form-label">Export File Option</label>
-                      <div>
-                      <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="exportOption" class="form-control">
-                        <option value="excel">Excel</option>
-                        <option value="pdf">PDF</option>
-                      </select>
-                      <div class="col-sm-0 col-md-7"></div>
-                    </div>
-                    </div>
-  
-                    <div class="form-group row">
-                    <div class="col-sm-12 col-md-6">
-                        <button type="submit" name="export" class="btn btn-primary btn-sm">Export</button>
-                        <button type="submit" name="search" class="btn btn-primary btn-sm">Search</button>
-                    </div>
-                  </div>
-                </div>
-                </form>
+        <form [formGroup]="form" (ngSubmit)="submit(form.value)">
+          <div class="container-fluid">
+
+            <div class="form-group row">
+
+              <label class="col-sm-12 col-md-2 col-form-label">From Date</label>
+              <div class="col-sm-12 col-md-3">
+                <mat-form-field>
+                  <input matInput [matDatepicker]="picker" formControlName="fromdate">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
               </div>
-            </app-card>
 
-            <app-card [title]="'RTGS Outward List'" [classHeader]="true" [blockClass]="'table-border-style'">
-                  <div class="table-responsive" *ngIf="ccsOutwardList?.length">
-                    <table class="table table table-hover">
-                      <thead>
-                        <tr> 
-                           <th scope="col">#</th>
-                          <th scope="col">Date</th>
-                          <th scope="col">CPN</th>
-                          <th scope="col">Contract No</th>
-                          <th scope="col">Business</th>
-                          <th scope="col">Drawee Bank</th>
-                          <th scope="col">Type</th>
-                          <th scope="col">Beneficiary Acc</th>
-                          <th scope="col">Beneficiary Name</th>
-                        <th scope="col">Remittee Acc</th>
-                        <th scope="col">Remittee Name</th>
-                        <th scope="col">Fee Amt</th>
-                        <th scope="col">Commission</th>
-                        <th scope="col">Remit Amt (Cash)</th>
-                        <th scope="col">Remit Amt (Transfer)</th>
-                        <th scope="col">CBM Processing Amt</th>
-                          <th scope="col">Core Banking Status</th>
-                          <th scope="col">CCS Status</th>
-                          <th scope="col">CBM Status</th>
-                          <th scope="col">Other Bank Status</th>
-                          <th scope="col">Remark</th>
-                        </tr>
-                      </thead>
+              <div class="col-sm-0 col-md-1"></div>
 
-                      <tbody> 
-                        <tr class="table-active" *ngFor="let item of ccsOutwardList  | slice:0; let i = index"> 
-                          <td scope="col">{{startCount + (i + 1) }}</td>
-                          <td scope="col">{{item.date | date: "dd/MM/yyyy hh:mm:ss"}}</td>
-                          <td scope="col">{{item.cpn}}</td>
-                          <td scope="col">{{item.contract_no}}</td>
-                          <td scope="col">{{item.business_id}}</td>
-                          <td scope="col">{{item.drawee_bank}}</td>
-                          <td scope="col">{{item.type}}</td>
-                          <td scope="col">{{item.benificiary_acc}}</td>
-                          <td scope="col">{{item.benificiary_name}}</td>
-                          <td scope="col">{{item.remittee_acc}}</td>
-                          <td scope="col">{{item.remittee_name}}</td>
-                          <td scope="col">{{item.fee_amt}}</td>
-                          <td scope="col">{{item.commission_amt}}</td>
-                          <td scope="col">{{item.cash_amt}}</td>
-                          <td scope="col">{{item.transfer_amt}}</td>
-                          <td scope="col">{{item.total_amt}}</td>
-                          <td scope="col">{{item.core_banking_status}}</td>
-                          <td scope="col">{{item.ccs_status}}</td>
-                          <td scope="col">{{item.cbm_status}}</td>
-                          <td scope="col">{{item.other_bank_status}}</td>
-                          <td scope="col">{{item.remark}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-            </app-card>
-    </div>
-  </div>  
+              <label class="col-sm-12 col-md-2  col-form-label">Bank Name</label>
+              <div class="col-sm-12 col-md-3">
+                <select [ngClass]="{'large-combo':scrWidth>deviceSmall}"
+                  formControlName="bankCode" class="form-control">
+                  <option class="col-sm-2 col-md-2" value="{{item.bank_code}}" *ngFor='let item of bankList'>
+                    {{item.bank_name}}</option>
+                </select>
+                <div class="col-sm-0 col-md-7"></div>
+              </div>
 
+            </div>
 
+            <div class="form-group row">
 
+              <label class="col-sm-12 col-md-2 col-form-label">To Date</label>
+              <div class="col-sm-12 col-md-3">
+                <mat-form-field>
+                  <input [ngClass]="{'large-combo':scrWidth>deviceSmall}" matInput [matDatepicker]="todatepicker"
+                    formControlName="todate">
+                  <mat-datepicker-toggle matSuffix [for]="todatepicker"></mat-datepicker-toggle>
+                  <mat-datepicker #todatepicker></mat-datepicker>
+                </mat-form-field>
+              </div>
 
+              <div class="col-sm-0 col-md-7"></div>
 
-  
+              <label class="col-sm-12 col-md-2  col-form-label">Transition Status</label>
+              <div class="col-sm-12 col-md-3">
+                <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" 
+                  formControlName="statusCode" class="form-control">
+                  <option value="{{item.status_id}}" *ngFor='let item of ccsStatusList'>{{item.status_name}}</option>
+                </select>
+              </div>
+
+            </div>
+
+            <div class="form-group row">
+
+              <label class="col-sm-12 col-md-2  col-form-label">Transition Name</label>
+              <div class="col-sm-12 col-md-3">
+                <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" 
+                  formControlName="ccsTranCode" class="form-control">
+                  <option value="{{item.tran_code}}" *ngFor='let item of ccsTranList'>{{item.tran_name}}</option>
+                </select>
+              </div>
+
+              <div class="col-sm-0 col-md-1"></div>
+
+              <div class="form-group row">
+                <label class="col-sm-12 col-md-2  col-form-label">Export File Option</label>
+                <div class="col-sm-12 col-md-3">
+                  <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" 
+                    formControlName="exportOption" class="form-control">
+                    <option value="excel">Excel</option>
+                    <option value="pdf">PDF</option>
+                  </select>
+                </div>
+
+            </div>
+
+<!--             <div class="form-group row">
+              <label class="col-sm-12 col-md-2  col-form-label">Bank Name</label>
+              <div>
+                <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3"
+                  formControlName="bankCode" class="form-control">
+                  <option class="col-sm-2 col-md-2" value="{{item.bank_code}}" *ngFor='let item of bankList'>
+                    {{item.bank_name}}</option>
+                </select>
+                <div class="col-sm-0 col-md-7"></div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-12 col-md-2  col-form-label">Transition Status</label>
+              <div>
+                <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3"
+                  formControlName="statusCode" class="form-control">
+                  <option value="{{item.status_id}}" *ngFor='let item of ccsStatusList'>{{item.status_name}}</option>
+                </select>
+                <div class="col-sm-0 col-md-7"></div>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-sm-12 col-md-2  col-form-label">Export File Option</label>
+              <div>
+                <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3"
+                  formControlName="exportOption" class="form-control">
+                  <option value="excel">Excel</option>
+                  <option value="pdf">PDF</option>
+                </select>
+                <div class="col-sm-0 col-md-7"></div>
+              </div>
+            </div> -->
+
+            <div class="form-group row">
+              <div class="col-sm-12 col-md-6">
+                <button type="submit" name="export" class="btn btn-primary btn-sm">Export</button>
+                <button type="submit" name="search" class="btn btn-primary btn-sm">Search</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+
+    <app-card [title]="'RTGS Outward List'" [classHeader]="true" [blockClass]="'table-border-style'">
+      <div class="table-responsive nu-table-body" *ngIf="ccsOutwardList?.length">
+        <table class="table table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Date</th>
+              <th scope="col">CPN</th>
+              <th scope="col">Contract No</th>
+              <th scope="col">Business</th>
+              <th scope="col">Drawee Bank</th>
+              <th scope="col">Type</th>
+              <th scope="col">Beneficiary Acc</th>
+              <th scope="col">Beneficiary Name</th>
+              <th scope="col">Remittee Acc</th>
+              <th scope="col">Remittee Name</th>
+              <th scope="col">Fee Amt</th>
+              <th scope="col">Commission</th>
+              <th scope="col">Remit Amt (Cash)</th>
+              <th scope="col">Remit Amt (Transfer)</th>
+              <th scope="col">CBM Processing Amt</th>
+              <th scope="col">Core Banking Status</th>
+              <th scope="col">CCS Status</th>
+              <th scope="col">CBM Status</th>
+              <th scope="col">Other Bank Status</th>
+              <th scope="col">Remark</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr class="table-active" *ngFor="let item of ccsOutwardList  | slice:0; let i = index">
+              <td scope="col">{{startCount + (i + 1) }}</td>
+              <td scope="col">{{item.date | date: "dd/MM/yyyy hh:mm:ss"}}</td>
+              <td scope="col">{{item.cpn}}</td>
+              <td scope="col">{{item.contract_no}}</td>
+              <td scope="col">{{item.business_id}}</td>
+              <td scope="col">{{item.drawee_bank}}</td>
+              <td scope="col">{{item.type}}</td>
+              <td scope="col">{{item.benificiary_acc}}</td>
+              <td scope="col">{{item.benificiary_name}}</td>
+              <td scope="col">{{item.remittee_acc}}</td>
+              <td scope="col">{{item.remittee_name}}</td>
+              <td scope="col">{{item.fee_amt}}</td>
+              <td scope="col">{{item.commission_amt}}</td>
+              <td scope="col">{{item.cash_amt}}</td>
+              <td scope="col">{{item.transfer_amt}}</td>
+              <td scope="col">{{item.total_amt}}</td>
+              <td scope="col">{{item.core_banking_status}}</td>
+              <td scope="col">{{item.ccs_status}}</td>
+              <td scope="col">{{item.cbm_status}}</td>
+              <td scope="col">{{item.other_bank_status}}</td>
+              <td scope="col">{{item.remark}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

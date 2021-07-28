@@ -38,3 +38,8 @@ label{
 .btn{
     margin-right: 5px;
 }
+
+.nu-table-body {
+    overflow-y:auto;
+    max-height:300px;
+}
