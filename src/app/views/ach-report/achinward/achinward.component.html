@@ -23,18 +23,6 @@
 
               <div class="col-sm-0 col-md-1"></div>
 
-              <label class="col-sm-12 col-md-2 col-form-label">Bank Name</label>
-              <div class="col-sm-12 col-md-3">
-                <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" formControlName="bankCode"
-                  class="form-control">
-                  <option class="col-sm-2 col-md-2" value="{{item.bank_code}}" *ngFor='let item of bankList'>
-                    {{item.bank_name}}</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="form-group row">
-
               <label class="col-sm-12 col-md-2 col-form-label">To Date</label>
               <div class="col-sm-12 col-md-3">
                 <mat-form-field>
@@ -43,6 +31,19 @@
                   <mat-datepicker-toggle matSuffix [for]="todatepicker"></mat-datepicker-toggle>
                   <mat-datepicker #todatepicker></mat-datepicker>
                 </mat-form-field>
+              </div>
+
+            </div>
+
+            <div class="form-group row">
+
+              <label class="col-sm-12 col-md-2 col-form-label">Bank Name</label>
+              <div class="col-sm-12 col-md-3">
+                <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" formControlName="bankCode"
+                  class="form-control">
+                  <option class="col-sm-2 col-md-2" value="{{item.bank_code}}" *ngFor='let item of bankList'>
+                    {{item.bank_name}}</option>
+                </select>
               </div>
 
               <div class="col-sm-0 col-md-1"></div>
@@ -79,7 +80,7 @@
 
             </div>
 
-<!--              <div class="form-group row">
+            <!--              <div class="form-group row">
                       <label class="col-sm-12 col-md-2  col-form-label">Bank Name</label>
                       <div>
                       <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" class="col-sm-12 col-md-3" formControlName="bankCode" class="form-control" >
