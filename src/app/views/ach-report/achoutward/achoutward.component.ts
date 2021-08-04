@@ -14,18 +14,6 @@ import { DatePipe } from '@angular/common';
 
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 
-export const MY_DATE_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
-  },
-};
-
 @Component({
   selector: 'app-achoutward',
   templateUrl: './achoutward.component.html',
@@ -34,7 +22,7 @@ export const MY_DATE_FORMATS = {
 })
 export class AchoutwardComponent implements OnInit {
 
-  deviceSmall = 458;
+  deviceSmall=1261;
   scrHeight: Number;
   scrWidth: Number;
 

@@ -21,7 +21,8 @@ import { CCSReportService } from '../../../../services/CCSReportService';
 })
 export class AchinwardComponent implements OnInit {
 
-  deviceSmall = 458;
+  //deviceSmall = 458;
+  deviceSmall=1261;
   scrHeight: Number;
   scrWidth: Number;
 
@@ -133,7 +134,7 @@ export class AchinwardComponent implements OnInit {
             var link = document.createElement('a');
             debugger;
             link.href = window.URL.createObjectURL(blob);
-            link.download = 'RTGS_Inward.pdf';
+            link.download = 'ACH_Inward.pdf';
             link.target = '_blank';
             link.click();
             window.URL.revokeObjectURL(link.href);
@@ -158,7 +159,7 @@ export class AchinwardComponent implements OnInit {
               });
               var link = document.createElement('a');
               link.href = window.URL.createObjectURL(blob);
-              link.download = "RTGS_Inward.xlsx";
+              link.download = "ACH_Inward.xlsx";
               link.click();
               console.log("Finish >>>")
             }))
