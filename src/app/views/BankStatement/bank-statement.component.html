@@ -9,32 +9,32 @@
                     <div class="spinner-border spinner-border-sm text-warning"></div>
                       <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
                   </div>
+                  <code *ngIf="error">{{error}}</code>
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Account No</label>
                         <div class="col-sm-3">
                           <input type="text" formControlName="accno" class="form-control">
-                          <code *ngIf="error">{{error}}</code>
                         </div>
                     </div>
                     <div class="form-group row">
                       
                       <label class="col-sm-2 col-form-label">  Date
-                          <input type="checkbox" (change)="passOnChange($event.target.checked)" class="styled">
+                          <input type="checkbox" checked (change)="passOnChange($event.target.checked)" class="styled">
                       </label>
                       
-                      <div *ngIf="passDate" class="col-sm-3">
+                      <div *ngIf="!passDate" class="col-sm-3">
                         <select class="form-control" formControlName="years" id="exampleFormControlSelect1">
                           <option value="" selected>-- Select --</option>
                           <option *ngFor="let y of yearList" value="{{y.pass_years}}">{{ y.pass_years}}</option>
                         </select>
                       </div>
                       
-                      <div *ngIf="!passDate" class="col-sm-3">
+                      <div *ngIf="passDate" class="col-sm-3">
                         <input type="date" formControlName="fromDate" class="form-control">
                       </div>
-                      <label  *ngIf="!passDate" class="col-form-label">-</label>
-                      <div *ngIf="!passDate" class="col-sm-3">
+                      <label  *ngIf="passDate" class="col-form-label">-</label>
+                      <div *ngIf="passDate" class="col-sm-3">
                         <input type="date" formControlName="toDate" class="form-control">
                       </div>
                   </div>

@@ -11,7 +11,7 @@ import { BankStatementService } from 'src/services/BankStatementService';
 })
 export class BankStatementComponent implements OnInit {
   loading = false;
-  passDate = false;
+  passDate = true;
   acc_no: string;
   fromDate: Date;
   toDate: Date;
@@ -60,7 +60,39 @@ export class BankStatementComponent implements OnInit {
       appfiletype = "application/pdf";
     }
     if (this.passDate) {
+      this.fromDate = this.form.get(["fromDate"])!.value;
+      this.toDate = this.form.get(["toDate"])!.value;
+      this.bankStatementAPIService.createBankStatement(this.acc_no,this.fileType, this.fromDate, this.toDate)
+        .pipe(
+          map((data: any) => {
+            let blob = new Blob([data], {
+              type: 'application/pdf'
+            });
+            var link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            if(this.fileType ==="excel"){
+              link.download = 'BankStatememnt.xlsx';
+              }else{
+                link.target = '_blank';
+              }
+            link.click();
+            window.URL.revokeObjectURL(link.href);
+            this.loading = false;
+          })).subscribe(
+            res => { },
+            error => {
+              this.error = this.acc_no + "(The system cannot find the file specified)";
+              this.loading = false;
+            });
+   
+    }
+    else {
       this.filePath = this.form.get(["years"])!.value;
+      if(this.filePath == ""){
+        this.error = "Year is required";
+        this.loading = false;
+        return;
+      }
       this.bankStatementAPIService.searchPassBankStatement(this.acc_no, this.filePath, this.fileType)
         .pipe(
           map((data: any) => {
@@ -86,55 +118,8 @@ export class BankStatementComponent implements OnInit {
               this.error = this.acc_no + "(The system cannot find the file specified)";
               this.loading = false;
             });
-    }
-    else {
-      this.fromDate = this.form.get(["fromDate"])!.value;
-      this.toDate = this.form.get(["toDate"])!.value;
-      this.bankStatementAPIService.createBankStatement(this.acc_no,this.fileType, this.fromDate, this.toDate)
-        .pipe(
-          map((data: any) => {
-            let blob = new Blob([data], {
-              type: 'application/pdf'
-            });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            if(this.fileType ==="excel"){
-              link.download = 'BankStatememnt.xlsx';
-              }else{
-                link.target = '_blank';
-              }
-            link.click();
-            window.URL.revokeObjectURL(link.href);
-            this.loading = false;
-          })).subscribe(
-            res => { },
-            error => {
-              this.error = this.acc_no + "(The system cannot find the file specified)";
-              this.loading = false;
-            });
-    }
-    /*
-    this.pdfAPIService.searchPassBankStatement(this.acc_no)
-    .pipe(
-      map((data: any) => {
-      let blob = new Blob([data], {
-          type: 'application/pdf' 
-      });
-      var link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      // link.download = 'samplePDFFile.pdf';
-      link.target = '_blank';
-      link.click();
-      window.URL.revokeObjectURL(link.href);
-      this.loading = false;
-  })).subscribe(
-    res=>{
-  
-    },
-        error => {
-          this.error = this.acc_no+ "(The system cannot find the file specified)";
-          this.loading = false;
-          });*/
+
+          }
   }
 
 }

@@ -39,9 +39,11 @@ export class BasicLoginComponent implements OnInit {
     document.querySelector('body').setAttribute('themebg-pattern', 'theme1');
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
     const currentUser = this.authenticationService.currentUserValue;
+    //console.log("login >>"+currentUser);
     if(currentUser){
     this.router.navigate([this.returnUrl]);
     }
+    
   }
  
 check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); } 
