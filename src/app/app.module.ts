@@ -16,9 +16,6 @@ import { ErrorInterceptor } from 'src/helpers/error.interceptor';
 import { BnNgIdleService } from 'bn-ng-idle'; 
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
-
-
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
       window.scrollTo(0, 0);
     });
 
-    this.authService.currentUser.subscribe(x => this.currentUser = x);
+    //this.authService.currentUser.subscribe(x => this.currentUser = x);
 
     // let context = this;
     // window.addEventListener("beforeunload", function (e) {
@@ -43,12 +43,12 @@ export class AppComponent implements OnInit {
     //   }
     // });
 
-    this.bnIdle.startWatching(3600).subscribe((isTimedOut: boolean) => {
+    /*this.bnIdle.startWatching(3600).subscribe((isTimedOut: boolean) => {
       if (isTimedOut) {
         console.log('Application session expired');
         this.authService.applicationBackend_logout(this.authService.currentUserValue.userId);
       }
-    });
+    });*/
 
   }
 }

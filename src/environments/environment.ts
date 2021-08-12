@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl :'http://localhost:7071'//'http://172.30.4.51:7003/reporting_frontend_service'// 
+  baseUrl :'http://localhost:7071'//'http://172.30.4.51:7004/reporting_frontend_service'// 
 };
 
 /*

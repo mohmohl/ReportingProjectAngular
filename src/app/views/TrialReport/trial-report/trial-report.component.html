@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+              <h5>Trial Report</h5>
+              <div *ngIf="loading" class="d-flex justify-content-center">
+                <div class="spinner-border spinner-border-sm text-warning"></div>
+                  <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <code *ngIf="error">{{error}}</code>
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                  
+                    <div class="container-fluid">
+                    <div class="form-group row">
+                        <label class="col-sm-2">Date (DD/MM/YYYY)</label>
+                        <div class="col-xs-2">
+                            <mat-form-field class="col-sm-12 col-md-12">
+                                <input readonly matInput [matDatepicker]="picker" formControlName="fromDate">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                        </div>
+                        <label class="col-sm-1">Branch</label>
+                      <div class="col-xs-2">
+                        <select class="" formControlName="branchCode" id="exampleFormControlSelect1">
+                          <option value="" selected>-- Select --</option>
+                          <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
+                        </select>
+                      </div>
+                      <label class="col-sm-1 ">Currency</label>
+                      <div class="col-xs-2">
+                        <select class="" formControlName="currencyCode" id="exampleFormControlSelect1">
+                          <option value="" selected>-- Select --</option>
+                          <option *ngFor="let c of currencyList" value="{{c}}">{{ c }}</option>
+                        </select>
+                      </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn-primary">Search</button>
+                          </div>
+                      </div>
+                      
+                    </div>
+                </form>
+                <div *ngIf="trialList" class="col-sm-12 text-right">
+                  <button type="button" class="btn-success">
+                    <i class="ti-printer"></i>Excel
+                  </button> 
+                  <button type="button" class="btn-danger">
+                    <i class="ti-printer"></i>PDF
+                  </button> 
+                </div>
+                <p *ngIf="data_message" class="text-danger">{{data_message}}</p>
+             
+            <div class="table-responsive">
+              <div *ngIf="data" class="col-sm-12 text-center">
+                <p>{{data.companyName}}</p>
+                <p>{{data.branchName}}</p>
+                <p>{{data.title}}</p>
+              </div>
+              <table class="table table table-hover" id="export-table">
+                <thead>
+                <tr class="text-uppercase">
+                  <th [attr.colspan]="ccyCode == true ? '2' : ''">Debit</th>
+                  <th rowspan="2">Account</th>
+                  <th rowspan="2">Description</th>
+                  <th [attr.colspan]="ccyCode == true ? '2' : ''">Credit</th>
+                </tr>
+                <tr *ngIf="ccyCode" class="text-uppercase">
+                  
+                  <th>{{currencyCode}}</th>
+                  <th>Kyats</th>
+                  
+                  <th>{{currencyCode}}</th>
+                  <th>Kyats</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let list of trialList">
+                        <td *ngIf="ccyCode">{{list.debit}}</td>
+                        <td [attr.colspan]="ccyCode == true ? '2' : ''">{{list.debit_lcy}}</td>
+                        <td>{{list.account}}</td>
+                        <td>{{list.gl_desc}}</td>
+                        <td *ngIf="ccyCode">{{list.credit}}</td>
+                        <td [attr.colspan]="ccyCode == true ? '2' : ''">{{list.credit_lcy}}</td>
+                        
+                    </tr>
+               
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+ 

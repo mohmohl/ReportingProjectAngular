@@ -76,61 +76,65 @@ export class AdminComponent implements OnInit {
     this.innerHeight = scrollHeight + 'px';
     this.windowWidth = window.innerWidth;
     this.setMenuAttributs(this.windowWidth);
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.userName = this.currentUser.username;
-    console.log("current user = "+this.userName);
-    this.menuItems = [{
-      label: 'Reporting',
-      main: [
-        {
-          state: 'home',
-          name: 'Home',
-          type: 'link',
-          icon: 'ti-layout-sidebar-left'
-        }
-      ]
-    }];
-    var menuItemList: MenuItem[];
-    const menuMap = new Map(Object.entries(this.currentUser.menuItem));
-    menuMap.forEach((value, key) => {
-      const menuItemList: MenuItem[] = value;
-      if (key == "No_Category") {
-        menuItemList.forEach(e => {
-          var item = {
-            state: e.url1,
-            name: e.menu_name,
+   
+    if(this.authenticationService.currentUser != null){
+      this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+      this.userName = this.currentUser.username;
+      console.log("current user = "+this.userName);
+      this.menuItems = [{
+        label: 'Reporting',
+        main: [
+          {
+            state: 'home',
+            name: 'Home',
             type: 'link',
-            icon: 'ti-layout-sidebar-left'
+            icon: 'icofont icofont-stylish-right text-danger'
+          }
+        ]
+      }];
+      var menuItemList: MenuItem[];
+   //ti-layout-sidebar-left
+      const menuMap = new Map(Object.entries(this.currentUser.menuItem));
+      menuMap.forEach((value, key) => {
+        const menuItemList: MenuItem[] = value;
+        if (key == "No_Category") {
+          menuItemList.forEach(e => {
+            var item = {
+              state: e.url1,
+              name: e.menu_name,
+              type: 'link',
+              icon: 'icofont icofont-stylish-right text-danger'
+            };
+            this.menuItems[0].main.push(item);
+          });
+        }
+        else {
+          var mitem = {
+            state: '',
+            name: menuItemList[0].category_name,
+            type: 'sub',
+            icon: 'icofont icofont-stylish-right text-danger',
+            children: []
           };
-          this.menuItems[0].main.push(item);
+//ti-direction-alt
+          menuItemList.forEach(e => {
+            var sub_item = {
+              state: e.url1,
+              name: e.menu_name
+            };
+            mitem.children.push(sub_item);
+          });
+          this.menuItems[0].main.push(mitem);
+        }
+     
         });
       }
-      else {
-        var mitem = {
-          state: '',
-          name: menuItemList[0].category_name,
-          type: 'sub',
-          icon: 'ti-direction-alt',
-          children: []
-        };
-
-        menuItemList.forEach(e => {
-          var sub_item = {
-            state: e.url1,
-            name: e.menu_name
-          };
-          mitem.children.push(sub_item);
-        });
-        this.menuItems[0].main.push(mitem);
-      }
-    });
     //console.log("menu serve data = "+JSON.stringify(this.currentUser.menuItem));
   }
 
   ngOnInit() {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    this.userName = this.currentUser.username;
-    console.log("current user = "+this.userName);
+    //this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    //this.userName = this.currentUser.username;
    }
 
   onClickedOutside(e: Event) {

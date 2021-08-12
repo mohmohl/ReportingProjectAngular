@@ -8,13 +8,12 @@ import { AuthenticationService } from "./AuthenticationService";
     providedIn: 'root'
   })
   export class UserDataService {
+   
     constructor(private http: HttpClient,private authenticationService: AuthenticationService) { 
     }
-  
-  
+
     public getFcubUserData(user_id:string): Observable<any>{
-      
-       return this.http.post<any>(`${environment.baseUrl}`+'/user/getFcubActiveUser?userId='+user_id,{ title: 'Fcubs user Data' });
+       return this.http.post<any>(`${environment.baseUrl}`+'/user/getFcubActiveUser?userId='+user_id,{title:"Fcub User"});
   }
 
   public createApplicationAccount(user_id: string, password: string,menuId:string[]) {
