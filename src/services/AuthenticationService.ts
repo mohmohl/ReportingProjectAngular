@@ -16,16 +16,17 @@ export class AuthenticationService {
     constructor(private http: HttpClient, private router: Router) {
 
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUser = this.currentUserSubject.asObservable();
+ 
         //for permission list
         this.permission = [];
         this.permission.push("/home");
         this.permission.push("/change-password");
-        this.permission.push("/user-registration/**");
         this.permission.push("/access-denied");
+   
         if (this.currentUserSubject.value != null) {
+            this.currentUser = this.currentUserSubject.asObservable();
             const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
-            console.log("Menu = " + menuMap);
+           
             menuMap.forEach((value, key) => {
                 const menuList: MenuItem[] = value;
                 menuList.forEach(e => {
@@ -33,11 +34,11 @@ export class AuthenticationService {
                 });
             });
         }
+       
+       
     }
 
     public get currentUserValue(): User {
-        var u:User = this.currentUserSubject.value;
-        console.log("refresh u="+u);
         return this.currentUserSubject.value;
     }
 
@@ -60,7 +61,6 @@ export class AuthenticationService {
                 this.permission = [];
                 this.permission.push("/home");
                 this.permission.push("/change-password");
-                this.permission.push("/user-registration/**");
                 this.permission.push("/access-denied");
                 if (this.currentUserSubject.value != null) {
                     this.currentUserValue;
@@ -78,8 +78,19 @@ export class AuthenticationService {
     }
 
     logout() {
+        var userId = this.currentUserValue.userId;
+        console.log("Currnet Login userId for logout = "+userId);
+        var url = "/user/authenticate_logout?userId=" + userId;
+        this.http.get(`${environment.baseUrl}` + url, { responseType: 'text' }).subscribe(res => {
+
+            // remove user from local storage to log user out
+            // localStorage.removeItem('currentUser');
+            // this.currentUserSubject.next(null);
+            // this.router.navigate(['/auth/login']);
+        });
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
+        this.router.navigate(['/auth/login']);
     }
 
     applicationBackend_logout(userId: string) {

@@ -2311,13 +2311,13 @@ agm-map, vector_map {
   border-left-color: #fcd703 !important;
 }
 .col-form-label {
-  font-size: 12px !important;
+  font-size: 11px !important;
 }
 .form-control {
-  font-size: 12px !important;
+  font-size: 11px !important;
 }
 .pcoded .pcoded-navbar .pcoded-item > li > a {
-  font-size: 12px !important;
+  font-size: 11px !important;
 }
 .pcoded[theme-layout=vertical] .pcoded-navbar .pcoded-item > li > a{
   padding: 7px 10px !important;
@@ -2328,4 +2328,26 @@ agm-map, vector_map {
 }
 .pcoded[theme-layout=vertical] .pcoded-navbar .pcoded-item .pcoded-hasmenu .pcoded-submenu li > a {
   padding: 5px 10px !important;
+}
+.main-body .page-wrapper{
+  padding: 0.1rem !important;
+}
+body{
+  font-size: 12px !important;
+}
+p{
+  margin-bottom: 0 !important;
+}
+.table-responsive table{
+  width:99%;
+}
+
+.table-responsive table td{
+  border:1px solid #aaa;
+  padding:5px;
+}
+.table-responsive table th{
+  border:1px solid #aaa;
+  padding:5px;
+  background-color: #fcf6d6;
 }
