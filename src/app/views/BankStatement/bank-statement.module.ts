@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { MatDatepickerModule, MatInputModule, MatNativeDateModule,MatFormFieldModule } from '@angular/material';
 import { BankStatementRoutingModule} from './bank-statement-routing.module';
 import {BankStatementComponent } from './bank-statement.component';
 import {SharedModule} from '../../shared/shared.module';
@@ -9,7 +9,11 @@ import {SharedModule} from '../../shared/shared.module';
   imports: [
     CommonModule,
     BankStatementRoutingModule,
-    SharedModule
+    SharedModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule
   ],
   declarations: [BankStatementComponent]
 })

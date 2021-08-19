@@ -1,15 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
 import { map } from 'rxjs/operators';
 import { PassYears } from 'src/models/PassYears';
+import { PickDateAdapter } from 'src/models/PickDateAdapter';
 import { BankStatementService } from 'src/services/BankStatementService';
-
+export const PICK_FORMATS = {
+  parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
+  display: {
+      dateInput: 'input',
+      monthYearLabel: {year: 'numeric', month: 'short'},
+      dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
+      monthYearA11yLabel: {year: 'numeric', month: 'long'}
+  }
+};
 @Component({
   selector: 'app-bank-statement',
   templateUrl: './bank-statement.component.html',
-  styleUrls: ['./bank-statement.component.css']
+  styleUrls: ['./bank-statement.component.css'],
+  providers: [
+    {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
+]
 })
 export class BankStatementComponent implements OnInit {
+  Content :any;
   loading = false;
   passDate = true;
   acc_no: string;
@@ -26,6 +41,7 @@ export class BankStatementComponent implements OnInit {
     fromDate: new FormControl('',),
     toDate: new FormControl('',),
   });
+  sanitizer: any;
   constructor(private bankStatementAPIService: BankStatementService) { }
 
   ngOnInit() {
@@ -62,11 +78,13 @@ export class BankStatementComponent implements OnInit {
     if (this.passDate) {
       this.fromDate = this.form.get(["fromDate"])!.value;
       this.toDate = this.form.get(["toDate"])!.value;
-      this.bankStatementAPIService.createBankStatement(this.acc_no,this.fileType, this.fromDate, this.toDate)
+      let fDate = `${this.fromDate.getFullYear()}-${this.fromDate.getMonth()+1}-${this.fromDate.getDate()}`;
+      let tDate = `${this.toDate.getFullYear()}-${this.toDate.getMonth()+1}-${this.toDate.getDate()}`;
+      this.bankStatementAPIService.createBankStatement(this.acc_no,this.fileType, fDate, tDate)
         .pipe(
           map((data: any) => {
             let blob = new Blob([data], {
-              type: 'application/pdf'
+              type: appfiletype
             });
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
@@ -74,7 +92,9 @@ export class BankStatementComponent implements OnInit {
               link.download = 'BankStatememnt.xlsx';
               }else{
                 link.target = '_blank';
+                //this.Content=this.sanitizer.bypassSecurityTrustResourceUrl(link.href);
               }
+         
             link.click();
             window.URL.revokeObjectURL(link.href);
             this.loading = false;

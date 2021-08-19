@@ -16,7 +16,7 @@ export class AuthenticationService {
     constructor(private http: HttpClient, private router: Router) {
 
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
- 
+        this.currentUser = this.currentUserSubject.asObservable();
         //for permission list
         this.permission = [];
         this.permission.push("/home");
@@ -24,9 +24,7 @@ export class AuthenticationService {
         this.permission.push("/access-denied");
    
         if (this.currentUserSubject.value != null) {
-            this.currentUser = this.currentUserSubject.asObservable();
             const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
-           
             menuMap.forEach((value, key) => {
                 const menuList: MenuItem[] = value;
                 menuList.forEach(e => {
@@ -34,11 +32,10 @@ export class AuthenticationService {
                 });
             });
         }
-       
-       
     }
 
     public get currentUserValue(): User {
+
         return this.currentUserSubject.value;
     }
 
