@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {TrialReportRoutingModule} from './trial-report-routing.module';
 import {SharedModule} from '../../../shared/shared.module';
-import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import { MatDatepickerModule, MatInputModule, MatNativeDateModule,MatFormFieldModule } from '@angular/material';
 import { TrialReportComponent } from './trial-report.component';
 
 @NgModule({
@@ -12,7 +12,8 @@ import { TrialReportComponent } from './trial-report.component';
     SharedModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatFormFieldModule
   ],
   declarations: [TrialReportComponent]
 })
