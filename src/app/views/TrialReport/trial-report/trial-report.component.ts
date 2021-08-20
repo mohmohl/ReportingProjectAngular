@@ -4,16 +4,36 @@ import { TrialReport } from 'src/models/TrialReport';
 import { DateAdapter} from '@angular/material/core';
 import { TrialReportService } from 'src/services/TrialReportService';
 import { TrialData } from 'src/models/TrialData';
+
+import { NativeDateAdapter,MAT_DATE_FORMATS } from '@angular/material';
+import { PickDateAdapter } from 'src/models/PickDateAdapter';
+ export const PICK_FORMATS = {
+  parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
+  display: {
+      dateInput: 'input',
+      monthYearLabel: {year: 'numeric', month: 'short'},
+      dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
+      monthYearA11yLabel: {year: 'numeric', month: 'long'}
+  }
+};
+
 @Component({
   selector: 'app-trial-report',
   templateUrl: './trial-report.component.html',
-  styleUrls: ['./trial-report.component.css']
+  styleUrls: ['./trial-report.component.css'],
+  providers: [
+    {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
+]
 })
 export class TrialReportComponent implements OnInit {
   error='';
   from_date:Date;
   loading = false;
   data:TrialReport;
+  minDate = new Date(2021, 5, 30);
+  maxDate = new Date(2020,0,1);
+
   trialList:TrialData[];
   branchList:string[];
   currencyList:string[];
@@ -25,8 +45,8 @@ export class TrialReportComponent implements OnInit {
     branchCode:new FormControl('', Validators.required),
     currencyCode:new FormControl('', Validators.required)
   });
-  constructor(private service:TrialReportService,private dateAdapter: DateAdapter<Date>) {
-    this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
+  constructor(private service:TrialReportService){//,private dateAdapter: DateAdapter<Date>) {
+    //this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
     this.loading = true;
     service.getBranchList().subscribe((res:string[])=>{
       this.loading = false;
@@ -49,7 +69,6 @@ export class TrialReportComponent implements OnInit {
   this.error="";
   this.from_date = this.form.get(["fromDate"])!.value;
   this.loading = true;
-
   let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
   let bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;

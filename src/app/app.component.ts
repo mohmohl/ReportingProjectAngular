@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
       window.scrollTo(0, 0);
     });
 
-    //this.authService.currentUser.subscribe(x => this.currentUser = x);
+    this.authService.currentUser.subscribe(x => this.currentUser = x);
 
     // let context = this;
     // window.addEventListener("beforeunload", function (e) {

@@ -36,7 +36,7 @@ import { AuthenticationService } from 'src/services/AuthenticationService';
        
     }
 
-    public createBankStatement(accNo:string,fileType:string,fromDate:Date,toDate:Date){
+    public createBankStatement(accNo:string,fileType:string,fromDate:string,toDate:string){
       // return this.http.get(this.api,{params:accParam});
       var api = environment.baseUrl+"/bankStatement/getBankStatement?accountNo="+accNo+"&fileType="+fileType+"&fromDate="+fromDate+"&toDate="+toDate;
         return this.http.get<any>(`${api}`, {responseType: 'arraybuffer' as 'json'});

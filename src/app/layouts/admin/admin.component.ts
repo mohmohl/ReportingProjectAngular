@@ -77,7 +77,7 @@ export class AdminComponent implements OnInit {
     this.windowWidth = window.innerWidth;
     this.setMenuAttributs(this.windowWidth);
    
-    if(this.authenticationService.currentUser != null){
+    //if(this.authenticationService.currentUser != null){
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
       this.userName = this.currentUser.username;
       console.log("current user = "+this.userName);
@@ -128,13 +128,14 @@ export class AdminComponent implements OnInit {
         }
      
         });
-      }
+      
     //console.log("menu serve data = "+JSON.stringify(this.currentUser.menuItem));
   }
 
   ngOnInit() {
-    //this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-    //this.userName = this.currentUser.username;
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.userName = this.currentUser.username;
+    console.log("Admin >> u = "+this.userName);
    }
 
   onClickedOutside(e: Event) {
