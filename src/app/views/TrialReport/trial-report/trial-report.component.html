@@ -65,7 +65,7 @@
               </div>
               <table class="table table table-hover" id="export-table">
                 <thead>
-                <tr class="text-uppercase">
+                <tr class="text-uppercase" width="100%">
                   <th [attr.colspan]="ccyCode == true ? '2' : ''">Debit</th>
                   <th rowspan="2">Account</th>
                   <th rowspan="2">Description</th>
@@ -75,7 +75,6 @@
                   
                   <th>{{currencyCode}}</th>
                   <th>Kyats</th>
-                  
                   <th>{{currencyCode}}</th>
                   <th>Kyats</th>
                 </tr>
@@ -83,11 +82,11 @@
                 <tbody>
                     <tr *ngFor="let list of trialList">
                         <td *ngIf="ccyCode" class="num-txt">{{list.debit | number}}</td>
-                        <td class="num-txt" [attr.colspan]="ccyCode == true ? '2' : ''">{{list.debit_lcy | number}}</td>
+                        <td class="num-txt" >{{list.debit_lcy | number}}</td>
                         <td>{{list.account}}</td>
                         <td>{{list.gl_desc}}</td>
                         <td class="num-txt" *ngIf="ccyCode">{{list.credit | number}}</td>
-                        <td class="num-txt" [attr.colspan]="ccyCode == true ? '2' : ''">{{list.credit_lcy | number}}</td>
+                        <td class="num-txt" >{{list.credit_lcy | number}}</td>
                         
                     </tr>
                

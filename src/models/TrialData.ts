@@ -7,4 +7,5 @@ export class TrialData{
 	  ac_ccy:string;
 	  branch:string;
 	  gl_desc:string;
+	  t_date:string;
 }
