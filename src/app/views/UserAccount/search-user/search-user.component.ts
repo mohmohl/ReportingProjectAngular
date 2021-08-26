@@ -28,7 +28,7 @@ export class SearchUserComponent implements OnInit {
   this.error="";
   this.user_id = this.form.get(["userId"])!.value;
   this.loading = true;
-  console.log("Param = "+this.user_id)
+  //console.log("Param = "+this.user_id)
   this.service.getFcubUserData(this.user_id).subscribe((res:UserInfo[])=>{
     this.loading = false;
     this.data_list = res;

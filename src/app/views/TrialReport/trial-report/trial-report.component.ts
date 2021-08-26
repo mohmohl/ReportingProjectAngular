@@ -62,6 +62,7 @@ export class TrialReportComponent implements OnInit {
   ngOnInit() {
   }
   submit(){
+    this.trialList=[];
     if (this.form.invalid) {
       this.error = "Data is required";
       return;
