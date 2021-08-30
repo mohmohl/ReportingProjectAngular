@@ -7,6 +7,8 @@ import { TrialData } from 'src/models/TrialData';
 
 import { NativeDateAdapter,MAT_DATE_FORMATS } from '@angular/material';
 import { PickDateAdapter } from 'src/models/PickDateAdapter';
+import { isNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
+import { formatNumber } from '@angular/common';
  export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
   display: {
@@ -33,7 +35,14 @@ export class TrialReportComponent implements OnInit {
   data:TrialReport;
   minDate = new Date(2021, 5, 30);
   maxDate = new Date(2020,0,1);
-
+totalDebit:number=0;
+totalDebit_lcy:number=0;
+totalCredit:number=0;
+totalCredit_lcy:number=0;
+totalDebitstr:string;
+totalDebit_lcystr:string;
+totalCreditstr:string;
+totalCredit_lcystr:string;
   trialList:TrialData[];
   branchList:string[];
   currencyList:string[];
@@ -61,8 +70,20 @@ export class TrialReportComponent implements OnInit {
 
   ngOnInit() {
   }
+  isNegitive(val: number): boolean {
+    if (val < 0) {
+     return true;
+    } else {
+     return false
+    }
+   }
+   
   submit(){
     this.trialList=[];
+    this.totalDebit=0;
+    this.totalDebit_lcy=0;
+    this.totalCredit=0;
+    this.totalCredit_lcy=0;
     if (this.form.invalid) {
       this.error = "Data is required";
       return;
@@ -87,6 +108,7 @@ export class TrialReportComponent implements OnInit {
       this.data_message="";
       this.data = res;
       this.trialList = this.data.trialList;
+      this.findsum(this.trialList);
     }
     else{
       this.data_message="No Record Found";
@@ -98,7 +120,42 @@ export class TrialReportComponent implements OnInit {
     this.data=null;
     this.loading = false;
     this.error="Internal Server Error";
-    console.log(error);
+    
   });
+}
+
+findsum(data:TrialData[]){    
+ 
+  for(let j=0;j<data.length;j++){  
+    if(data[j].debit < 0 ){
+      data[j].debitstr = this.isNegitiveTransform(data[j].debit)
+    }
+    if(data[j].debit_lcy < 0 ){
+      data[j].debit_lcystr = this.isNegitiveTransform(data[j].debit_lcy)
+      console.log(">>> "+data[j].debit_lcystr)
+    }
+    if(data[j].credit < 0 ){data[j].creditstr = this.isNegitiveTransform(data[j].credit)}
+    if(data[j].credit_lcy < 0 ){data[j].credit_lcystr = this.isNegitiveTransform(data[j].credit_lcy)} 
+      
+      this.totalDebit+= data[j].debit;
+       this.totalDebit_lcy+= data[j].debit_lcy;
+       this.totalCredit+= data[j].credit;
+       this.totalCredit_lcy+= data[j].credit_lcy;
+      
+  }
+if(this.totalDebit < 0 )this.totalDebitstr = this.isNegitiveTransform(this.totalDebit);
+if(this.totalDebit_lcy < 0 )this.totalDebit_lcystr = this.isNegitiveTransform(this.totalDebit_lcy);
+if(this.totalCredit < 0 )this.totalCreditstr = this.isNegitiveTransform(this.totalCredit);
+if(this.totalCredit_lcy < 0 )this.totalCredit_lcystr = this.isNegitiveTransform(this.totalCredit_lcy);
+} 
+
+isNegitiveTransform(value: any, args?: any): any {
+  var data;
+  if(value < 0){
+    value=value * -1;
+    data = "( "+formatNumber(Number(value), 'en-US', '1.2-2')+" )";
+
+  }
+  return data;
 }
 }

@@ -5,6 +5,7 @@ import {SharedModule} from '../../../shared/shared.module';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule,MatFormFieldModule } from '@angular/material';
 import { TrialReportComponent } from './trial-report.component';
 
+
 @NgModule({
   imports: [
     CommonModule,

@@ -23,7 +23,7 @@
                     <div class="container-fluid">
                     <div class="form-group row">
                         <label class="col-sm-1">Date</label>
-                        <div class="col-xs-2">
+                        <div class="col-xs-2 date-picker">
                               <mat-form-field>
                                 <input #minmaxInput matInput 
                                   [min]="minDate" 
@@ -65,31 +65,55 @@
               </div>
               <table class="table table table-hover" id="export-table">
                 <thead>
-                <tr class="text-uppercase" width="100%">
+                <tr class="text-uppercase table-header-txt" width="100%">
                   <th [attr.colspan]="ccyCode == true ? '2' : ''">Debit</th>
-                  <th rowspan="2">Account</th>
+                  <th rowspan="2" width="80px">Account</th>
                   <th rowspan="2">Description</th>
                   <th [attr.colspan]="ccyCode == true ? '2' : ''">Credit</th>
                 </tr>
-                <tr *ngIf="ccyCode" class="text-uppercase">
+                <tr *ngIf="ccyCode" class="text-uppercase table-header-txt">
                   
-                  <th>{{currencyCode}}</th>
-                  <th>Kyats</th>
-                  <th>{{currencyCode}}</th>
-                  <th>Kyats</th>
+                  <th width="150px">{{currencyCode}}</th>
+                  <th width="150px">Kyats</th>
+                  <th width="150px">{{currencyCode}}</th>
+                  <th width="150px">Kyats</th>
                 </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let list of trialList">
-                        <td *ngIf="ccyCode" class="num-txt">{{list.debit | number}}</td>
-                        <td class="num-txt" >{{list.debit_lcy | number}}</td>
-                        <td>{{list.account}}</td>
-                        <td>{{list.gl_desc}}</td>
-                        <td class="num-txt" *ngIf="ccyCode">{{list.credit | number}}</td>
-                        <td class="num-txt" >{{list.credit_lcy | number}}</td>
+                        <td *ngIf="ccyCode" class="num-txt">
+                          {{list.debit < 0 ? list.debitstr : list.debit === 0 ? "" :list.debit | number: '1.2-2'}}
+                        </td>
+                        <td class="num-txt">
+                          {{list.debit_lcy < 0 ? list.debit_lcystr : list.debit_lcy === 0 ? "" :list.debit_lcy | number: '1.2-2'}}
+                        </td>
+                        <td class="txt">{{list.account}}</td>
+                        <td class="des-txt">{{list.gl_desc}}</td>
+                        <td class="num-txt" *ngIf="ccyCode">
+                          {{list.credit < 0 ? list.creditstr : list.credit === 0 ? "" :list.credit | number: '1.2-2'}}
+                        </td>
+                        <td class="num-txt" >
+                          {{list.credit_lcy < 0 ? list.credit_lcystr : list.credit_lcy === 0 ? "" :list.credit_lcy | number: '1.2-2'}}
+                        </td>
                         
                     </tr>
-               
+                    <tr>
+                      <td *ngIf="ccyCode" class="num-txt">
+                        {{totalDebit < 0 ? totalDebitstr : totalDebit === 0 ? "" :  totalDebit | number: '1.2-2'}}
+                      </td>
+                      <td class="num-txt">
+                         {{totalDebit_lcy < 0 ? totalDebit_lcystr : totalDebit_lcy === 0 ? "" :  totalDebit_lcy | number: '1.2-2'}}
+                      </td>
+                      <td class="txt" colspan="2"> Grand Total</td>
+                      
+                      <td class="num-txt" *ngIf="ccyCode">
+                        {{totalCredit < 0 ? totalCreditstr : totalCredit === 0 ? "" :  totalCredit | number: '1.2-2'}}
+                      </td>
+                      <td class="num-txt" >
+                         {{totalCredit_lcy < 0 ? totalCredit_lcystr : totalCredit_lcy === 0 ? "" :  totalCredit_lcy | number: '1.2-2'}}
+                      </td>
+                      
+                  </tr>
                 </tbody>
               </table>
             </div>
