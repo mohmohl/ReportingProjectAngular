@@ -7,4 +7,5 @@ export class MenuItem {
 	  url2:string;
 	  category_id:string;
 	  category_name:string;
+	  selected:boolean;
 }

@@ -25,10 +25,11 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
-      {
+     /* {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-      }, {
+      },*/
+       {
         path: 'basic',
         loadChildren: () => import('./components/basic/basic.module').then(m => m.BasicModule)
       }, {
@@ -60,6 +61,10 @@ const routes: Routes = [
         path: 'user-registration/:userId',
         loadChildren: () => import('./views/UserAccount/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
       },
+      {
+        path: 'search-registered-user',
+        loadChildren: () => import('./views/UserAccount/search-registered-user/user-permission.module').then(m => m.UserPermissionModule),canActivate:[AuthGuard]
+      }, 
       {
         path: 'change-password',
         loadChildren: () => import('./views/change-password/change-password.module').then(m => m.ChangePasswordModule)

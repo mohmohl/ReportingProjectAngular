@@ -32,7 +32,6 @@ export class SearchUserComponent implements OnInit {
   this.service.getFcubUserData(this.user_id).subscribe((res:UserInfo[])=>{
     this.loading = false;
     this.data_list = res;
-    console.log(this.data_list[0].user_id);
   },(error) => {
     this.data_list=null;
     this.loading = false;
