@@ -76,6 +76,7 @@ export class BankStatementComponent implements OnInit {
       appfiletype = "application/pdf";
     }
     if (this.passDate) {
+      console.log("appfiletype >>" +appfiletype);
       this.fromDate = this.form.get(["fromDate"])!.value;
       this.toDate = this.form.get(["toDate"])!.value;
       let fDate = `${this.fromDate.getFullYear()}-${this.fromDate.getMonth()+1}-${this.fromDate.getDate()}`;
@@ -90,13 +91,19 @@ export class BankStatementComponent implements OnInit {
             link.href = window.URL.createObjectURL(blob);
             if(this.fileType ==="excel"){
               link.download = 'BankStatememnt.xlsx';
-              }else{
-                link.target = '_blank';
-                //this.Content=this.sanitizer.bypassSecurityTrustResourceUrl(link.href);
-              }
-         
-            link.click();
+              link.click();
             window.URL.revokeObjectURL(link.href);
+              }else{
+                var a = document.createElement("a");
+                document.body.appendChild(a);
+                
+                var file = new Blob([data], {type: 'application/pdf'});
+                var fileURL = URL.createObjectURL(file);
+                a.href = fileURL;
+                a.target     = '_blank'; 
+                a.click();
+   
+              }
             this.loading = false;
           })).subscribe(
             res => { },
@@ -123,12 +130,19 @@ export class BankStatementComponent implements OnInit {
             link.href = window.URL.createObjectURL(blob);
             if(this.fileType ==="excel"){
             link.download = 'BankStatememnt.xlsx';
-            }else{
-              link.target = '_blank';
-            }
-            
             link.click();
             window.URL.revokeObjectURL(link.href);
+            }else{
+              var a = document.createElement("a");
+                document.body.appendChild(a);
+                var file = new Blob([data], {type: 'application/pdf'});
+                var fileURL = URL.createObjectURL(file);
+                a.href = fileURL;
+                a.target      = '_blank'; 
+                a.click();
+              
+            }
+            
             this.loading = false;
           })).subscribe(
             res => {
