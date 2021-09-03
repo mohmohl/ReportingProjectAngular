@@ -23,7 +23,7 @@ export class CcsinwardComponent implements OnInit {
 
     //deviceSmall=768;//in pixel
   //refer: https://www.angularjswiki.com/angular/how-to-add-a-class-based-on-condition-in-angular/
-  deviceSmall=458;
+  deviceSmall=1261;
   scrHeight:Number;
   scrWidth:Number;
 
