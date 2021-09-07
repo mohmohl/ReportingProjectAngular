@@ -61,7 +61,7 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
           this.response = user;
           if(this.response.status=="OK"){
             this.mobileLogin_OTP = this.response.message;
-            this.error="One time password sent...";
+            this.error="User ID Registered Please Proceed...";
             this.form.get(["password"])!.enable();
             console.log("OTP >>> "+this.mobileLogin_OTP);
           }
@@ -87,9 +87,9 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
          this.changePasswordMode = true;
           this.mobileLoginFlag=true;
           this.mobileLogin_OTP = this.response.message;
-          this.error="Register Successful!..One time password sent...";
+          this.error="Register Successful!..Please proceed!..";
           this.form.get(["password"])!.enable();
-          console.log("OTP >>> "+this.mobileLogin_OTP);
+         
           
         }
         else if(this.response.status=="Registed"){
@@ -129,7 +129,7 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
     }
     else{
       this.loading = false;
-      this.error="Your One Time Password doesn't match!...";
+      this.error="Password doesn't match!...";
       return;
     }
   
@@ -144,7 +144,7 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
                 },
                 error => {
                   console.log("login error= "+error)
-                    this.error = error;
+                    this.error = "User ID and Password doesn't mach!.";
                     this.loading = false;
                 });
 

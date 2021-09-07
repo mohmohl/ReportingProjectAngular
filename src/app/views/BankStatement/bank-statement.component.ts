@@ -32,14 +32,16 @@ export class BankStatementComponent implements OnInit {
   toDate: Date;
   filePath: string;
   fileType: string;
+  print_date: string;
   yearList: PassYears[] = [];
   error = '';
   form = new FormGroup({
     accno: new FormControl('', Validators.required),
     years: new FormControl('',),
+    printDate: new FormControl('Transaction',Validators.required),
     fileType: new FormControl('pdf', Validators.required),
-    fromDate: new FormControl('',),
-    toDate: new FormControl('',),
+    fromDate: new FormControl(new Date,),
+    toDate: new FormControl(new Date,),
   });
   sanitizer: any;
   constructor(private bankStatementAPIService: BankStatementService) { }
@@ -76,12 +78,13 @@ export class BankStatementComponent implements OnInit {
       appfiletype = "application/pdf";
     }
     if (this.passDate) {
-      console.log("appfiletype >>" +appfiletype);
+     
       this.fromDate = this.form.get(["fromDate"])!.value;
       this.toDate = this.form.get(["toDate"])!.value;
       let fDate = `${this.fromDate.getFullYear()}-${this.fromDate.getMonth()+1}-${this.fromDate.getDate()}`;
       let tDate = `${this.toDate.getFullYear()}-${this.toDate.getMonth()+1}-${this.toDate.getDate()}`;
-      this.bankStatementAPIService.createBankStatement(this.acc_no,this.fileType, fDate, tDate)
+      this.print_date = this.form.get(["printDate"])!.value;
+      this.bankStatementAPIService.createBankStatement(this.acc_no,this.fileType, fDate, tDate,this.print_date)
         .pipe(
           map((data: any) => {
             let blob = new Blob([data], {
@@ -90,7 +93,7 @@ export class BankStatementComponent implements OnInit {
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
             if(this.fileType ==="excel"){
-              link.download = 'BankStatememnt.xlsx';
+              link.download = 'BankStatement.xlsx';
               link.click();
             window.URL.revokeObjectURL(link.href);
               }else{
@@ -129,7 +132,7 @@ export class BankStatementComponent implements OnInit {
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
             if(this.fileType ==="excel"){
-            link.download = 'BankStatememnt.xlsx';
+            link.download = 'BankStatement.xlsx';
             link.click();
             window.URL.revokeObjectURL(link.href);
             }else{

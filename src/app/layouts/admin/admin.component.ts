@@ -80,7 +80,6 @@ export class AdminComponent implements OnInit {
     //if(this.authenticationService.currentUser != null){
       this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
       this.userName = this.currentUser.username;
-      console.log("current user = "+this.userName);
       this.menuItems = [{
         label: 'Reporting',
         main: [
@@ -94,6 +93,7 @@ export class AdminComponent implements OnInit {
       }];
       var menuItemList: MenuItem[];
    //ti-layout-sidebar-left
+   if(typeof this.currentUser.userId != "undefined"){
       const menuMap = new Map(Object.entries(this.currentUser.menuItem));
       menuMap.forEach((value, key) => {
         const menuItemList: MenuItem[] = value;
@@ -128,6 +128,7 @@ export class AdminComponent implements OnInit {
         }
      
         });
+   }
       
     //console.log("menu serve data = "+JSON.stringify(this.currentUser.menuItem));
   }
@@ -135,7 +136,7 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.userName = this.currentUser.username;
-    console.log("Admin >> u = "+this.userName);
+   
    }
 
   onClickedOutside(e: Event) {

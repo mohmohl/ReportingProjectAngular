@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate  {
        // console.log("permission >>>> ...." + this.authenticationService.permission);
         //console.log("current url >>>> ...." + state.url);
         //console.log("permission check>>>> ...."+ this.authenticationService.permission.indexOf(state.url));
-        console.log("currentUser check>>>>"+currentUser);
+        //console.log("currentUser check>>>>"+currentUser);
         var param = '';
         param = route.paramMap.get('userId');
         //console.log("check param >>>>"+param);
