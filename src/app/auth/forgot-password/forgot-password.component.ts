@@ -34,7 +34,8 @@ export class ForgotPasswordComponent implements OnInit {
       this.loading = false;
       this.response = user;
         if(this.response.status=="OK"){
-          this.router.navigate(["/auth/login"]);
+          this.error = "Password Reset Successful..Please Sign In"
+          //this.router.navigate(["/auth/login"]);
         }
         else{
           this.error=this.response.message;

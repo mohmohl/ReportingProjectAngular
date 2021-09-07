@@ -26,11 +26,13 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit() {
   }
   submit(){
+    this.successMsg='';
+    this.error='';
     if (this.form.invalid) {
       this.error = "Data is required";
       return;
   }
-  this.error='';
+ 
   console.log("newPassword = "+this.form.get(["newPassword"])!.value)
   console.log("confirm Password = "+this.form.get(["confirmPassword"])!.value)
   if(this.form.get(["newPassword"])!.value != this.form.get(["confirmPassword"])!.value){
@@ -47,9 +49,11 @@ export class ChangePasswordComponent implements OnInit {
     this.response = user;
     if(this.response.status=="OK"){
       this.successMsg = this.response.message;
+      this.error='';
     }
     else{
       this.error=this.response.message;
+      this.successMsg ='';
     }
 })).subscribe(
   res => {

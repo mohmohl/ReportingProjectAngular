@@ -26,7 +26,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             }
             if (err.status === 403) {
                 console.log(">>>>> 403")
-                error = err.error.message;
+                //error = err.error.message;
                // this.router.navigate(['/access-denied']);
                 // auto logout if 401 response returned from api
                 this.authenticationService.logout();

@@ -16,7 +16,7 @@ export class SimplePageComponent implements OnInit {
 
   ngOnInit() {
     this.apiService.getTestingData().subscribe(res => {
-      console.log("api test = " + res.toString());
+     
     });
   }
 
