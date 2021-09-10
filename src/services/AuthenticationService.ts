@@ -24,8 +24,8 @@ export class AuthenticationService {
         this.permission.push("/access-denied");
    
         if (this.currentUserSubject.value != null) {
-            debugger
-            if(typeof this.currentUserSubject.value.userId != "undefined"){
+            
+            //if(typeof this.currentUserSubject.value.userId != "undefined"){
             const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
             menuMap.forEach((value, key) => {
                 const menuList: MenuItem[] = value;
@@ -33,10 +33,10 @@ export class AuthenticationService {
                     this.permission.push("/" + e.url1);
                 });
             });
-        }
-        else{
-            this.router.navigate(['/auth/login']);
-        }
+       // }
+       // else{
+        //    this.router.navigate(['/auth/login']);
+        //}
         }
     }
 

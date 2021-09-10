@@ -14,10 +14,10 @@ import { BehaviorSubject, Observable } from "rxjs";
 })
 export class AppComponent implements OnInit {
   title = 'app';
-  currentUser: User;
-  private currentUserSubject: BehaviorSubject<User>;
-  constructor(private authService: AuthenticationService, private bnIdle: BnNgIdleService, private router: Router,
+
+  constructor(private bnIdle: BnNgIdleService, private router: Router,
     private http: HttpClient) {
+      
   }
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
       window.scrollTo(0, 0);
     });
 
-    this.authService.currentUser.subscribe(x => this.currentUser = x);
+    //this.authService.currentUser.subscribe(x => this.currentUser = x);
 
     // let context = this;
     // window.addEventListener("beforeunload", function (e) {

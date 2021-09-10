@@ -45,14 +45,23 @@ export class BasicLoginComponent implements OnInit {
     }
     
   }
- 
+  togglePassword(){
+  var x = document.getElementById("p_box");
+  if ( x.getAttribute('type')  === "password") {
+    x.setAttribute('type', "text");
+  } else {
+    x.setAttribute('type', "password");
+  }
+}
 check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); } 
 
   onChange(event: any){
     this.form.get(["password"])!.disable();
-    this.loading = true;
-    let value = event.target.value;
+    
+    var value = event.target.value;
     this.error="";
+    if(value != ""){
+      this.loading = true;
     if(!isNaN(value) && this.check_isNumber(value)){
       if(value.slice(0, 2) ==="09"){
         this.mobileLoginFlag=true;
@@ -77,9 +86,15 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
           this.loading = false;
         });
       }
+      else{
+        this.loading = false;
+        this.error = "UserID doesn't exist!..";
+      }
 
     }
     else{
+      value=value.toUpperCase();
+      event.target.value = value.toUpperCase();
       this.userService.checkUserForRegistration(value).pipe(map(user => {
         this.loading = false;
         this.response = user;
@@ -106,13 +121,14 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
     
       },
       error => {
+        console.log("login onchange >> "+error)
         this.error = "(System have the error!..)";
         this.loading = false;
       });
       
       
     }
-    
+  }
   }
   submit(){
      if (this.form.invalid) {
@@ -120,7 +136,7 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
       return;
   }
   this.error="";
-  this.userId = this.form.get(["userId"])!.value;
+  this.userId = this.form.get(["userId"])!.value.toUpperCase();;
   this.user_password= this.form.get(["password"])!.value;
   this.loading = true;
   if(this.mobileLoginFlag){
@@ -144,7 +160,7 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
                 },
                 error => {
                   console.log("login error= "+error)
-                    this.error = "User ID and Password doesn't mach!.";
+                    this.error = "User ID and Password doesn't match!.";
                     this.loading = false;
                 });
 

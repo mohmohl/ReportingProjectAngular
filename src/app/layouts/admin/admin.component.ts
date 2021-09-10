@@ -129,6 +129,7 @@ export class AdminComponent implements OnInit {
      
         });
    }
+  
       
     //console.log("menu serve data = "+JSON.stringify(this.currentUser.menuItem));
   }
@@ -136,7 +137,6 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.userName = this.currentUser.username;
-   
    }
 
   onClickedOutside(e: Event) {
