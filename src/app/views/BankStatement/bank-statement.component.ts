@@ -44,7 +44,9 @@ export class BankStatementComponent implements OnInit {
     toDate: new FormControl(new Date,),
   });
   sanitizer: any;
-  constructor(private bankStatementAPIService: BankStatementService) { }
+  constructor(private bankStatementAPIService: BankStatementService) { 
+    this.passDate = true;
+  }
 
   ngOnInit() {
     this.loading = true;
@@ -90,16 +92,16 @@ export class BankStatementComponent implements OnInit {
             let blob = new Blob([data], {
               type: appfiletype
             });
-            var link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
+            
             if(this.fileType ==="excel"){
+              var link = document.createElement('a');
+              link.href = window.URL.createObjectURL(blob);
               link.download = 'BankStatement.xlsx';
               link.click();
-            window.URL.revokeObjectURL(link.href);
+              window.URL.revokeObjectURL(link.href);
               }else{
                 var a = document.createElement("a");
                 document.body.appendChild(a);
-                
                 var file = new Blob([data], {type: 'application/pdf'});
                 var fileURL = URL.createObjectURL(file);
                 a.href = fileURL;
@@ -111,6 +113,7 @@ export class BankStatementComponent implements OnInit {
           })).subscribe(
             res => { },
             error => {
+              console.log("Bankstatement Error >>> "+error)
               this.error = this.acc_no + "(The system cannot find the file specified)";
               this.loading = false;
             });
