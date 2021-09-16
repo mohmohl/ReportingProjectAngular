@@ -90,6 +90,18 @@ const routes: Routes = [
       {
         path: 'gt-trial-report',
         loadChildren: () => import('./views/TrialReport/trial-report/trial-report.module').then(m => m.TrialReportModule),canActivate:[AuthGuard]
+      },
+      {
+        path: 'bypass-account-list',
+        loadChildren: () => import('./views/bypass/bypass-account-list/bypass-account-list-module').then(m => m.ByPassAccountListModule),canActivate:[AuthGuard]
+      },
+      {
+        path: 'bypass-new-account',
+        loadChildren: () => import('./views/bypass/bypass-new-account/bypass-new-account-module').then(m => m.ByPassNewAccountModule),canActivate:[AuthGuard]
+      },
+      {
+        path: 'bypass-edit-account/:cust_ac_no',
+        loadChildren: () => import('./views/bypass/bypass-edit-account/bypass-edit-account.module').then(m => m.ByPassEditAccountModule),canActivate:[AuthGuard]
       }
     ]
   },

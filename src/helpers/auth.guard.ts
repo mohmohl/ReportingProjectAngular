@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate  {
         //console.log("check param >>>>"+param);
         if (currentUser) {
              if (this.authenticationService.permission.indexOf(state.url) == -1) {
-                 debugger
+
                 if(param === '' || param== null){
                     this.router.navigate(['/access-denied']);
                     return false;
