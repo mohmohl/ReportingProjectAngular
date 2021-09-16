@@ -4,7 +4,8 @@ import { TrialReport } from 'src/models/TrialReport';
 import { DateAdapter} from '@angular/material/core';
 import { TrialReportService } from 'src/services/TrialReportService';
 import { TrialData } from 'src/models/TrialData';
-
+import * as XLSX from 'xlsx'; 
+import * as fs from 'file-saver';
 import { NativeDateAdapter,MAT_DATE_FORMATS } from '@angular/material';
 import { PickDateAdapter } from 'src/models/PickDateAdapter';
 import { isNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
@@ -34,7 +35,7 @@ export class TrialReportComponent implements OnInit {
   loading = false;
   data:TrialReport;
   minDate = new Date(2021, 5, 30);
-  maxDate = new Date(2020,0,1);
+  maxDate = new Date();
 totalDebit:number=0;
 totalDebit_lcy:number=0;
 totalCredit:number=0;
@@ -158,4 +159,18 @@ isNegitiveTransform(value: any, args?: any): any {
   }
   return data;
 }
+exportexcel(): void 
+  {
+    
+     /* table id is passed over here */   
+     let element = document.getElementById('export-table'); 
+     const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+      /* generate workbook and add the worksheet */
+     const wb: XLSX.WorkBook = XLSX.utils.book_new();
+     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+     /* save to file */
+     XLSX.writeFile(wb, "DetailTrial.xlsx");
+    
+  }
+// end tag
 }

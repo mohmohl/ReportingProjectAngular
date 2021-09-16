@@ -8,7 +8,7 @@
                   <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
               </div>
               <div *ngIf="trialList" class="page-header-breadcrumb">
-                <button type="button" class="btn-success">
+                <button type="button" class="btn-success" (click)="exportexcel()">
                   <i class="ti-printer"></i>Excel
                 </button> 
                 <button type="button" class="btn-danger">
@@ -27,6 +27,7 @@
                               <mat-form-field>
                                 <input #minmaxInput matInput 
                                   [min]="minDate" 
+                                  [max]="maxDate" 
                                   [matDatepicker]="minmaxvalidation" formControlName="fromDate" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
                                    </mat-datepicker-toggle>
