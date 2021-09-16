@@ -39,8 +39,8 @@ export class BasicLoginComponent implements OnInit {
     document.querySelector('body').setAttribute('themebg-pattern', 'theme1');
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
     const currentUser = this.authenticationService.currentUserValue;
-    //console.log("login >>"+currentUser);
-    if(currentUser){
+    console.log("login >>"+currentUser);
+    if(currentUser.userId){
     this.router.navigate([this.returnUrl]);
     }
     

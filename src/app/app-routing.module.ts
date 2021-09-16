@@ -88,7 +88,7 @@ const routes: Routes = [
       }
       ,
       {
-        path: 'trial-report',
+        path: 'gt-trial-report',
         loadChildren: () => import('./views/TrialReport/trial-report/trial-report.module').then(m => m.TrialReportModule),canActivate:[AuthGuard]
       },
       {

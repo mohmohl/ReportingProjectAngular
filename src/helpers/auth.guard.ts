@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate  {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         let currentUser = this.authenticationService.currentUserValue;
-       // console.log("permission >>>> ...." + this.authenticationService.permission);
+       console.log("permission >>>> ...." + this.authenticationService.permission);
         //console.log("current url >>>> ...." + state.url);
         //console.log("permission check>>>> ...."+ this.authenticationService.permission.indexOf(state.url));
         //console.log("currentUser check>>>>"+currentUser);
@@ -23,11 +23,11 @@ export class AuthGuard implements CanActivate  {
         //console.log("check param >>>>"+param);
         if (currentUser) {
              if (this.authenticationService.permission.indexOf(state.url) == -1) {
-                    if(param === ''){
-                        this.router.navigate(['/access-denied']);
-                        return false;
-                    }
-                    
+
+                if(param === '' || param== null){
+                    this.router.navigate(['/access-denied']);
+                    return false;
+                }
              }
             // logged in so return true
             return true;

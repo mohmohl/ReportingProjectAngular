@@ -49,11 +49,11 @@ export class BankStatementComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loading = true;
-    this.bankStatementAPIService.getYearsList().subscribe((res: PassYears[]) => {
+    //this.loading = true;
+    /*this.bankStatementAPIService.getYearsList().subscribe((res: PassYears[]) => {
       this.loading = false;
       this.yearList = res;
-    });
+    });*/
   }
   passOnChange(isChecked: boolean) {
     if (isChecked) {
@@ -114,7 +114,10 @@ export class BankStatementComponent implements OnInit {
             res => { },
             error => {
               console.log("Bankstatement Error >>> "+error)
+              debugger;
+              if(error != ""){
               this.error = this.acc_no + "(The system cannot find the file specified)";
+                }
               this.loading = false;
             });
    
