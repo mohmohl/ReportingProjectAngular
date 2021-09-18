@@ -39,7 +39,12 @@ import { AuthenticationService } from 'src/services/AuthenticationService';
       // return this.http.get(this.api,{params:accParam});
       var api = environment.baseUrl+"/bankStatement/getBankStatement?accountNo="+accNo+"&fileType="+fileType+"&fromDate="+fromDate+"&toDate="+toDate+"&printDate="+printDate;
         return this.http.get<any>(`${api}`, {responseType: 'arraybuffer' as 'json'});
-     
-  } 
+    }
+    
+    public viewBankStatement(accNo:string,fromDate:string,toDate:string,printDate:string){
+      // return this.http.get(this.api,{params:accParam});
+      var api = environment.baseUrl+"/bankStatement/getBankStatementView?accountNo="+accNo+"&fromDate="+fromDate+"&toDate="+toDate+"&printDate="+printDate;
+        return this.http.get<any>(`${api}`, {responseType: 'json'});
+    }
     
 }

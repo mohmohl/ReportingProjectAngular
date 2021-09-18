@@ -1,0 +1,51 @@
+.noBorder {
+    border:none !important;
+}
+
+td.amount {
+    text-align: right;
+}
+
+.center{
+    text-align: center;
+}
+
+hr.style1{
+	border-top: 1px solid #691c31;
+}
+
+hr.style2 {
+	border-top: 5px double #691c31;
+}
+
+hr.style3 {
+	border-top: 1px dashed #691c31;
+}
+
+hr.style4 {
+	border-top: 1px dotted #691c31;
+}
+
+.table-responsive table th {
+    border: 1px solid black;
+    padding: 5px;
+    background-color: #691c31 !important;
+    color: white !important;
+}
+
+.table-active, .table-active > th, .table-active > td {
+    background-color: white !important;
+}
+
+.theme-bg-color{
+    background-color: #691c31;
+    color: white;
+}
+
+.theme-font-color{
+    color: #691c31;
+}
+
+.font-grey-color{
+    color:grey;
+}

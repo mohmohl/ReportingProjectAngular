@@ -102,6 +102,10 @@ const routes: Routes = [
       {
         path: 'bypass-edit-account/:cust_ac_no',
         loadChildren: () => import('./views/bypass/bypass-edit-account/bypass-edit-account.module').then(m => m.ByPassEditAccountModule),canActivate:[AuthGuard]
+      },
+      {
+        path: 'bank-statement-view',
+        loadChildren: () => import('./views/bank-statement-view/bank-statement-view.module').then(m => m.BankStatementViewModule)
       }
     ]
   },
