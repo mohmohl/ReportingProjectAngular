@@ -1,7 +1,8 @@
 <div class="row">
     <div class="col-sm-12">
-        <form [formGroup]="form" (ngSubmit)="submit()">
-            <div class="card" >
+
+        <div class="card">
+            <form [formGroup]="form" (ngSubmit)="submit()" [target]="_blank">
                 <div class="card-header">
                     <h5>Bank Statement</h5>
                     <div class="page-header-breadcrumb">
@@ -18,32 +19,31 @@
                     <code *ngIf="error">{{error}}</code>
 
                     <div style="padding-left:15px; padding-right:15px;" class="form-group row">
-                        <label class="col-sm-2 col-form-label">Account No</label>
-                        <div class="col-sm-3">
+                        <label class="col-sm-1 col-form-label" style="text-align: right;">Account No</label>
+                        <div class="col-sm-2">
                             <input type="text" formControlName="accno" class="form-control">
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <select class="form-control" formControlName="printDate" id="exampleFormControlSelect1">
                                 <option value="Transaction" selected>Transaction</option>
                                 <option value="Value">Value</option>
                             </select>
                         </div>
-                    </div>
-                    <div style="padding-left:15px; padding-right:15px;" class="form-group row">
 
-                        <label class="col-sm-2 col-form-label"> Date
-                            <!-- <input type="checkbox" checked (change)="passOnChange($event.target.checked)" class="styled">-->
+                        <div class="col-sm-1"></div>
+                        <label class="col-sm-1 col-form-label"> Date
                         </label>
 
-                        <div *ngIf="!passDate" class="col-sm-3">
+                        <div *ngIf="!passDate" class="col-sm-2">
                             <select class="form-control" formControlName="years" id="exampleFormControlSelect1">
                                 <option value="" selected>-- Select --</option>
-                                <option *ngFor="let y of yearList" value="{{y.pass_years}}">{{ y.pass_years}}</option>
+                                <option *ngFor="let y of yearList" value="{{y.pass_years}}">{{ y.pass_years}}
+                                </option>
                             </select>
                         </div>
 
-                        <div *ngIf="passDate" class="col-sm-3">
-                            <!--<input type="date" formControlName="fromDate" class="form-control">-->
+                        <div *ngIf="passDate" class="col-sm-2">
+
                             <mat-form-field>
                                 <input #minmaxInput matInput [matDatepicker]="minmaxvalidation"
                                     formControlName="fromDate" readonly>
@@ -52,9 +52,10 @@
                                 <mat-datepicker #minmaxvalidation></mat-datepicker>
                             </mat-form-field>
                         </div>
+
                         <label *ngIf="passDate" class="col-form-label">-</label>
-                        <div *ngIf="passDate" class="col-sm-3">
-                            <!--<input type="date" formControlName="toDate" class="form-control">-->
+                        <div *ngIf="passDate" class="col-sm-2">
+
                             <mat-form-field>
                                 <input #minmaxInput matInput [matDatepicker]="minmaxvalidation2"
                                     formControlName="toDate" readonly>
@@ -64,14 +65,50 @@
                             </mat-form-field>
                         </div>
                     </div>
-                </div>
-            </div>
-        </form>
+                    <!-- <div style="padding-left:15px; padding-right:15px;" class="form-group row">
 
-        <div>
-            <app-card [title]="'Bank Statement Preview'" [classHeader]="true" [blockClass]="'table-border-style'"
-                *ngIf="bankStatementViewData">
-                <div style="padding-left:15px; padding-right:15px;" class="table-responsive nu-table-body" *ngIf="bankStatementViewData">
+                        <label class="col-sm-2 col-form-label"> Date
+
+                        </label>
+
+                        <div *ngIf="!passDate" class="col-sm-3">
+                            <select class="form-control" formControlName="years" id="exampleFormControlSelect1">
+                                <option value="" selected>-- Select --</option>
+                                <option *ngFor="let y of yearList" value="{{y.pass_years}}">{{ y.pass_years}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div *ngIf="passDate" class="col-sm-3">
+
+                            <mat-form-field>
+                                <input #minmaxInput matInput [matDatepicker]="minmaxvalidation"
+                                    formControlName="fromDate" readonly>
+                                <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #minmaxvalidation></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+
+                        <label *ngIf="passDate" class="col-form-label">-</label>
+                        <div *ngIf="passDate" class="col-sm-3">
+
+                            <mat-form-field>
+                                <input #minmaxInput matInput [matDatepicker]="minmaxvalidation2"
+                                    formControlName="toDate" readonly>
+                                <mat-datepicker-toggle matSuffix [for]="minmaxvalidation2">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #minmaxvalidation2></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div> -->
+                </div>
+
+            </form>
+
+            <div *ngIf="bankStatementViewData" style="background-color: white; padding-top: 10px;">
+                <div style="padding-left:15px; padding-right:15px;" class="table-responsive nu-table-body"
+                    *ngIf="bankStatementViewData">
                     <table class="table table table-hover noBorder">
                         <tbody>
                             <tr class="noBorder">
@@ -123,141 +160,174 @@
                                     <td scope="col">{{item.checkNo}}</td>
                                     <td scope="col">{{item.narrative1}} {{item.narrative2}} {{item.narrative3}}
                                         {{item.narrative4}}</td>
-                                    <td scope="col" class="amount">{{item.drAmount}}</td>
-                                    <td scope="col" class="amount">{{item.crAmount}}</td>
-                                    <td scope="col" class="amount">{{item.balance1}}</td>
+                                    <td scope="col" class="amount">{{item.drAmount == 0 ? '' :
+                                        item.drAmount.toFixed(2)}}</td>
+                                    <td scope="col" class="amount">{{item.crAmount == 0 ? '' :
+                                        item.crAmount.toFixed(2)}}</td>
+                                    <td scope="col" class="amount">{{item.balance1 == 0 ? '' :
+                                        item.balance1.toFixed(2)}}</td>
                                 </tr>
                                 <tr>
                                     <td scope="col" class="noBorder"></td>
-                                    <td scope="col" class="noBorder">{{toDate  | date: "dd/MM/yyyy"}}</td>
+                                    <td scope="col" class="noBorder">{{toDate | date: "dd/MM/yyyy"}}</td>
                                     <td scope="col" class="noBorder"></td>
                                     <td scope="col" class="noBorder"></td>
                                     <td scope="col" class="noBorder theme-font-color"><b>Closing Balance</b></td>
                                     <td scope="col" class="noBorder"></td>
                                     <td scope="col" class="noBorder"></td>
-                                    <td scope="col" class="amount noBorder"><b>{{bankStatementViewData.closingBalance.toFixed(2)}}</b></td>
+                                    <td scope="col" class="amount noBorder">
+                                        <b>{{bankStatementViewData.closingBalance.toFixed(2)}}</b>
+                                    </td>
                                 </tr>
 
                                 <tr class="noBorder">
-                                    <td scope="col" colspan="8" class="noBorder"><hr class="style2"></td>
+                                    <td scope="col" colspan="8" class="noBorder">
+                                        <hr class="style2">
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <div class="table-responsive nu-table-body">
-                    <table class="table table table-hover">
-                        <thead>
-                            <tr class="noBorder">
-                                <td class="noBorder center theme-bg-color" colspan="3" scope="col"><h6><b>Statement Summary</b></h6></td>
-                                <!--
+                        <table class="table table table-hover">
+                            <thead>
+                                <tr class="noBorder">
+                                    <td class="noBorder center theme-bg-color" colspan="3" scope="col">
+                                        <h6><b>Statement Summary</b></h6>
+                                    </td>
+                                    <!--
                                 <td class="noBorder" style="width: 27%;"></td>
                                 <td class="noBorder center" ><h6 class="center"><b>Statement Summary</b></h6></td>
                                 <td class="noBorder center"></td>
                                 -->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="noBorder">
-                                <td class="noBorder" style="width: 27%;" scope="col">Statement Period</td>
-                                <td class="noBorder center" scope="col">{{fromDate  | date: "dd/MM/yyyy"}}</td>
-                                <td class="noBorder center" scope="col">{{toDate  | date: "dd/MM/yyyy"}}</td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td class="noBorder" style="width: 27%;" scope="col">Previous Balance</td>
-                                <td class="noBorder center" scope="col">{{bankStatementViewData.previousBalance.toFixed(2)}}</td>
-                                <td class="noBorder center" scope="col"></td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td class="noBorder" style="width: 27%;" scope="col"></td>
-                                <td class="noBorder center theme-font-color" scope="col"><b>Transaction Count</b></td>
-                                <td class="noBorder center theme-font-color" scope="col"><b>Amount</b></td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td class="noBorder" style="width: 27%;">Cash Deposit</td>
-                                <td class="noBorder center">{{bankStatementViewData.cashDepositCount}}</td>
-                                <td class="noBorder center">{{bankStatementViewData.cashDepositAmt.toFixed(2)}}</td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td class="noBorder" style="width: 27%;">Transfer Deposit</td>
-                                <td class="noBorder center">{{bankStatementViewData.transferDepositCount}}</td>
-                                <td class="noBorder center">{{bankStatementViewData.transferDepositAmt.toFixed(2)}}</td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td colspan="3" class="noBorder"><hr class="style1"></td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td class="noBorder theme-font-color" style="width: 27%;"><b>Total Deposit</b></td>
-                                <td class="noBorder center" >{{bankStatementViewData.totalDepositCount}}</td>
-                                <td class="noBorder center">{{bankStatementViewData.totalDepositCount.toFixed(2)}}</td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td colspan="3" class="noBorder"><hr class="style2"></td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td class="noBorder" style="width: 27%;">Cash Withdrawals</td>
-                                <td class="noBorder center">{{bankStatementViewData.cashWithdrawlCount}}</td>
-                                <td class="noBorder center">{{bankStatementViewData.cashWithdrawlAmt.toFixed(2)}}</td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td class="noBorder" style="width: 27%;">Transfer Withdrawals</td>
-                                <td class="noBorder center">{{bankStatementViewData.transferWithdrawlCount}}</td>
-                                <td class="noBorder center">{{bankStatementViewData.transferWithdrawlAmt.toFixed(2)}}</td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td colspan="3" class="noBorder"><hr class="style1"></td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td class="noBorder theme-font-color" style="width: 27%;"><b>Total Withdrawal</b></td>
-                                <td class="noBorder center" >{{bankStatementViewData.totalWithdrawlCount}}</td>
-                                <td class="noBorder center">{{bankStatementViewData.totalWithdrawl.toFixed(2)}}</td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td colspan="3" class="noBorder"><hr class="style2"></td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td class="noBorder" style="width: 27%;"><b>Total Balance</b></td>
-                                <td class="noBorder center" ></td>
-                                <td class="noBorder center"><b>{{bankStatementViewData.closingBalance.toFixed(2)}}</b></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="noBorder">
+                                    <td class="noBorder" style="width: 27%;" scope="col">Statement Period</td>
+                                    <td class="noBorder center" scope="col">{{fromDate | date: "dd/MM/yyyy"}}</td>
+                                    <td class="noBorder center" scope="col">{{toDate | date: "dd/MM/yyyy"}}</td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td class="noBorder" style="width: 27%;" scope="col">Previous Balance</td>
+                                    <td class="noBorder center" scope="col">
+                                        {{bankStatementViewData.previousBalance.toFixed(2)}}</td>
+                                    <td class="noBorder center" scope="col"></td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td class="noBorder" style="width: 27%;" scope="col"></td>
+                                    <td class="noBorder center theme-font-color" scope="col"><b>Transaction Count</b>
+                                    </td>
+                                    <td class="noBorder center theme-font-color" scope="col"><b>Amount</b></td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td class="noBorder" style="width: 27%;">Cash Deposit</td>
+                                    <td class="noBorder center">{{bankStatementViewData.cashDepositCount}}</td>
+                                    <td class="noBorder center">{{bankStatementViewData.cashDepositAmt.toFixed(2)}}</td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td class="noBorder" style="width: 27%;">Transfer Deposit</td>
+                                    <td class="noBorder center">{{bankStatementViewData.transferDepositCount}}</td>
+                                    <td class="noBorder center">{{bankStatementViewData.transferDepositAmt.toFixed(2)}}
+                                    </td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td colspan="3" class="noBorder">
+                                        <hr class="style1">
+                                    </td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td class="noBorder theme-font-color" style="width: 27%;"><b>Total Deposit</b></td>
+                                    <td class="noBorder center">{{bankStatementViewData.totalDepositCount}}</td>
+                                    <td class="noBorder center">{{bankStatementViewData.totalDepositCount.toFixed(2)}}
+                                    </td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td colspan="3" class="noBorder">
+                                        <hr class="style2">
+                                    </td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td class="noBorder" style="width: 27%;">Cash Withdrawals</td>
+                                    <td class="noBorder center">{{bankStatementViewData.cashWithdrawlCount}}</td>
+                                    <td class="noBorder center">{{bankStatementViewData.cashWithdrawlAmt.toFixed(2)}}
+                                    </td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td class="noBorder" style="width: 27%;">Transfer Withdrawals</td>
+                                    <td class="noBorder center">{{bankStatementViewData.transferWithdrawlCount}}</td>
+                                    <td class="noBorder center">
+                                        {{bankStatementViewData.transferWithdrawlAmt.toFixed(2)}}</td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td colspan="3" class="noBorder">
+                                        <hr class="style1">
+                                    </td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td class="noBorder theme-font-color" style="width: 27%;"><b>Total Withdrawal</b>
+                                    </td>
+                                    <td class="noBorder center">{{bankStatementViewData.totalWithdrawlCount}}</td>
+                                    <td class="noBorder center">{{bankStatementViewData.totalWithdrawl.toFixed(2)}}</td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td colspan="3" class="noBorder">
+                                        <hr class="style2">
+                                    </td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td class="noBorder" style="width: 27%;"><b>Total Balance</b></td>
+                                    <td class="noBorder center"></td>
+                                    <td class="noBorder center">
+                                        <b>{{bankStatementViewData.closingBalance.toFixed(2)}}</b>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                    <table class="table table table-hover">
-                        <tbody>
-                            <tr class="noBorder">
-                                <td class="noBorder theme-font-color" style="width: 50%;"><hr class="style4"></td>
-                                <td class="noBorder center theme-font-color" style="width: fit-content;"><b>END OF TRANSACTION</b></td>
-                                <td class="noBorder theme-font-color" style="width: 50%;"><hr class="style4"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <table class="table table table-hover">
+                            <tbody>
+                                <tr class="noBorder">
+                                    <td class="noBorder theme-font-color" style="width: 50%;">
+                                        <hr class="style4">
+                                    </td>
+                                    <td class="noBorder center theme-font-color" style="width: fit-content;"><b>END OF
+                                            TRANSACTION</b></td>
+                                    <td class="noBorder theme-font-color" style="width: 50%;">
+                                        <hr class="style4">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                    <table class="table table table-hover">
-                        <tbody>
-                            <tr class="noBorder">
-                                <td class="noBorder theme-font-color" style="width: 50%;"></td>
-                                <td class="noBorder theme-font-color center" style="width: auto;">
-                                    <div class="font-grey-color">
-                                        This eStatement is issued by MAB. For more information, please contact 'info@mabbank.com' or visit 'www.mabbank.com.'
-                                    </div>
-                                    <div class="font-grey-color"> 
-                                         Myanmar Apex Bank Limited. (207), Thein Phyu Road (Middle Block), Botahtaung Township, Yangon. +95 (1) 8610612.
-                                    </div>
-                                </td>
-                                <td class="noBorder theme-font-color" style="width: 50%;"></td>
-                            </tr>
-                            <tr class="noBorder">
-                                <td colspan="3" class="noBorder theme-font-color" scope="col"><hr class="style4"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <table class="table table table-hover">
+                            <tbody>
+                                <tr class="noBorder">
+                                    <td class="noBorder theme-font-color" style="width: 50%;"></td>
+                                    <td class="noBorder theme-font-color center" style="width: auto;">
+                                        <div class="font-grey-color">
+                                            This eStatement is issued by MAB. For more information, please contact
+                                            'info@mabbank.com' or visit 'www.mabbank.com.'
+                                        </div>
+                                        <div class="font-grey-color">
+                                            Myanmar Apex Bank Limited. (207), Thein Phyu Road (Middle Block), Botahtaung
+                                            Township, Yangon. +95 (1) 8610612.
+                                        </div>
+                                    </td>
+                                    <td class="noBorder theme-font-color" style="width: 50%;"></td>
+                                </tr>
+                                <tr class="noBorder">
+                                    <td colspan="3" class="noBorder theme-font-color" scope="col">
+                                        <hr class="style4">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
-                    
-                </div>
-            </app-card>
+            </div>
         </div>
-
-
     </div>
 </div>

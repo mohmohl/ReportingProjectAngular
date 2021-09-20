@@ -49,3 +49,8 @@ hr.style4 {
 .font-grey-color{
     color:grey;
 }
+
+.card-body {
+    padding: 0 !important;
+    padding-top: 1.25rem !important;
+}
