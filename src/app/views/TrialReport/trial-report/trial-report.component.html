@@ -7,11 +7,11 @@
                 <div class="spinner-border spinner-border-sm text-warning"></div>
                   <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
               </div>
-              <div *ngIf="trialList" class="page-header-breadcrumb">
+              <div class="page-header-breadcrumb">
                 <button type="button" class="btn-success" (click)="exportexcel()">
                   <i class="ti-printer"></i>Excel
                 </button> 
-                <button type="button" class="btn-danger">
+                <button type="button" class="btn-danger" (click)="exportPDF()">
                   <i class="ti-printer"></i>PDF
                 </button> 
               </div>
