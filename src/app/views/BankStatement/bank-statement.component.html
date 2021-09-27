@@ -6,7 +6,7 @@
               <h5>Bank Statement</h5>
               <div class="page-header-breadcrumb">
                 <button type="submit" class="btn-primary">
-                  <i class="ti-printer"></i>View
+                  <i class="ti-printer"></i>Print
                 </button> 
               </div>
             </div>
@@ -44,7 +44,7 @@
                       
                       <div *ngIf="passDate" class="col-sm-3">
                         <!--<input type="date" formControlName="fromDate" class="form-control">-->
-                        <mat-form-field>
+                        <mat-form-field style="width:100px;">
                           <input #minmaxInput matInput 
                             
                             [matDatepicker]="minmaxvalidation" formControlName="fromDate" readonly>
@@ -56,7 +56,7 @@
                       <label  *ngIf="passDate" class="col-form-label">-</label>
                       <div *ngIf="passDate" class="col-sm-3">
                         <!--<input type="date" formControlName="toDate" class="form-control">-->
-                        <mat-form-field>
+                        <mat-form-field style="width:100px;">
                           <input #minmaxInput matInput 
                              
                             [matDatepicker]="minmaxvalidation2" formControlName="toDate" readonly>

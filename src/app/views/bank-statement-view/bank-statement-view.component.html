@@ -2,12 +2,12 @@
     <div class="col-sm-12">
 
         <div class="card">
-            <form [formGroup]="form" (ngSubmit)="submit()" [target]="_blank">
+            <form [formGroup]="form" (ngSubmit)="submit()">
                 <div class="card-header">
                     <h5>Bank Statement</h5>
                     <div class="page-header-breadcrumb">
                         <button type="submit" class="btn-primary">
-                            <i class="ti-printer"></i>View
+                            View
                         </button>
                     </div>
                 </div>
@@ -29,87 +29,38 @@
                                 <option value="Value">Value</option>
                             </select>
                         </div>
-
-                        <div class="col-sm-1"></div>
-                        <label class="col-sm-1 col-form-label"> Date
-                        </label>
-
-                        <div *ngIf="!passDate" class="col-sm-2">
-                            <select class="form-control" formControlName="years" id="exampleFormControlSelect1">
-                                <option value="" selected>-- Select --</option>
-                                <option *ngFor="let y of yearList" value="{{y.pass_years}}">{{ y.pass_years}}
-                                </option>
-                            </select>
-                        </div>
-
-                        <div *ngIf="passDate" class="col-sm-2">
-
-                            <mat-form-field>
+                        <label class="col-sm-1 col-form-label"> Date</label>
+                        <div class="col-sm-2">
+                            <mat-form-field style="width:100px;">
                                 <input #minmaxInput matInput [matDatepicker]="minmaxvalidation"
-                                    formControlName="fromDate" readonly>
+                                    formControlName="fromDate">
                                 <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #minmaxvalidation></mat-datepicker>
                             </mat-form-field>
+                         
                         </div>
+                        <label class="col-form-label">-</label>
+                        
+                        <div class="col-sm-2">
 
-                        <label *ngIf="passDate" class="col-form-label">-</label>
-                        <div *ngIf="passDate" class="col-sm-2">
-
-                            <mat-form-field>
+                            <mat-form-field style="width:100px;">
                                 <input #minmaxInput matInput [matDatepicker]="minmaxvalidation2"
-                                    formControlName="toDate" readonly>
+                                    formControlName="toDate">
                                 <mat-datepicker-toggle matSuffix [for]="minmaxvalidation2">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #minmaxvalidation2></mat-datepicker>
                             </mat-form-field>
                         </div>
                     </div>
-                    <!-- <div style="padding-left:15px; padding-right:15px;" class="form-group row">
-
-                        <label class="col-sm-2 col-form-label"> Date
-
-                        </label>
-
-                        <div *ngIf="!passDate" class="col-sm-3">
-                            <select class="form-control" formControlName="years" id="exampleFormControlSelect1">
-                                <option value="" selected>-- Select --</option>
-                                <option *ngFor="let y of yearList" value="{{y.pass_years}}">{{ y.pass_years}}
-                                </option>
-                            </select>
-                        </div>
-
-                        <div *ngIf="passDate" class="col-sm-3">
-
-                            <mat-form-field>
-                                <input #minmaxInput matInput [matDatepicker]="minmaxvalidation"
-                                    formControlName="fromDate" readonly>
-                                <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #minmaxvalidation></mat-datepicker>
-                            </mat-form-field>
-                        </div>
-
-                        <label *ngIf="passDate" class="col-form-label">-</label>
-                        <div *ngIf="passDate" class="col-sm-3">
-
-                            <mat-form-field>
-                                <input #minmaxInput matInput [matDatepicker]="minmaxvalidation2"
-                                    formControlName="toDate" readonly>
-                                <mat-datepicker-toggle matSuffix [for]="minmaxvalidation2">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #minmaxvalidation2></mat-datepicker>
-                            </mat-form-field>
-                        </div>
-                    </div> -->
                 </div>
 
             </form>
-
+<hr>
             <div *ngIf="bankStatementViewData" style="background-color: white; padding-top: 10px;">
                 <div style="padding-left:15px; padding-right:15px;" class="table-responsive nu-table-body"
                     *ngIf="bankStatementViewData">
-                    <table class="table table table-hover noBorder">
+                    <table class="table noBorder">
                         <tbody>
                             <tr class="noBorder">
                                 <td scope="col" class="noBorder">Account No.</td>
@@ -137,7 +88,7 @@
                     <h6><b>Transaction Details</b></h6>
                     <div class="table-responsive nu-table-body"
                         *ngIf="bankStatementViewData?.bankStatementCommonData.statementList?.length">
-                        <table class="table table table-hover">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Sr No.</th>
@@ -190,7 +141,7 @@
                     </div>
 
                     <div class="table-responsive nu-table-body">
-                        <table class="table table table-hover">
+                        <table class="table">
                             <thead>
                                 <tr class="noBorder">
                                     <td class="noBorder center theme-bg-color" colspan="3" scope="col">
@@ -286,7 +237,7 @@
                             </tbody>
                         </table>
 
-                        <table class="table table table-hover">
+                        <table class="table">
                             <tbody>
                                 <tr class="noBorder">
                                     <td class="noBorder theme-font-color" style="width: 50%;">
@@ -301,7 +252,7 @@
                             </tbody>
                         </table>
 
-                        <table class="table table table-hover">
+                        <table class="table">
                             <tbody>
                                 <tr class="noBorder">
                                     <td class="noBorder theme-font-color" style="width: 50%;"></td>

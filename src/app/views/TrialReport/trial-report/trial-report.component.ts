@@ -10,6 +10,7 @@ import { NativeDateAdapter,MAT_DATE_FORMATS } from '@angular/material';
 import { PickDateAdapter } from 'src/models/PickDateAdapter';
 import { isNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { formatNumber } from '@angular/common';
+import { map } from 'rxjs/operators';
  export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
   display: {
@@ -34,6 +35,7 @@ export class TrialReportComponent implements OnInit {
   from_date:Date;
   loading = false;
   data:TrialReport;
+  bCode:string;
   minDate = new Date(2021, 5, 30);
   maxDate = new Date();
 totalDebit:number=0;
@@ -80,7 +82,7 @@ totalCredit_lcystr:string;
    }
    
   submit(){
-    this.trialList=[];
+    this.trialList=null;
     this.totalDebit=0;
     this.totalDebit_lcy=0;
     this.totalCredit=0;
@@ -93,7 +95,7 @@ totalCredit_lcystr:string;
   this.from_date = this.form.get(["fromDate"])!.value;
   this.loading = true;
   let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
-  let bCode=this.form.get(["branchCode"])!.value;
+  this.bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;
   
   if(this.currencyCode == "Base" || this.currencyCode == "MMK"){
@@ -102,7 +104,8 @@ totalCredit_lcystr:string;
   else{
     this.ccyCode = true;
   }
-  this.service.getTrialReportData(fDate,bCode,this.currencyCode).subscribe((res:TrialReport)=>{
+  this.bCode=this.form.get(["branchCode"])!.value;
+  this.service.getTrialReportData(fDate,this.bCode,this.currencyCode).subscribe((res:TrialReport)=>{
     this.loading = false;
    
     if(res != null){
@@ -162,15 +165,81 @@ isNegitiveTransform(value: any, args?: any): any {
 exportexcel(): void 
   {
     
-     /* table id is passed over here */   
-     let element = document.getElementById('export-table'); 
-     const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
-      /* generate workbook and add the worksheet */
-     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-     /* save to file */
-     XLSX.writeFile(wb, "DetailTrial.xlsx");
-    
+    if (this.form.invalid) {
+      this.error = "Data is required";
+      return;
   }
+  this.error="";
+  this.loading = true;
+  this.from_date = this.form.get(["fromDate"])!.value;
+  let f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
+  this.bCode=this.form.get(["branchCode"])!.value;
+  this.currencyCode = this.form.get(["currencyCode"])!.value;
+  this.service.exportDetailTrialExcel(f_Date,this.bCode,this.currencyCode)
+  .pipe(
+    map((data: any) => {
+      debugger;
+      let blob = new Blob([data], {
+        type: "application/vnd.ms-excel"
+      });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'DetailTrial_'+this.bCode+'_'+this.currencyCode+'.xlsx';
+        link.click();
+        window.URL.revokeObjectURL(link.href);
+      
+      this.loading = false;
+    })).subscribe(
+      res => { },
+      error => {
+        console.log("Detail Trial Error >>> "+error)
+        debugger;
+        if(error != ""){
+        this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
+          }
+        this.loading = false;
+      });
+  }
+
+  exportPDF(): void 
+  {
+    
+    if (this.form.invalid) {
+      this.error = "Data is required";
+      return;
+  }
+  this.error="";
+  this.loading = true;
+  this.from_date = this.form.get(["fromDate"])!.value;
+  let f_date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
+  this.bCode=this.form.get(["branchCode"])!.value;
+  this.currencyCode = this.form.get(["currencyCode"])!.value;
+  this.service.exportDetailTrialPDF(f_date,this.bCode,this.currencyCode)
+  .pipe(
+    map((data: any) => {
+      let blob = new Blob([data], {
+        type: "application/pdf"
+      });
+      var a = document.createElement("a");
+      document.body.appendChild(a);
+      var file = new Blob([data], {type: 'application/pdf'});
+      var fileURL = URL.createObjectURL(file);
+      a.href = fileURL;
+      a.target     = '_blank'; 
+      a.click();
+      
+      this.loading = false;
+    })).subscribe(
+      res => { },
+      error => {
+        console.log("Detail Trial Error >>> "+error)
+        debugger;
+        if(error != ""){
+        this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
+          }
+        this.loading = false;
+      });
+  }
+
 // end tag
 }

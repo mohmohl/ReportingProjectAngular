@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
-import { INSPECT_MAX_BYTES } from 'buffer';
-import { map } from 'rxjs/operators';
 import { BankStatementViewData } from 'src/models/BankStatementViewData';
-import { PassYears } from 'src/models/PassYears';
 import { PickDateAdapter } from 'src/models/PickDateAdapter';
 import { BankStatementService } from 'src/services/BankStatementService';
 
@@ -31,13 +28,10 @@ export class BankStatementViewComponent implements OnInit {
 
   Content :any;
   loading = false;
-  passDate = true;
   acc_no: string;
   fromDate: Date;
   toDate: Date;
-  filePath: string;
   print_date: string;
-  yearList: PassYears[] = [];
   error = '';
   form = new FormGroup({
     accno: new FormControl('', Validators.required),
@@ -52,21 +46,12 @@ export class BankStatementViewComponent implements OnInit {
 
   sanitizer: any;
 
-  constructor(private bankStatementAPIService: BankStatementService) { 
-    this.passDate = true;    
+  constructor(private bankStatementAPIService: BankStatementService) {  
   }
 
   ngOnInit() {
   }
 
-  passOnChange(isChecked: boolean) {
-    if (isChecked) {
-      this.passDate = isChecked;
-    }
-    else {
-      this.passDate = isChecked;
-    }
-  }
   
   submit() {
     if (this.form.invalid) {
@@ -76,10 +61,8 @@ export class BankStatementViewComponent implements OnInit {
     this.loading = true;
     this.error = "";
     this.acc_no = this.form.get(["accno"])!.value;
-    var appfiletype ='';
-    
-    if (this.passDate) {
-     
+  
+   
       this.fromDate = this.form.get(["fromDate"])!.value;
       this.toDate = this.form.get(["toDate"])!.value;
       let fDate = `${this.fromDate.getFullYear()}-${this.fromDate.getMonth()+1}-${this.fromDate.getDate()}`;
@@ -98,11 +81,11 @@ export class BankStatementViewComponent implements OnInit {
               console.log("Bankstatement Error >>> "+error)
               debugger;
               if(error != ""){
-              this.error = this.acc_no + "(The system cannot find the file specified)";
+              this.error = this.acc_no + "(The system cannot find the records!....)";
                 }
               this.loading = false;
             });
    
-    }
+
   }
 }
