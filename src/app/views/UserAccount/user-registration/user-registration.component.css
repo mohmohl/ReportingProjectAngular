@@ -1,0 +1,10 @@
+table td{
+    border-bottom: 1px solid rgb(230, 228, 228);
+}
+table th{
+    background-color: lightgoldenrodyellow;
+    border-bottom: 1px solid rgb(230, 228, 228);
+    min-width: 100px;
+}
+
+ 

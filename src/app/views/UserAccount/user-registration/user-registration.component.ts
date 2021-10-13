@@ -34,7 +34,9 @@ this.form.setValue({
   password:'',
   confirm_password:''
 });
+this.loading = true;
 this.menuService.getMenuData().subscribe((res:MenuItem[])=>{
+  this.loading = false;
   this.menuList = res;
 });
   }
