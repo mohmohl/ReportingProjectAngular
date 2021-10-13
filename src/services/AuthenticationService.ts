@@ -27,7 +27,7 @@ export class AuthenticationService {
         if (this.currentUserSubject.value != null) {
             
             if(typeof this.currentUserSubject.value.userId != "undefined"){
-            const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
+            const menuMap = new Map(Object.entries(this.currentUserSubject.value.permission));
             menuMap.forEach((value, key) => {
                 const menuList: MenuItem[] = value;
                 menuList.forEach(e => {
@@ -69,7 +69,7 @@ export class AuthenticationService {
                 this.permission.push("/bypass-edit-account");
                 if (this.currentUserSubject.value != null) {
                     this.currentUserValue;
-                    const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
+                    const menuMap = new Map(Object.entries(this.currentUserSubject.value.permission));
                     menuMap.forEach((value, key) => {
                         const menuList: MenuItem[] = value;
                         menuList.forEach(e => {

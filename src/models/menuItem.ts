@@ -8,4 +8,6 @@ export class MenuItem {
 	  category_id:string;
 	  category_name:string;
 	  selected:boolean;
+	  program:string;
+	menu_status:string;
 }

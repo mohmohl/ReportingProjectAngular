@@ -89,7 +89,15 @@ const routes: Routes = [
       ,
       {
         path: 'gt-trial-report',
-        loadChildren: () => import('./views/TrialReport/trial-report/trial-report.module').then(m => m.TrialReportModule),canActivate:[AuthGuard]
+        loadChildren: () => import('./views/TrialReport/detail-trial-report/trial-report.module').then(m => m.TrialReportModule),canActivate:[AuthGuard]
+      },
+      {
+        path: 'general-trial-report',
+        loadChildren: () => import('./views/TrialReport/general-trial-report/general-trial-report.module').then(m => m.GeneralTrialReportModule),canActivate:[AuthGuard]
+      },
+      {
+        path: 'mis-trial-report',
+        loadChildren: () => import('./views/TrialReport/mis-trial-report/mis-trial-report.module').then(m => m.MisTrialReportModule),canActivate:[AuthGuard]
       },
       {
         path: 'bypass-account-list',
