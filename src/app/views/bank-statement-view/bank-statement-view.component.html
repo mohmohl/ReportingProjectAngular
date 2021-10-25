@@ -33,7 +33,7 @@
                         <div class="col-sm-2">
                             <mat-form-field style="width:100px;">
                                 <input #minmaxInput matInput [matDatepicker]="minmaxvalidation"
-                                    formControlName="fromDate">
+                                    formControlName="fromDate" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #minmaxvalidation></mat-datepicker>
@@ -46,7 +46,7 @@
 
                             <mat-form-field style="width:100px;">
                                 <input #minmaxInput matInput [matDatepicker]="minmaxvalidation2"
-                                    formControlName="toDate">
+                                    formControlName="toDate" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="minmaxvalidation2">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #minmaxvalidation2></mat-datepicker>

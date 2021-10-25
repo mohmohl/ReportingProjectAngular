@@ -2293,6 +2293,9 @@ agm-map, vector_map {
 .card{
   border-top:4px solid rgba(105, 28, 49, 0.75) !important;
 }
+.card-body {
+  padding: 2.25rem !important;
+}
 .table td{
   border: 1px solid #dee2e6;
 }
