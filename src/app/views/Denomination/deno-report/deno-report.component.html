@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-sm-12">
+      
+        <div class="card">
+            <div class="card-header">
+              <h5>Denomination Report</h5>
+              <div class="page-header-breadcrumb">
+                
+              </div>
+            </div>
+            <div class="card-body">
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+                  <code *ngIf="error">{{error}}</code>
+                  <form [formGroup]="form" (ngSubmit)="submit()"></form>
+                  <div class="form-group row">
+                    <label class="col-sm-1 col-form-label"> Date</label>
+                    <div class="col-sm-2">
+                        <mat-form-field style="width:100px;">
+                            <input #minmaxInput matInput  [max]="maxDate" [matDatepicker]="minmaxvalidation"
+                                formControlName="import_date" readonly>
+                            <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #minmaxvalidation></mat-datepicker>
+                        </mat-form-field>
+                     
+                    </div>
+                    <div class="col-sm-2">
+                    <button type="submit" class="btn-success">
+                        <i _ngcontent-rdh-c12="" class="ti-printer"></i>
+                        Export
+                    </button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+

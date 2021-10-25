@@ -114,6 +114,14 @@ const routes: Routes = [
       {
         path: 'bank-statement-view',
         loadChildren: () => import('./views/bank-statement-view/bank-statement-view.module').then(m => m.BankStatementViewModule)
+      },
+      {
+        path: 'deno-import',
+        loadChildren: () => import('./views/Denomination/deno-import/deno-import.module').then(m => m.DenoImportModule)
+      },
+      {
+        path: 'deno-report',
+        loadChildren: () => import('./views/Denomination/deno-report/deno-report.module').then(m => m.DenoReportModule)
       }
     ]
   },
