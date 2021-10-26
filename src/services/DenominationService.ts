@@ -16,6 +16,6 @@ export class DenominationService {
     }
     public exportExcel(importDate:string): Observable<any>{
 
-      return this.http.get<any>(`${environment.baseUrl}`+'/trial/get_excel_detail_trial_report?fromDate='+importDate,{responseType: 'arraybuffer' as 'json'});
+      return this.http.get<any>(`${environment.baseUrl}`+'/CMD_DT_01/export?date='+importDate,{responseType: 'arraybuffer' as 'json'});
   }
 }

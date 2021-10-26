@@ -14,13 +14,12 @@
                       <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
                   </div>
                   <code *ngIf="error">{{error}}</code>
-                  <form [formGroup]="form" (ngSubmit)="submit()"></form>
+                  <form [formGroup]="form" (ngSubmit)="submit()">
                   <div class="form-group row">
                     <label class="col-sm-1 col-form-label"> Date</label>
-                    <div class="col-sm-2">
+                    <div class="col-sm-2" >
                         <mat-form-field style="width:100px;">
-                            <input #minmaxInput matInput  [max]="maxDate" [matDatepicker]="minmaxvalidation"
-                                formControlName="import_date" readonly>
+                            <input #minmaxInput matInput  [max]="maxDate" [matDatepicker]="minmaxvalidation" formControlName="import_date" readonly>
                             <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
                             </mat-datepicker-toggle>
                             <mat-datepicker #minmaxvalidation></mat-datepicker>
@@ -34,8 +33,10 @@
                     </button>
                     </div>
                     </div>
+                </form>
                 </div>
-            </div>
+
             </div>
         </div>
+</div>
 
