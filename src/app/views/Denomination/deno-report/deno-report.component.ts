@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { PickDateAdapter } from 'src/models/PickDateAdapter';
 import { DenominationService } from 'src/services/DenominationService';
-import { PICK_FORMATS } from '../deno-import/deno-import.component';
-
+export const PICK_FORMATS = {
+  parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
+  display: {
+      dateInput: 'input',
+      monthYearLabel: {year: 'numeric', month: 'short'},
+      dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
+      monthYearA11yLabel: {year: 'numeric', month: 'long'}
+  }
+};
 @Component({
   selector: 'app-deno-report',
   templateUrl: './deno-report.component.html',
