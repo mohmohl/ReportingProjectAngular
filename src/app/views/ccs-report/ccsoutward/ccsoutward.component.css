@@ -43,3 +43,7 @@ label{
     overflow-y:auto;
     max-height:300px;
 }
+
+select{
+    max-width: 100%;
+}
