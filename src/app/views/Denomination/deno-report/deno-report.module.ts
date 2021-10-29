@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { DenoReportRoutingModule } from './deno-report-routing.module';
 import { DenoReportComponent } from './deno-report.component';
 import { SharedModule } from '../../../shared/shared.module';
