@@ -10,3 +10,7 @@
     overflow-y:auto !important;
     max-height:300px !important;
 }
+
+select{
+    max-width: 100%;
+}
