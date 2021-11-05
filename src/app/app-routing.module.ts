@@ -122,6 +122,22 @@ const routes: Routes = [
       {
         path: 'deno-report',
         loadChildren: () => import('./views/Denomination/deno-report/deno-report.module').then(m => m.DenoReportModule)
+      },
+      {
+        path: 'domestic-new-company',
+        loadChildren: () => import('./views/asm-screening-api/domestic-new-company/domestic-new-company.module').then(m => m.DomesticNewCompanyModule)
+      },
+      {
+        path: 'domestic-new-individual',
+        loadChildren: () => import('./views/asm-screening-api/domestic-new-individual/domestic-new-individual.module').then(m => m.DomesticNewIndividualModule)
+      },
+      {
+        path: 'domestic-existing-company',
+        loadChildren: () => import('./views/asm-screening-api/domestic-existing-company/domestic-existing-company.module').then(m => m.DomesticExistingCompanyModule)
+      },
+      {
+        path: 'domestic-existing-individual',
+        loadChildren: () => import('./views/asm-screening-api/domestic-existing-individual/domestic-existing-individual.module').then(m => m.DomesticExistingIndividualModule)
       }
     ]
   },
