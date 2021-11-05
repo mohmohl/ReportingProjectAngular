@@ -15,7 +15,7 @@ import { JwtInterceptor } from 'src/helpers/jwt.interceptor';
 import { ErrorInterceptor } from 'src/helpers/error.interceptor';
 import { BnNgIdleService } from 'bn-ng-idle'; 
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';import { DenoReportComponent } from './views/Denomination/deno-report/deno-report.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
