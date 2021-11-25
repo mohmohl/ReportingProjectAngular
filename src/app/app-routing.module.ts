@@ -138,6 +138,22 @@ const routes: Routes = [
       {
         path: 'domestic-existing-individual',
         loadChildren: () => import('./views/asm-screening-api/domestic-existing-individual/domestic-existing-individual.module').then(m => m.DomesticExistingIndividualModule)
+      },
+      {
+        path: 'meter-bill-upload',
+        loadChildren: () => import('./views/meterBill/metre-bill-upload/metre-bill-upload.module').then(m => m.MetreBillUploadModule)
+      },
+      {
+        path: 'vendor-registration',
+        loadChildren: () => import('./views/meterBill/vendor-registration/vendor-registration.module').then(m => m.VendorRegistrationModule)
+      },
+      {
+        path: 'vendor-meter-bill-upload',
+        loadChildren: () => import('./views/meterBill/vendor-meter-bill-upload/vendor-meter-bill-upload.module').then(m => m.VendorMetreBillUploadModule)
+      },
+      {
+        path: 'report-generation',
+        loadChildren: () => import('./views/meterBill/report-generation/report-generation.module').then(m => m.ReportGenerationModule)
       }
     ]
   },

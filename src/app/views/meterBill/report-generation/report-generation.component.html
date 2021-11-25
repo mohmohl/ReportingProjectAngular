@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Meter Bill Report</h5>
+                <!-- <p class="text-danger mb-1 ng-tns-c85-3" *ngIf="timeCounter">{{timeCounter}}</p> -->
+            </div>
+
+            <div class="card-body">
+                <code *ngIf="error">{{error}}</code>
+                <label  *ngIf="message" class="text-info">{{message}}</label>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                  <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+  
+              <form [formGroup]="form" (ngSubmit)="submit()">
+
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Vendor</label>
+                  <div class="col-sm-2">
+                    <select class="form-control" formControlName="vendorId"> 
+                      <option value="{{item.vendorId}}" *ngFor='let item of vendorList'>{{item.vendorName}}</option>
+                    </select>
+                  </div>
+
+                  <label class="col-sm-2  col-form-label">Division</label>
+                  <div class="col-sm-2">
+                    <select class="form-control" formControlName="divisionId" (change)="onChange($event)"> 
+                      <option value="{{item.divisionId}}" *ngFor='let item of divisionList'>{{item.divisionName}}</option>
+                    </select>
+                  </div>
+                </div>
+                
+                  <div class="form-group row">
+                    <label class="col-sm-2  col-form-label">Region</label>
+                    <div class="col-sm-2">
+                      <select class="form-control" formControlName="regionId" (change)="onRegionChange($event)"> 
+                        <option value="{{item.regionId}}" *ngFor='let item of regionList'>{{item.regionName}}</option>
+                      </select>
+                    </div>
+
+                    <label class="col-sm-2  col-form-label">Township</label>
+                    <div class="col-sm-2">
+                      <select class="form-control" formControlName="townshipId"> 
+                        <option value="{{item.townshipId}}" *ngFor='let item of townshipList'>{{item.townshipName}}</option>
+                      </select>
+                    </div>
+                  </div>
+      
+                  <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                    <div  class="col-sm-1">
+                        <button class="btn btn-warning btn-sm" type="submit">View</button>
+                    </div>
+                    <div  class="col-sm-1">
+                      <button class="btn btn-warning btn-sm" (click)="exportexcel()">Download</button>
+                  </div>
+                  </div>
+            </form>
+
+            <table class="table">
+                <thead>
+                    <th>No</th>
+                    <th>Corporate</th>
+                    <th>Division</th>
+                    <th>Township</th>
+                    <th>Meter No</th>
+                    <th>Site ID</th>
+                    <th>Ledger No</th>
+                    <th>Consumer Name</th>
+                    <th>Unit</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of response;let i=index;">
+                       <td>{{i+1}}</td>
+                       <td>{{item.vendorName}}</td>
+                       <td>{{item.divisionName}}</td>
+                       <td>{{item.townshipName}}</td>
+                       <td>{{item.meterNo}}</td>
+                       <td>{{item.siteId}}</td>
+                       <td>{{item.ledgerNo}}</td>
+                       <td>{{item.consumerName}}</td>
+                       <td>{{item.usedUnits}}</td>
+                       <td>{{item.billAmount}}</td>
+                       <td>{{item.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+          
+
+          </div>
+          
+    </div>
+</div>
