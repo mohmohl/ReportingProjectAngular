@@ -37,6 +37,7 @@ export class MetreBillUploadComponent implements OnInit {
 townshipMultiFile =new FormData();
   form = new FormGroup({
     fileData: new FormControl('', Validators.required),
+    template: new FormControl(''),
     divisionId: new FormControl('', Validators.required),
     regionId: new FormControl('', Validators.required),
     townshipId: new FormControl('', Validators.required)
@@ -61,6 +62,7 @@ townshipMultiFile =new FormData();
           this.divisionList = res;
           }
         });
+
 }
 
 timeStart(){
@@ -127,6 +129,7 @@ onChange(event: any){
 
   reChange(){
     this.error = '';
+    this.message = '';
   }
 
   handleFileInput(files: FileList) {
@@ -164,6 +167,7 @@ onChange(event: any){
     formData.append("division_id",this.form.get(["divisionId"])!.value)
     formData.append("region_id",this.form.get(["regionId"])!.value)
     formData.append("township_id",this.form.get(["townshipId"])!.value)
+    formData.append("template", this.form.get(["template"])!.value)
     formData.append("file", this.fileToUpload);
     this.metreService.fileUpload(formData) 
     .pipe(
@@ -196,8 +200,51 @@ onChange(event: any){
       this.error ="The system have the error";
       this.loading = false;
     });
+  }
 
+  noJob() {
+    this.loading = true;
+    this.timeStart();
+    this.error = "";    
+   this.message = "";
 
+    const formData = new FormData();
+    formData.append("division_id",this.form.get(["divisionId"])!.value)
+    formData.append("region_id",this.form.get(["regionId"])!.value)
+    formData.append("township_id",this.form.get(["townshipId"])!.value)
+    formData.append("template", this.form.get(["template"])!.value)
+    formData.append("file", this.fileToUpload);
+    this.metreService.fileUpload(formData) 
+    .pipe(
+      map((data: any) => {
+        this.response = data;
+        this.loading = false;
+       // this.isDisabled = false;
+        if(this.response != null){
+          if(this.response.flag == false){
+            this.message = "Import Done !....";
+            //  if(this.response.totalCount >0){
+            //    this.totalCount = this.response.totalCount;
+            //    this.message = "Import Done !....";
+            //  }else{
+            //    this.message = "Import Fail !....";
+            //  }
+          }else{
+            this.message = this.response.message;
+          }
+          
+          this.errorList = this.response.errorList;
+        }
+        this.subscription.unsubscribe();
+      }))
+    .subscribe(res=>{
+      
+    },
+    error => {
+      this.subscription.unsubscribe();
+      this.error ="The system have the error";
+      this.loading = false;
+    });
   }
     
 

@@ -8,4 +8,5 @@ export class Meter_ReportResponse {
 	  usedUnits: string;
 	  consumerName: string;
 	  billAmount: number;
+	  status: string;
 }
