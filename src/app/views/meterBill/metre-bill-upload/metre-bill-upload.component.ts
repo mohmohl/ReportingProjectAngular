@@ -177,13 +177,12 @@ onChange(event: any){
        // this.isDisabled = false;
         if(this.response != null){
           if(this.response.flag == false){
-            this.message = "Import Done !....";
-            //  if(this.response.totalCount >0){
-            //    this.totalCount = this.response.totalCount;
-            //    this.message = "Import Done !....";
-            //  }else{
-            //    this.message = "Import Fail !....";
-            //  }
+            if(this.response.totalCount >0){
+              this.totalCount = this.response.totalCount;
+              this.message = this.totalCount + " Import Done!....";
+            }else{
+              this.message = "Import Fail !....";
+            }
           }else{
             this.message = this.response.message;
           }
@@ -201,52 +200,5 @@ onChange(event: any){
       this.loading = false;
     });
   }
-
-  noJob() {
-    this.loading = true;
-    this.timeStart();
-    this.error = "";    
-   this.message = "";
-
-    const formData = new FormData();
-    formData.append("division_id",this.form.get(["divisionId"])!.value)
-    formData.append("region_id",this.form.get(["regionId"])!.value)
-    formData.append("township_id",this.form.get(["townshipId"])!.value)
-    formData.append("template", this.form.get(["template"])!.value)
-    formData.append("file", this.fileToUpload);
-    this.metreService.fileUpload(formData) 
-    .pipe(
-      map((data: any) => {
-        this.response = data;
-        this.loading = false;
-       // this.isDisabled = false;
-        if(this.response != null){
-          if(this.response.flag == false){
-            this.message = "Import Done !....";
-            //  if(this.response.totalCount >0){
-            //    this.totalCount = this.response.totalCount;
-            //    this.message = "Import Done !....";
-            //  }else{
-            //    this.message = "Import Fail !....";
-            //  }
-          }else{
-            this.message = this.response.message;
-          }
-          
-          this.errorList = this.response.errorList;
-        }
-        this.subscription.unsubscribe();
-      }))
-    .subscribe(res=>{
-      
-    },
-    error => {
-      this.subscription.unsubscribe();
-      this.error ="The system have the error";
-      this.loading = false;
-    });
-  }
-    
-
 
 }
