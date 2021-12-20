@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+              <h5>Uploaded Vendor Meter Bill</h5>
+            </div>
+            <div class="card-body">
+               
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                  <code *ngIf="error">{{error}}</code>
+                  <label  *ngIf="successMsg" class="text-info">{{successMsg}}</label>
+                  <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+                      
+                    <div class="form-group row">
+                    <label class="col-sm-2  col-form-label">Division<code>*</code></label>
+                    <div class="col-sm-2">
+                        <select class="form-control" formControlName="divisionId"> 
+                        <option value="{{item.divisionId}}" *ngFor='let item of divisionList'>{{item.divisionName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-info btn-sm">Search</button>
+                    </div>
+                    </div>
+                </form>
+
+                <table class="table" >
+                    <thead>
+                        <th>Vendor Name</th>
+                        <th>Uploaded File Name</th>
+                        <th>Count</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of uploadedList;">
+                           <td>{{item.vendorName}}</td>
+                           <td>{{item.fileName}}</td>
+                           <td>{{item.dataCount}}</td>
+                          <td><button type="button" class="btn btn-primary btn-sm" (click)="clear(item.vendorId)" >Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+  </div>

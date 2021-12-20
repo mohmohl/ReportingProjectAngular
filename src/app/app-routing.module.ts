@@ -154,6 +154,14 @@ const routes: Routes = [
       {
         path: 'report-generation',
         loadChildren: () => import('./views/meterBill/report-generation/report-generation.module').then(m => m.ReportGenerationModule)
+      },
+      {
+        path: 'meter-bill-view',
+        loadChildren: () => import('./views/meterBill/meter-bill-view/metre-bill-view.module').then(m => m.MetreBillViewModule)
+      },
+      {
+        path: 'vendor-meter-bill-view',
+        loadChildren: () => import('./views/meterBill/vendor-meter-bill-view/vendor-meter-bill-view.module').then(m => m.VendorMetreBillViewModule)
       }
     ]
   },
