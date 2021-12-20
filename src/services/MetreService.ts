@@ -9,7 +9,7 @@ import { Vendor } from "src/models/meterBill/Vendor";
 @Injectable({
     providedIn: 'root'
   })
-  export class MetreService {
+  export class MeterService {
     constructor(private http: HttpClient) { 
     }
   
@@ -57,6 +57,16 @@ import { Vendor } from "src/models/meterBill/Vendor";
       return this.http.post<any>(`${api}`, divisionId);
     }
 
+    public getUploadedMeterBill(regionId: string): Observable<any>{
+      let api = environment.baseUrl + `/meterBill/getUploadedData?regionId=` + regionId;
+      return this.http.post<any>(`${api}`, regionId);
+    }
+
+    public getUploadedVendorMeterBill(divisionId: string): Observable<any>{
+      let api = environment.baseUrl + `/meterBill/getUploadedVData?divisionId=` + divisionId;
+      return this.http.post<any>(`${api}`, divisionId);
+    }
+
     public getDivisions(): Observable<any>{
       let api = environment.baseUrl + `/meterBill/getDivisions`;
       return this.http.get<any>(`${api}`);
@@ -64,12 +74,22 @@ import { Vendor } from "src/models/meterBill/Vendor";
 
     public deleteMeterBill(): Observable<any>{
       let api = environment.baseUrl + `/meterBill/deleteMBill`;
-      return this.http.get<any>(`${api}`);
+      return this.http.post<any>(`${api}`,'');
     }
 
     public deleteVendorMeterBill(): Observable<any>{
       let api = environment.baseUrl + `/meterBill/deleteVBill`;
-      return this.http.get<any>(`${api}`);
+      return this.http.post<any>(`${api}`,'');
+    }
+
+    public deleteUploadedMeterBill(townshipId: string): Observable<any>{
+      let api = environment.baseUrl + `/meterBill/deleteUploadedM?townshipId=` + townshipId;
+      return this.http.post<any>(`${api}`, townshipId);
+    }
+
+    public deleteUploadedVendorMeterBill(vendorId: string): Observable<any>{
+      let api = environment.baseUrl + `/meterBill/deleteUploadedV?vendorId=` + vendorId;
+      return this.http.post<any>(`${api}`, vendorId);
     }
 
     public viewReport(data: Meter_Report): Observable<any> {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MetreService } from 'src/services/MetreService';
+import { MeterService } from 'src/services/MetreService';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Meter_Report } from 'src/models/meterBill/Meter_Report';
 import { Meter_ReportResponse } from 'src/models/meterBill/Meter_ReportResponse';
@@ -34,7 +34,7 @@ export class ReportGenerationComponent {
     vendorId: new FormControl('')
   });
 
-  constructor(private metreService: MetreService, public datepipe: DatePipe) { 
+  constructor(private metreService: MeterService, public datepipe: DatePipe) { 
     this.loading = true;
     this.metreService.getVendors().subscribe(res =>{
       this.loading = false;
