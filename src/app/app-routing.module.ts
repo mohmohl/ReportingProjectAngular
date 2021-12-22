@@ -162,6 +162,10 @@ const routes: Routes = [
       {
         path: 'vendor-meter-bill-view',
         loadChildren: () => import('./views/meterBill/vendor-meter-bill-view/vendor-meter-bill-view.module').then(m => m.VendorMetreBillViewModule)
+      },
+      {
+        path: 'delete-view',
+        loadChildren: () => import('./views/meterBill/delete-view/delete-view.module').then(m => m.DeleteViewModule)
       }
     ]
   },
