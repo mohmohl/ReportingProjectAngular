@@ -17,6 +17,7 @@ import { BnNgIdleService } from 'bn-ng-idle';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { DeleteViewComponent } from './views/meterBill/delete-view/delete-view.component';
 
 
 @NgModule({
