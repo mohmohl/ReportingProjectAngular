@@ -16,6 +16,9 @@ import { ErrorInterceptor } from 'src/helpers/error.interceptor';
 import { BnNgIdleService } from 'bn-ng-idle'; 
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { DeleteViewComponent } from './views/meterBill/delete-view/delete-view.component';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +43,8 @@ import { FormsModule } from '@angular/forms';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    BnNgIdleService
+    BnNgIdleService,
+    DatePipe
  ],
   bootstrap: [AppComponent]
 })

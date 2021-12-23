@@ -131,7 +131,35 @@ const routes: Routes = [
         path: 'mab-survey-report',
         loadChildren: () => import('./views/MABQA/mab-answer-view/mab-answer-view.module').then(m => m.MABAnswerViewModule)
       },
-     
+      {
+        path: 'meter-bill-upload',
+        loadChildren: () => import('./views/meterBill/metre-bill-upload/metre-bill-upload.module').then(m => m.MetreBillUploadModule)
+      },
+      {
+        path: 'vendor-registration',
+        loadChildren: () => import('./views/meterBill/vendor-registration/vendor-registration.module').then(m => m.VendorRegistrationModule)
+      },
+      {
+        path: 'vendor-meter-bill-upload',
+        loadChildren: () => import('./views/meterBill/vendor-meter-bill-upload/vendor-meter-bill-upload.module').then(m => m.VendorMetreBillUploadModule)
+      },
+      {
+        path: 'report-generation',
+        loadChildren: () => import('./views/meterBill/report-generation/report-generation.module').then(m => m.ReportGenerationModule)
+      },
+      {
+        path: 'meter-bill-view',
+        loadChildren: () => import('./views/meterBill/meter-bill-view/metre-bill-view.module').then(m => m.MetreBillViewModule)
+      },
+      {
+        path: 'vendor-meter-bill-view',
+        loadChildren: () => import('./views/meterBill/vendor-meter-bill-view/vendor-meter-bill-view.module').then(m => m.VendorMetreBillViewModule)
+      },
+      {
+        path: 'delete-view',
+        loadChildren: () => import('./views/meterBill/delete-view/delete-view.module').then(m => m.DeleteViewModule)
+      }
+
     ]
   },
   {
