@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/helpers/auth.guard';
-import { DomesticNewIndividualComponent } from './domestic-new-individual.component';
+import {MABQuestionAnswerComponent} from './mab-question-answer.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DomesticNewIndividualComponent,
+    component: MABQuestionAnswerComponent,
     canActivate: [AuthGuard],
     data: {
-      breadcrumb: 'Domestic New Individual',
+      breadcrumb: 'MAB Question & Answer',
       icon: 'icofont icofont-file-document bg-c-pink',
       breadcrumb_caption: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit - Sample Page',
       status: true
@@ -21,4 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DomesticNewIndividualRoutingModule { }
+export class MABQuestionAnswerRoutingModule { }

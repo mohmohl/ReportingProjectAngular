@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DomesticNewCompanyComponent } from './domestic-new-company.component';
+import { MABQuestionAnswerComponent } from './mab-question-answer.component';
 
-describe('DomesticNewCompanyComponent', () => {
-  let component: DomesticNewCompanyComponent;
-  let fixture: ComponentFixture<DomesticNewCompanyComponent>;
+describe('MABQuestionAnswerComponent', () => {
+  let component: MABQuestionAnswerComponent;
+  let fixture: ComponentFixture<MABQuestionAnswerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DomesticNewCompanyComponent ]
+      declarations: [ MABQuestionAnswerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DomesticNewCompanyComponent);
+    fixture = TestBed.createComponent(MABQuestionAnswerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -23,3 +23,4 @@ describe('DomesticNewCompanyComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
