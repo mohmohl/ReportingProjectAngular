@@ -124,20 +124,12 @@ const routes: Routes = [
         loadChildren: () => import('./views/Denomination/deno-report/deno-report.module').then(m => m.DenoReportModule)
       },
       {
-        path: 'domestic-new-company',
-        loadChildren: () => import('./views/asm-screening-api/domestic-new-company/domestic-new-company.module').then(m => m.DomesticNewCompanyModule)
+        path: 'mab-survey-form',
+        loadChildren: () => import('./views/MABQA/mab-question-answer/mab-question-answer.module').then(m => m.MABQuestionAnswerModule)
       },
       {
-        path: 'domestic-new-individual',
-        loadChildren: () => import('./views/asm-screening-api/domestic-new-individual/domestic-new-individual.module').then(m => m.DomesticNewIndividualModule)
-      },
-      {
-        path: 'domestic-existing-company',
-        loadChildren: () => import('./views/asm-screening-api/domestic-existing-company/domestic-existing-company.module').then(m => m.DomesticExistingCompanyModule)
-      },
-      {
-        path: 'domestic-existing-individual',
-        loadChildren: () => import('./views/asm-screening-api/domestic-existing-individual/domestic-existing-individual.module').then(m => m.DomesticExistingIndividualModule)
+        path: 'mab-survey-report',
+        loadChildren: () => import('./views/MABQA/mab-answer-view/mab-answer-view.module').then(m => m.MABAnswerViewModule)
       },
       {
         path: 'meter-bill-upload',
@@ -167,6 +159,7 @@ const routes: Routes = [
         path: 'delete-view',
         loadChildren: () => import('./views/meterBill/delete-view/delete-view.module').then(m => m.DeleteViewModule)
       }
+
     ]
   },
   {
