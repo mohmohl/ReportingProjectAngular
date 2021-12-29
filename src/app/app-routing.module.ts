@@ -124,6 +124,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/Denomination/deno-report/deno-report.module').then(m => m.DenoReportModule)
       },
       {
+        path: 'mab-survey-question',
+        loadChildren: () => import('./views/MABQA/mab-survey-question/mab-survey-question.module').then(m => m.MABSurveyQuestionModule)
+      },
+      {
         path: 'mab-survey-form',
         loadChildren: () => import('./views/MABQA/mab-question-answer/mab-question-answer.module').then(m => m.MABQuestionAnswerModule)
       },
