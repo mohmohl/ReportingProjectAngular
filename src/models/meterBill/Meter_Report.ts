@@ -3,4 +3,5 @@ export class Meter_Report {
     regionId: string;
     divisionId: string;
     townshipId: string;
+    searchData: string;
 }
