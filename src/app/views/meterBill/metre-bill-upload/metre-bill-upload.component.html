@@ -17,14 +17,14 @@
             <form [formGroup]="form" (ngSubmit)="submit()">
                 <div class="form-group row">
                   <label class="col-sm-2  col-form-label">Division<code>*</code></label>
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                     <select class="form-control" formControlName="divisionId" (change)="onChange($event)"> 
                       <option value="{{item.divisionId}}" *ngFor='let item of divisionList'>{{item.divisionName}}</option>
                     </select>
                   </div>
 
                   <label class="col-sm-2  col-form-label">Region<code>*</code></label>
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                     <select class="form-control" formControlName="regionId" (change)="onRegionChange($event)"> 
                       <option value="{{item.regionId}}" *ngFor='let item of regionList'>{{item.regionName}}</option>
                     </select>
@@ -33,7 +33,7 @@
 
                 <div class="form-group row">
                   <label class="col-sm-2  col-form-label">Township<code>*</code></label>
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                     <select class="form-control" formControlName="townshipId"> 
                       <option value="{{item.townshipId}}" *ngFor='let item of tspList'>{{item.townshipName}}</option>
                     </select>

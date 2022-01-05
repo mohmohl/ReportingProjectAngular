@@ -98,8 +98,8 @@ import { Vendor } from "src/models/meterBill/Vendor";
     }
 
 
-  public exportExcel(divisionId:string,vendorId:string,regionId:string,tspId:string): Observable<any>{
-    return this.http.get<any>(`${environment.baseUrl}`+'/meterBill/exportExcel?divisionId='+divisionId+ '&vendorId='+vendorId+'&regionId='+regionId+'&tspId='+tspId,{responseType: 'arraybuffer' as 'json'});
+  public exportExcel(divisionId:string,vendorId:string,regionId:string,tspId:string,searchData:string): Observable<any>{
+    return this.http.get<any>(`${environment.baseUrl}`+'/meterBill/exportExcel?divisionId='+divisionId+'&vendorId='+vendorId+'&regionId='+regionId+'&tspId='+tspId+'&searchData='+searchData,{responseType: 'arraybuffer' as 'json'});
   }
 
     

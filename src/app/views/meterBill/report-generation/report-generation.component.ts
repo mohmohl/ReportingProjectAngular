@@ -25,13 +25,14 @@ export class ReportGenerationComponent {
   regionId: any;
   townshipId: any;
   vendorId: any;
+  searchData: any;
   
-
   form = new FormGroup({
     divisionId: new FormControl(''),
     regionId: new FormControl(''),
     townshipId: new FormControl(''),
-    vendorId: new FormControl('')
+    vendorId: new FormControl(''),
+    searchData: new FormControl('')
   });
 
   constructor(private metreService: MeterService, public datepipe: DatePipe) { 
@@ -91,6 +92,7 @@ export class ReportGenerationComponent {
     reqReport.divisionId = this.form.get(["divisionId"])!.value
     reqReport.townshipId = this.form.get(["townshipId"])!.value
     reqReport.vendorId = this.form.get(['vendorId'])!.value
+    reqReport.searchData = this.form.get(['searchData'])!.value
 
     this.metreService.viewReport(reqReport)
           .pipe(
@@ -124,8 +126,9 @@ export class ReportGenerationComponent {
   this.regionId = this.form.get(["regionId"])!.value
   this.townshipId = this.form.get(["townshipId"])!.value
   this.vendorId = this.form.get(['vendorId'])!.value
+  this.searchData = this.form.get(['searchData'])!.value
 
-  this.metreService.exportExcel(this.divisionId,this.vendorId,this.regionId, this.townshipId)
+  this.metreService.exportExcel(this.divisionId,this.vendorId,this.regionId, this.townshipId,this.searchData)
   .pipe(
     map((data: any) => {
       let blob = new Blob([data], {
