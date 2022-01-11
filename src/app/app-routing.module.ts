@@ -136,6 +136,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/MABQA/mab-answer-view/mab-answer-view.module').then(m => m.MABAnswerViewModule)
       },
       {
+        path: 'mab-survey-setting',
+        loadChildren: () => import('./views/MABQA/mab-survey-setting/mab-survey-setting.module').then(m => m.MABSurveySettingModule)
+      },
+      {
         path: 'meter-bill-upload',
         loadChildren: () => import('./views/meterBill/metre-bill-upload/metre-bill-upload.module').then(m => m.MetreBillUploadModule)
       },

@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <form [formGroup]="form"  (ngSubmit)="save_survet(form.value)">
+            <div class="card-header">
+              <h5>Survey</h5>
+              
+            <div class="page-header-breadcrumb">
+                <button type="submit" class="btn-primary" >
+                    Submit
+                </button> 
+            </div>
+            </div>
+            <div class="card-body">
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+                <p style="color:red;" *ngIf="error">{{error}}</p>
+               
+                 <div class="form-group row">
+                    <label class="col-sm-2">Survey Title</label>
+                       <div class="col-sm-6">
+                        <input type="text" formControlName="title">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2">Status</label>
+                       <div class="col-sm-6">
+                        <select formControlName="status">
+                            <option value="0" selected>0</option>
+                            <option  value="1">1</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2">Due Date</label>
+                    <div class="col-sm-6">
+                        
+                        <mat-form-field style="width:100px;">
+                            <input #minmaxInput matInput 
+                              
+                              [matDatepicker]="minmaxvalidation" formControlName="due_dt" readonly>
+                            <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                               </mat-datepicker-toggle>
+                            <mat-datepicker #minmaxvalidation></mat-datepicker>
+                          </mat-form-field>
+                 </div>
+                 </div>
+                 
+             </div>
+</form></div></div></div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+              <h5>Survey Title List</h5>
+              
+            
+            </div>
+            
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th> No </th>
+                                    <th class="col-sm-9">Title</th>
+                                    <th>Status</th>
+                                    <th>Due Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let list of survey_list; let i = index">
+                                <td>{{i+1}} </td>
+                                <td style="max-width:250px; white-space: break-spaces;">{{list.title}}</td>
+                                <td>{{list.status}} </td>
+                                <td>{{list.due_dt}} </td>
+                                <td>
+                                    <button class="btn-primary" (click)="edit_survey(list.survey_id,list.title,list.status,list.due_dt)">
+                                    Edit
+                                </button> 
+                            </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+        </div>
+    </div>
+</div>
+
+
+
+</div></div></div>
