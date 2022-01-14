@@ -86,6 +86,7 @@ export class ReportGenerationComponent {
    }
 
    submit() {
+    this.error = ''
     this.loading = true;
     const reqReport = new Meter_Report();
     reqReport.regionId = this.form.get(["regionId"])!.value

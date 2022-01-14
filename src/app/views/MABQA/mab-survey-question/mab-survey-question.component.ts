@@ -41,7 +41,6 @@ export class MabSurveyQuestionComponent implements OnInit {
   }
 
   save_question(formdata){
-    debugger
     this.error='';
     if (this.form.invalid) {
       this.error = "Please Fill required field!....";
