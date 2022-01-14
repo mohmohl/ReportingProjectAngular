@@ -13,6 +13,7 @@ export class MabSurveyQuestionComponent implements OnInit {
   loading=false;
   error="";
   search_error="";
+  survey_title = "";
   survey_list:MABSurvey[];
   ques_list:MABQuestion[];
   form = new FormGroup({

@@ -33,6 +33,5 @@ import { CashWithdrawExpAcc } from "src/models/CashWithdrawExpAcc";
     public saveEditData(data : CashWithdrawExpAcc) : Observable<any>{
       return this.http.post<any>(`${environment.baseUrl}`+'/exp/saveEditData',data);
     }
-    
 
   }
