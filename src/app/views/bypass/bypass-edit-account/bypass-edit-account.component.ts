@@ -24,18 +24,20 @@ export class BypassEditAccountComponent implements OnInit {
   }
 
   ngOnInit() {
-    //debugger;
+    debugger;
     /*this.activatedRoute.queryParams.subscribe(
       params => {
         this.cust_ac_no =  params['cust_ac_no'];
       })*/
       this.activatedRoute.paramMap.subscribe(params => {
-        this.cust_ac_no = params.get('cust_ac_no');
+        this.cust_ac_no = params.get('param1'); 
+        console.log("edit component >>>>>  " + this.cust_ac_no);
       })
     this.searchEditData(this.cust_ac_no); 
   }
 
   searchEditData(cust_ac_no){
+    debugger;
     this.loading = true;
     this.data = new CashWithdrawExpAcc();
     this.service.searchEditData(cust_ac_no).subscribe( res =>{
