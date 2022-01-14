@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Better Current Account Cash% List</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+            </div>
+            
+            <div class="card-body">
+                <code *ngIf="errorMsg" >{{errorMsg}}</code>
+                <label *ngIf="message" class="text-info">{{message}}</label>
+                
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="form-group row">
+                        <label class="col-sm-2">Customer Acc No </label>
+                        <div class="col-xs-2">
+                            <input type="text" formControlName="cust_ac_no" > 
+                        </div>
+                        <!--<label class="col-sm-1">Status</label>
+                        <div class="col-xs-2">
+                            <select  formControlName="status" >
+                                <option value="">All</option>
+                                <option value="1">Active</option>
+                                <option value="0">Not Active</option>
+                            </select>
+                        </div> -->
+                        <div class="col-sm-1">
+                            <button type="submit" class="btn-primary">Search</button>
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="button" (click)="deleteData()" class="btn-primary">Delete</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row" *ngIf="response.listData != null"> 
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table table-hover">
+                                <thead>
+                                    <tr class="text-uppercase">
+                                        <th> # </th>
+                                        <th>
+                                            <input type="checkbox"  [(ngModel)]="allChecked" [ngModelOptions]="{standalone: true}" (change)="selectAll($event)">
+                                        </th>
+                                        <th>Date</th>
+                                        <th>Customer Account Number</th>
+                                        <th>Line Code</th>
+                                        <th>Serial No</th>
+                                        <th>Cash%</th>
+                                        <th>Recommended By</th>
+                                        <th>Remark</th>
+                                        <!--<th>Status</th>-->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let list of response.listData; let i = index">
+                                        <td> {{i+1}} </td>
+                                        <td>
+                                            <input type="checkbox" id="i" [(ngModel)]="list.checked" (change)="changeSelection($event,i)">
+                                        </td>
+                                        <td>{{list.entry_date}}</td>
+                                        <td>{{list.cust_ac_no}}</td>
+                                        <td>{{list.line_code}}</td>
+                                        <td>{{list.serial_no}}</td>
+                                        <td>{{list.cash}}</td>
+                                        <td>{{list.recommended_by}}</td>
+                                        <td align="right">{{list.remark}}</td>
+                                        <!--<td align="right">{{list.status}}</td>-->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

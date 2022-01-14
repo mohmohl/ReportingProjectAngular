@@ -108,7 +108,7 @@ const routes: Routes = [
         loadChildren: () => import('./views/bypass/bypass-new-account/bypass-new-account-module').then(m => m.ByPassNewAccountModule),canActivate:[AuthGuard]
       },
       {
-        path: 'bypass-edit-account/:cust_ac_no',
+        path: 'bypass-edit-account/:param1',
         loadChildren: () => import('./views/bypass/bypass-edit-account/bypass-edit-account.module').then(m => m.ByPassEditAccountModule),canActivate:[AuthGuard]
       },
       {
@@ -162,6 +162,14 @@ const routes: Routes = [
       {
         path: 'delete-view',
         loadChildren: () => import('./views/meterBill/delete-view/delete-view.module').then(m => m.DeleteViewModule)
+      },
+      {
+        path: 'bypass-new-bc-account',
+        loadChildren: () => import('./views/bypass/bypass-new-bc-account/bypass-new-bc-account-module').then(m => m.ByPassNewBCAccountModule)
+      },
+      {
+        path: 'bypass-bc-account-list',
+        loadChildren: () => import('./views/bypass/bypass-bc-account-list/bypass-bs-account-list-module').then(m => m.ByPassBCAccountListModule)
       }
 
     ]
