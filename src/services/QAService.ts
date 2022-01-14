@@ -59,7 +59,7 @@ export class QAService{
       }
       public saveToSurvey(req: MABSurvey) {
         var api = environment.baseUrl + '/survey/saveSurvey';
-        return this.http.post<any>(`${api}`,req);
+        return this.http.post(`${api}`,req);
     
       }
 }
