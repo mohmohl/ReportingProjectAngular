@@ -24,13 +24,19 @@
               </div>
               <hr/>
               <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="feather icon-user"></i></span>
+                </div>
                 <input type="text" (change)="onChange($event)" formControlName="userId" class="form-control" placeholder="User ID">
                 <span class="md-line"></span>
               </div>
               <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="feather icon-lock"></i></span>
+                </div>
                 <input type="password" id="p_box" formControlName="password" class="form-control" placeholder="Password">
                 <div class="input-group-append">
-                  <span class="input-group-text" (click)="togglePassword()" style="background-color: rgb(155, 154, 154);"><i class="icofont icofont-eye"></i></span>
+                  <span class="input-group-text" (click)="togglePassword()" style="background-color: #dcdcdc; color:#666;"><i class="icofont icofont-eye"></i></span>
                 </div>
               </div>
               

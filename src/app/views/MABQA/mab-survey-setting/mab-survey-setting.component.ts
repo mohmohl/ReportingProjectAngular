@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { map } from 'rxjs/operators';
 import { MABSurvey } from 'src/models/MABSurvey';
 import { PickDateAdapter } from 'src/models/PickDateAdapter';
 import { QAService } from 'src/services/QAService';
@@ -53,7 +54,7 @@ export class MabSurveySettingComponent implements OnInit {
     due_dt: new FormControl(new Date(due_dt),Validators.required)
     });
     }
-  save_survet(formdata){
+  save_survey(formdata){
       this.error='';
       if (this.form.invalid) {
         this.error = "Please Fill required field!....";
@@ -69,16 +70,29 @@ export class MabSurveySettingComponent implements OnInit {
       due_dt:new Date(d_date)
     };
       this.loading = true;
-      this.service.saveToSurvey(q).subscribe(res => {
-        this.loading = false;
-        console.log("response = "+res);
-          this.error =res;
-          this.form = new FormGroup({
-            survey_id:new FormControl(''),
-            title: new FormControl('',Validators.required),
-            status:new FormControl('',Validators.required),
-            due_dt: new FormControl(new Date,Validators.required)
-          });
+      this.service.saveToSurvey(q).pipe(
+        map((data: any) => {
+          this.loading = false;
+          console.log("response = "+data);
+         // console.log("getMemberList: ",res.json());
+            this.error =data;
+            this.form = new FormGroup({
+              survey_id:new FormControl(''),
+              title: new FormControl('',Validators.required),
+              status:new FormControl('',Validators.required),
+              due_dt: new FormControl(new Date,Validators.required)
+            });
+            this.loading = true;
+            this.service.getSurveyDataList().subscribe((res: MABSurvey[]) => {
+              this.loading = false;
+              this.survey_list = res;
+            },
+            error => {
+              this.error ="The system have the error";
+              this.loading = false;
+            });
+        }))
+      .subscribe(res => {
        
       },
       error => {
