@@ -168,12 +168,17 @@ const routes: Routes = [
         loadChildren: () => import('./views/meterBill/delete-view/delete-view.module').then(m => m.DeleteViewModule)
       },
       {
+        path: 'back_date_report/:param1',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule)
+      },
+      {
         path: 'bypass-new-bc-account',
         loadChildren: () => import('./views/bypass/bypass-new-bc-account/bypass-new-bc-account-module').then(m => m.ByPassNewBCAccountModule)
       },
       {
         path: 'bypass-bc-account-list',
         loadChildren: () => import('./views/bypass/bypass-bc-account-list/bypass-bs-account-list-module').then(m => m.ByPassBCAccountListModule)
+
       }
 
     ]
