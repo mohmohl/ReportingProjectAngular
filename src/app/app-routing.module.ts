@@ -166,6 +166,10 @@ const routes: Routes = [
       {
         path: 'delete-view',
         loadChildren: () => import('./views/meterBill/delete-view/delete-view.module').then(m => m.DeleteViewModule)
+      },
+      {
+        path: 'back_date_report/:param1',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule)
       }
 
     ]
