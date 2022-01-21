@@ -29,6 +29,7 @@ export const PICK_FORMATS = {
 
 export class SearchPdfReportComponent implements OnInit {
   paramId:any;
+  title: string;
   branch_list:string[];
   ccy_list:string[];
   loading = false;
@@ -46,11 +47,16 @@ export class SearchPdfReportComponent implements OnInit {
   constructor(private route: ActivatedRoute,private bdService:BackDateReportService) { }
 
   ngOnInit() {
+    this.title = this.route.snapshot.data.param;
+    this.paramId = this.route.snapshot.data;
+    this.loading = true
     this.bdService.getBranchList().subscribe(res =>{
+      this.loading = false
       this.branch_list=res;
     });
 
     this.bdService.getCurrencyList().subscribe(res =>{
+      this.loading = false
       this.ccy_list=res;
     });
 
@@ -67,7 +73,7 @@ export class SearchPdfReportComponent implements OnInit {
     this.date = this.form.get(["date"])!.value;
     
 
-    this.paramId = this.route.snapshot.data;
+    
     this.fileName = this.paramId.param + "_" + this.form.get(["currency"])!.value + ".pdf";
 
 
