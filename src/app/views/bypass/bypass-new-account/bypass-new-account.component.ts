@@ -78,7 +78,8 @@ export class BypassNewAccountComponent implements OnInit {
       if(res == true){
         this.message = "Save Successful.";
       }else{
-        this.message = "Save Fail."
+        //this.message = "Save Fail."
+        this.message = "This record is already exist."
       }
     },
     error => {
