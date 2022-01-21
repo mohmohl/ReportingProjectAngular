@@ -99,7 +99,7 @@ export class SearchPdfReportComponent implements OnInit {
 
           },
           error => {
-            this.error = this.branch + "(The system cannot find the file specified)";
+            this.error =  "Branch Code - " + this.branch + " File - " + this.fileName  + "(The system cannot find the file specified)";
             this.loading = false;
           });
 
