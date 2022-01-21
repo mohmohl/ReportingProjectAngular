@@ -9,4 +9,5 @@ export class Meter_ReportResponse {
 	  consumerName: string;
 	  billAmount: number;
 	  status: string;
+	  lastDate: string;
 }
