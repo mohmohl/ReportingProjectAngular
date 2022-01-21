@@ -178,13 +178,57 @@ const routes: Routes = [
         data :{param:"Accrual Transfer Scroll"}
       },
       {
+        path: 'bank_cash',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Bank Cash Scroll"}
+      },
+      {
+        path: 'clean_cash',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Clean Cash Scroll"}
+      },
+      {
+        path: 'current_account_daybook',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Current Account Daybook"}
+      },
+      {
+        path: 'domestic_daybook',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Daybook Domestic"}
+      },
+      {
+        path: 'detail_trial',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Detail Trial"}
+      },
+      {
+        path: 'general_trial',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"General Trial"}
+      },
+      {
+        path: 'od_account_daybook',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"OD Account Daybook"}
+      },
+      {
+        path: 'transfer_scroll',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Transfer Scroll"}
+      },
+      {
+        path: 'trial_sheet',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Trial Sheet"}
+      },
+      {
         path: 'bypass-new-bc-account',
         loadChildren: () => import('./views/bypass/bypass-new-bc-account/bypass-new-bc-account-module').then(m => m.ByPassNewBCAccountModule)
       },
       {
         path: 'bypass-bc-account-list',
         loadChildren: () => import('./views/bypass/bypass-bc-account-list/bypass-bs-account-list-module').then(m => m.ByPassBCAccountListModule)
-
       }
 
     ]

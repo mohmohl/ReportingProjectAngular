@@ -14,5 +14,14 @@ export class BackDateReportService{
     public getBranchList(): Observable<any>{
         var userId=this.authService.currentUserValue.userId;
         return this.http.get<any>(`${environment.baseUrl}`+'/trial/get_branchList?userId='+userId);
-      }
+    }
+
+    public getCurrencyList(): Observable<any>{
+      return this.http.get<any>(`${environment.baseUrl}`+'/trial/get_currencyList');
+    }
+
+    public searchBackDateTrial(branch:string,searchDate:string,fileName:string){
+        var api = environment.baseUrl+'/backDateTrial/searchBackDateTrial?branch='+branch+"&searchDate="+searchDate+"&fileName="+fileName;
+        return this.http.get<any>(`${api}`, {responseType: 'arraybuffer' as 'json'});
+    }
 }
