@@ -168,8 +168,14 @@ const routes: Routes = [
         loadChildren: () => import('./views/meterBill/delete-view/delete-view.module').then(m => m.DeleteViewModule)
       },
       {
-        path: 'back_date_report/:param1',
-        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule)
+        path: 'accrual_domestic_daybook',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Accrual Domestic Daybook"}
+      },
+      {
+        path: 'accrual_transfer_scroll',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Accrual Transfer Scroll"}
       },
       {
         path: 'bypass-new-bc-account',

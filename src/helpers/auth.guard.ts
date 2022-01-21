@@ -22,8 +22,9 @@ export class AuthGuard implements CanActivate  {
         var param1 = '';
         param = route.paramMap.get('userId');
         param1 = route.paramMap.get('param1');
-        //console.log("check param >>>> "+param1);
+        console.log("check param >>>> "+param1);
         if (currentUser) {
+            debugger
              if (this.authenticationService.permission.indexOf(state.url) == -1) {
                 if((param === '' || param== null) && (param1 ==='' || param1 == null) ){
                     this.router.navigate(['/access-denied']);
