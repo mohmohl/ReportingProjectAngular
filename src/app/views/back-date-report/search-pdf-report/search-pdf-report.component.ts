@@ -64,7 +64,7 @@ export class SearchPdfReportComponent implements OnInit {
 
   submit() {
     if (this.form.invalid) {
-      this.error = "Branch is required";
+      this.error = "Data is required";
       return;
     }
     this.loading = true;
@@ -105,7 +105,7 @@ export class SearchPdfReportComponent implements OnInit {
 
           },
           error => {
-            this.error =  "Branch Code - " + this.branch + " File - " + this.fileName  + "(The system cannot find the file specified)";
+            this.error =  "Branch Code - " + this.branch + " /Date - "+searchDate+" /File Name - " + this.fileName  + "(The system cannot find the file specified)";
             this.loading = false;
           });
 
