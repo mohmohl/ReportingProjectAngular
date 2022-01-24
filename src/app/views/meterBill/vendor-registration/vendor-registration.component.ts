@@ -16,7 +16,7 @@ export class VendorRegistrationComponent implements OnInit {
 
   form = new FormGroup({
     vendorName: new FormControl('',Validators.required),
-    divisionId: new FormControl('')
+    divisionId: new FormControl('',Validators.required)
   });
 
   constructor(private meterService: MeterService) { 
