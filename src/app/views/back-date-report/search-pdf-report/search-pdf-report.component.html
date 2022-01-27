@@ -16,15 +16,8 @@
                       <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
                   </div>
                   <p class="text-danger" *ngIf="error">{{error}}</p>
-
-                  <div style="padding-left:15px; padding-right:15px;" class="form-group row">
-                    <label class="col-sm-1 col-form-label"> Branch </label>
-                        <div class="col-sm-2">
-                          <select formControlName="branch">
-                              <option *ngFor="let arr of branch_list" value="{{arr}}">{{arr}}</option>
-                          </select>
-                        </div>
-                    
+                <div class="container-fluid">
+                  <div class="form-group row">
                     <label class="col-sm-1 col-form-label"> Date</label>
                     <div class="col-sm-2">
                         <mat-form-field style="width:100px;">
@@ -34,15 +27,24 @@
                             </mat-datepicker-toggle>
                             <mat-datepicker #minmaxvalidation></mat-datepicker>
                         </mat-form-field>
-                     
                     </div>
-                    <label class="col-sm-1 col-form-label"> Currency </label>
-                    <div class="col-sm-2">
+                    <label class="col-sm-1"> Branch </label>
+                        <div class="col-xs-2">
+                          <select formControlName="branch">
+                            <option value="" selected>-- Select --</option>
+                              <option *ngFor="let arr of branch_list" value="{{arr}}">{{arr}}</option>
+                          </select>
+                        </div>
+                   
+                    
+                    <label class="col-sm-1"> Currency </label>
+                    <div class="col-xs-2">
                       <select formControlName="currency" id="exampleFormControlSelect1">
+                        <option value="" selected>-- Select --</option>
                           <option *ngFor="let arr of ccy_list" value="{{arr}}">{{arr}}</option>
                       </select>
                   </div>
-                </div>
+                </div></div>
             </div>
         </div>
       </form>
