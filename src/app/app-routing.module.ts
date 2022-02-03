@@ -156,6 +156,16 @@ const routes: Routes = [
         loadChildren: () => import('./views/meterBill/report-generation/report-generation.module').then(m => m.ReportGenerationModule)
       },
       {
+
+        path: 'mmcb-data-upload',
+        loadChildren: () => import('./views/mmcb-data-upload/mmcb-data-upload.module').then(m => m.MMCBDataUploadModule)
+      },
+      {
+        path: 'mab-doc-upload',
+        loadChildren: () => import('./views/mab-doc-upload/upload-doc/mab-doc-upload.module').then(m => m.MABDocUploadModule)
+      }
+
+
         path: 'meter-bill-view',
         loadChildren: () => import('./views/meterBill/meter-bill-view/metre-bill-view.module').then(m => m.MetreBillViewModule)
       },
@@ -230,6 +240,7 @@ const routes: Routes = [
         path: 'bypass-bc-account-list',
         loadChildren: () => import('./views/bypass/bypass-bc-account-list/bypass-bs-account-list-module').then(m => m.ByPassBCAccountListModule)
       }
+
 
     ]
   },

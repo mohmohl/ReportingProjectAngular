@@ -1,0 +1,95 @@
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>MAB Doc Upload</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="loading" class="d-flex justify-content-center">
+            <div class="spinner-border spinner-border-sm text-warning"></div>
+              <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+          </div>
+
+          <code *ngIf="error">{{error}}</code>
+          <code  *ngIf="message" class="text-info">{{message}}</code>
+          <form [formGroup]="editForm" >
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2 col-form-label">Branch Code:</label>
+              <label class="col-sm-2 col-form-label">{{editForm.controls.branch.value}}</label>
+            </div>
+
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2 col-form-label">Category:</label>
+              <select class="col-sm-4 form-control"  placeholder="Choose Category" name="Choose Category" formControlName="category" (change)="onCategoryChange($event)">
+                  <option [value]="category.value" *ngFor="let category of categoryList;">{{ category.caption }}</option>
+              </select>
+            </div>
+
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2 col-form-label">Account No.:</label>
+              <div class="input-group stylish-input-group col-sm-4"  style="margin-left: -16px !important; margin-bottom: 0px !important;">
+
+                <input type="text" readonly formControlName="accountNo" 
+                  class="form-control input-sm" style="width:200px; height:auto; background:white;" (click)="search()">
+                <span class="input-group-btn input-sm"> 
+                  <button type="button" class="btn btn-primary btn-sm" (click)="search()">
+                    Search
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2 col-form-label">Upload File:</label>
+              <div class="col-sm-4">
+                <input #domUpload type="file" name="files" id="files" class="custom-file-input" (change)="selectFiles($event)"
+                accept="application/pdf, 
+                image/jpeg, image/png, 
+                text/*,
+                application/vnd.ms-excel, 
+                application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, 
+                application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple required>
+                    <label class="custom-file-label" for="customFile">Choose files</label>
+                    <!-- accept="application/pdf, 
+                      image/jpeg, image/png, 
+                      text/*,
+                      application/vnd.ms-excel, 
+                      application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, 
+                      application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" -->
+              </div>
+            </div>
+
+            <!--[disabled]="!selectedFiles || !form.valid"-->
+            <div class="row">
+              <div class="col-sm-5 form-group">
+                <button class="btn btn-sm btn-primary" (click)="uploadFile()" [disabled]="fileList.length ==0 || !editForm.valid">Upload</button>
+              </div>
+            </div>
+
+            <div class="table-responsive" *ngIf="fileList.length >0">
+
+              <table class="table table table-hover" id="export-table" style="width: 80%;">
+                <thead>
+                <tr class="text-uppercase">
+                  
+                  <th style="width: 10%;">No.</th>
+                  <th style="width: 50%;">File Name</th>
+                  <th style="width: 10%;">REMOVE</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let file of fileList; let i = index">
+                    <td style="text-align: right;">{{ (i + 1)}}</td>
+                    <td>{{file.name}}</td>
+                    <td><span title ="remove" (click)="removeFile(i)"><i class="icofont icofont-ui-close icon-theme"></i></span></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+                  
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

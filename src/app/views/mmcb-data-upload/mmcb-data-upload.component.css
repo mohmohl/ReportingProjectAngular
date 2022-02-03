@@ -1,0 +1,39 @@
+.custom-card {
+
+    border: 1px solid #691c31;
+    padding: 16px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.file-upload {
+    cursor: pointer;
+    color:#000000;
+    background-color: inherit;
+    border: 1px solid #cccccc;
+    padding: 3px;
+  }
+
+  .row {
+    margin-bottom: 8px;
+  }
+
+  .mat-form-field-prefix, .mat-form-field-suffix {
+    white-space: nowrap;
+    flex: none;
+    position: relative;
+    font-size: 20px !important;
+}
+
+.mat-form-field{
+  margin: -16px !important;
+}
+
+
+/deep/ .mat-form-field-suffix {
+  font-size: 16px !important;
+  
+}  
+
+
+

@@ -1,0 +1,231 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+              <h5>MMCB Credit Bureau Data Uploading</h5>
+            </div>
+            <div class="card-body">
+              <div *ngIf="loading" class="d-flex justify-content-center">
+                <div class="spinner-border spinner-border-sm text-warning"></div>
+                  <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+              </div>
+              <code *ngIf="error">{{error}}</code>
+                <form [formGroup]="editForm" >
+                  <div class="row form-group col-md-12">
+                    <label class="col-sm-6 col-form-label">Before doing nothing, please check the current status for inputed month</label>
+                    <div class="col-sm-3">
+                      <mat-form-field  style="width:100px;">
+                        <input #minmaxInput matInput [matDatepicker]="checkDate" formControlName="checkDate" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="checkDate">
+                           </mat-datepicker-toggle>
+                        <mat-datepicker #checkDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                <div class ="custom-card">
+                  <h5>CMS</h5>
+
+                  <div class="row form-group col-md-12">
+                    <label class="col-sm-2 col-form-label">As Of Date</label>
+                    <div class="col-sm-3">
+                      <!--
+                      <input type="date" formControlName="asOfDate" class="form-control">
+                      -->
+                      <mat-form-field  style="width:100px;">
+                        <input #minmaxInput matInput [matDatepicker]="asOfDate" formControlName="asOfDate" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="asOfDate">
+                           </mat-datepicker-toggle>
+                        <mat-datepicker #asOfDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+
+                    <label class="col-sm-2 col-form-label">First Day Of Month</label>
+                    <div class="col-sm-3">
+                      <mat-form-field style="width:100px;">
+                        <input #minmaxInput matInput [matDatepicker]="firstDayOfMonth" formControlName="firstDayOfMonth" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="firstDayOfMonth">
+                           </mat-datepicker-toggle>
+                        <mat-datepicker #firstDayOfMonth></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row form-group col-md-12" style="margin-bottom: 30px !important;">
+                    <label class="col-sm-2 col-form-label">Cycle Date</label>
+                    <div class="col-sm-3">
+                      <mat-form-field style="width:100px;">
+                        <input #minmaxInput matInput [matDatepicker]="cycleDate" formControlName="cycleDate" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="cycleDate">
+                           </mat-datepicker-toggle>
+                        <mat-datepicker #cycleDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+
+                    <label class="col-sm-2 col-form-label">Last Day Of Month</label>
+                    <div class="col-sm-3">
+                      <mat-form-field style="width:100px;">
+                        <input #minmaxInput matInput [matDatepicker]="lastDayOfMonth" formControlName="lastDayOfMonth" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="lastDayOfMonth">
+                           </mat-datepicker-toggle>
+                        <mat-datepicker #lastDayOfMonth></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row form-group col-md-12" style="margin-bottom: -8px !important;"> 
+                    <label class="col-sm-6 col-form-label">Step 1: Please upload previous month loss data</label>
+
+                    <div class="input-group stylish-input-group col-sm-6"  style="margin-left: -16px !important;">
+
+                      <input type="file" (change)="onUploadCMSLossData($event)" #cmsLossFile  
+                        accept=" application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                        style="visibility:hidden; width: 2px;"/>
+
+                      <span class="input-group-btn input-sm"> 
+                        <button type="button" class="btn btn-primary btn-sm" (click)="cmsLossFile.click()">
+                          Upload
+                        </button>
+                      </span>
+                      <input type="text" readonly class="form-control input-sm" formControlName="cmsLossFilePath" 
+                        (click)="cmsLossFile.click()"  class="form-control input-sm" style="width:200px; height:auto; background:white;">
+                    </div>
+                  </div>
+
+                  <div class="row form-group col-md-12">
+                    <label class="col-sm-6 col-form-label">Step 2: Please click Process button to prepare data</label>
+                    <button type="button" class="btn btn-primary btn-sm">Process</button>
+                  </div>
+
+                  <div class="row form-group col-md-12">
+                    <label class="col-sm-6 col-form-label">Step 3: Please download the prepared data</label>
+                    <button type="button" class="btn btn-primary btn-sm">Download</button>
+                  </div>
+
+                  <div class="row form-group col-md-12" style="margin-top: -8px;">
+                    <label class="col-sm-10 col-form-label" for="cmsChk1">
+                        <input type="checkbox" class="mt-2"  id="cmsChk1" name="cmsChk1" formControlName="cmsChk1">
+                        <span>&nbsp;If your updated data is wrong, please click this check box and upload again</span>
+                    </label>
+                 </div>
+
+                  <div class="row form-group col-md-12" style="margin-bottom: -8px !important;"> 
+                    <label class="col-sm-6 col-form-label">Step 4: Please upload the updated data</label>
+
+                    <div class="input-group stylish-input-group col-sm-6"  style="margin-left: -16px !important;">
+
+                      <input type="file" (change)="onUploadCMSLossData($event)" #cmsFinalFile  
+                        accept=" application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                        style="visibility:hidden; width: 2px;"/>
+
+                      <span class="input-group-btn input-sm"> 
+                        <button type="button" class="btn btn-primary btn-sm" (click)="cmsFinalFile.click()">
+                          Upload Final Data For MMCB
+                        </button>
+                      </span>
+                      <input type="text" readonly class="form-control input-sm" formControlName="cmsFinalFilePath" 
+                        (click)="cmsFinalFile.click()"  class="form-control input-sm" style="width:200px; height:auto; background:white;">
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class ="custom-card">
+                  <h5>FLEXCUBE</h5>
+
+                  <div class="row form-group col-md-12" style="margin-bottom: 30px !important;">
+                    <label class="col-sm-2 col-form-label">Month End Date</label>
+                    <div class="col-sm-3">
+                      <mat-form-field style="width:100px;">
+                        <input #minmaxInput matInput [matDatepicker]="monthEndDate" formControlName="monthEndDate" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="monthEndDate">
+                           </mat-datepicker-toggle>
+                        <mat-datepicker #monthEndDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row form-group col-md-12">
+                    <label class="col-sm-6 col-form-label">Step 1: Please click Process 1 button to prepare Consumer Loan and OD data</label>
+                    <button type="button" class="btn btn-primary btn-sm">Process 1</button>
+                  </div>
+
+                  <div class="row form-group col-md-12">
+                    <label class="col-sm-6 col-form-label">Step 2: Please download the prepared data </label>
+                    <button type="button" class="btn btn-primary btn-sm">Download</button>
+                  </div>
+
+                  <div class="row form-group col-md-12" style="margin-top: -8px;">
+                      <label class="col-sm-10 col-form-label" for="flexcubeChk1">
+                          <input type="checkbox" class="mt-2"  id="flexcubeChk1" name="flexcubeChk1" formControlName="flexcubeChk1">
+                          <span>&nbsp;If your updated data is wrong, please click this check box and upload again</span>
+                      </label>
+                  </div>
+
+                  <div class="row form-group col-md-12" style="margin-bottom: -8px !important;"> 
+                    <label class="col-sm-6 col-form-label">Step 3: Please upload the updated data</label>
+
+                    <div class="input-group stylish-input-group col-sm-6"  style="margin-left: -16px !important;">
+
+                      <input type="file" (change)="onUploadCMSLossData($event)" #flexcubeLossFile  
+                        accept=" application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                        style="visibility:hidden; width: 2px;"/>
+
+                      <span class="input-group-btn input-sm"> 
+                        <button type="button" class="btn btn-primary btn-sm" (click)="flexcubeLossFile.click()">
+                          Upload
+                        </button>
+                      </span>
+                      <input type="text" readonly class="form-control input-sm" formControlName="flexcubeLossFilePath" 
+                        (click)="flexcubeLossFile.click()"  class="form-control input-sm" style="width:200px; height:auto; background:white;">
+                    </div>
+                  </div>
+
+                  <div class="row form-group col-md-12">
+                    <label class="col-sm-6 col-form-label">Step 4: Please click Process 2 button to prepare the final data data</label>
+                    <button type="button" class="btn btn-primary btn-sm">Process 2</button>
+                  </div>
+
+                  <div class="row form-group col-md-12" style="margin-top: -8px;">
+                    <label class="col-sm-10 col-form-label" for="flexcubeChk2">
+                        <input type="checkbox" class="mt-2"  id="flexcubeChk2" name="flexcubeChk2" formControlName="flexcubeChk2">
+                        <span>&nbsp;If final data is wrong, please click this check box, download the final data and upload again</span>
+                    </label>
+                  </div>
+
+                  <div class="row form-group col-md-12">
+                    <label class="col-sm-6 col-form-label">Step 1: Please download the prepared data </label>
+                    <button type="button" class="btn btn-primary btn-sm">Download</button>
+                  </div>
+
+                  <div class="row form-group col-md-12" style="margin-bottom: -8px !important;"> 
+                    <label class="col-sm-6 col-form-label">Step 2: Please download the prepared data</label>
+
+                    <div class="input-group stylish-input-group col-sm-6"  style="margin-left: -16px !important;">
+
+                      <input type="file"  (change)="onUploadCMSLossData($event)" #flexcubeFinalFile  
+                        accept=" application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                        style="visibility:hidden; width: 2px;"/>
+
+                      <span class="input-group-btn input-sm"> 
+                        <button type="button" class="btn btn-primary btn-sm" (click)="flexcubeFinalFile.click()">
+                          Upload Final Data For MMCB
+                        </button>
+                      </span>
+                      <input type="text" readonly class="form-control input-sm" formControlName="flexcubeFinalFilePath" 
+                        (click)="flexcubeFinalFile.click()"  class="form-control input-sm" style="width:200px; height:auto; background:white;">
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+              
+              <div class="row form-group col-md-12">
+                <label class="col-sm-6 col-form-label">Please download the final MMCB Credit Bureau Data </label>
+                <button type="button" class="btn btn-primary btn-sm">Download</button>
+              </div>
+
+            </div>    
+        </div>
+    </div>
+  </div>
+  

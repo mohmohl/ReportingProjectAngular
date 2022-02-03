@@ -1,0 +1,52 @@
+
+<div class="modal-header bg-primary">
+    <h6 class="modal-title">{{category.caption}}</h6>
+
+    <button type="button" class="close color-white" data-dismiss="modal" aria-hidden="true" title="close"
+            (click)="cancel()">&times;</button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="editForm" >
+        <div class="form-group col-md-12" style="margin: 8px !important;">
+            <div class="input-group stylish-input-group col-sm-6"  style="margin-left: -16px !important;">
+    
+              <input type="text" formControlName="searchStr" [placeholder]="category.colName1"
+                class="form-control input-sm" style="width:200px; height:auto; background:white;">
+              <span class="input-group-btn input-sm"> 
+                <button type="button" class="btn btn-primary btn-sm" (click)="search()">Search</button>
+              </span>
+            </div>
+
+            <div *ngIf="loading" class="d-flex justify-content-center">
+              <div class="spinner-border spinner-border-sm text-warning"></div>
+                <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+            </div>
+            <code *ngIf="error">{{error}}</code>
+            <div class="table-responsive">
+
+              <table class="table table table-hover" id="export-table">
+                <thead>
+                <tr class="text-uppercase">
+                  
+                  <th style="width: 30%;">{{category.colName1}}</th>
+                  <th style="width: 40%;">{{category.colName2}}</th>
+                  <th style="width: 30%;">{{category.colName3}}</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of dataList">
+                    <!-- <td><button type="button" class="btn btn-info btn-sm" (click)="select(data)">Select</button></td> -->
+                    <td><a (click)="select(data)">{{data.colName1}}</a></td>
+                    <td>{{data.colName2}}</td>
+                    <td>{{data.colName3}}</td>
+                    
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </form>
+    
+
+</div>
