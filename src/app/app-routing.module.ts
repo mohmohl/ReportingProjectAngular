@@ -108,7 +108,7 @@ const routes: Routes = [
         loadChildren: () => import('./views/bypass/bypass-new-account/bypass-new-account-module').then(m => m.ByPassNewAccountModule),canActivate:[AuthGuard]
       },
       {
-        path: 'bypass-edit-account/:cust_ac_no',
+        path: 'bypass-edit-account/:param1',
         loadChildren: () => import('./views/bypass/bypass-edit-account/bypass-edit-account.module').then(m => m.ByPassEditAccountModule),canActivate:[AuthGuard]
       },
       {
@@ -124,20 +124,20 @@ const routes: Routes = [
         loadChildren: () => import('./views/Denomination/deno-report/deno-report.module').then(m => m.DenoReportModule)
       },
       {
-        path: 'domestic-new-company',
-        loadChildren: () => import('./views/asm-screening-api/domestic-new-company/domestic-new-company.module').then(m => m.DomesticNewCompanyModule)
+        path: 'mab-survey-question',
+        loadChildren: () => import('./views/MABQA/mab-survey-question/mab-survey-question.module').then(m => m.MABSurveyQuestionModule)
       },
       {
-        path: 'domestic-new-individual',
-        loadChildren: () => import('./views/asm-screening-api/domestic-new-individual/domestic-new-individual.module').then(m => m.DomesticNewIndividualModule)
+        path: 'mab-survey-form',
+        loadChildren: () => import('./views/MABQA/mab-question-answer/mab-question-answer.module').then(m => m.MABQuestionAnswerModule)
       },
       {
-        path: 'domestic-existing-company',
-        loadChildren: () => import('./views/asm-screening-api/domestic-existing-company/domestic-existing-company.module').then(m => m.DomesticExistingCompanyModule)
+        path: 'mab-survey-report',
+        loadChildren: () => import('./views/MABQA/mab-answer-view/mab-answer-view.module').then(m => m.MABAnswerViewModule)
       },
       {
-        path: 'domestic-existing-individual',
-        loadChildren: () => import('./views/asm-screening-api/domestic-existing-individual/domestic-existing-individual.module').then(m => m.DomesticExistingIndividualModule)
+        path: 'mab-survey-setting',
+        loadChildren: () => import('./views/MABQA/mab-survey-setting/mab-survey-setting.module').then(m => m.MABSurveySettingModule)
       },
       {
         path: 'meter-bill-upload',
@@ -156,6 +156,7 @@ const routes: Routes = [
         loadChildren: () => import('./views/meterBill/report-generation/report-generation.module').then(m => m.ReportGenerationModule)
       },
       {
+
         path: 'mmcb-data-upload',
         loadChildren: () => import('./views/mmcb-data-upload/mmcb-data-upload.module').then(m => m.MMCBDataUploadModule)
       },
@@ -164,7 +165,83 @@ const routes: Routes = [
         loadChildren: () => import('./views/mab-doc-upload/upload-doc/mab-doc-upload.module').then(m => m.MABDocUploadModule)
       }
 
-      
+
+        path: 'meter-bill-view',
+        loadChildren: () => import('./views/meterBill/meter-bill-view/metre-bill-view.module').then(m => m.MetreBillViewModule)
+      },
+      {
+        path: 'vendor-meter-bill-view',
+        loadChildren: () => import('./views/meterBill/vendor-meter-bill-view/vendor-meter-bill-view.module').then(m => m.VendorMetreBillViewModule)
+      },
+      {
+        path: 'delete-view',
+        loadChildren: () => import('./views/meterBill/delete-view/delete-view.module').then(m => m.DeleteViewModule)
+      },
+      {
+        path: 'accrual_domestic_daybook',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Accrual Domestic Daybook"}
+      },
+      {
+        path: 'accrual_transfer_scroll',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Accrual Transfer Scroll"}
+      },
+      {
+        path: 'bank_cash',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Bank Cash Scroll"}
+      },
+      {
+        path: 'clean_cash',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Clean Cash Scroll"}
+      },
+      {
+        path: 'current_account_daybook',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Current Account Daybook"}
+      },
+      {
+        path: 'domestic_daybook',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Daybook Domestic"}
+      },
+      {
+        path: 'detail_trial',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Detail Trial"}
+      },
+      {
+        path: 'general_trial',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"General Trial"}
+      },
+      {
+        path: 'od_account_daybook',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"OD Account Daybook"}
+      },
+      {
+        path: 'transfer_scroll',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Transfer Scroll"}
+      },
+      {
+        path: 'trial_sheet',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Trial Sheet"}
+      },
+      {
+        path: 'bypass-new-bc-account',
+        loadChildren: () => import('./views/bypass/bypass-new-bc-account/bypass-new-bc-account-module').then(m => m.ByPassNewBCAccountModule)
+      },
+      {
+        path: 'bypass-bc-account-list',
+        loadChildren: () => import('./views/bypass/bypass-bc-account-list/bypass-bs-account-list-module').then(m => m.ByPassBCAccountListModule)
+      }
+
+
     ]
   },
   {

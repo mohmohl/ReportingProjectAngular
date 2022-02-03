@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MetreService } from 'src/services/MetreService';
+import { MeterService } from 'src/services/MetreService';
 import { map } from 'rxjs/operators';
 import { MeterBillResponse } from 'src/models/meterBill/MeterBillResponse';import { interval } from 'rxjs';
 import { MeterBill_Error } from 'src/models/meterBill/MeterBill_Error';
@@ -22,6 +22,7 @@ export class MetreBillUploadComponent implements OnInit {
   tspList: any=[];
   divisionList: any=[];
   tspId: any;
+  uploadedFileName;
  // isDisabled = false;
   
   timeCounter='';
@@ -43,7 +44,7 @@ townshipMultiFile =new FormData();
     townshipId: new FormControl('', Validators.required)
   });
 
-  constructor(private metreService: MetreService) {
+  constructor(private metreService: MeterService) {
    
     this.loading = true;
     this.metreService.getRegions().subscribe(res =>{
@@ -133,6 +134,7 @@ onChange(event: any){
   }
 
   handleFileInput(files: FileList) {
+    this.uploadedFileName = files[0].name
     this.error = '';
     if (!this.validateFile(files[0].name)) {
       this.error = files[0].name + ' file format is not supported';
@@ -167,7 +169,7 @@ onChange(event: any){
     formData.append("division_id",this.form.get(["divisionId"])!.value)
     formData.append("region_id",this.form.get(["regionId"])!.value)
     formData.append("township_id",this.form.get(["townshipId"])!.value)
-    formData.append("template", this.form.get(["template"])!.value)
+    formData.append("template", this.uploadedFileName)
     formData.append("file", this.fileToUpload);
     this.metreService.fileUpload(formData) 
     .pipe(
@@ -196,6 +198,29 @@ onChange(event: any){
     },
     error => {
       this.subscription.unsubscribe();
+      this.error ="The system have the error";
+      this.loading = false;
+    });
+  }
+
+  removeAll() {
+    this.error = "";
+    this.loading = true;
+    this.metreService.deleteMeterBill()
+    .pipe(
+      map((data: any) => {
+        this.response = data;
+        this.loading = false;
+        if(this.response){
+          this.message = "Clear Done !....";          
+        } else {
+          this.message = "Clear Fail !....";  
+        }
+      }))
+    .subscribe(res=>{
+      
+    },
+    error => {
       this.error ="The system have the error";
       this.loading = false;
     });

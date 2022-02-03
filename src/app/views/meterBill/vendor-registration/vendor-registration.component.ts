@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Vendor } from 'src/models/meterBill/Vendor';
-import { MetreService } from 'src/services/MetreService';
+import { MeterService } from 'src/services/MetreService';
 
 @Component({
   selector: 'app-vendor-registration',
@@ -12,15 +12,14 @@ export class VendorRegistrationComponent implements OnInit {
   loading = false;
   error='';
   successMsg=''
-  pass_error='';
   divisionList: any=[];
 
   form = new FormGroup({
     vendorName: new FormControl('',Validators.required),
-    divisionId: new FormControl('')
+    divisionId: new FormControl('',Validators.required)
   });
 
-  constructor(private meterService: MetreService) { 
+  constructor(private meterService: MeterService) { 
 
     this.meterService.getDivisions().subscribe(res =>{
       this.loading = false;
@@ -40,7 +39,6 @@ export class VendorRegistrationComponent implements OnInit {
       return;
   }
   this.error="";
-  this.pass_error="";
   this.loading = true;
 
   const vendor = new Vendor();

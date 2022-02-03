@@ -18,14 +18,14 @@
 
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">Vendor</label>
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                     <select class="form-control" formControlName="vendorId"> 
                       <option value="{{item.vendorId}}" *ngFor='let item of vendorList'>{{item.vendorName}}</option>
                     </select>
                   </div>
 
                   <label class="col-sm-2  col-form-label">Division</label>
-                  <div class="col-sm-2">
+                  <div class="col-sm-3">
                     <select class="form-control" formControlName="divisionId" (change)="onChange($event)"> 
                       <option value="{{item.divisionId}}" *ngFor='let item of divisionList'>{{item.divisionName}}</option>
                     </select>
@@ -34,27 +34,34 @@
                 
                   <div class="form-group row">
                     <label class="col-sm-2  col-form-label">Region</label>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                       <select class="form-control" formControlName="regionId" (change)="onRegionChange($event)"> 
                         <option value="{{item.regionId}}" *ngFor='let item of regionList'>{{item.regionName}}</option>
                       </select>
                     </div>
 
                     <label class="col-sm-2  col-form-label">Township</label>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                       <select class="form-control" formControlName="townshipId"> 
                         <option value="{{item.townshipId}}" *ngFor='let item of townshipList'>{{item.townshipName}}</option>
                       </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-2  col-form-label">Search</label>
+                    <div class="col-sm-3">
+                      <input type="text" formControlName="searchData" class="form-control">
                     </div>
                   </div>
       
                   <div class="form-group row">
                     <div class="col-sm-2"></div>
                     <div  class="col-sm-1">
-                        <button class="btn btn-warning btn-sm" type="submit">View</button>
+                        <button class="btn btn-primary btn-sm" type="submit">View</button>
                     </div>
                     <div  class="col-sm-1">
-                      <button class="btn btn-warning btn-sm" (click)="exportexcel()">Download</button>
+                      <button class="btn btn-primary btn-sm" (click)="exportexcel()">Download</button>
                   </div>
                   </div>
             </form>
@@ -69,6 +76,7 @@
                     <th>Site ID</th>
                     <th>Ledger No</th>
                     <th>Consumer Name</th>
+                    <th>Last Date</th>
                     <th>Unit</th>
                     <th>Amount</th>
                     <th>Status</th>
@@ -83,6 +91,7 @@
                        <td>{{item.siteId}}</td>
                        <td>{{item.ledgerNo}}</td>
                        <td>{{item.consumerName}}</td>
+                       <td>{{item.lastDate}}</td>
                        <td>{{item.usedUnits}}</td>
                        <td>{{item.billAmount}}</td>
                        <td>{{item.status}}</td>

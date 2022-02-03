@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MetreService } from 'src/services/MetreService';
+import { MeterService } from 'src/services/MetreService';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Meter_Report } from 'src/models/meterBill/Meter_Report';
 import { Meter_ReportResponse } from 'src/models/meterBill/Meter_ReportResponse';
@@ -25,16 +25,17 @@ export class ReportGenerationComponent {
   regionId: any;
   townshipId: any;
   vendorId: any;
+  searchData: any;
   
-
   form = new FormGroup({
     divisionId: new FormControl(''),
     regionId: new FormControl(''),
     townshipId: new FormControl(''),
-    vendorId: new FormControl('')
+    vendorId: new FormControl(''),
+    searchData: new FormControl('')
   });
 
-  constructor(private metreService: MetreService, public datepipe: DatePipe) { 
+  constructor(private metreService: MeterService, public datepipe: DatePipe) { 
     this.loading = true;
     this.metreService.getVendors().subscribe(res =>{
       this.loading = false;
@@ -85,12 +86,14 @@ export class ReportGenerationComponent {
    }
 
    submit() {
+    this.error = ''
     this.loading = true;
     const reqReport = new Meter_Report();
     reqReport.regionId = this.form.get(["regionId"])!.value
     reqReport.divisionId = this.form.get(["divisionId"])!.value
     reqReport.townshipId = this.form.get(["townshipId"])!.value
     reqReport.vendorId = this.form.get(['vendorId'])!.value
+    reqReport.searchData = this.form.get(['searchData'])!.value
 
     this.metreService.viewReport(reqReport)
           .pipe(
@@ -124,8 +127,9 @@ export class ReportGenerationComponent {
   this.regionId = this.form.get(["regionId"])!.value
   this.townshipId = this.form.get(["townshipId"])!.value
   this.vendorId = this.form.get(['vendorId'])!.value
+  this.searchData = this.form.get(['searchData'])!.value
 
-  this.metreService.exportExcel(this.divisionId,this.vendorId,this.regionId, this.townshipId)
+  this.metreService.exportExcel(this.divisionId,this.vendorId,this.regionId, this.townshipId,this.searchData)
   .pipe(
     map((data: any) => {
       let blob = new Blob([data], {

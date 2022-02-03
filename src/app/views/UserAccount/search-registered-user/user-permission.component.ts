@@ -48,6 +48,7 @@ export class UserPermissionComponent implements OnInit {
   //console.log("Param = "+this.user_id)
   this.service.getRegisteredUserData(this.user_id).subscribe((res:UserInfo)=>{
     this.loading = false;
+    debugger
     if(res){
       this.data = res;
       this.data.menuItem.forEach(e =>{

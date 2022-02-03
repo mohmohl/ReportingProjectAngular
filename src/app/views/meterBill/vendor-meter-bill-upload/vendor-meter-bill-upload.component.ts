@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MeterBillResponse } from 'src/models/meterBill/MeterBillResponse';
-import { MetreService } from 'src/services/MetreService';
+import { MeterService } from 'src/services/MetreService';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { interval } from 'rxjs';
@@ -18,6 +18,7 @@ export class VendorMeterBillUploadComponent {
   vendorList: any;
   clearFlag = false;
   errorList: MeterBill_Error[];
+  uploadedFileName;
   
   fileToUpload: File | null = null;
   response: MeterBillResponse;
@@ -33,7 +34,7 @@ export class VendorMeterBillUploadComponent {
     public hoursToDday;
     subscription: any;
   
-  constructor(private meterService: MetreService) {
+  constructor(private meterService: MeterService) {
     this.loading = true;
     this.meterService.getVendors().subscribe(res =>{
       this.loading = false;
@@ -88,6 +89,7 @@ export class VendorMeterBillUploadComponent {
    }
  
    handleFileInput(files: FileList) {
+    this.uploadedFileName = files[0].name
      this.error = '';
      if (!this.validateFile(files[0].name)) {
        this.error = files[0].name + ' file format is not supported';
@@ -123,11 +125,8 @@ export class VendorMeterBillUploadComponent {
    this.message = "";
      const formData = new FormData();
      formData.append("vendor_id",this.form.get(["vendorId"])!.value)
-     console.log("VendorID" + this.form.get(["vendorId"])!.value)
+     formData.append("fileName",this.uploadedFileName)
      formData.append("file", this.fileToUpload);
-     
-     console.log("FormData" + formData)
- 
      
      this.meterService.oneFileUpload(formData)
      .pipe(
@@ -160,17 +159,18 @@ export class VendorMeterBillUploadComponent {
      });
  }
 
- clear() {
+ removeAll() {
+  this.error = "";
   this.loading = true;
   this.meterService.deleteVendorMeterBill()
   .pipe(
     map((data: any) => {
-      this.clearFlag = data;
+      this.response = data;
       this.loading = false;
-      if(this.clearFlag == true) {
-        this.message = "Clear Done !....";
-      } else{
-        this.message = "Clear Fail !....";
+      if(this.response){
+        this.message = "Clear Done !....";          
+      } else {
+        this.message = "Clear Fail !....";  
       }
     }))
   .subscribe(res=>{
@@ -180,5 +180,6 @@ export class VendorMeterBillUploadComponent {
     this.error ="The system have the error";
     this.loading = false;
   });
- }
+}
+
 }

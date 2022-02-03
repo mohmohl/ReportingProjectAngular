@@ -1,0 +1,123 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <form [formGroup]="form"  (ngSubmit)="save_question(form.value)">
+            <div class="card-header">
+              <h5>Question</h5>
+              
+            <div class="page-header-breadcrumb">
+                <button type="submit" class="btn-primary" >
+                    Submit
+                </button> 
+            </div>
+            </div>
+            <div class="card-body">
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+                <p style="color:red;" *ngIf="error">{{error}}</p>
+                <div class="form-group row">
+                    <label class="col-sm-2">Survey</label>
+                    <div class="col-sm-2">
+                     <select formControlName="survey_id">
+                       <option value="">--Choose--</option>
+                         <option *ngFor="let arr of survey_list" value="{{arr.survey_id}}">
+                             {{arr.title}}</option>
+                     </select>
+                 </div>
+                 </div>
+                 <div class="form-group row">
+                    <label class="col-sm-2">Question No</label>
+                       <div class="col-sm-2">
+                        <input type="text" formControlName="ques_no">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2">Question Type</label>
+                    <div class="col-sm-2">
+                     <select formControlName="question_type">
+                         <option value="I">I</option>
+                         <option value="C">C</option>
+                        
+                     </select>
+                 </div>
+                 </div>
+                 <div class="form-group row">
+                 <label class="col-sm-2">Question</label>
+                    <div class="col-sm-2">
+                     <textarea type="text" formControlName="question" cols="100"></textarea>
+                         
+                 </div>
+                 </div>
+             </div>
+</form></div></div></div>
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <form [formGroup]="search_form"  (ngSubmit)="search_question(search_form.value)">
+            <div class="card-header">
+              <h5>Question</h5>
+              
+            <div class="page-header-breadcrumb">
+                <button type="submit" class="btn-primary" >
+                    Search
+                </button> 
+            </div>
+            </div>
+            <div class="card-body">
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+                <p style="color:red;" *ngIf="search_error">{{error}}</p>
+                <div class="form-group row">
+                    <label class="col-sm-1">Survey</label>
+                    <div class="col-sm-2">
+                     <select formControlName="survey_id">
+                         <option value="0" selected>--Choose--</option>
+                         <option *ngFor="let arr of survey_list" value="{{arr.survey_id}}">
+                             {{arr.title}}</option>
+                     </select>
+                 </div>
+                 </div>
+             
+             </div>
+</form>
+<div class="card-body">
+    <div class="row">
+        <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table >
+                            <thead>
+                                <tr>
+                                    <th> No </th>
+                                    <th class="col-sm-9">Question</th>
+                                    <th>Question Type</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let list of ques_list; let i = index">
+                                <td>{{list.ques_no}} </td>
+                                <td style="max-width:250px; white-space: break-spaces;">{{list.question}}</td>
+                                <td>{{list.question_type}} </td>
+                                <td>
+                                    <button class="btn-primary" (click)="edit_question(list.ques_id,list.survey_id,list.ques_no,list.question,list.question_type)">
+                                    Edit
+                                </button> 
+                            </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+        </div>
+    </div>
+</div>
+
+
+
+</div></div></div>
+
