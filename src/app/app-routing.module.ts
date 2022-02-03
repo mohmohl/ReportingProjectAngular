@@ -154,7 +154,17 @@ const routes: Routes = [
       {
         path: 'report-generation',
         loadChildren: () => import('./views/meterBill/report-generation/report-generation.module').then(m => m.ReportGenerationModule)
+      },
+      {
+        path: 'mmcb-data-upload',
+        loadChildren: () => import('./views/mmcb-data-upload/mmcb-data-upload.module').then(m => m.MMCBDataUploadModule)
+      },
+      {
+        path: 'mab-doc-upload',
+        loadChildren: () => import('./views/mab-doc-upload/upload-doc/mab-doc-upload.module').then(m => m.MABDocUploadModule)
       }
+
+      
     ]
   },
   {
