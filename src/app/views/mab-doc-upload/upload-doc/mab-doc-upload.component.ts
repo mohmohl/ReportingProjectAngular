@@ -121,20 +121,32 @@ export class MABDocUploadComponent implements OnInit {
       return ret;
     }
 
+    validateFileSize(event: any):boolean {
+      var ret = true;
+      var fileSize = 0;
+      for(let file of event.target.files){
+        fileSize = fileSize + file.size;
+      }
+      console.log ("File Size_________" + fileSize);
+      if((fileSize/1048576) < 50)
+          return true;
+      else return false;
+    }
+
     selectFiles(event: any) :void {
       this.error = "";
-      /* if(!this.checkFileFormat(event)){
+      if(!this.checkFileFormat(event)){
           this.error = "Invalid File Format. System only accepts PDF format";
-      }else{
+      }
+      else if (!this.validateFileSize(event)){
+        this.error = "Invalid File Size. System only accepts 50MB for total file size";
+      }
+      else{
         for(let file of event.target.files){
           this.fileList.push(file);
         }
         //this.fileList = event.target.files;
-      } */
-
-      for(let file of event.target.files){
-        this.fileList.push(file);
-      }
+      } 
     }
 
     removeFile(index) :void {
@@ -161,10 +173,10 @@ export class MABDocUploadComponent implements OnInit {
                                 ).subscribe(
                                 (res :  DocUploadResponse) => { 
                                   this.loading = false;
-                                  JSON.stringify("Response......... "+res);
                                   if(res.msgCode === '0000'){
                                     this.error = "";
                                     this.message = "Upload Successfully."
+                                    this.clearForm();
                                   }else {
                                     this.message = "";
                                     this.error = res.msgDesc;
@@ -179,5 +191,10 @@ export class MABDocUploadComponent implements OnInit {
       }
     }
 
-
+    clearForm() :void {
+      this.editForm.controls['branch'].setValue('');
+      this.editForm.controls['category'].setValue('');
+      this.editForm.controls['accountNo'].setValue('');
+      this.fileList =[];
+    }
 } 
