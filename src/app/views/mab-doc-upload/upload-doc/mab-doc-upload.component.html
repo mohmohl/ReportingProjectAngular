@@ -43,12 +43,7 @@
               <label class="col-sm-2 col-form-label">Upload File:</label>
               <div class="col-sm-4">
                 <input #domUpload type="file" name="files" id="files" class="custom-file-input" (change)="selectFiles($event)"
-                accept="application/pdf, 
-                image/jpeg, image/png, 
-                text/*,
-                application/vnd.ms-excel, 
-                application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, 
-                application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple required>
+                accept="application/pdf" multiple required>
                     <label class="custom-file-label" for="customFile">Choose files</label>
                     <!-- accept="application/pdf, 
                       image/jpeg, image/png, 
