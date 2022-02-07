@@ -163,8 +163,8 @@ const routes: Routes = [
       {
         path: 'mab-doc-upload',
         loadChildren: () => import('./views/mab-doc-upload/upload-doc/mab-doc-upload.module').then(m => m.MABDocUploadModule)
-      }
-
+      },
+{
 
         path: 'meter-bill-view',
         loadChildren: () => import('./views/meterBill/meter-bill-view/metre-bill-view.module').then(m => m.MetreBillViewModule)
