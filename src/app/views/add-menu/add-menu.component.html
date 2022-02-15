@@ -16,7 +16,7 @@
                     <div class="form-group row">
                         <label class="col-sm-1 col-form-label">Category Name</label>
                         <div class="col-sm-2">
-                            <select class="form-control" formControlName="categoryName" (change)="onChange($event)"> 
+                            <select class="form-control" formControlName="categoryName"> 
                                 <option value="{{item.categoryId}}" *ngFor='let item of categoryList'>{{item.categoryName}}</option>
                               </select>
                         </div>
