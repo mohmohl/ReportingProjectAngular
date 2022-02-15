@@ -238,7 +238,20 @@ const routes: Routes = [
       {
         path: 'bypass-bc-account-list',
         loadChildren: () => import('./views/bypass/bypass-bc-account-list/bypass-bs-account-list-module').then(m => m.ByPassBCAccountListModule)
+      },
+      {
+        path: 'auth-forgot-password',
+        loadChildren: () => import('./views/auth-forgot-password/auth-forgot-password.module').then(m => m.AuthForgotPasswordModule)
+      },
+      {
+        path: 'add-menu',
+        loadChildren: () => import('./views/add-menu/add-menu.module').then(m => m.AddMenuModule)
+      },
+      {
+        path: 'add-category',
+        loadChildren: () => import('./views/add-category/add-category.module').then(m => m.AddCategoryModule)
       }
+
 
 
     ]
