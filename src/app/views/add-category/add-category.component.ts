@@ -39,6 +39,11 @@ export class AddCategoryComponent implements OnInit {
   }
 
   submit() {
+  if (this.form.invalid) {
+    this.error = "Data is required";
+    return;
+  }  
+  
   this.error = '';
   this.message = '';
   this.loading = true;

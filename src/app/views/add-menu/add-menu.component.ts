@@ -17,7 +17,7 @@ export class AddMenuComponent implements OnInit {
   categoryList: any = [];
 
   form = new FormGroup({
-    categoryName: new FormControl('', Validators.required),
+    categoryName: new FormControl(''),
     menuName: new FormControl('', Validators.required),
     menuUrl: new FormControl('', Validators.required),
     program: new FormControl('', Validators.required),
@@ -55,6 +55,11 @@ export class AddMenuComponent implements OnInit {
   }
 
   submit() {
+  if (this.form.invalid) {
+    this.error = "Data is required";
+    return;
+  }
+
   this.error = '';
   this.message = '';
   this.loading = true;
@@ -72,7 +77,7 @@ export class AddMenuComponent implements OnInit {
       this.message = "Saved Successful!..."
 
       this.form = new FormGroup({
-        categoryName: new FormControl('', Validators.required),
+        categoryName: new FormControl(''),
         menuName: new FormControl('', Validators.required),
         menuUrl: new FormControl('', Validators.required),
         program: new FormControl('', Validators.required),
