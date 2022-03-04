@@ -172,7 +172,6 @@ const routes: Routes = [
         path: 'mab-doc-view-management',
         loadChildren: () => import('./views/mab-doc-upload/view-doc-management/mab-doc-view-management.module').then(m => m.MABDocViewManagementModule)
       },
-
       {
         path: 'meter-bill-view',
         loadChildren: () => import('./views/meterBill/meter-bill-view/metre-bill-view.module').then(m => m.MetreBillViewModule)
@@ -247,7 +246,20 @@ const routes: Routes = [
       {
         path: 'bypass-bc-account-list',
         loadChildren: () => import('./views/bypass/bypass-bc-account-list/bypass-bs-account-list-module').then(m => m.ByPassBCAccountListModule)
+      },
+      {
+        path: 'auth-forgot-password',
+        loadChildren: () => import('./views/auth-forgot-password/auth-forgot-password.module').then(m => m.AuthForgotPasswordModule)
+      },
+      {
+        path: 'add-menu',
+        loadChildren: () => import('./views/add-menu/add-menu.module').then(m => m.AddMenuModule)
+      },
+      {
+        path: 'add-category',
+        loadChildren: () => import('./views/add-category/add-category.module').then(m => m.AddCategoryModule)
       }
+
 
 
     ]
