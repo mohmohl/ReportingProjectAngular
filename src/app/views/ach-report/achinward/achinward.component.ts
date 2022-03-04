@@ -73,7 +73,7 @@ export class AchinwardComponent implements OnInit {
 
     //Create Form
     this.form = new FormGroup({
-      fromdatesss: new FormControl(new Date(), Validators.required),
+      fromdate: new FormControl(new Date(), Validators.required),
       todate: new FormControl(new Date(), Validators.required),
       statusCode: new FormControl('ALL', Validators.required),
       exportOption: new FormControl('excel', Validators.required),
