@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders,HttpErrorResponse, HttpParams, HttpRequest } fr
 import { environment } from "src/environments/environment";
 import { Observable } from "rxjs";
 import { AuthenticationService } from 'src/services/AuthenticationService';
+import { DocUploadFilter } from 'src/models/DocUploadFilter';
+import { DocUploadData } from 'src/models/DocUploadData';
 @Injectable({
     providedIn: 'root'
   })
@@ -25,6 +27,11 @@ import { AuthenticationService } from 'src/services/AuthenticationService';
         var api = environment.baseUrl+'/mabDocUpload/getCategoryList';
         return this.http.get<any>(`${api}`, {responseType: 'json'});
     }
+
+    public getAllBranchList():Observable<any>{
+      var api = environment.baseUrl+'/mabDocUpload/getAllBranchList';
+      return this.http.get<any>(`${api}`, {responseType: 'json'});
+  }
 
     public search(category: String, searchStr: String ):Observable<any>{
       var api = environment.baseUrl+'/mabDocUpload/search?category='+category+"&param="+searchStr;
@@ -58,5 +65,17 @@ import { AuthenticationService } from 'src/services/AuthenticationService';
         });
         return this.http.post<any>(`${environment.baseUrl}/mabDocUpload/upload`, formData);
         //return this.http.request(req);
+    }
+
+    public searchDocLog(data: DocUploadFilter): Observable<any> {
+      return this.http.post<any>(`${environment.baseUrl}` + '/mabDocUpload/searchDocLog', data);
+    }
+
+    public deleteDoc(data: DocUploadData): Observable<any> {
+      return this.http.post<any>(`${environment.baseUrl}` + '/mabDocUpload/deleteDoc', data);
+    }
+
+    public downloadDoc(data: DocUploadData): Observable<any> {
+      return this.http.post<any>(`${environment.baseUrl}` + '/mabDocUpload/downloadDoc', data,{responseType: 'arraybuffer' as 'json'});
     }
   }

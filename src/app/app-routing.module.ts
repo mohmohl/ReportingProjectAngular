@@ -165,6 +165,14 @@ const routes: Routes = [
         loadChildren: () => import('./views/mab-doc-upload/upload-doc/mab-doc-upload.module').then(m => m.MABDocUploadModule)
       },
       {
+        path: 'mab-doc-view',
+        loadChildren: () => import('./views/mab-doc-upload/view-doc/mab-doc-view.module').then(m => m.MABDocViewModule)
+      },
+      {
+        path: 'mab-doc-view-management',
+        loadChildren: () => import('./views/mab-doc-upload/view-doc-management/mab-doc-view-management.module').then(m => m.MABDocViewManagementModule)
+      },
+      {
         path: 'meter-bill-view',
         loadChildren: () => import('./views/meterBill/meter-bill-view/metre-bill-view.module').then(m => m.MetreBillViewModule)
       },

@@ -1,0 +1,20 @@
+
+<div class="modal-header">
+  <h5 class="modal-title">{{title}}</h5>
+
+  <button type="button" class="btn btn-close" data-dismiss="modal" title="close"
+          (click)="cancel()">&times;</button>
+</div>
+
+<div class="modal-body">
+  <p>{{bodyMessage}}</p>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-sm  btn-primary" data-dismiss="modal" (click)="ok()">
+      <span>Ok</span>
+  </button>
+  <button type="button" class="btn btn-sm  btn-warning" data-dismiss="modal" (click)="cancel()">
+    <span>Cancel</span>
+  </button>
+</div>
+
