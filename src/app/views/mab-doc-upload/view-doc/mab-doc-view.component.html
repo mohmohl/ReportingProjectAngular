@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>MAB Doc View</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="loading" class="d-flex justify-content-center">
+            <div class="spinner-border spinner-border-sm text-warning"></div>
+              <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+          </div>
+
+          <code *ngIf="error">{{error}}</code>
+          <code  *ngIf="message" class="text-info">{{message}}</code>
+          <form [formGroup]="editForm" >
+            
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2 col-form-label">Uploaded Date:</label>
+              <div class="col-sm-2">
+                <mat-form-field style="width:100px;">
+                  <input #minmaxInput matInput [matDatepicker]="fromDate" formControlName="fromDate" readonly>
+                  <mat-datepicker-toggle matSuffix [for]="fromDate">
+                     </mat-datepicker-toggle>
+                  <mat-datepicker #fromDate></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <label class="col-form-label" style="padding-right: 16px;">-</label>
+              <div class="col-sm-2">
+                <mat-form-field style="width:100px;">
+                  <input #minmaxInput matInput [matDatepicker]="toDate" formControlName="toDate" readonly>
+                  <mat-datepicker-toggle matSuffix [for]="toDate">
+                     </mat-datepicker-toggle>
+                  <mat-datepicker #toDate></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2 col-form-label">Branch Code:</label>
+              <label class="col-sm-2 col-form-label">{{editForm.controls.branch.value}}</label>
+            </div>
+
+            
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2 col-form-label">Category:</label>
+              <select class="col-sm-4 form-control"  placeholder="Choose Category" name="Choose Category" formControlName="category" >
+                <option [value]='0'>ALL</option>  
+                <option [value]="category.value" *ngFor="let category of categoryList;">{{ category.caption }}</option>
+              </select>
+            </div>
+            
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2 col-form-label">Account No./ Contract No.:</label>
+              <input type="text" formControlName="accountNo" class="col-sm-4 form-control">
+            </div>
+
+            
+            <div class="row">
+              <div class="col-sm-5 form-group">
+                <button class="btn btn-sm btn-primary" (click)="search()">Search</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+
+              <table class="table table table-hover" id="export-table" style="width: 100%;">
+                <thead>
+                <tr class="text-uppercase">
+                  <th style="width: 5%;">#</th>
+                  <th style="width: 10%;">Uploaded Date</th>
+                  <th style="width: 10%;">Branch Code</th>
+                  <th style="width: 15%;">Branch Name</th>
+                  <th style="width: 10%;">Category</th>
+                  <th style="width: 10%;">Account No./Contract No.</th>
+                  <th style="width: 10%;">User Id</th>
+                  <th style="width: 10%;">Original File Name</th>
+                  <th style="width: 20%;">New File Name</th>
+                  <th style="width: 20%;">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of dataList; let i = index">
+                    <td style="text-align: right;">{{ (i + 1)}}</td>
+                    <td>{{data.uploadedDate}}</td>
+                    <td>{{data.branchCode}}</td>
+                    <td>{{data.branchName}}</td>
+                    <td>{{data.category}}</td>
+                    <td>{{data.accountNo}}</td>
+                    <td>{{data.userId}}</td>
+                    <td>{{data.oldFileName}}</td>
+                    <td>{{data.newFileName}}</td>
+                    <td>
+                      <a style="cursor: pointer; color: #007bff; padding-right: 10px;"
+                      (click)="view(data)">View</a> |
+                      <a style="cursor: pointer; color: #007bff; padding-right: 10px;"
+                      (click)="download(data)">Download</a> |
+                      <a style="cursor: pointer; color: #007bff; padding-right: 10px;"
+                        (click)="delete(data)">Delete</a>
+                    </td>
+                    
+                </tr>
+                </tbody>
+              </table>
+            </div>
+                  
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

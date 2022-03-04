@@ -96,7 +96,7 @@ export class MABDocUploadComponent implements OnInit {
       modalRef.componentInstance.category = this.category;
       modalRef.componentInstance.passEntry.subscribe((accountNo) => {
         this.editForm.controls['accountNo'].setValue(accountNo);
-      })
+      });
     }
 
     getExtension(fileName: string): string {
@@ -192,7 +192,7 @@ export class MABDocUploadComponent implements OnInit {
     }
 
     clearForm() :void {
-      this.editForm.controls['branch'].setValue('');
+      //this.editForm.controls['branch'].setValue('');
       this.editForm.controls['category'].setValue('');
       this.editForm.controls['accountNo'].setValue('');
       this.fileList =[];
