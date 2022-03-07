@@ -14,6 +14,7 @@ export class MetreBillUploadComponent implements OnInit {
   loading = false;
   error = '';
   message = '';
+  progress=0;
   fileToUpload: File | null = null;
   response: MeterBillResponse;
   totalCount = 0;
@@ -161,14 +162,17 @@ onChange(event: any){
     }
     //console.log("TspID :" +  this.form.get(["townshipId"])!.value)
     this.loading = true;
-    this.timeStart();
+    //this.timeStart();
     this.error = "";    
    this.message = "";
-
+   this.progress=0;
     const formData = new FormData();
-    formData.append("division_id",this.form.get(["divisionId"])!.value)
-    formData.append("region_id",this.form.get(["regionId"])!.value)
-    formData.append("township_id",this.form.get(["townshipId"])!.value)
+    let divi=this.form.get(["divisionId"])!.value;
+    let region = this.form.get(["regionId"])!.value;
+    let township = this.form.get(["townshipId"])!.value;
+    formData.append("division_id",divi)
+    formData.append("region_id",region)
+    formData.append("township_id",township)
     formData.append("template", this.uploadedFileName)
     formData.append("file", this.fileToUpload);
     this.metreService.fileUpload(formData) 
@@ -181,17 +185,24 @@ onChange(event: any){
           if(this.response.flag == false){
             if(this.response.totalCount >0){
               this.totalCount = this.response.totalCount;
+              this.subscription.unsubscribe();
+              this.progress=100;
               this.message = this.totalCount + " Import Done!....";
             }else{
+              this.subscription.unsubscribe();
+              this.progress=0;
               this.message = "Import Fail !....";
             }
           }else{
+            this.subscription.unsubscribe();
+            this.progress=0;
             this.message = this.response.message;
           }
           
           this.errorList = this.response.errorList;
         }
         this.subscription.unsubscribe();
+        this.progress=0;
       }))
     .subscribe(res=>{
       
@@ -201,6 +212,7 @@ onChange(event: any){
       this.error ="The system have the error";
       this.loading = false;
     });
+   this.progessbar_loadingCount(divi,region,township); 
   }
 
   removeAll() {
@@ -225,5 +237,17 @@ onChange(event: any){
       this.loading = false;
     });
   }
+
+  progessbar_loadingCount(divi:string,region:string,township:string){
+    this.subscription = interval(1000)
+           .subscribe(x => { this.metreService.get_meter_upload_progress(divi,region,township).subscribe(res=>{
+            this.progress=res;
+          },
+          error => {
+            this.progress=0;
+             this.error = "Progress Error";
+          }
+          ); });
+   }
 
 }

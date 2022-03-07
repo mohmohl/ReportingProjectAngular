@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="login-card card-body auth-body">
-          <form class="md-float-material" [formGroup]="form" (ngSubmit)="submit()">
+          <form class="md-float-material" [formGroup]="form">
             
             <div class="auth-box">
               <div class="row m-b-20">
@@ -42,7 +42,7 @@
               
               <div class="row m-t-30">
                 <div class="col-md-12">
-                  <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Sign in</button>
+                  <button type="button" (click)="submit()" [disabled]="submitDisabled" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Sign in</button>
                 </div>
               </div>
  <!--

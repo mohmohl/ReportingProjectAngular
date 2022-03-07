@@ -17,6 +17,7 @@ export class BasicLoginComponent implements OnInit {
   loading = false;
   changePasswordMode = false;
   mobileLoginFlag=false;
+  submitDisabled = true;
   submitted = false;
   returnUrl: string;
   error = '';
@@ -57,7 +58,7 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
 
   onChange(event: any){
     this.form.get(["password"])!.disable();
-    
+    this.submitDisabled = true;
     var value = event.target.value;
     this.error="";
     if(value != ""){
@@ -72,6 +73,7 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
             this.mobileLogin_OTP = this.response.message;
             this.error="User ID Registered Please Proceed...";
             this.form.get(["password"])!.enable();
+            this.submitDisabled = false;
             console.log("OTP >>> "+this.mobileLogin_OTP);
           }
           else{
@@ -104,12 +106,13 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
           this.mobileLogin_OTP = this.response.message;
           this.error="Register Successful!..Please proceed!..";
           this.form.get(["password"])!.enable();
-         
+          this.submitDisabled = false;
           
         }
         else if(this.response.status=="Registed"){
           this.error=this.response.message;
           this.form.get(["password"])!.enable();
+          this.submitDisabled = false;
         }
         else{
           this.error=this.response.message;
@@ -131,6 +134,10 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
   }
   }
   submit(){
+    if (this.submitDisabled) {
+      this.error = "Please Fill the step by step";
+      return;
+  }
      if (this.form.invalid) {
       this.error = "User ID and Password are required";
       return;
