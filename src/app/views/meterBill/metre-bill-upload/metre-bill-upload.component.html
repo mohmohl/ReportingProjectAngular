@@ -90,24 +90,24 @@
                   
                 </div>
                 
-                <div class="col-md-10" >
+              <div class="col-md-10" *ngIf="progress != 0">
                 <div class="progress" style="height: 4px;">
                   <div role="progressbar"  class="bg-warning progress-bar" [style.width.%]="progress">
                   </div>
-              </div>
+               </div>
               </div>
 
-              <div class="col-sm-2">
-              <label class="col-sm-12  col-form-label">{{progress}}</label>
-             </div>
-                <div *ngIf="errorList" class="col-md-12">
-                  <ul *ngFor="let item of errorList">
-                    <li>
-                      <i class="icofont icofont-hand-right text-info"></i> 
-                      <span class="text-danger">{{item.errorMessage}}</span>
-                    </li>
-                  </ul>
-                </div>
+            <div class="col-sm-2" *ngIf="progress != 0">
+              <label class="col-sm-12  col-form-label">{{progress}} %</label>
+            </div>
+            <div *ngIf="errorList" class="col-md-12">
+              <ul *ngFor="let item of errorList">
+                <li>
+                  <i class="icofont icofont-hand-right text-info"></i> 
+                  <span class="text-danger">{{item.errorMessage}}</span>
+                </li>
+              </ul>
+            </div>
 
           </form>
 
