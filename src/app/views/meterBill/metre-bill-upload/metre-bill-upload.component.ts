@@ -162,6 +162,7 @@ onChange(event: any){
     }
     //console.log("TspID :" +  this.form.get(["townshipId"])!.value)
     this.loading = true;
+    this.errorList = [];
     //this.timeStart();
     this.error = "";    
    this.message = "";
@@ -242,10 +243,14 @@ onChange(event: any){
     this.subscription = interval(1000)
            .subscribe(x => { this.metreService.get_meter_upload_progress(divi,region,township).subscribe(res=>{
             this.progress=res;
+            if( this.progress == 100){
+              this.subscription.unsubscribe();
+            }
           },
           error => {
             this.progress=0;
              this.error = "Progress Error";
+             this.subscription.unsubscribe();
           }
           ); });
    }
