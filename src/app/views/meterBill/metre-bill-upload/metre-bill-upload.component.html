@@ -97,26 +97,24 @@
                </div>
               </div>
 
-            <div class="col-sm-2" *ngIf="progress != 0">
-              <label class="col-sm-12  col-form-label">{{progress}} %</label>
-            </div>
-            <div *ngIf="errorList" class="col-md-12">
-              <ul *ngFor="let item of errorList">
-                <li>
-                  <i class="icofont icofont-hand-right text-info"></i> 
-                  <span class="text-danger">{{item.errorMessage}}</span>
-                </li>
-              </ul>
-            </div>
-
+              <div class="col-sm-2" *ngIf="progress != 0">
+              <label class="col-sm-12 col-form-label">{{progress}} % completed</label>
+             </div>
+                <div *ngIf="errorList" class="col-md-12">
+                  <ul *ngFor="let item of errorList">
+                    <li>
+                      <i class="icofont icofont-hand-right text-info"></i> 
+                      <span class="text-danger">{{item.errorMessage}}</span>
+                    </li>
+                  </ul>
+                </div>
           </form>
 
           <!-- <div class="col-sm-12 col-md-2">
             <button class="btn btn-primary btn-sm" (click)="removeAll()">All Clear</button>
           </div> -->
         
-
         </div>
-        
+       
   </div>
 </div>

@@ -206,7 +206,7 @@ onChange(event: any){
         this.progress=0;
       }))
     .subscribe(res=>{
-      
+      this.loading = false;
     },
     error => {
       this.subscription.unsubscribe();
