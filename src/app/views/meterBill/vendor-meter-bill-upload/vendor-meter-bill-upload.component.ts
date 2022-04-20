@@ -131,17 +131,18 @@ export class VendorMeterBillUploadComponent {
      formData.append("vendor_id",vendor)
      formData.append("fileName",this.uploadedFileName)
      formData.append("file", this.fileToUpload);
-     
+     debugger
      this.meterService.oneFileUpload(formData)
      .pipe(
        map((data: any) => {
+        debugger
         this.subscription.unsubscribe();
          this.response = data;
          this.loading = false;
          if(this.response != null){
            if(this.response.flag == false){
             this.message = "Import Done !....";
-            
+            this.subscription.unsubscribe();
             this.progress=100;
               // if(this.response.totalCount >0){
               //   this.totalCount = this.response.totalCount;
@@ -152,7 +153,7 @@ export class VendorMeterBillUploadComponent {
            }else{
             this.subscription.unsubscribe();
             this.progress=0;
-             this.message = this.response.message;
+            this.message = this.response.message;
            }
            this.errorList = this.response.errorList;
          }
