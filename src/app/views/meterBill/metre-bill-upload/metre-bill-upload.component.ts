@@ -179,6 +179,7 @@ onChange(event: any){
     this.metreService.fileUpload(formData) 
     .pipe(
       map((data: any) => {
+        this.subscription.unsubscribe();
         this.response = data;
         this.loading = false;
        // this.isDisabled = false;
@@ -213,6 +214,7 @@ onChange(event: any){
       this.error ="The system have the error";
       this.loading = false;
     });
+    
    this.progessbar_loadingCount(divi,region,township); 
   }
 
