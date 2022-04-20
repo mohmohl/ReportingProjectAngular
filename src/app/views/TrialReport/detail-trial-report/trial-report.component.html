@@ -34,14 +34,14 @@
                                 <mat-datepicker #minmaxvalidation></mat-datepicker>
                               </mat-form-field>
                         </div>
-                        <label class="col-sm-1">Branch</label>
+                        <label class="col-sm-2">Branch</label>
                       <div class="col-xs-2">
                         <select class="" formControlName="branchCode" id="exampleFormControlSelect1">
                           <option value="" selected>-- Select --</option>
                           <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
                         </select>
                       </div>
-                      <label class="col-sm-1 ">Currency</label>
+                      <label class="col-sm-2 ">Currency</label>
                       <div class="col-xs-2">
                         <select class="" formControlName="currencyCode" id="exampleFormControlSelect1">
                           <option value="" selected>-- Select --</option>
