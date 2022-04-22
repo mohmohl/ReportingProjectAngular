@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MeterService } from 'src/services/MetreService';
 import { map } from 'rxjs/operators';
+import * as XLSX from 'xlsx'; 
 import { MeterBillResponse } from 'src/models/meterBill/MeterBillResponse';import { interval } from 'rxjs';
 import { MeterBill_Error } from 'src/models/meterBill/MeterBill_Error';
 
@@ -25,7 +26,9 @@ export class MetreBillUploadComponent implements OnInit {
   tspId: any;
   uploadedFileName;
  // isDisabled = false;
-  
+ storeData: any;   
+ worksheet: any; 
+ excel_row_count=0;
   timeCounter='';
   totalHours = 216000;
    totalMinutes = 3600;
@@ -36,6 +39,7 @@ export class MetreBillUploadComponent implements OnInit {
     public minutesToDday;
     public hoursToDday;
     subscription: any;
+    progress_subscription : any;
 townshipMultiFile =new FormData();
   form = new FormGroup({
     fileData: new FormControl('', Validators.required),
@@ -141,8 +145,37 @@ onChange(event: any){
       this.error = files[0].name + ' file format is not supported';
       return false;
     }
+    console.log("excel file size= "+files.item(0))
     this.fileToUpload = files.item(0);
+    this.readExcel()
   }
+
+ 
+  readExcel() {  
+    let readFile = new FileReader(); 
+    readFile.onload = (e) => {  
+      this.storeData = readFile.result;  
+      var data = new Uint8Array(this.storeData);  
+      var arr = new Array(); 
+      for (var i = 0; i != data.length; ++i) 
+      arr[i] = String.fromCharCode(data[i]);  
+      var bstr = arr.join("");  
+      var workbook = XLSX.read(bstr, { type: "binary" });  
+      var first_sheet_name = workbook.SheetNames[0];  
+      this.worksheet = workbook.Sheets[first_sheet_name];  
+      var range = XLSX.utils.decode_range(this.worksheet['!ref']);
+      this.excel_row_count=range.e.r;
+
+    }  
+   
+    readFile.readAsArrayBuffer(this.fileToUpload);          
+  }
+
+
+
+
+
+
 
   validateFile(name: String) {
     var ext = name.substring(name.lastIndexOf('.') + 1);
@@ -163,7 +196,7 @@ onChange(event: any){
     //console.log("TspID :" +  this.form.get(["townshipId"])!.value)
     this.loading = true;
     this.errorList = [];
-    //this.timeStart();
+    this.timeStart();
     this.error = "";    
    this.message = "";
    this.progress=0;
@@ -188,15 +221,19 @@ onChange(event: any){
             if(this.response.totalCount >0){
               this.totalCount = this.response.totalCount;
               this.subscription.unsubscribe();
+              this.progress_subscription.unsubscribe();
               this.progress=100;
+              console.log("upload finish = "+ this.progress);
               this.message = this.totalCount + " Import Done!....";
             }else{
               this.subscription.unsubscribe();
+              this.progress_subscription.unsubscribe();
               this.progress=0;
               this.message = "Import Fail !....";
             }
           }else{
             this.subscription.unsubscribe();
+            this.progress_subscription.unsubscribe();
             this.progress=0;
             this.message = this.response.message;
           }
@@ -204,6 +241,7 @@ onChange(event: any){
           this.errorList = this.response.errorList;
         }
         this.subscription.unsubscribe();
+        this.progress_subscription.unsubscribe();
         this.progress=0;
       }))
     .subscribe(res=>{
@@ -211,11 +249,12 @@ onChange(event: any){
     },
     error => {
       this.subscription.unsubscribe();
+      this.progress_subscription.unsubscribe();
       this.error ="The system have the error";
       this.loading = false;
     });
     
-   this.progessbar_loadingCount(divi,region,township); 
+   this.progessbar_loadingCount(this.excel_row_count,divi,region,township); 
   }
 
   removeAll() {
@@ -241,20 +280,26 @@ onChange(event: any){
     });
   }
 
-  progessbar_loadingCount(divi:string,region:string,township:string){
-    this.subscription = interval(1000)
-           .subscribe(x => { this.metreService.get_meter_upload_progress(divi,region,township).subscribe(res=>{
+  progessbar_loadingCount(data_count:number,divi:string,region:string,township:string){
+    this.progress_subscription = interval(1000)
+           .subscribe(x => { 
+             if(data_count != 0){
+             this.metreService.get_meter_upload_progress(data_count,divi,region,township).subscribe(res=>{
             this.progress=res;
+            console.log("progress percentage = "+ this.progress);
             if( this.progress == 100){
-              this.subscription.unsubscribe();
+              this.progress_subscription.unsubscribe();
             }
           },
           error => {
             this.progress=0;
              this.error = "Progress Error";
-             this.subscription.unsubscribe();
+             this.progress_subscription.unsubscribe();
           }
-          ); });
+          );
+        }else{this.progress=0;}
+        
+        });
    }
 
 }
