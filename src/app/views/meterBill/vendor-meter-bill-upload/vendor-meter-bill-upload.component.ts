@@ -19,6 +19,7 @@ export class VendorMeterBillUploadComponent {
   clearFlag = false;
   errorList: MeterBill_Error[];
   uploadedFileName;
+  progress=0;
   
   fileToUpload: File | null = null;
   response: MeterBillResponse;
@@ -76,7 +77,7 @@ export class VendorMeterBillUploadComponent {
 
    form = new FormGroup({
      fileData: new FormControl('', Validators.required),
-     vendorId: new FormControl('')
+     vendorId: new FormControl('', Validators.required)
    });
  
    reChange(){
@@ -120,23 +121,29 @@ export class VendorMeterBillUploadComponent {
      }
  
    this.loading = true;
-	 this.timeStart();
+	 //this.timeStart();
+   this.errorList = [];
 	 this.error = "";
    this.message = "";
+   this.progress = 0;
      const formData = new FormData();
-     formData.append("vendor_id",this.form.get(["vendorId"])!.value)
+     let vendor = this.form.get(["vendorId"])!.value;
+     formData.append("vendor_id",vendor)
      formData.append("fileName",this.uploadedFileName)
      formData.append("file", this.fileToUpload);
-     
+     debugger
      this.meterService.oneFileUpload(formData)
      .pipe(
        map((data: any) => {
+        debugger
         this.subscription.unsubscribe();
          this.response = data;
          this.loading = false;
          if(this.response != null){
            if(this.response.flag == false){
             this.message = "Import Done !....";
+            this.subscription.unsubscribe();
+            this.progress=100;
               // if(this.response.totalCount >0){
               //   this.totalCount = this.response.totalCount;
               //   this.message = "Import Done !....";
@@ -144,11 +151,14 @@ export class VendorMeterBillUploadComponent {
               //   this.message = "Import Fail !....";
               // }
            }else{
-             this.message = this.response.message;
+            this.subscription.unsubscribe();
+            this.progress=0;
+            this.message = this.response.message;
            }
            this.errorList = this.response.errorList;
          }
-         
+         this.subscription.unsubscribe();
+         this.progress=0;
        }))
      .subscribe(res=>{
      },
@@ -157,6 +167,24 @@ export class VendorMeterBillUploadComponent {
        this.loading = false;
        this.subscription.unsubscribe();
      });
+
+     this.progessbar_loadingCount(vendor); 
+ }
+
+ progessbar_loadingCount(vendor:string){
+  this.subscription = interval(1000)
+         .subscribe(x => { this.meterService.get_vendor_upload_progress(vendor).subscribe(res=>{
+          this.progress=res;
+          if( this.progress == 100){
+            this.subscription.unsubscribe();
+          }
+        },
+        error => {
+          this.progress=0;
+           this.error = "Progress Error";
+           this.subscription.unsubscribe();
+        }
+        ); });
  }
 
  removeAll() {
