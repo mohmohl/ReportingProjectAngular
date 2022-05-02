@@ -88,7 +88,7 @@ const routes: Routes = [
       }
       ,
       {
-        path: 'gt-trial-report',
+        path: 'gt-detail-trial-report',
         loadChildren: () => import('./views/TrialReport/detail-trial-report/trial-report.module').then(m => m.TrialReportModule),canActivate:[AuthGuard]
       },
       {
@@ -258,6 +258,18 @@ const routes: Routes = [
       {
         path: 'add-category',
         loadChildren: () => import('./views/add-category/add-category.module').then(m => m.AddCategoryModule)
+      },
+      {
+        path: 'finance-report',
+        loadChildren: () => import('./views/finance-reports/finance-report.module').then(m => m.FinanceReportModule)
+      },
+      {
+        path: 'hod2-report',
+        loadChildren: () => import('./views/hod2-report/hod2-report.module').then(m => m.Hod2ReportModule)
+      },
+      {
+        path: 'loan-excel',
+        loadChildren: () => import('./views/loanproduct-excel/loanexcel.module').then(m => m.LoanExcelModule)
       }
 
 
