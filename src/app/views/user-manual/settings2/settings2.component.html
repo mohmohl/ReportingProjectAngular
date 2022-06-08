@@ -1,0 +1,97 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>User Manual Role </h5>
+            </div>
+            <div class="card-body">
+                <code *ngIf="error">{{error}}</code>              
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                  <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+  
+              <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Role ID <code>*</code></label>
+                    <div class="col-sm-3">
+                        <input type="text" formControlName="roleId" class="form-control">
+                    </div>
+                    <div class="col-sm-2">
+                      <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                    </div>
+                </div>
+              </form>  
+
+
+                <!-- <div class="form-group row">
+                  <div class="col-sm-2"></div>
+                  <div class="col-sm-10">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Choose</th>
+                            <th>File Name</th>
+                            <th>File Path</th>
+                        </tr>
+                        <tr *ngFor="let menu of fileList">
+                          <td style="max-width: 20%;">
+                            <input type="checkbox" [(ngModel)]="menu.selected" formControlName="chk" (change)="onChange(menu.id, $event.target.checked)" class="styled">
+                          </td>
+                          <td>{{menu.description}}</td>
+                          <td>{{menu.fullPath}}</td>
+                        </tr>
+                    </table>
+                  </div>
+                </div>
+                
+                <div class="form-group row">
+                  <label class="col-sm-2  col-form-label"></label>
+                  <div class="col-sm-1">
+                    <button class="btn btn-primary btn-sm" type="button" (click)="permit()">Save</button> 
+                  </div>
+                  <div class="col-sm-1">
+                    <button class="btn btn-primary btn-sm" type="button" (click)="clear()">Clear</button> 
+                  </div>
+                </div> -->
+
+          </div>
+          
+    </div>
+  </div>
+  </div>
+
+ <div class="row" *ngIf="fileList.length!=0">
+    <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <code *ngIf="message">{{message}}</code>
+            <div class="page-header-breadcrumb">
+              <button type="button" (click)="permit()" class="btn-primary">
+                Permit
+              </button> 
+            </div>
+          </div>
+          <div class="card-body p-t-10">
+
+            <div class="form-group row">
+              <div class="col-sm-2"></div>
+              <div class="col-sm-8">
+              <table>
+                  <tr>
+                      <th style="width: 12%;">Choose</th>
+                      <th style="width: 25%;">File Name</th>
+                      <th>File Path</th>
+                  </tr>
+                  <tr *ngFor="let menu of fileList">
+                    <td><input type="checkbox" [(ngModel)]="menu.selected" (change)="onChange(menu.id, $event.target.checked)" class="styled">
+                    </td>
+				            <td>{{menu.description}}</td>
+                    <td>{{menu.fullPath}}</td>
+                  </tr>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
