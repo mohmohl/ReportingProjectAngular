@@ -258,7 +258,20 @@ const routes: Routes = [
       {
         path: 'add-category',
         loadChildren: () => import('./views/add-category/add-category.module').then(m => m.AddCategoryModule)
+      },
+      {
+        path: 'user_manual',
+        loadChildren: () => import('./views/user-manual/user-manual/user-manual.module').then(m => m.UserManualModule)
+      },
+      {
+        path: 'file-directory',
+        loadChildren: () => import('./views/user-manual/settings1/settings1.module').then(m => m.Settings1Module)
+      },
+      {
+        path: 'role',
+        loadChildren: () => import('./views/user-manual/settings2/settings2.module').then(m => m.Settings2Module)
       }
+
 
 
 
