@@ -85,5 +85,27 @@ onPermit(){
   });
 }
 
+onUpdateStatus(userId: string, status: string) {
+  debugger
+  this.loading=true;
+  this.message='';
+
+
+  this.service.UpdateUserStatus(userId,status).subscribe((res:boolean)=>{
+    this.loading = false;
+    if(res){
+      this.message="Successful Update User Status";
+    }else{
+      this.message="Not Successful Update User Status";
+    }
+   
+  },(error) => {
+    this.message='';
+    this.loading = false;
+    this.error="Internal Server Error";
+    console.log(error);
+  });
+}
+
 
 }
