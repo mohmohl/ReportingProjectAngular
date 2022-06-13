@@ -36,6 +36,12 @@
             <div class="page-header-breadcrumb">
               <button type="button" (click)="onPermit()" class="btn-primary">
                 Permit
+              </button>&nbsp;
+              <button type="button" (click)="onUpdateStatus(data.user_id,data.user_status)" class="btn-primary" *ngIf="data.user_status == 'D' || data.user_status == null"  >
+                Enable
+              </button> 
+              <button type="button" (click)="onUpdateStatus(data.user_id,data.user_status)" class="btn-primary" *ngIf="data.user_status == 'E'">
+                Disable
               </button> 
             </div>
           </div>
