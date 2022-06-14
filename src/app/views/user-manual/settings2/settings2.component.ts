@@ -85,8 +85,7 @@ export class Settings2Component implements OnInit {
 
 clear() {
   this.form = new FormGroup({
-    roleId: new FormControl('',Validators.required),
-    chk: new FormControl('',Validators.required)
+    roleId: new FormControl('',Validators.required)
   });
   this.checkedList = [];
 }
