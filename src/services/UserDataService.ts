@@ -51,4 +51,11 @@ import { AuthenticationService } from "./AuthenticationService";
   public forgotPassword(userId:string): Observable<any>{
     return this.http.post<any>(`${environment.baseUrl}`+'/smsAuthenticate/forgotPasswordSendingSMSData/'+userId,{ title: 'Forgot Password' });
   }
+  
+  public getUserReport(){
+  //return this.http.post<any>(`${environment.baseUrl}`+'/get_transaction',{ title: 'Transaction Data' });
+  return this.http.post<any>(`${environment.baseUrl}`+'/user/userreport',{});
+  
 }
+}
+
