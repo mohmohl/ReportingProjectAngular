@@ -267,10 +267,17 @@ const routes: Routes = [
         path: 'hod2-report',
         loadChildren: () => import('./views/hod2-report/hod2-report.module').then(m => m.Hod2ReportModule)
       },
+      
+      {
+        path: 'subsidaryledger',
+        loadChildren: () => import('./views/dw-subsiledger/dw_subsiledger.module').then(m => m.DWSubsiLedgerModule)
+      }
+      /*
       {
         path: 'loan-excel',
         loadChildren: () => import('./views/loanproduct-excel/loanexcel.module').then(m => m.LoanExcelModule)
       }
+      */
 
 
 
