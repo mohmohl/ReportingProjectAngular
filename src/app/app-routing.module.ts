@@ -267,6 +267,10 @@ const routes: Routes = [
       {
         path: 'subsidaryledger',
         loadChildren: () => import('./views/dw-subsiledger/dw_subsiledger.module').then(m => m.DWSubsiLedgerModule)
+      },
+      {
+        path: 'domesticftransfer',
+        loadChildren: () => import('./views/dw-domesticsfundtransfer/dw_domesticsfundtransfer.module').then(m => m.DWDomesticsFundTransferModule)
       }
       ,
       {
