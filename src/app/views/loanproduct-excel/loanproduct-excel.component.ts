@@ -4,11 +4,29 @@ import { map } from 'rxjs/operators';
 import { FinanceReportService } from 'src/services/FinanceReportService';
 import { LoanProductExcelData } from 'src/models/LoanProductExcelData';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter} from '@angular/material/core';
+import { PickDateAdapter } from 'src/models/PickDateAdapter';
+import { NativeDateAdapter,MAT_DATE_FORMATS } from '@angular/material';
+import { DatePipe } from '@angular/common'
+
+export const PICK_FORMATS = {
+  parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
+  display: {
+      dateInput: 'input',
+      monthYearLabel: {year: 'numeric', month: 'short'},
+      dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
+      monthYearA11yLabel: {year: 'numeric', month: 'long'}
+  }
+};
 
 @Component({
   selector: 'app-loanproduct-excel',
   templateUrl: './loanproduct-excel.component.html',
-  styleUrls: ['./loanproduct-excel.component.css']
+  styleUrls: ['./loanproduct-excel.component.css'],
+  providers: [
+    {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
+]
 })
 export class LoanproductExcelComponent implements OnInit {
 
@@ -22,17 +40,19 @@ export class LoanproductExcelComponent implements OnInit {
   ccy_list : string[];
 
   branch = '';
+  fromdate : Date;
   ccy = '';
 
   form = new FormGroup({
-    branch: new FormControl(''),
-    ccy: new FormControl('')
+    fromDate: new FormControl('', Validators.required),
+    branch: new FormControl('', Validators.required),
+    ccy: new FormControl('', Validators.required)
   });
 
- constructor(private xlsService : FinanceReportService, private exportServ : ExportDataService) { }
+ constructor(private xlsService : FinanceReportService, private exportServ : ExportDataService, private datepipe: DatePipe) { }
 
   ngOnInit(): void {
-    this.loading = false;
+    this.loading = true;
     this.xlsService.getBranchList().subscribe(res =>{
       this.loading = false
       this.branch_list=res;
@@ -59,11 +79,14 @@ export class LoanproductExcelComponent implements OnInit {
 
     this.branch = this.form.get(["branch"])!.value;
     this.ccy = this.form.get(["ccy"])!.value;
+    this.fromdate = this.form.get(["fromDate"])!.value;
+    let f_Date = `${this.fromdate.getFullYear()}-${this.fromdate.getMonth()+1}-${this.fromdate.getDate()}`;
+    let date = this.datepipe.transform(this.fromdate, 'yyyyMMdd');
     console.log('exporting excel...');
     this.error='';
     this.loading = true;
 
-    this.exportServ.export_excel("/export/excel/xlsloanall?branch="+this.branch+"&ccy="+this.ccy)
+    this.exportServ.export_excel("/export/excel/xlsloanall?branch="+this.branch+"&ccy="+this.ccy+"&fdate="+date)
     .pipe(
       map((data: any) => {
       let blob = new Blob([data], {
