@@ -56,6 +56,9 @@ export class DwDomesticsfundtransferComponent implements OnInit {
 
   showDatas(){
     this._showData =false;
+    this.domesticftdatalist = [];
+    this.g_domesticftdatalist = [];
+    this.domesticftdataset = [];
     this.http.doPost("/fttransaction/getDomesticFTDataList?date="+this.month+"&branch="+this.branch+"&status="+
     this.auth, "Domestic Fund Transfer").subscribe(
       res => {
