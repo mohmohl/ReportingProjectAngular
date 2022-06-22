@@ -1,0 +1,62 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>OBR Encash Schedule CCSI</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    
+                    <code *ngIf="error">{{error}}</code>
+					
+                    <div class="form-group row">
+
+                        <label class="col-sm-1">Date</label>
+                            <div class="col-xs-2 date-picker">
+                                <select formControlName="branch">
+                                    <option value="" selected>-- Select --</option>
+                                </select>
+                            </div>
+    
+                        <label class="col-sm-1"> Currency </label>
+                        <div class="col-xs-2">
+                            <select formControlName="currency">
+                                <option value="" selected>-- Select --</option>
+                            </select>
+                        </div>
+                        
+                        <label class="col-sm-1"> Branch </label>
+                        <div class="col-xs-2">
+                            <select formControlName="branch">
+                                <option value="" selected>-- Select --</option>
+                            </select>
+                        </div>
+                        
+                        <label class="col-sm-2"> Remitting Bank </label>
+                        <div class="col-xs-2">
+                          <select formControlName="remitbank" id="exampleFormControlSelect1">
+                            <option value="" disabled selected>ALL</option>
+                          </select>
+                        </div>
+
+                        <label class="col-sm-1"> Status </label>
+                        <div class="col-xs-2">
+                          <select formControlName="status" id="exampleFormControlSelect1">
+                            <option value="" disabled selected>Authorized</option>
+                          </select>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <button type="button" (click)="exportExcel_backend()" class="btn-primary">Print</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
