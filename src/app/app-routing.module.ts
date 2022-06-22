@@ -260,14 +260,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/add-category/add-category.module').then(m => m.AddCategoryModule)
       },
       {
-        path: 'finance-report',
-        loadChildren: () => import('./views/finance-reports/finance-report.module').then(m => m.FinanceReportModule)
-      },
-      {
-        path: 'hod2-report',
-        loadChildren: () => import('./views/hod2-report/hod2-report.module').then(m => m.Hod2ReportModule)
-      },
-      
+
+        path: 'user_manual',
+        loadChildren: () => import('./views/user-manual/user-manual/user-manual.module').then(m => m.UserManualModule)
+      },      
       {
         path: 'subsidaryledger',
         loadChildren: () => import('./views/dw-subsiledger/dw_subsiledger.module').then(m => m.DWSubsiLedgerModule)
@@ -276,12 +272,18 @@ const routes: Routes = [
         path: 'domesticftransfer',
         loadChildren: () => import('./views/dw-domesticsfundtransfer/dw_domesticsfundtransfer.module').then(m => m.DWDomesticsFundTransferModule)
       }
-      /*
+      ,
       {
-        path: 'loan-excel',
-        loadChildren: () => import('./views/loanproduct-excel/loanexcel.module').then(m => m.LoanExcelModule)
+        path: 'file-directory',
+        loadChildren: () => import('./views/user-manual/settings1/settings1.module').then(m => m.Settings1Module)
+      },
+      {
+        path: 'role',
+        loadChildren: () => import('./views/user-manual/settings2/settings2.module').then(m => m.Settings2Module)
+
       }
-      */
+
+
 
 
 
