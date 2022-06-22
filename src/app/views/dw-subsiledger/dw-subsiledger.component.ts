@@ -146,7 +146,7 @@ export class DwSubsiledgerComponent implements OnInit {
         this.branchData = res;        
       },
       error => {
-        console.log("Read Incoming MT 103 Error >>> "+error)
+        console.log("Read Subsidary Ledger Error >>> "+error)
         debugger;
         this.loading = false;
       }
