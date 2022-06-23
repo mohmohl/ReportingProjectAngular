@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from 'src/services/HttpService';
-import { jsPDF } from "jspdf";
+//import { jsPDF } from "jspdf";
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -128,7 +128,7 @@ export class DwIncomingmt103Component implements OnInit  {
       this.totalCommission += this.incomingmt103list[i].comission;
     }
   }
-
+/*
   downloadPDF(){
     let content=this.pdfcontent.nativeElement;  
     let doc = new jsPDF({
@@ -182,6 +182,6 @@ export class DwIncomingmt103Component implements OnInit  {
         this.loading = false;
       });
   }
-
+*/
 
 }

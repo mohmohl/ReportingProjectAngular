@@ -64,7 +64,7 @@ export class DwSubsiledgerComponent implements OnInit {
   });
 
     //read months
-    this.http.doGet('/fttransaction/getMonthNameList').subscribe(res=>{
+    this.http.doGet('/fttransaction/getSubsiMonthNameList').subscribe(res=>{
         this.loading = false;
         this.monthList = res;
         if(this.monthList.length>0){

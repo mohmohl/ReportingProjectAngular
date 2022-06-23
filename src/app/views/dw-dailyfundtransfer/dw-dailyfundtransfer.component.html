@@ -1,0 +1,141 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            
+            <div class="card-header">
+                <h5>Transfer Report</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+
+                  <div class="page-header-breadcrumb">
+                    <button type="button" class="btn-danger" (click)="exportPDF()">
+                      <i class="ti-printer"></i>PDF
+                    </button> 
+                   </div>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    
+                    <code *ngIf="error">{{error}}</code>
+					
+                    <div class="form-group row">
+
+                        <label class="col-sm-1"> Branch </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="branch">
+                                <option value="{{branch}}" selected>{{branch}}</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-1">Date</label>
+                        <div class="col-xs-2 date-picker">
+                            <select [(ngModel)]="month">
+                                <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2"> Report Type </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="rptType">
+                                <option  *ngFor="let rpttype of reportTypeList" value="{{rpttype.code}}">{{rpttype.description}}</option>
+                            </select>
+                        </div>
+     
+                        <label class="col-sm-1"> Currency </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="currency">
+                                <option  *ngFor="let curr of currencyList" value="{{curr.code}}">{{curr.code}}</option>
+                            </select>
+                        </div>
+                        
+                        
+                        
+                        <div class="col-sm-2">
+                            <button type="button" (click)="showDatas()" class="btn-primary">Show</button>
+                            
+                        </div>
+                        
+                    </div>
+                <div *ngIf="_showData">
+                    <div class="title" *ngIf="_showData">
+                        <h4>Myanmar Apex Bank</h4>      
+                        <h6>Daily Fund Transfer Report</h6>
+
+                    </div>
+
+                    <div class="prtDate">
+                        <p>{{month}}</p>
+                    </div>
+                    
+
+                    <table class="table table table-hover" id="content" #content>
+                        <thead class="text-uppercase">
+                            <th> No</th>
+                            <th> I-Banking Ref. No.</th>
+                            <th> Date/Time</th>
+                            <th> Debit A/C no.</th>
+                            <th> Debit A/C Name </th>
+                            <th> Debit Currency </th>
+                            <th style="text-align: right;"> Amount Debited </th>
+                            <th> Credit A/C No.  </th>
+                            <th> Credit A/C Name</th>
+                            <th> Credit Currency</th>
+                            <th style="text-align: right;"> Amount Credited</th>
+                            <th style="text-align: right;"> Charges</th>
+                        </thead>
+
+                        <tbody>
+                           
+                            <tr *ngFor="let data of dailytransferList; let i = index;">
+                                
+                                <td> {{(i+1)}}</td>
+                                <td> {{data.trn_ref_no}}</td>
+                                <td> {{data.trn_dt}}</td>
+                                <td> {{data.dr_ac}}</td>
+                                <td> {{data.dr_desc}} </td>
+                                <td> {{data.dr_ccy}} </td>
+                                <td class="number"> {{data.dr_amount | number : '1.2-3'}} </td>
+                                <td> {{data.cr_ac}} </td>
+                                <td> {{data.cr_desc}}  </td>
+                                <td> {{data.cr_ccy}}</td>
+                                <td class="number"> {{data.dr_amount | number : '1.2-3'}}</td>
+                                <td class="number"> {{data.charge_amt | number : '1.2-3'}}</td>
+                                
+                            </tr>
+
+                            <tr>
+                                <td colspan="6" class="title"> Sub Total</td>
+                                <td class="stotal"> {{subDrAmt | number : '1.2-3'}} </td>
+                                <td colspan="3" >  </td>
+                                <td class="stotal"> {{subCrAmt | number : '1.2-3'}} </td>
+                                <td class="stotal"> {{subCharge | number : '1.2-3'}} </td>
+                                
+                            </tr>
+
+                            <tr>
+                                <td colspan="6" class="title"> Grand Total </td>
+                                <td class="stotal"> {{totDrAmt | number : '1.2-3'}} </td>
+                                <td colspan="4" >  </td>
+                                <td class="stotal"> {{totCrAmt | number : '1.2-3'}} </td>
+                            </tr>
+                            
+                        </tbody>
+                        
+                    </table>
+
+                  
+                </div>
+                <div  *ngIf="_showData" class="col-md-4" >
+                    <p>Total Records ({{totNoOfTrans}}) Listed.</p>
+                </div>
+                   
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
