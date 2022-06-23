@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Vendor Meter Bill Upload</h5>
+                <p class="text-danger mb-1 ng-tns-c85-3" *ngIf="timeCounter">{{timeCounter}}</p>
+            </div>
+            <div class="card-body">
+                <code *ngIf="error">{{error}}</code>
+                <label  *ngIf="message" class="text-info">{{message}}</label>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                  <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+  
+              <form [formGroup]="form" (ngSubmit)="submit()">
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-md-2  col-form-label">Vendor<code>*</code></label>
+                    <div class="col-sm-12 col-md-3">
+                      <select class="form-control" formControlName="vendorId"> 
+                        <option value="{{item.vendorId}}" *ngFor='let item of vendorList'>{{item.vendorName}}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-12 col-md-2  col-form-label">Upload Excel File<code>*</code></label>
+                    <div class="col-sm-12 col-md-3">
+                       <input type="file" formControlName="fileData" (click)="reChange()" (change)="handleFileInput($event.target.files)">
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div  class="col-sm-12 col-md-3">
+                    </div>
+                    <div class="col-sm-12 col-md-1">
+                      <button class="btn btn-primary btn-sm" type="submit">Import</button>
+                    </div>
+                  </div>
+
+                  <div class="col-md-10" *ngIf="progress != 0">
+                    <div class="progress" style="height: 4px;">
+                      <div role="progressbar"  class="bg-warning progress-bar" [style.width.%]="progress">
+                      </div>
+                   </div>
+                  </div>
+    
+                  <div class="col-sm-2" *ngIf="progress != 0">
+                     <label class="col-sm-12  col-form-label">{{progress}} %</label>
+                  </div>
+
+                  <div *ngIf="errorList" class="col-sm-12 col-xl-3">
+                    <ul *ngFor="let item of errorList">
+                      <li>
+                        <i class="icofont icofont-hand-right text-info"></i> 
+                        <span class="text-danger">{{item.errorMessage}}</span>
+                      </li>
+                    </ul>
+                  </div>
+
+            </form>
+
+            <!-- <div class="col-sm-12 col-md-2">
+              <button class="btn btn-primary btn-sm" (click)="removeAll()">All Clear</button>
+            </div> -->
+          
+
+          </div>
+          
+    </div>
+</div>

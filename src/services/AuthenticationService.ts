@@ -22,12 +22,12 @@ export class AuthenticationService {
         this.permission.push("/home");
         this.permission.push("/change-password");
         this.permission.push("/access-denied");
-        this.permission.push("/bypass-edit-account");
-   
+       // this.permission.push("/bypass-edit-account");
+        this.permission.push("/mab-survey-form");
         if (this.currentUserSubject.value != null) {
             
             if(typeof this.currentUserSubject.value.userId != "undefined"){
-            const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
+            const menuMap = new Map(Object.entries(this.currentUserSubject.value.permission));
             menuMap.forEach((value, key) => {
                 const menuList: MenuItem[] = value;
                 menuList.forEach(e => {
@@ -66,10 +66,11 @@ export class AuthenticationService {
                 this.permission.push("/home");
                 this.permission.push("/change-password");
                 this.permission.push("/access-denied");
-                this.permission.push("/bypass-edit-account");
+               // this.permission.push("/bypass-edit-account");
+                this.permission.push("/mab-survey-form");
                 if (this.currentUserSubject.value != null) {
                     this.currentUserValue;
-                    const menuMap = new Map(Object.entries(this.currentUserSubject.value.menuItem));
+                    const menuMap = new Map(Object.entries(this.currentUserSubject.value.permission));
                     menuMap.forEach((value, key) => {
                         const menuList: MenuItem[] = value;
                         menuList.forEach(e => {

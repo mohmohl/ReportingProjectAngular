@@ -1,0 +1,88 @@
+<div class="row">
+    <div class="col-md-12">
+        <form [formGroup]="form">
+        <div class="card">
+            <div class="card-header">
+                <h5>Loan Account Data Export</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+            </div>
+            <div class="card-body">
+                
+                <code *ngIf="error">{{error}}</code>
+
+                <div class="form-group row">
+
+                    <label class="col-sm-1">Date</label>
+                        <div class="col-xs-2 date-picker">
+                              <mat-form-field>
+                                <input #minmaxInput matInput 
+                                  [min]="minDate" 
+                                  [max]="maxDate" 
+                                  [matDatepicker]="minmaxvalidation" formControlName="fromDate" readonly>
+                                <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                                   </mat-datepicker-toggle>
+                                <mat-datepicker #minmaxvalidation></mat-datepicker>
+                              </mat-form-field>
+                        </div>
+
+                    <label class="col-sm-1"> Branch </label>
+                    <div class="col-xs-2">
+                        <select formControlName="branch">
+                        <option value="" selected>-- Select --</option>
+                            <option *ngFor="let arr of branch_list" value="{{arr}}">{{arr}}</option>
+                        </select>
+                    </div>
+                    
+                    <label class="col-sm-1"> Currency </label>
+                    <div class="col-xs-2">
+                      <select formControlName="ccy" id="exampleFormControlSelect1">
+                        <option value="" selected>-- Select --</option>
+                          <option *ngFor="let arr of ccy_list" value="{{arr}}">{{arr}}</option>
+                      </select>
+                    </div>
+                    
+                    
+                    <div class="col-sm-2">
+                        <button type="button" (click)="exportExcel_backend()" class="btn-primary">Export</button>
+                    </div>
+                </div>
+
+            </div>
+            <!--
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    <div *ngIf="loading" class="d-flex justify-content-center">
+                        <div class="spinner-border spinner-border-sm text-warning"></div>
+                        <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                    </div>
+                    <code *ngIf="error">{{error}}</code>
+
+                    <table class="table table table-hover" id="export-table">
+                        <thead class="text-uppercase">
+                            <th>GL Account</th>
+                            <th >Principal</th>
+                            <th >Interest</th>
+                            <th >Total</th>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let list of dataList">
+                                <td>{{list.glacc}}</td>
+                                <td>{{list.principleAmt}}</td>
+                                <td>{{list.interestAmt}}</td>
+                                <td>{{list.total}}</td>
+                            </tr>
+                       
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+-->
+
+        </div>
+        </form>
+    </div>
+</div>

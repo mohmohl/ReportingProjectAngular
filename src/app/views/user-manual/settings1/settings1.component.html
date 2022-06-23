@@ -1,0 +1,73 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>User Manual File Directory </h5>
+            </div>
+            <div class="card-body">
+                <code *ngIf="error">{{error}}</code>
+                <label  *ngIf="message" class="text-info">{{message}}</label>
+               
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                  <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+  
+              <form [formGroup]="form" (ngSubmit)="submit()">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Type <code>*</code></label>
+                    <div class="col-sm-3">
+                        <input type="text" formControlName="type" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Description <code>*</code></label>
+                    <div class="col-sm-3">
+                      <input type="text" formControlName="description" class="form-control">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">File Path<code>*</code></label>
+                  <div class="col-sm-3">
+                    <textarea class="form-control" formControlName="path" rows="5"></textarea>
+                  </div>
+              </div>
+                  
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">File Type<code>*</code></label>
+                    
+                    <div class="col-sm-1">
+                      <input type="radio"  formControlName="fileType" value="pdf" /> PDF
+                    </div> 
+                    
+                    <div class="col-sm-1">
+                      <input type="radio"  formControlName="fileType" value="excel" /> Excel
+                    </div>  
+                  </div>
+
+  
+                  <!-- <table class="table">
+                    <thead></thead>
+                    <tbody>
+                      <tr *ngFor="let item of tspList">
+                        <td> {{item.townshipName}}</td> 
+                        <td>  <input type="file" (change)="handleFileInput($event.target.files,item.townshipId)"></td>
+                      </tr>
+                      
+                    </tbody>
+                  </table> -->
+      
+                  <div class="form-group row">
+                    <label class="col-sm-2  col-form-label"></label>
+                    <div class="col-sm-1">
+                      <button class="btn btn-primary btn-sm" type="submit">Save</button> 
+                    </div>
+                    
+                  </div>
+            </form>
+          </div>
+          
+    </div>
+  </div>

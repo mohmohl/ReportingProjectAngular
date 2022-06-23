@@ -88,8 +88,16 @@ const routes: Routes = [
       }
       ,
       {
-        path: 'gt-trial-report',
-        loadChildren: () => import('./views/TrialReport/trial-report/trial-report.module').then(m => m.TrialReportModule),canActivate:[AuthGuard]
+        path: 'gt-detail-trial-report',
+        loadChildren: () => import('./views/TrialReport/detail-trial-report/trial-report.module').then(m => m.TrialReportModule),canActivate:[AuthGuard]
+      },
+      {
+        path: 'general-trial-report',
+        loadChildren: () => import('./views/TrialReport/general-trial-report/general-trial-report.module').then(m => m.GeneralTrialReportModule),canActivate:[AuthGuard]
+      },
+      {
+        path: 'mis-trial-report',
+        loadChildren: () => import('./views/TrialReport/mis-trial-report/mis-trial-report.module').then(m => m.MisTrialReportModule),canActivate:[AuthGuard]
       },
       {
         path: 'bypass-account-list',
@@ -100,13 +108,185 @@ const routes: Routes = [
         loadChildren: () => import('./views/bypass/bypass-new-account/bypass-new-account-module').then(m => m.ByPassNewAccountModule),canActivate:[AuthGuard]
       },
       {
-        path: 'bypass-edit-account/:cust_ac_no',
+        path: 'bypass-edit-account/:param1',
         loadChildren: () => import('./views/bypass/bypass-edit-account/bypass-edit-account.module').then(m => m.ByPassEditAccountModule),canActivate:[AuthGuard]
       },
       {
         path: 'bank-statement-view',
         loadChildren: () => import('./views/bank-statement-view/bank-statement-view.module').then(m => m.BankStatementViewModule)
+      },
+      {
+        path: 'deno-import',
+        loadChildren: () => import('./views/Denomination/deno-import/deno-import.module').then(m => m.DenoImportModule)
+      },
+      {
+        path: 'deno-report',
+        loadChildren: () => import('./views/Denomination/deno-report/deno-report.module').then(m => m.DenoReportModule)
+      },
+      {
+        path: 'mab-survey-question',
+        loadChildren: () => import('./views/MABQA/mab-survey-question/mab-survey-question.module').then(m => m.MABSurveyQuestionModule)
+      },
+      {
+        path: 'mab-survey-form',
+        loadChildren: () => import('./views/MABQA/mab-question-answer/mab-question-answer.module').then(m => m.MABQuestionAnswerModule)
+      },
+      {
+        path: 'mab-survey-report',
+        loadChildren: () => import('./views/MABQA/mab-answer-view/mab-answer-view.module').then(m => m.MABAnswerViewModule)
+      },
+      {
+        path: 'mab-survey-setting',
+        loadChildren: () => import('./views/MABQA/mab-survey-setting/mab-survey-setting.module').then(m => m.MABSurveySettingModule)
+      },
+      {
+        path: 'meter-bill-upload',
+        loadChildren: () => import('./views/meterBill/metre-bill-upload/metre-bill-upload.module').then(m => m.MetreBillUploadModule)
+      },
+      {
+        path: 'vendor-registration',
+        loadChildren: () => import('./views/meterBill/vendor-registration/vendor-registration.module').then(m => m.VendorRegistrationModule)
+      },
+      {
+        path: 'vendor-meter-bill-upload',
+        loadChildren: () => import('./views/meterBill/vendor-meter-bill-upload/vendor-meter-bill-upload.module').then(m => m.VendorMetreBillUploadModule)
+      },
+      {
+        path: 'report-generation',
+        loadChildren: () => import('./views/meterBill/report-generation/report-generation.module').then(m => m.ReportGenerationModule)
+      },
+      {
+
+        path: 'mmcb-data-upload',
+        loadChildren: () => import('./views/mmcb-data-upload/mmcb-data-upload.module').then(m => m.MMCBDataUploadModule)
+      },
+      {
+        path: 'mab-doc-upload',
+        loadChildren: () => import('./views/mab-doc-upload/upload-doc/mab-doc-upload.module').then(m => m.MABDocUploadModule)
+      },
+      {
+        path: 'mab-doc-view',
+        loadChildren: () => import('./views/mab-doc-upload/view-doc/mab-doc-view.module').then(m => m.MABDocViewModule)
+      },
+      {
+        path: 'mab-doc-view-management',
+        loadChildren: () => import('./views/mab-doc-upload/view-doc-management/mab-doc-view-management.module').then(m => m.MABDocViewManagementModule)
+      },
+      {
+        path: 'meter-bill-view',
+        loadChildren: () => import('./views/meterBill/meter-bill-view/metre-bill-view.module').then(m => m.MetreBillViewModule)
+      },
+      {
+        path: 'vendor-meter-bill-view',
+        loadChildren: () => import('./views/meterBill/vendor-meter-bill-view/vendor-meter-bill-view.module').then(m => m.VendorMetreBillViewModule)
+      },
+      {
+        path: 'delete-view',
+        loadChildren: () => import('./views/meterBill/delete-view/delete-view.module').then(m => m.DeleteViewModule)
+      },
+      {
+        path: 'accrual_domestic_daybook',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Accrual Domestic Daybook"}
+      },
+      {
+        path: 'accrual_transfer_scroll',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Accrual Transfer Scroll"}
+      },
+      {
+        path: 'bank_cash',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Bank Cash Scroll"}
+      },
+      {
+        path: 'clean_cash',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Clean Cash Scroll"}
+      },
+      {
+        path: 'current_account_daybook',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Current Account Daybook"}
+      },
+      {
+        path: 'domestic_daybook',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Daybook Domestic"}
+      },
+      {
+        path: 'detail_trial',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Detail Trial"}
+      },
+      {
+        path: 'general_trial',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"General Trial"}
+      },
+      {
+        path: 'od_account_daybook',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"OD Account Daybook"}
+      },
+      {
+        path: 'transfer_scroll',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Transfer Scroll"}
+      },
+      {
+        path: 'trial_sheet',
+        loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
+        data :{param:"Trial Sheet"}
+      },
+      {
+        path: 'bypass-new-bc-account',
+        loadChildren: () => import('./views/bypass/bypass-new-bc-account/bypass-new-bc-account-module').then(m => m.ByPassNewBCAccountModule)
+      },
+      {
+        path: 'bypass-bc-account-list',
+        loadChildren: () => import('./views/bypass/bypass-bc-account-list/bypass-bs-account-list-module').then(m => m.ByPassBCAccountListModule)
+      },
+      {
+        path: 'auth-forgot-password',
+        loadChildren: () => import('./views/auth-forgot-password/auth-forgot-password.module').then(m => m.AuthForgotPasswordModule)
+      },
+      {
+        path: 'add-menu',
+        loadChildren: () => import('./views/add-menu/add-menu.module').then(m => m.AddMenuModule)
+      },
+      {
+        path: 'add-category',
+        loadChildren: () => import('./views/add-category/add-category.module').then(m => m.AddCategoryModule)
+      },
+      {
+
+        path: 'user_manual',
+        loadChildren: () => import('./views/user-manual/user-manual/user-manual.module').then(m => m.UserManualModule)
+      },      
+      {
+        path: 'subsidaryledger',
+        loadChildren: () => import('./views/dw-subsiledger/dw_subsiledger.module').then(m => m.DWSubsiLedgerModule)
+      },
+      {
+        path: 'domesticftransfer',
+        loadChildren: () => import('./views/dw-domesticsfundtransfer/dw_domesticsfundtransfer.module').then(m => m.DWDomesticsFundTransferModule)
       }
+      ,
+      {
+        path: 'file-directory',
+        loadChildren: () => import('./views/user-manual/settings1/settings1.module').then(m => m.Settings1Module)
+      },
+      {
+        path: 'role',
+        loadChildren: () => import('./views/user-manual/settings2/settings2.module').then(m => m.Settings2Module)
+
+      }
+
+
+
+
+
     ]
   },
   {

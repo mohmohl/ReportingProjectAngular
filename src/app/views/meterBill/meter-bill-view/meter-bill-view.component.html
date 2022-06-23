@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+              <h5>Uploaded Meter Bill</h5>
+            </div>
+            <div class="card-body">
+               
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                  <code *ngIf="error">{{error}}</code>
+                  <label  *ngIf="msg" class="text-info">{{msg}}</label>
+                  <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+                      
+                    <div class="form-group row">
+                    <label class="col-sm-2  col-form-label">Region<code>*</code></label>
+                    <div class="col-sm-3">
+                        <select class="form-control" formControlName="regionId"> 
+                        <option value="{{item.regionId}}" *ngFor='let item of regionList'>{{item.regionName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-info btn-sm">Search</button>
+                    </div>
+                    </div>
+                </form>
+
+                <table class="table" >
+                    <thead>
+                        <th>Township Name</th>
+                        <th>Uploaded File Name</th>
+                        <th>Count</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of uploadedList;">
+                           <td>{{item.townshipName}}</td>
+                           <td>{{item.fileName}}</td>
+                           <td>{{item.dataCount}}</td>
+                          <td><button type="button" class="btn btn-primary btn-sm" (click)="clear(item.townshipId)">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+  </div>

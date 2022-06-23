@@ -36,17 +36,39 @@
             <div class="page-header-breadcrumb">
               <button type="button" (click)="onPermit()" class="btn-primary">
                 Permit
+              </button>&nbsp;
+              <button type="button" (click)="onUpdateStatus(data.user_id,data.user_status)" class="btn-primary" *ngIf="data.user_status == 'D' || data.user_status == null"  >
+                Enable
+              </button> 
+              <button type="button" (click)="onUpdateStatus(data.user_id,data.user_status)" class="btn-primary" *ngIf="data.user_status == 'E'">
+                Disable
               </button> 
             </div>
           </div>
           <div class="card-body p-t-10">
-            <ul *ngFor="let menu of data.menuItem">
-              <li className="list-unstyled"> 
-                <input type="checkbox" [(ngModel)]="menu.selected" (change)="onChange(menu.menu_id, $event.target.checked)" class="styled">
-                {{menu.menu_name}}
-              </li>
-             
-          </ul>
+
+            <div class="form-group row">
+              <div class="col-sm-2"></div>
+              <div class="col-sm-8">
+              <table>
+                  <tr>
+                      <th>Choose</th>
+                      <th>Menus</th>
+                      <th>Menu Category</th>
+                      <th>Program</th>
+                      <th>Status</th>
+                  </tr>
+                  <tr *ngFor="let menu of data.menuItem">
+                    <td><input type="checkbox" [(ngModel)]="menu.selected" (change)="onChange(menu.menu_id, $event.target.checked)" class="styled">
+                    </td>
+                      <td>   {{menu.menu_name}}</td>
+                      <td> {{menu.category_name}}</td>
+                      <td> {{menu.program}}</td>
+                      <td> {{menu.menu_status}}</td>
+                  </tr>
+              </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

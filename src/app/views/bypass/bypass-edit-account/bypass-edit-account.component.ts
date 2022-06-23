@@ -24,13 +24,9 @@ export class BypassEditAccountComponent implements OnInit {
   }
 
   ngOnInit() {
-    //debugger;
-    /*this.activatedRoute.queryParams.subscribe(
-      params => {
-        this.cust_ac_no =  params['cust_ac_no'];
-      })*/
       this.activatedRoute.paramMap.subscribe(params => {
-        this.cust_ac_no = params.get('cust_ac_no');
+        this.cust_ac_no = params.get('param1'); 
+        console.log("edit component >>>>>  " + this.cust_ac_no);
       })
     this.searchEditData(this.cust_ac_no); 
   }
@@ -88,7 +84,7 @@ export class BypassEditAccountComponent implements OnInit {
         if(this.result == true){
           this.message = "Update Successful."
         }else{
-          this.message = "Update Fail.";
+          this.message = "This record is already exist.";
         }
         this.loading = false;
       },

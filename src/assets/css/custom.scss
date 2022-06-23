@@ -2293,6 +2293,9 @@ agm-map, vector_map {
 .card{
   border-top:4px solid rgba(105, 28, 49, 0.75) !important;
 }
+.card-body {
+  padding: 2.25rem !important;
+}
 .table td{
   border: 1px solid #dee2e6;
 }
@@ -2300,11 +2303,11 @@ agm-map, vector_map {
   background-color: #691c31;
 }
 .btn-primary{
-  background-color:#691c31 !important;
-  border-color: #691c31 !important;
+  background-color:maroon !important;
+  border-color: maroon !important;
 }
 .bg-login{
-  background-color: #dcdada !important;
+  background-color: #adb5bd !important;
   color: #fff;
 }
 .pcoded .pcoded-navbar[active-item-theme=theme4] .pcoded-item > li.active > a:before{
@@ -2353,4 +2356,8 @@ p{
 }
 .date-picker .mat-form-field-infix{
   width:80px !important;
+}
+.input-group-prepend .input-group-text{
+  background-color: #dcdcdc !important;
+  color:#666 !important;
 }

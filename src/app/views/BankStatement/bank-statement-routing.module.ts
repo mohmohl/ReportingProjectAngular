@@ -10,7 +10,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       breadcrumb: 'Bank Statement',
-      icon: 'icofont icofont-file-document bg-c-pink',
+      icon: 'icofont icofont-file-document bg-c-pink ',
       breadcrumb_caption: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit - Sample Page',
       status: true
     }

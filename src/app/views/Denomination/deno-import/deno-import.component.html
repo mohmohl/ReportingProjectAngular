@@ -1,0 +1,159 @@
+<div class="row">
+    <div class="col-sm-12">
+      <form [formGroup]="form" (ngSubmit)="submit(form.value)">
+        <div class="card">
+            <div class="card-header">
+              <h5>Denomination Data Import</h5>
+              <div class="page-header-breadcrumb">
+                <button type="submit" class="btn-primary">
+                 Send
+                </button> 
+              </div>
+            </div>
+            <div class="card-body">
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+                  <code *ngIf="error">{{error}}</code>
+                  <p class="text-success" *ngIf="successMsg">{{successMsg}}</p>
+                  <div class="container-fluid">
+                  <div class="form-group row">
+                    <label class="col-sm-1 col-form-label"> Import Date</label>
+                    <div class="col-sm-2">
+                        <mat-form-field style="width:100px;">
+                            <input #minmaxInput matInput  [max]="maxDate" [matDatepicker]="minmaxvalidation"
+                                formControlName="import_date" readonly>
+                            <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #minmaxvalidation></mat-datepicker>
+                        </mat-form-field>
+                     
+                    </div>
+                    <label class="col-sm-1 col-form-label">Branch</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" formControlName="branch" id="exampleFormControlSelect1">
+                          <option value="" selected>-- Select --</option>
+                          <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label">Lion 1</label>
+                    <div class="col-sm-2">
+                      <input type="number" formControlName="denolion1" placeholder="0" class="form-control form-control-sm">
+                    </div> 
+                    <label class="col-sm-1 col-form-label">Lion 5</label>
+                    <div class="col-sm-2">
+                      <input type="number" formControlName="denolion5" placeholder="0" class="form-control form-control-sm">
+                    </div>
+                    <label class="col-sm-1 col-form-label">Lion 10</label>
+                    <div class="col-sm-2">
+                      <input type="number" formControlName="denolion10" placeholder="0" class="form-control form-control-sm">
+                    </div>
+                    <label class="col-sm-1 col-form-label">Lion 20</label>
+                    <div class="col-sm-2">
+                      <input type="number" formControlName="denolion20" placeholder="0" class="form-control form-control-sm">
+                    </div>   
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-sm-1 col-form-label">Lion 50</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denolion50" placeholder="0" class="form-control form-control-sm">
+                  </div> 
+                  <label class="col-sm-1 col-form-label">Lion 100</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denolion100" placeholder="0" class="form-control form-control-sm">
+                  </div> 
+                  <label class="col-sm-1 col-form-label"> Lion 200</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denolion200" placeholder="0" class="form-control form-control-sm">
+                  </div>
+                  <label class="col-sm-1 col-form-label"> Lion 500</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denolion500" placeholder="0" class="form-control form-control-sm">
+                  </div>
+                    
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-1 col-form-label"> Lion 1000</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denolion1000" placeholder="0" class="form-control form-control-sm">
+                  </div> 
+                </div>
+                
+                <div class="form-group row">
+                  <label class="col-sm-1 col-form-label"> KL 200</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denokl200" placeholder="0" class="form-control form-control-sm">
+                  </div> 
+                  
+                  <label class="col-sm-1 col-form-label"> KL 500</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denokl500" placeholder="0" class="form-control form-control-sm">
+                  </div>
+                  <label class="col-sm-1 col-form-label"> KL 1000</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denokl1000" placeholder="0" class="form-control form-control-sm">
+                  </div>   
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-sm-1 col-form-label"> RWE 5000</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denorwe5000" placeholder="0" class="form-control form-control-sm">
+                  </div> 
+                  <label class="col-sm-1 col-form-label"> RWE 10000</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denorwe10000" placeholder="0" placeholder="0" class="form-control form-control-sm">
+                  </div>
+                  <label class="col-sm-1 col-form-label"> RWEN 5000</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denorwen5000" placeholder="0" class="form-control form-control-sm">
+                  </div>
+                  <label class="col-sm-1 col-form-label"> RWEN 10000</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denorwen10000" placeholder="0" class="form-control form-control-sm">
+                  </div>   
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-sm-1 col-form-label"> NBD 50</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denonbd50" placeholder="0" class="form-control form-control-sm">
+                  </div> 
+                  <label class="col-sm-1 col-form-label"> NBD 100</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denonbd100" placeholder="0" class="form-control form-control-sm">
+                  </div>
+                  <label class="col-sm-1 col-form-label"> NBD 200</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denonbd200" placeholder="0" class="form-control form-control-sm">
+                  </div>
+                  <label class="col-sm-1 col-form-label"> NBD 500</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denonbd500" placeholder="0" class="form-control form-control-sm">
+                  </div>   
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-1 col-form-label"> NBD 1000</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denonbd1000" placeholder="0" class="form-control form-control-sm">
+                  </div> 
+                  <label class="col-sm-1 col-form-label"> NBD 5000</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denonbd5000" placeholder="0" class="form-control form-control-sm">
+                  </div>
+                  <label class="col-sm-1 col-form-label">Deno NBD 10000</label>
+                  <div class="col-sm-2">
+                    <input type="number" formControlName="denonbd10000" placeholder="0" class="form-control form-control-sm">
+                  </div>  
+                </div>
+              
+              </div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>

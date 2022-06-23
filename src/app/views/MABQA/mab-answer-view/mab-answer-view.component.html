@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <form [formGroup]="form"  (ngSubmit)="search(form.value)">
+            <div class="card-header">
+                <h4>ASM Answering Report</h4>
+               
+                <div class="card-header-right ng-tns-c14-9 ng-star-inserted">
+                <button type="submit" (click)="search(form.value)" class="btn-primary">
+                    Search
+                  </button> 
+                </div>
+               
+            </div>
+            <div class="card-body">
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+                <code *ngIf="error">{{error}}</code>
+               
+                    <div class="form-group row">
+                       <label class="col-sm-1">Branch</label>
+                       <div class="col-sm-2">
+                        <select formControlName="branch_code" (change)="branchOnChange($event)">
+                            <option value="All" selected>All</option>
+                            <option *ngFor="let arr of branch_list" value="{{arr}}">
+                                {{arr}}</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1">S_No</label>
+                       <div class="col-sm-2">
+                        <select formControlName="SNO">
+                            <option *ngFor="let arr of sno_list" value="{{arr}}">
+                                {{arr}}</option>
+                        </select>
+                    </div>
+                    </div>
+                </div>
+            </form>
+                <div class="card-body">
+                <div class="row" *ngIf="response != null">
+                    <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table >
+                                        <thead>
+                                            <tr>
+                                                <th> No </th>
+                                                <th>Question</th>
+                                                <th>Answer</th>
+                                                
+                                                
+                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let list of response; let i = index">
+                                                <td>{{list.ques_no}} </td>
+                                                <td>{{list.question}}</td>
+                                                <td>{{list.answer}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

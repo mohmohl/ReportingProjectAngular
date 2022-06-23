@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS} from '@angular/material/core';
 import { map } from 'rxjs/operators';
 import { PassYears } from 'src/models/PassYears';
@@ -27,7 +27,8 @@ export class BankStatementComponent implements OnInit {
   Content :any;
   loading = false;
   passDate = true;
-  acc_no: string;
+  acc_no: string[];
+  accountNo: string;
   fromDate: Date;
   toDate: Date;
   filePath: string;
@@ -35,19 +36,33 @@ export class BankStatementComponent implements OnInit {
   print_date: string;
   yearList: PassYears[] = [];
   error = '';
+  /*form = new FormGroup({
+    accno: new FormArray([new FormControl('')]),
+    years: new FormControl('',),
+    printDate: new FormControl('Transaction',Validators.required),
+    fileType: new FormControl('pdf', Validators.required),
+    fromDate: new FormControl(new Date,),
+    toDate: new FormControl(new Date,),
+  });*/
   form = new FormGroup({
-    accno: new FormControl('', Validators.required),
+    accno:new FormControl('',Validators.required),
     years: new FormControl('',),
     printDate: new FormControl('Transaction',Validators.required),
     fileType: new FormControl('pdf', Validators.required),
     fromDate: new FormControl(new Date,),
     toDate: new FormControl(new Date,),
   });
+
   sanitizer: any;
-  constructor(private bankStatementAPIService: BankStatementService) { 
+  constructor(private fb:FormBuilder,private bankStatementAPIService: BankStatementService) { 
     this.passDate = true;
   }
-
+  addAccount() {
+    this.account.push(new FormControl('',Validators.required));
+  }
+  get account(): FormArray {
+    return this.form.get('accno') as FormArray;
+  }
   ngOnInit() {
     //this.loading = true;
     /*this.bankStatementAPIService.getYearsList().subscribe((res: PassYears[]) => {
@@ -63,6 +78,24 @@ export class BankStatementComponent implements OnInit {
       this.passDate = isChecked;
     }
   }
+
+  onChange(event: any){
+    var value = event.target.value;
+    if(!this.checkTheSpecialCharacter(value)){
+      this.error="Invalid Account No!...Please check the space or special character."
+    }
+    else{
+      this.error="";
+    }
+  }
+  checkTheSpecialCharacter(val:string){
+    var format = /^[a-zA-Z0-9\d\-_.,]+$/g;
+    if(format.test(val)){
+      return true;
+    } else {
+      return false;
+    }
+  }
   submit() {
     if (this.form.invalid) {
       this.error = "Account No is required";
@@ -70,7 +103,11 @@ export class BankStatementComponent implements OnInit {
     }
     this.loading = true;
     this.error = "";
-    this.acc_no = this.form.get(["accno"])!.value;
+    
+    this.accountNo = this.form.get(["accno"])!.value;
+    this.acc_no = this.accountNo.split(',')
+    console.log("arr = "+this.acc_no);
+    debugger
     this.fileType = this.form.get(["fileType"])!.value;
     var appfiletype ='';
     if(this.fileType ==="excel"){
@@ -86,7 +123,12 @@ export class BankStatementComponent implements OnInit {
       let fDate = `${this.fromDate.getFullYear()}-${this.fromDate.getMonth()+1}-${this.fromDate.getDate()}`;
       let tDate = `${this.toDate.getFullYear()}-${this.toDate.getMonth()+1}-${this.toDate.getDate()}`;
       this.print_date = this.form.get(["printDate"])!.value;
-      this.bankStatementAPIService.createBankStatement(this.acc_no,this.fileType, fDate, tDate,this.print_date)
+      this.acc_no.forEach(e=>{
+
+      if(e != ""){
+        e= e.replace(" ","");
+        e= e.replace("'","");
+      this.bankStatementAPIService.createBankStatement(e,this.fileType, fDate, tDate,this.print_date)
         .pipe(
           map((data: any) => {
             let blob = new Blob([data], {
@@ -96,7 +138,7 @@ export class BankStatementComponent implements OnInit {
             if(this.fileType ==="excel"){
               var link = document.createElement('a');
               link.href = window.URL.createObjectURL(blob);
-              link.download = 'BankStatement.xlsx';
+              link.download = 'BankStatement_'+e+'_'+fDate+'_'+tDate+'.xlsx';
               link.click();
               window.URL.revokeObjectURL(link.href);
               }else{
@@ -120,7 +162,8 @@ export class BankStatementComponent implements OnInit {
                 }
               this.loading = false;
             });
-   
+          }
+     });
     }
     else {
       this.filePath = this.form.get(["years"])!.value;
@@ -129,7 +172,12 @@ export class BankStatementComponent implements OnInit {
         this.loading = false;
         return;
       }
-      this.bankStatementAPIService.searchPassBankStatement(this.acc_no, this.filePath, this.fileType)
+      this.acc_no.forEach(e=>{
+
+        if(e != ""){
+         e= e.replace(" ","");
+         e= e.replace("'","");
+      this.bankStatementAPIService.searchPassBankStatement(e, this.filePath, this.fileType)
         .pipe(
           map((data: any) => {
             let blob = new Blob([data], {
@@ -138,7 +186,8 @@ export class BankStatementComponent implements OnInit {
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
             if(this.fileType ==="excel"){
-            link.download = 'BankStatement.xlsx';
+            link.download = 'BankStatement_'+e+'.xlsx';
+            
             link.click();
             window.URL.revokeObjectURL(link.href);
             }else{
@@ -161,6 +210,8 @@ export class BankStatementComponent implements OnInit {
               this.error = this.acc_no + "(The system cannot find the file specified)";
               this.loading = false;
             });
+          }
+        });
 
           }
   }

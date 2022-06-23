@@ -48,10 +48,16 @@ export class UserPermissionComponent implements OnInit {
   //console.log("Param = "+this.user_id)
   this.service.getRegisteredUserData(this.user_id).subscribe((res:UserInfo)=>{
     this.loading = false;
-    this.data = res;
-    this.data.menuItem.forEach(e =>{
-      if(e.selected)this.checkedList.push(e.menu_id);
-    })
+    debugger
+    if(res){
+      this.data = res;
+      this.data.menuItem.forEach(e =>{
+        if(e.selected)this.checkedList.push(e.menu_id);
+      })
+    }
+    else{
+      this.error = "User doesn't exist!..";
+    }
   },(error) => {
     this.data=null;
     this.loading = false;
@@ -62,6 +68,7 @@ export class UserPermissionComponent implements OnInit {
 
 onPermit(){
   this.loading=true;
+  this.message='';
   this.service.PermitMenuToApplicationAccount(this.user_id,this.checkedList).subscribe((res:boolean)=>{
     this.loading = false;
     if(res){
@@ -71,7 +78,29 @@ onPermit(){
     }
    
   },(error) => {
+    this.message='';
+    this.loading = false;
+    this.error="Internal Server Error";
+    console.log(error);
+  });
+}
+
+onUpdateStatus(userId: string, status: string) {
+  debugger
+  this.loading=true;
+  this.message='';
+
+
+  this.service.UpdateUserStatus(userId,status).subscribe((res:boolean)=>{
+    this.loading = false;
+    if(res){
+      this.message="Successful Update User Status";
+    }else{
+      this.message="Not Successful Update User Status";
+    }
    
+  },(error) => {
+    this.message='';
     this.loading = false;
     this.error="Internal Server Error";
     console.log(error);

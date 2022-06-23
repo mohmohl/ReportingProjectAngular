@@ -9,4 +9,5 @@ export class User {
     role: string[];
     permissionList: string[];
     menuItem = new Map();
+    permission = new Map();
 }

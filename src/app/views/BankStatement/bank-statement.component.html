@@ -6,7 +6,7 @@
               <h5>Bank Statement</h5>
               <div class="page-header-breadcrumb">
                 <button type="submit" class="btn-primary">
-                  <i class="ti-printer"></i>View
+                  <i class="ti-printer"></i>Print
                 </button> 
               </div>
             </div>
@@ -16,19 +16,30 @@
                       <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
                   </div>
                   <code *ngIf="error">{{error}}</code>
-               
-                    <div class="form-group row">
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Account No</label>
+                    <div class="col-sm-3">
+                    <input formControlName="accno" class="form-control" (change)="onChange($event)" placeholder="Account No">
+                  </div>
+                    <div class="col-sm-3">
+                      <select class="form-control" formControlName="printDate" id="exampleFormControlSelect1">
+                       <option value="Transaction" selected>Transaction</option>
+                        <option value="Value">Value</option>
+                      </select>
+                      </div>
+                      
+                  </div>
+                   <!--<div class="form-group row">
                         <label class="col-sm-2 col-form-label">Account No</label>
-                        <div class="col-sm-3">
-                          <input type="text" formControlName="accno" class="form-control">
+                        <div class="col-sm-1">
+                          <button type="button" (click)="addAccount()" class="btn-primary">Add</button>
                         </div>
-                        <div class="col-sm-3">
-                        <select class="form-control" formControlName="printDate" id="exampleFormControlSelect1">
-                         <option value="Transaction" selected>Transaction</option>
-                          <option value="Value">Value</option>
-                        </select>
+                        <div formArrayName="accno">
+                          <div class="col-sm-3" *ngFor="let a of account.controls; index as i">
+                            <input [formControlName]="i"(change)="onChange($event)"  placeholder="Account No">
+                          </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="form-group row">
                       
                       <label class="col-sm-2 col-form-label">  Date
@@ -44,7 +55,7 @@
                       
                       <div *ngIf="passDate" class="col-sm-3">
                         <!--<input type="date" formControlName="fromDate" class="form-control">-->
-                        <mat-form-field>
+                        <mat-form-field style="width:100px;">
                           <input #minmaxInput matInput 
                             
                             [matDatepicker]="minmaxvalidation" formControlName="fromDate" readonly>
@@ -56,7 +67,7 @@
                       <label  *ngIf="passDate" class="col-form-label">-</label>
                       <div *ngIf="passDate" class="col-sm-3">
                         <!--<input type="date" formControlName="toDate" class="form-control">-->
-                        <mat-form-field>
+                        <mat-form-field style="width:100px;">
                           <input #minmaxInput matInput 
                              
                             [matDatepicker]="minmaxvalidation2" formControlName="toDate" readonly>
