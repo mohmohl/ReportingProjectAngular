@@ -271,6 +271,10 @@ const routes: Routes = [
       {
         path: 'domesticftransfer',
         loadChildren: () => import('./views/dw-domesticsfundtransfer/dw_domesticsfundtransfer.module').then(m => m.DWDomesticsFundTransferModule)
+      },
+      {
+        path: 'domesticftransferreversal',
+        loadChildren: () => import('./views/dw-domestictransferreversal/dw_domestictransferreversal.module').then(m => m.DWDomesticTransferReversalModule)
       }
       ,
       {

@@ -3,7 +3,7 @@
         <div class="card">
             
             <div class="card-header">
-                <h5>Domestic Fund Transfer</h5>
+                <h5>Domestic Fund Transfer Reversal for iBanking</h5>
                 <div *ngIf="loading" class="d-flex justify-content-center">
                     <div class="spinner-border spinner-border-sm text-warning"></div>
                       <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -36,14 +36,6 @@
                             </select>
                         </div>
                         
-                        
-                        <label class="col-sm-2"> Authentication Status </label>
-                        <div class="col-xs-2">
-                            <select [(ngModel)]="auth">                               
-                                <option value="{{auth}}">{{auth}}</option>
-                            </select>
-                        </div>
-                       
                         <div class="col-sm-2">
                             <button type="button" (click)="showDatas()" class="btn-primary">Show</button>
                             
@@ -54,7 +46,7 @@
                     <div class="title" *ngIf="_showData">
                         <h4>Myanmar Apex Bank</h4>
                         <h6>ALL</h6>                        
-                        <h6>Domestic Fund Transfer</h6>
+                        <h6>Domestic Fund Transfer Reversal</h6>
 
                     </div>
 
