@@ -1,26 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from 'src/services/HttpService';
 import { map } from 'rxjs/operators';
+import { HttpService } from 'src/services/HttpService';
 
 @Component({
-  selector: 'app-dw-domesticsfundtransfer',
-  templateUrl: './dw-domesticsfundtransfer.component.html',
-  styleUrls: ['./dw-domesticsfundtransfer.component.css']
+  selector: 'app-dw-domestictransferreversal',
+  templateUrl: './dw-domestictransferreversal.component.html',
+  styleUrls: ['./dw-domestictransferreversal.component.css']
 })
-export class DwDomesticsfundtransferComponent implements OnInit {
+export class DwDomestictransferreversalComponent implements OnInit {
 
   loading;
   error;
   monthList = [];
   month : string;
-  auth : string = 'A';
   branch : string = "ALL";
   domesticftdatalist : any;
   g_domesticftdatalist : any;
   domesticftdataset : Array<any> =[];
   totNoOfTrans = 0;
   _showData =false;
-  _NoData =false;
+  _NoData = false;
   subDrAmt = 0;
   subCharge1 = 0;
   subCharge2 = 0;
@@ -39,6 +38,7 @@ export class DwDomesticsfundtransferComponent implements OnInit {
     this.readReferenceData();
   }
 
+  
   readReferenceData(){
     //read months
     this.http.doGet('/fttransaction/getDomesticFTMonth').subscribe(res=>{
@@ -61,9 +61,8 @@ export class DwDomesticsfundtransferComponent implements OnInit {
     this.domesticftdatalist = [];
     this.g_domesticftdatalist = [];
     this.domesticftdataset = [];
-    this.loading = false;
-    this.http.doPost("/fttransaction/getDomesticFTDataList?date="+this.month+"&branch="+this.branch+"&status="+
-    this.auth, "Domestic Fund Transfer").subscribe(
+    this.loading = true;
+    this.http.doPost("/fttransaction/getDomesticTransferRevsList?date="+this.month+"&branch="+this.branch, "Domestic Fund Transfer Reversal").subscribe(
       res => {
         this.loading = false;
         if(res != null){
@@ -84,7 +83,7 @@ export class DwDomesticsfundtransferComponent implements OnInit {
         
       },
       error => {
-        console.log("Read Domestic Fund Transfer Error >>> "+error)
+        console.log("Read Domestic Fund Transfer Reversal Error >>> "+error)
         debugger;
         this.loading = false;
       }
@@ -95,9 +94,9 @@ export class DwDomesticsfundtransferComponent implements OnInit {
 
   exportPDF(){
     this.error="";
-  this.loading = true;
+    this.loading = true;
  
-  this.http.doGet("/fttransaction/exportDomesticFTransferPDF?date="+this.month+"&status="+this.auth+"&branch="+
+    this.http.doGet("/fttransaction/exportDomesticTransferRevsPDF?date="+this.month+"&branch="+
     this.branch).pipe(
     map((data: any) => {
       let blob = new Blob([data], {
@@ -115,10 +114,10 @@ export class DwDomesticsfundtransferComponent implements OnInit {
     })).subscribe(
       res => { },
       error => {
-        console.log("Detail Trial Error >>> "+error)
+        console.log("Domestic Fund Transfer Reversal Error >>> "+error)
         debugger;
         if(error != ""){
-        this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
+        this.error = "(The system cannot cannot generate Domestic Fund Transfer Reversal!.. Have the error)";
           }
         this.loading = false;
       });
@@ -167,8 +166,6 @@ export class DwDomesticsfundtransferComponent implements OnInit {
     });
     return (map);
 }
-
-
 
 
 }
