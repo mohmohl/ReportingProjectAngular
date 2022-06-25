@@ -290,6 +290,11 @@ const routes: Routes = [
         path: 'dailyftransfer',
         loadChildren: () => import('./views/dw-dailyfundtransfer/dw_dailyfundtransfer.module').then(m => m.DWDailyFundTransferModule)
       }
+      ,
+      {
+        path: 'crossccytransfer',
+        loadChildren: () => import('./views/dw-cctransfer/dw_cctransfer.module').then(m => m.DWCCTransferModule)
+      }
 
 
 

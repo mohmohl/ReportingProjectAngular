@@ -1,0 +1,31 @@
+.number{
+    text-align: right;
+}
+
+.title{
+    font-weight: bold;
+    text-align: center;
+}
+
+.prtDate{
+    font-weight: bold;
+    text-align: right;
+}
+
+.headertbl .td{
+    border-collapse: collapse;
+    border: none;
+    font-weight: bold;
+}
+
+.stotal{
+    font-weight: bold;
+    text-align: right;
+
+}
+
+.nodata{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: grey;
+}
