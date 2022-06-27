@@ -271,6 +271,10 @@ const routes: Routes = [
       {
         path: 'domesticftransfer',
         loadChildren: () => import('./views/dw-domesticsfundtransfer/dw_domesticsfundtransfer.module').then(m => m.DWDomesticsFundTransferModule)
+      },
+      {
+        path: 'domesticftransferreversal',
+        loadChildren: () => import('./views/dw-domestictransferreversal/dw_domestictransferreversal.module').then(m => m.DWDomesticTransferReversalModule)
       }
       ,
       {
@@ -285,13 +289,15 @@ const routes: Routes = [
       {
         path: 'duplicate-channel-user',
         loadChildren: () => import('./views/fcdb/duplicate-channel-user/duplicate-channel-user.module').then(m => m.DuplicateChannelUserModule), canActivate: [AuthGuard]
-
+      },
+      {
+        path: 'dailyftransfer',
+        loadChildren: () => import('./views/dw-dailyfundtransfer/dw_dailyfundtransfer.module').then(m => m.DWDailyFundTransferModule)
+      },
+      {
+        path: 'crossccytransfer',
+        loadChildren: () => import('./views/dw-cctransfer/dw_cctransfer.module').then(m => m.DWCCTransferModule)
       }
-
-
-
-
-
     ]
   },
   {
