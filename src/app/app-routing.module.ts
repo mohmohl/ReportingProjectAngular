@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthGuard } from 'src/helpers/auth.guard';
-import {AdminComponent} from './layouts/admin/admin.component';
-import {AuthComponent} from './layouts/auth/auth.component';
+import { AdminComponent } from './layouts/admin/admin.component';
+import { AuthComponent } from './layouts/auth/auth.component';
 import { SimplePageComponent } from './simple-page/simple-page.component';
 
 const routes: Routes = [
@@ -25,31 +25,31 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
-     /* {
-        path: 'dashboard',
-        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-      },*/
-      
-     {
+      /* {
+         path: 'dashboard',
+         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+       },*/
+
+      {
         path: 'home',
-        loadChildren: () => import('./simple-page/simple-page.module').then(m => m.SimplePageModule), canActivate:[AuthGuard]
-      }, 
+        loadChildren: () => import('./simple-page/simple-page.module').then(m => m.SimplePageModule), canActivate: [AuthGuard]
+      },
       {
         path: 'access-denied',
         loadChildren: () => import('./views/access-denied/access-denied.module').then(m => m.AccessDeniedModule)
-      }, 
+      },
       {
         path: 'search-user',
-        loadChildren: () => import('./views/UserAccount/search-user/search-user.module').then(m => m.SearchUserModule),canActivate:[AuthGuard]
-      }, 
+        loadChildren: () => import('./views/UserAccount/search-user/search-user.module').then(m => m.SearchUserModule), canActivate: [AuthGuard]
+      },
       {
         path: 'user-registration/:userId',
         loadChildren: () => import('./views/UserAccount/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
       },
       {
         path: 'search-registered-user',
-        loadChildren: () => import('./views/UserAccount/search-registered-user/user-permission.module').then(m => m.UserPermissionModule),canActivate:[AuthGuard]
-      }, 
+        loadChildren: () => import('./views/UserAccount/search-registered-user/user-permission.module').then(m => m.UserPermissionModule), canActivate: [AuthGuard]
+      },
       {
         path: 'change-password',
         loadChildren: () => import('./views/change-password/change-password.module').then(m => m.ChangePasswordModule)
@@ -60,19 +60,19 @@ const routes: Routes = [
       },
       {
         path: 'ccsoutward',
-        loadChildren: () => import('./views/ccs-report/ccsoutward/ccs-outward.module').then(m => m.CCSOutwardModule),canActivate:[AuthGuard]
+        loadChildren: () => import('./views/ccs-report/ccsoutward/ccs-outward.module').then(m => m.CCSOutwardModule), canActivate: [AuthGuard]
       },
       {
-         path: 'ccsinward',
-         loadChildren: () => import('./views/ccs-report/ccsinward/ccs-inward.module').then(m => m.CCSInwardModule),canActivate:[AuthGuard]
+        path: 'ccsinward',
+        loadChildren: () => import('./views/ccs-report/ccsinward/ccs-inward.module').then(m => m.CCSInwardModule), canActivate: [AuthGuard]
       },
       {
         path: 'achoutward',
         loadChildren: () => import('./views/ach-report/achoutward/ach-outward.module').then(m => m.ACHOutwardModule)
       },
       {
-         path: 'achinward',
-         loadChildren: () => import('./views/ach-report/achinward/ach-inward.module').then(m => m.ACHInwardModule)
+        path: 'achinward',
+        loadChildren: () => import('./views/ach-report/achinward/ach-inward.module').then(m => m.ACHInwardModule)
       },
       {
         path: 'bank-statement',
@@ -80,36 +80,36 @@ const routes: Routes = [
       },
       {
         path: 'loanContract',
-        loadChildren: () => import('./views/loan-contract/loan-contract.module').then(m => m.LoanContractModule),canActivate:[AuthGuard]
+        loadChildren: () => import('./views/loan-contract/loan-contract.module').then(m => m.LoanContractModule), canActivate: [AuthGuard]
       },
       {
         path: 'mpuist',
-        loadChildren: () => import('./views/mpuist/mpuist.module').then(m => m.MPUISTModule),canActivate:[AuthGuard]
+        loadChildren: () => import('./views/mpuist/mpuist.module').then(m => m.MPUISTModule), canActivate: [AuthGuard]
       }
       ,
       {
         path: 'gt-detail-trial-report',
-        loadChildren: () => import('./views/TrialReport/detail-trial-report/trial-report.module').then(m => m.TrialReportModule),canActivate:[AuthGuard]
+        loadChildren: () => import('./views/TrialReport/detail-trial-report/trial-report.module').then(m => m.TrialReportModule), canActivate: [AuthGuard]
       },
       {
         path: 'general-trial-report',
-        loadChildren: () => import('./views/TrialReport/general-trial-report/general-trial-report.module').then(m => m.GeneralTrialReportModule),canActivate:[AuthGuard]
+        loadChildren: () => import('./views/TrialReport/general-trial-report/general-trial-report.module').then(m => m.GeneralTrialReportModule), canActivate: [AuthGuard]
       },
       {
         path: 'mis-trial-report',
-        loadChildren: () => import('./views/TrialReport/mis-trial-report/mis-trial-report.module').then(m => m.MisTrialReportModule),canActivate:[AuthGuard]
+        loadChildren: () => import('./views/TrialReport/mis-trial-report/mis-trial-report.module').then(m => m.MisTrialReportModule), canActivate: [AuthGuard]
       },
       {
         path: 'bypass-account-list',
-        loadChildren: () => import('./views/bypass/bypass-account-list/bypass-account-list-module').then(m => m.ByPassAccountListModule),canActivate:[AuthGuard]
+        loadChildren: () => import('./views/bypass/bypass-account-list/bypass-account-list-module').then(m => m.ByPassAccountListModule), canActivate: [AuthGuard]
       },
       {
         path: 'bypass-new-account',
-        loadChildren: () => import('./views/bypass/bypass-new-account/bypass-new-account-module').then(m => m.ByPassNewAccountModule),canActivate:[AuthGuard]
+        loadChildren: () => import('./views/bypass/bypass-new-account/bypass-new-account-module').then(m => m.ByPassNewAccountModule), canActivate: [AuthGuard]
       },
       {
         path: 'bypass-edit-account/:param1',
-        loadChildren: () => import('./views/bypass/bypass-edit-account/bypass-edit-account.module').then(m => m.ByPassEditAccountModule),canActivate:[AuthGuard]
+        loadChildren: () => import('./views/bypass/bypass-edit-account/bypass-edit-account.module').then(m => m.ByPassEditAccountModule), canActivate: [AuthGuard]
       },
       {
         path: 'bank-statement-view',
@@ -187,57 +187,57 @@ const routes: Routes = [
       {
         path: 'accrual_domestic_daybook',
         loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
-        data :{param:"Accrual Domestic Daybook"}
+        data: { param: "Accrual Domestic Daybook" }
       },
       {
         path: 'accrual_transfer_scroll',
         loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
-        data :{param:"Accrual Transfer Scroll"}
+        data: { param: "Accrual Transfer Scroll" }
       },
       {
         path: 'bank_cash',
         loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
-        data :{param:"Bank Cash Scroll"}
+        data: { param: "Bank Cash Scroll" }
       },
       {
         path: 'clean_cash',
         loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
-        data :{param:"Clean Cash Scroll"}
+        data: { param: "Clean Cash Scroll" }
       },
       {
         path: 'current_account_daybook',
         loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
-        data :{param:"Current Account Daybook"}
+        data: { param: "Current Account Daybook" }
       },
       {
         path: 'domestic_daybook',
         loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
-        data :{param:"Daybook Domestic"}
+        data: { param: "Daybook Domestic" }
       },
       {
         path: 'detail_trial',
         loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
-        data :{param:"Detail Trial"}
+        data: { param: "Detail Trial" }
       },
       {
         path: 'general_trial',
         loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
-        data :{param:"General Trial"}
+        data: { param: "General Trial" }
       },
       {
         path: 'od_account_daybook',
         loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
-        data :{param:"OD Account Daybook"}
+        data: { param: "OD Account Daybook" }
       },
       {
         path: 'transfer_scroll',
         loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
-        data :{param:"Transfer Scroll"}
+        data: { param: "Transfer Scroll" }
       },
       {
         path: 'trial_sheet',
         loadChildren: () => import('./views/back-date-report/search-pdf-report/search-pdf-report.module').then(m => m.SearchPDFReportModule),
-        data :{param:"Trial Sheet"}
+        data: { param: "Trial Sheet" }
       },
       {
         path: 'bypass-new-bc-account',
@@ -263,7 +263,7 @@ const routes: Routes = [
 
         path: 'user_manual',
         loadChildren: () => import('./views/user-manual/user-manual/user-manual.module').then(m => m.UserManualModule)
-      },      
+      },
       {
         path: 'subsidaryledger',
         loadChildren: () => import('./views/dw-subsiledger/dw_subsiledger.module').then(m => m.DWSubsiLedgerModule)
@@ -287,19 +287,17 @@ const routes: Routes = [
 
       },
       {
+        path: 'duplicate-channel-user',
+        loadChildren: () => import('./views/fcdb/duplicate-channel-user/duplicate-channel-user.module').then(m => m.DuplicateChannelUserModule), canActivate: [AuthGuard]
+      },
+      {
         path: 'dailyftransfer',
         loadChildren: () => import('./views/dw-dailyfundtransfer/dw_dailyfundtransfer.module').then(m => m.DWDailyFundTransferModule)
-      }
-      ,
+      },
       {
         path: 'crossccytransfer',
         loadChildren: () => import('./views/dw-cctransfer/dw_cctransfer.module').then(m => m.DWCCTransferModule)
       }
-
-
-
-
-
     ]
   },
   {
@@ -309,7 +307,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{useHash:true})],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
