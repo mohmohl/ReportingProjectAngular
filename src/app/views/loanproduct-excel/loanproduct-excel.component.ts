@@ -39,6 +39,9 @@ export class LoanproductExcelComponent implements OnInit {
   branch_list : string[];
   ccy_list : string[];
 
+  minDate = new Date(2021, 5, 30);
+  maxDate = new Date();
+
   branch = '';
   fromdate : Date;
   ccy = '';
