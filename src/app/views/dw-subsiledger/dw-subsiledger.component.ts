@@ -214,9 +214,10 @@ export class DwSubsiledgerComponent implements OnInit {
   this.error="";
   this.loading = true;
  
-  this.http.doGet("/fttransaction/exportSubsiLedgerPDF?date="+this.month+"&ccy="+this.currency+"&branch="+
+  this.http.export_PDF("/fttransaction/exportSubsiLedgerPDF?date="+this.month+"&ccy="+this.currency+"&branch="+
     this.branch+"&acno="+this.accno).pipe(
     map((data: any) => {
+      
       let blob = new Blob([data], {
         type: "application/pdf"
       });
@@ -225,18 +226,16 @@ export class DwSubsiledgerComponent implements OnInit {
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
       a.target     = '_blank'; 
-      a.download = "SuSubsidiary Ledger_"+this.branch+"_"+this.accno +"_" + this.currency + "_"+this.month+".pdf";
+      a.download = "Subsidiary Ledger_" + this.branch + "_" + this.accno + "_" + this.currency + "_" + this.month + ".pdf";
       document.body.appendChild(a);
       a.click();
-      
-      this.loading = false;
     })).subscribe(
-      res => { },
+      res => {this.loading = false; },
       error => {
-        console.log("Detail Trial Error >>> "+error)
+        console.log("Subsidary Ledger Error >>> "+error)
         debugger;
         if(error != ""){
-        this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
+        this.error = "(The system cannot cannot generate Subsidary Ledger!.. Have the error)";
           }
         this.loading = false;
       });

@@ -12,6 +12,10 @@ export class UserReportComponent implements OnInit {
 
   loading=false;
   error='';
+
+  public col_list : String[] = null;
+  public data_list : TwoDimensional[]=null;
+  public startCount:number=0;
   
 
   constructor(private apiservice:TransactionService, private exporter : ExportDataService) { }

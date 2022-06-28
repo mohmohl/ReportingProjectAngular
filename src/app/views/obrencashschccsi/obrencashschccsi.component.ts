@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ObrencashschccsiComponent implements OnInit {
 
+  error;
+  loading;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  exportExcel_backend(){
+    
   }
 
 }

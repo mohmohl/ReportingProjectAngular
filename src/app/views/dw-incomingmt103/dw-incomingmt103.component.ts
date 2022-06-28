@@ -183,5 +183,7 @@ export class DwIncomingmt103Component implements OnInit  {
       });
   }
 */
-
+exportPDF(){
+  
+}
 }

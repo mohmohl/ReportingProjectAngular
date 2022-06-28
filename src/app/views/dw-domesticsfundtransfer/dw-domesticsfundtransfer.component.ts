@@ -96,10 +96,11 @@ export class DwDomesticsfundtransferComponent implements OnInit {
   exportPDF(){
     this.error="";
   this.loading = true;
- 
-  this.http.doGet("/fttransaction/exportDomesticFTransferPDF?date="+this.month+"&status="+this.auth+"&branch="+
+
+  this.http.export_PDF("/fttransaction/exportDomesticFTransferPDF?date="+this.month+"&status="+this.auth+"&branch="+
     this.branch).pipe(
     map((data: any) => {
+      
       let blob = new Blob([data], {
         type: "application/pdf"
       });
@@ -108,20 +109,20 @@ export class DwDomesticsfundtransferComponent implements OnInit {
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
       a.target     = '_blank'; 
+      a.download="Domestic Fund Transfer_" + this.month + ".pdf";
       document.body.appendChild(a);
       a.click();
-      
-      this.loading = false;
     })).subscribe(
-      res => { },
+      res => {this.loading = false; },
       error => {
-        console.log("Detail Trial Error >>> "+error)
+        console.log("Domestic Fund Transfer Error >>> "+error)
         debugger;
         if(error != ""){
-        this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
+        this.error = "(The system cannot cannot generate Domestic Fund Transfer!.. Have the error)";
           }
         this.loading = false;
       });
+      
   }
 
   getTotals(data){
