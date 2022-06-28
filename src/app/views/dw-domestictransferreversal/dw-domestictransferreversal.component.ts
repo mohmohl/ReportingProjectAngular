@@ -96,9 +96,10 @@ export class DwDomestictransferreversalComponent implements OnInit {
     this.error="";
     this.loading = true;
  
-    this.http.doGet("/fttransaction/exportDomesticTransferRevsPDF?date="+this.month+"&branch="+
+    this.http.export_PDF("/fttransaction/exportDomesticTransferRevsPDF?date="+this.month+"&branch="+
     this.branch).pipe(
     map((data: any) => {
+      
       let blob = new Blob([data], {
         type: "application/pdf"
       });
@@ -107,6 +108,7 @@ export class DwDomestictransferreversalComponent implements OnInit {
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
       a.target     = '_blank'; 
+      a.download = "Domestic Fund Transfer Reversal_" + this.month + ".pdf";
       document.body.appendChild(a);
       a.click();
       

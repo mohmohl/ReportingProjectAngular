@@ -30,6 +30,9 @@ export const PICK_FORMATS = {
 })
 export class LoanproductExcelComponent implements OnInit {
 
+  minDate = new Date(2021, 5, 30);
+  maxDate = new Date();
+  
   error = '';
   loading = false;
 
