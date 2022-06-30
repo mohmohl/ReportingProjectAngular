@@ -128,6 +128,7 @@ export class DwIncomingmt103Component implements OnInit  {
       this.totalCommission += this.incomingmt103list[i].comission;
     }
   }
+  exportPDF(){}
 /*
   downloadPDF(){
     let content=this.pdfcontent.nativeElement;  
