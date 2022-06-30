@@ -60,13 +60,24 @@
                     </div>
                 <div *ngIf="_showData">
                     <div class="title" *ngIf="_showData">
-                        <h4>{{branchData.bank_name}}</h4>
-                        <h6>{{branchData.branch_name}}</h6>
-                        <h6>{{branchData.branch_addr2}} {{branchData.branch_addr3}}</h6>
-                        <h6>Subsidiary Ledger  ({{titleCCy}})</h6>
+                        <div>
+                            <p class="pgtitle">{{branchData.bank_name}}</p>
+                        </div>
+                        
+                        <div>
+                            <p class="pgsubtitle">{{branchData.branch_name}}</p>
+                        </div>
+                        
+                        <div>
+                            <p class="pgsubtitle">{{branchData.branch_addr2}} {{branchData.branch_addr3}}</p>
+                        </div>
 
+                        <div>
+                            <p class="pgsubtitle">Subsidiary Ledger  ({{titleCCy}})</p>
+                        </div>
+                    
                     </div>
-
+                    
                     <div>
                         <table class="headertbl">
                             <tr>

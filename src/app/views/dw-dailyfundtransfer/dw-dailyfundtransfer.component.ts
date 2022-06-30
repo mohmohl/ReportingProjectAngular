@@ -109,8 +109,9 @@ exportPDF(){
   this.error="";
   this.loading = true;
  
-  this.http.doGet('/fttransaction/exportDailyFTransferPDF?date='+this.month+'&rptType='+this.rptType+'&branch='+this.branch+'&ccy='+this.currency).pipe(
+  this.http.export_PDF('/fttransaction/exportDailyFTransferPDF?date='+this.month+'&rptType='+this.rptType+'&branch='+this.branch+'&ccy='+this.currency).pipe(
     map((data: any) => {
+      
       let blob = new Blob([data], {
         type: "application/pdf"
       });
@@ -119,6 +120,7 @@ exportPDF(){
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
       a.target     = '_blank'; 
+      a.download = "Daily Fund Transfer_" + this.rptType + "_" + this.currency + "_" + this.month + ".pdf";
       document.body.appendChild(a);
       a.click();
       
@@ -126,10 +128,10 @@ exportPDF(){
     })).subscribe(
       res => { },
       error => {
-        console.log("Detail Trial Error >>> "+error)
+        console.log("Transfer Report Error >>> "+error)
         debugger;
         if(error != ""){
-        this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
+        this.error = "(The system cannot cannot generate Transfer Report!.. Have the error)";
           }
         this.loading = false;
       });
