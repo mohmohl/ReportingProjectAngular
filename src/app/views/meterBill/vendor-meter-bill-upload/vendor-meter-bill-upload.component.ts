@@ -121,7 +121,7 @@ export class VendorMeterBillUploadComponent {
      }
  
    this.loading = true;
-	 //this.timeStart();
+	 this.timeStart();
    this.errorList = [];
 	 this.error = "";
    this.message = "";

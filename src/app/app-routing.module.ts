@@ -280,17 +280,15 @@ const routes: Routes = [
       {
         path: 'role',
         loadChildren: () => import('./views/user-manual/settings2/settings2.module').then(m => m.Settings2Module)
-
       },
       {
         path: 'dailyftransfer',
         loadChildren: () => import('./views/dw-dailyfundtransfer/dw_dailyfundtransfer.module').then(m => m.DWDailyFundTransferModule)
+      },
+      {
+        path: 'fcubs-user-report',
+        loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
       }
-
-
-
-
-
     ]
   },
   {
