@@ -305,6 +305,10 @@ const routes: Routes = [
       {
         path: 'cctodrawing',
         loadChildren: () => import('./views/dw-cctodrawing/dw_cctodrawing.module').then(m => m.DWCCTODrawingModule)
+      },
+      {
+        path: 'obrencashfpti',
+        loadChildren: () => import('./views/dw-obrencashfpti/dw_obrencashfpti.module').then(m => m.DWOBREncashFPTIModule)
       }
     ]
   },
