@@ -37,6 +37,7 @@
               "src/assets/css/animate.scss",
               "src/styles.scss",
               "src/assets/css/custom.scss",
+              "src/dwstyle.scss",
               "node_modules/jquery-ui-dist/jquery-ui.css"
             ],
             "scripts": [

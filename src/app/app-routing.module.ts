@@ -297,6 +297,14 @@ const routes: Routes = [
       {
         path: 'crossccytransfer',
         loadChildren: () => import('./views/dw-cctransfer/dw_cctransfer.module').then(m => m.DWCCTransferModule)
+      },
+      {
+        path: 'obrencashccsi',
+        loadChildren: () => import('./views/dw-obrencashccsi/dw_obrencashccsi.module').then(m => m.DWOBREncashCCSIModule)
+      },
+      {
+        path: 'cctodrawing',
+        loadChildren: () => import('./views/dw-cctodrawing/dw_cctodrawing.module').then(m => m.DWCCTODrawingModule)
       }
     ]
   },

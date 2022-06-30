@@ -1,0 +1,163 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            
+            <div class="card-header">
+                <h5>CCTO Drawing Schedule </h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+
+                  <div class="page-header-breadcrumb">
+                    <button type="button" class="btn-danger" (click)="exportPDF()">
+                      <i class="ti-printer"></i>PDF
+                    </button> 
+                   </div>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    
+                    <code *ngIf="error">{{error}}</code>
+					
+                    <div class="form-group row">
+
+                        <label class="col-sm-1">Date</label>
+                        <div class="col-xs-2 date-picker">
+                            <select [(ngModel)]="month">
+                                <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
+                            </select>
+                        </div>
+     
+                        <label class="col-sm-1"> Branch </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="branch_code">
+                                <option *ngFor="let branch of branchList" value="{{branch.branch_code}}" selected>{{branch.branch_code}}</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2"> Authorized Status </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="auth">
+                                <option value="{{auth}}" selected>{{auth}}</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2"> Drawing Type </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="drawingtype">
+                                <option value="{{drawingtype}}" selected>{{drawingtype}}</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <button type="button" (click)="showDatas()" class="btn-primary">Show</button>
+                            
+                        </div>
+                        
+                    </div>
+                <div *ngIf="_showData" id="data">
+                    <div class="title" *ngIf="_showData">
+                        <div>
+                            <p class="pgtitle">Myanmar Apex Bank</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">{{branch_name}}</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">CCTO Drawing Schedule({{drawingtype}})</p>
+                        </div>
+                       
+                    </div>
+
+                    <div class="prtDate">
+                        <p>{{month}}</p>
+                    </div>
+                    
+
+                    <table class="table table table-hover" id="content" #content>
+                        <thead class="text-uppercase">
+                          <th style="text-align: center;">Sr. No.</th>
+                          <th style="text-align: center;">Date</th>
+                          <th style="text-align: center;">Contract No.</th>
+                          <th style="text-align: center;">MAB Branch</th>
+                          <th style="text-align: center;">Other Branches Name</th>
+                          <th style="text-align: center;">Other Bank Name</th>
+                          <th style="text-align: center;">Debited Account</th>
+                          <th style="text-align: center;">Sender Information</th>
+                          <th style="text-align: center;">Receiver Information</th>
+                          <th style="text-align: center;">Drawing Amount</th>
+                          <th style="text-align: center;">Charges1</th>
+                          <th style="text-align: center;">Charges2</th>
+                          <th style="text-align: center;">Charges3</th>
+                          <th style="text-align: center;">Total</th>
+                        </thead>
+                          
+                        <tbody *ngFor="let m_data of drawingcctodatalist; ">    
+
+                            <tr *ngFor="let data of m_data.datalist; let i = index;">  
+
+                                <td> {{(i+1)}}</td>
+                                <td> {{data.trns_dt}}</td>
+                                <td> {{data.trn_ref_no}}</td>
+                                <td> {{data.mab_branch}}</td>
+                                <td> {{data.to_branch}}</td>
+                                <td> {{data.other_bank_name}}</td>
+                                <td> {{data.dr_account}} </td>
+                                <td> {{data.drawee}} </td>
+                                <td> {{data.beneficiary}} </td>
+                                <td  class="number"> {{data.dr_amount | number : '1.2-3'}} </td>
+                                <td  class="number"> {{data.comm1 | number : '1.2-3'}} </td>
+                                <td  class="number"> {{data.comm2 | number : '1.2-3'}}  </td>
+                                <td  class="number"> {{data.comm3 | number : '1.2-3'}}  </td>
+                                <td class="number"> {{getTotals(data) | number : '1.2-3'}}</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="9" class="stotal"> ({{m_data.otherbank}}) Sub Total</td>
+                                <td class="stotal"> {{subDrAmt | number : '1.2-3'}} </td>
+                                <td class="stotal"> {{subComm1 | number : '1.2-3'}} </td>
+                                <td class="stotal"> {{subComm2 | number : '1.2-3'}} </td>
+                                <td class="stotal"> {{subComm3 | number : '1.2-3'}} </td>
+                                <td class="stotal"> {{subTotal | number : '1.2-3'}} {{clearSubTotal()}}</td>
+                                
+                            </tr>
+                    
+                        </tbody>
+                       
+                        <tr>
+                            <td colspan="9" class="title"> Grand Total </td>
+                            <td class="stotal"> {{ grandDrAmt | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandComm1 | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandComm2 | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandComm3 | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandTotal | number : '1.2-3'}} </td>
+                        </tr>
+                    </table>
+
+                    
+                    <div class="col-md-4" >
+                        <table>
+                            <tr>
+                                <td style="background-color:#fcf6d6">Total number of transaction</td>
+                                <td>{{totNoOfTrans}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                
+                <div *ngIf="_noData">
+                    <p class="nodata"> No records found.</p>
+                </div>
+                   
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
