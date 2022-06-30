@@ -171,12 +171,6 @@ onChange(event: any){
     readFile.readAsArrayBuffer(this.fileToUpload);          
   }
 
-
-
-
-
-
-
   validateFile(name: String) {
     var ext = name.substring(name.lastIndexOf('.') + 1);
     if (ext.toLowerCase() == 'xlsx' || ext.toLowerCase() == 'xls') {
@@ -187,6 +181,7 @@ onChange(event: any){
     }
   }
 
+  /*
   submit() {
     //this.isDisabled = true;
     if (this.form.invalid) {
@@ -226,37 +221,85 @@ onChange(event: any){
               console.log("upload finish = "+ this.progress);
               this.message = this.totalCount + " Import Done!....";
             }else{
-              this.subscription.unsubscribe();
-              this.progress_subscription.unsubscribe();
+              // this.subscription.unsubscribe();
               this.progress=0;
               this.message = "Import Fail !....";
             }
           }else{
-            this.subscription.unsubscribe();
-            this.progress_subscription.unsubscribe();
+
+            // this.subscription.unsubscribe();
             this.progress=0;
             this.message = this.response.message;
           }
           
           this.errorList = this.response.errorList;
         }
-        this.subscription.unsubscribe();
-        this.progress_subscription.unsubscribe();
+
+        // this.subscription.unsubscribe();
         this.progress=0;
       }))
     .subscribe(res=>{
       this.loading = false;
     },
     error => {
-      this.subscription.unsubscribe();
-      this.progress_subscription.unsubscribe();
+
+      // this.subscription.unsubscribe();
       this.error ="The system have the error";
       this.loading = false;
     });
     
-   this.progessbar_loadingCount(this.excel_row_count,divi,region,township); 
+   //this.progessbar_loadingCount(this.excel_row_count,divi,region,township); 
   }
+ */
 
+  submit() {
+    if (this.form.invalid) {
+      this.error = "Data is required";
+      return;
+    }
+    this.loading = true;
+    this.errorList = [];
+    this.timeStart();
+    this.error = "";    
+   this.message = "";
+   this.progress=0;
+    const formData = new FormData();
+    let divi=this.form.get(["divisionId"])!.value;
+    let region = this.form.get(["regionId"])!.value;
+    let township = this.form.get(["townshipId"])!.value;
+    formData.append("division_id",divi)
+    formData.append("region_id",region)
+    formData.append("township_id",township)
+    formData.append("template", this.uploadedFileName)
+    formData.append("file", this.fileToUpload);
+    this.metreService.fileUpload(formData) 
+    .pipe(
+      map((data: any) => {
+        this.subscription.unsubscribe();
+        this.response = data;
+        this.loading = false;
+       // this.isDisabled = false;
+        if(this.response){
+          this.subscription.unsubscribe();
+          this.message = "Import Done!....";
+        } else{
+          this.subscription.unsubscribe();
+          this.message = "Import Fail !....";
+        }  
+     }))
+    .subscribe(res=>{
+      this.subscription.unsubscribe();
+      this.loading = false;
+    },
+    error => {
+      this.subscription.unsubscribe();
+      this.error ="The system have the error";
+      this.loading = false;
+    });
+    
+}
+
+/*
   removeAll() {
     this.error = "";
     this.loading = true;
@@ -301,5 +344,5 @@ onChange(event: any){
         
         });
    }
-
+*/
 }

@@ -43,7 +43,8 @@
                   <th>User Id</th>
                   <th>User Name</th>
                   <th>User Status</th>
-                  <th>Create User Account</th>
+                  <th>Record Status</th>
+                  <!-- <th>Create User Account</th> -->
                 </tr>
                 </thead>
                 <tbody>
@@ -52,9 +53,10 @@
                         <td>{{list.user_id}}</td>
                         <td>{{list.user_name}}</td>
                         <td>{{list.user_status}}</td>
-                        <td>
+                        <td>{{list.record_stat}}</td>
+                        <!-- <td>
                           <a *ngIf="list.already_account_status" [routerLink]="['/user-registration',list.user_id]">Register</a>
-                        </td>
+                        </td> -->
                     </tr>
                
                 </tbody>

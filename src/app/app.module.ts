@@ -24,7 +24,7 @@ import { DatePipe } from '@angular/common';
     AdminComponent,
     TitleComponent,
     BreadcrumbsComponent,
-    AuthComponent
+    AuthComponent,
     
  ],
   imports: [
