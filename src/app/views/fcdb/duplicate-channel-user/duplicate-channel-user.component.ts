@@ -34,7 +34,7 @@ export class DuplicateChannelUserComponent implements OnInit {
     var buttonName = document.activeElement.getAttribute("name");
 
     console.log(buttonName);
-    if (buttonName == 'search') {
+    if (buttonName == null || buttonName == 'search') {
 
       if (user_id == '' || user_id == undefined || user_id == null) {
         this.error = 'User ID is required';
