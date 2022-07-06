@@ -290,6 +290,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/fcdb/duplicate-channel-user/duplicate-channel-user.module').then(m => m.DuplicateChannelUserModule), canActivate: [AuthGuard]
       },
       {
+        path: 'duplicate-channel-user-checker',
+        loadChildren: () => import('./views/fcdb/duplicate-channel-user-checker/duplicate-channel-user-checker.module').then(m => m.DuplicateChannelUserCheckerModule), canActivate: [AuthGuard]
+      },
+      {
         path: 'dailyftransfer',
         loadChildren: () => import('./views/dw-dailyfundtransfer/dw_dailyfundtransfer.module').then(m => m.DWDailyFundTransferModule)
       },

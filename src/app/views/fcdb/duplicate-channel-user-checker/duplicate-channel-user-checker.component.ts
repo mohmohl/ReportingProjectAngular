@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
@@ -6,11 +5,11 @@ import { ChannelUser } from 'src/models/fcdb/ChannelUser';
 import { FcdbChannelUserService } from 'src/services/FcdbChannelUserService';
 
 @Component({
-  selector: 'app-duplicate-channel-user',
-  templateUrl: './duplicate-channel-user.component.html',
-  styleUrls: ['./duplicate-channel-user.component.css']
+  selector: 'app-duplicate-channel-user-checker',
+  templateUrl: './duplicate-channel-user-checker.component.html',
+  styleUrls: ['./duplicate-channel-user-checker.component.css']
 })
-export class DuplicateChannelUserComponent implements OnInit {
+export class DuplicateChannelUserCheckerComponent implements OnInit {
 
   loading = false;
 
@@ -21,7 +20,7 @@ export class DuplicateChannelUserComponent implements OnInit {
     name: new FormControl('', Validators.required),
   });
 
-  constructor(private service: FcdbChannelUserService, public datepipe: DatePipe) { }
+  constructor(private service: FcdbChannelUserService) { }
 
   ngOnInit() {
     this.loading = false;
@@ -53,33 +52,8 @@ export class DuplicateChannelUserComponent implements OnInit {
           });
       }
     }
-    else {
-      this.service.getDuplicatedUser().pipe(
-        map((data: any) => {
-          let blob = new Blob([data], {
-            type: 'application/vnd.ms-excel'
-          });
-          var link = document.createElement('a');
-          link.download = 'Fcdb_duplicate_users_'+ this.datepipe.transform(new Date(), 'dd-MM-yyyy HH:mm:ss') +'.xlsx'
-          link.href = window.URL.createObjectURL(blob);
-          link.target = '_blank';
-
-          link.click();
-          window.URL.revokeObjectURL(link.href);
-          this.loading = false;
-          console.log("Finish >>>")
-          this.error = '';
-        }))
-        .subscribe((res) => {
-          this.loading = false;
-          this.error = '';
-        }, (error) => {
-          this.loading = false;
-          this.error = 'Something went wrong';
-          console.log(error);
-        })
-    }
     this.loading = false;
   }
+
 
 }
