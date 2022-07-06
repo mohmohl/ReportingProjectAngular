@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
@@ -20,7 +21,7 @@ export class DuplicateChannelUserComponent implements OnInit {
     name: new FormControl('', Validators.required),
   });
 
-  constructor(private service: FcdbChannelUserService) { }
+  constructor(private service: FcdbChannelUserService, public datepipe: DatePipe) { }
 
   ngOnInit() {
     this.loading = false;
@@ -56,10 +57,10 @@ export class DuplicateChannelUserComponent implements OnInit {
       this.service.getDuplicatedUser().pipe(
         map((data: any) => {
           let blob = new Blob([data], {
-            type: 'application/octet-stream'
+            type: 'application/vnd.ms-excel'
           });
           var link = document.createElement('a');
-          link.download = 'Fcdb_duplicate_users.xlsx'
+          link.download = 'Fcdb_duplicate_users_'+ this.datepipe.transform(new Date(), 'dd-MM-yyyy HH:mm:ss') +'.xlsx'
           link.href = window.URL.createObjectURL(blob);
           link.target = '_blank';
 
