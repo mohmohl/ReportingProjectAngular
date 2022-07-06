@@ -11,6 +11,7 @@ import { MeterBill_Error } from 'src/models/meterBill/MeterBill_Error';
   templateUrl: './metre-bill-upload.component.html',
   styleUrls: ['./metre-bill-upload.component.css']
 })
+
 export class MetreBillUploadComponent implements OnInit {
   loading = false;
   error = '';
@@ -145,12 +146,12 @@ onChange(event: any){
       this.error = files[0].name + ' file format is not supported';
       return false;
     }
-    console.log("excel file size= "+files.item(0))
+    // console.log("excel file size= "+files.item(0))
     this.fileToUpload = files.item(0);
-    this.readExcel()
+    //this.readExcel()
   }
 
- 
+ /*
   readExcel() {  
     let readFile = new FileReader(); 
     readFile.onload = (e) => {  
@@ -170,6 +171,7 @@ onChange(event: any){
    
     readFile.readAsArrayBuffer(this.fileToUpload);          
   }
+  */
 
   validateFile(name: String) {
     var ext = name.substring(name.lastIndexOf('.') + 1);
@@ -181,9 +183,9 @@ onChange(event: any){
     }
   }
 
-  /*
   submit() {
     //this.isDisabled = true;
+    debugger
     if (this.form.invalid) {
       this.error = "Data is required";
       return;
@@ -213,28 +215,31 @@ onChange(event: any){
        // this.isDisabled = false;
         if(this.response != null){
           if(this.response.flag == false){
-            if(this.response.totalCount >0){
-              this.totalCount = this.response.totalCount;
-              this.subscription.unsubscribe();
-              this.progress_subscription.unsubscribe();
-              this.progress=100;
-              console.log("upload finish = "+ this.progress);
-              this.message = this.totalCount + " Import Done!....";
-            }else{
-              // this.subscription.unsubscribe();
-              this.progress=0;
-              this.message = "Import Fail !....";
+            this.errorList = this.response.errorList;
+            if(this.errorList.length >0) {
+              this.message = "See below duplicate items!....";
+            } else {
+
+              if(this.response.totalCount >0){
+                this.totalCount = this.response.totalCount;
+                this.subscription.unsubscribe();
+                this.progress_subscription.unsubscribe();
+                this.progress=100;
+                console.log("upload finish = "+ this.progress);
+                this.message = this.totalCount + " Import Done!....";
+              }else{
+                // this.subscription.unsubscribe();
+                this.progress=0;
+                this.message = "Import Fail !....";
+              }
             }
           }else{
-
             // this.subscription.unsubscribe();
             this.progress=0;
             this.message = this.response.message;
           }
           
-          this.errorList = this.response.errorList;
         }
-
         // this.subscription.unsubscribe();
         this.progress=0;
       }))
@@ -242,64 +247,15 @@ onChange(event: any){
       this.loading = false;
     },
     error => {
-
       // this.subscription.unsubscribe();
       this.error ="The system have the error";
       this.loading = false;
     });
     
-   //this.progessbar_loadingCount(this.excel_row_count,divi,region,township); 
+   this.progessbar_loadingCount(this.excel_row_count,divi,region,township); 
   }
- */
 
-  submit() {
-    if (this.form.invalid) {
-      this.error = "Data is required";
-      return;
-    }
-    this.loading = true;
-    this.errorList = [];
-    this.timeStart();
-    this.error = "";    
-   this.message = "";
-   this.progress=0;
-    const formData = new FormData();
-    let divi=this.form.get(["divisionId"])!.value;
-    let region = this.form.get(["regionId"])!.value;
-    let township = this.form.get(["townshipId"])!.value;
-    formData.append("division_id",divi)
-    formData.append("region_id",region)
-    formData.append("township_id",township)
-    formData.append("template", this.uploadedFileName)
-    formData.append("file", this.fileToUpload);
-    this.metreService.fileUpload(formData) 
-    .pipe(
-      map((data: any) => {
-        this.subscription.unsubscribe();
-        this.response = data;
-        this.loading = false;
-       // this.isDisabled = false;
-        if(this.response){
-          this.subscription.unsubscribe();
-          this.message = "Import Done!....";
-        } else{
-          this.subscription.unsubscribe();
-          this.message = "Import Fail !....";
-        }  
-     }))
-    .subscribe(res=>{
-      this.subscription.unsubscribe();
-      this.loading = false;
-    },
-    error => {
-      this.subscription.unsubscribe();
-      this.error ="The system have the error";
-      this.loading = false;
-    });
-    
-}
-
-/*
+  /*
   removeAll() {
     this.error = "";
     this.loading = true;
@@ -322,6 +278,7 @@ onChange(event: any){
       this.loading = false;
     });
   }
+  */
 
   progessbar_loadingCount(data_count:number,divi:string,region:string,township:string){
     this.progress_subscription = interval(1000)
@@ -344,5 +301,5 @@ onChange(event: any){
         
         });
    }
-*/
+
 }
