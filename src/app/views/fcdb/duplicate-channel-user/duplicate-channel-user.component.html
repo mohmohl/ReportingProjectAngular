@@ -9,9 +9,8 @@
                 </div>
             </div>
             <div class="card-body">
-                <!-- <code *ngIf="error">{{error}}</code> -->
-                <label *ngIf="message" class="text-info margin-bottom: 10px">{{message}}</label>
-
+                <code *ngIf="error">{{error}}</code>
+                
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <div class="form-group row">
                         <label class="col-sm-2">USER ID</label>
