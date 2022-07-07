@@ -3,37 +3,40 @@ import { map } from 'rxjs/operators';
 import { HttpService } from 'src/services/HttpService';
 
 @Component({
-  selector: 'app-dw-obrencashccsi',
-  templateUrl: './dw-obrencashccsi.component.html',
-  styleUrls: ['./dw-obrencashccsi.component.css']
+  selector: 'app-dw-cctodrawingreversal',
+  templateUrl: './dw-cctodrawingreversal.component.html',
+  styleUrls: ['./dw-cctodrawingreversal.component.css']
 })
-export class DwObrencashccsiComponent implements OnInit {
+export class DwCctodrawingreversalComponent implements OnInit {
 
   loading;
   error;
   branchList = [];
   branch_code;
   branch_name;
+  auth = 'A';
+  drawingtype = 'ALL';
 
   monthList = [];
   month;
-  month_desc;
+  month_str;
 
-  cusID = 'ALL';
   _showData;
   _noData;
 
-  obrencashccsidatalist = [];
-  g_obrencashccsidatalist : any;
+  drawingcctodatalist = [];
+  g_drawingcctodatalist : any;
 
-  grandEncashAmt : number = 0;
-  grandCommMAB : number = 0; 
-  grandCommOB : number = 0;
+  grandDrAmt : number = 0;
+  grandComm1 : number = 0; 
+  grandComm2 : number = 0;
+  grandComm3 : number = 0;
   grandTotal : number = 0;
 
-  subEncashAmt : number = 0;
-  subCommMAB : number = 0; 
-  subCommOB : number = 0;
+  subDrAmt : number = 0;
+  subComm1 : number = 0; 
+  subComm2 : number = 0;
+  subComm3 : number = 0;
   subTotal : number = 0;
 
   totNoOfTrans : number = 0;
@@ -62,12 +65,12 @@ export class DwObrencashccsiComponent implements OnInit {
     );
 
     //
-    this.http.doGet("/fttransaction/getOBREncashCCSIMonth").subscribe(
+    this.http.doGet("/fttransaction/getOBRCCTODrawingMonth").subscribe(
       data => {
         if(data != null){
           this.monthList = data;
           this.month = this.monthList[0];
-          this.month_desc = this.monthList[0];
+          this.month_str = this.monthList[0];
         }
         this.loading = false;
       },
@@ -78,19 +81,14 @@ export class DwObrencashccsiComponent implements OnInit {
     );
   }
 
-  changeBranchCombo(index){
-    this.cdf.detach();
-    this.branch_code = this.branchList[index].branch_code;
-    this.branch_name = this.branchList[index].branch_name;
-  }
-
   groupBy(list, keyGetter) {
     const map = new Map();
     list.forEach((item) => {
         //calculate total
-        this.grandEncashAmt += item.encashamount;
-        this.grandCommMAB += item.comm1;
-        this.grandCommOB += item.comm2;
+        this.grandDrAmt += item.dr_amount;
+        this.grandComm1 += item.comm1;
+        this.grandComm2 += item.comm2;
+        this.grandComm3 += item.comm3;
 
          const key = keyGetter(item);
          const collection = map.get(key);
@@ -100,45 +98,56 @@ export class DwObrencashccsiComponent implements OnInit {
              collection.push(item);
          }
     });
-    this.grandTotal =  this.grandEncashAmt +  this.grandCommMAB + this.grandCommOB;
+    this.grandTotal =  this.grandDrAmt +  this.grandComm1 + this.grandComm2 + this.grandComm3;
     return (map);
 }
 
-  clearProperties(){
 
+changeDateCombo(index){
+  this.cdf.detach();
+}
+
+changeBranchCombo(index){
+  this.cdf.detach();
+  this.branch_code = this.branchList[index].branch_code;
+  this.branch_name = this.branchList[index].branch_name;
+}
+
+
+  clearData(){
+    this.grandDrAmt = 0 ;
+    this.grandComm1 = 0 ;
+    this.grandComm2 = 0 ;
+    this.grandComm3 = 0 ;
+    this.clearSubTotal();
     this.loading = true;
     this._showData = false;
     this._noData = false;
-    this.obrencashccsidatalist = [];
-    this.g_obrencashccsidatalist = [];
-
-    this.grandEncashAmt = 0 ;
-    this.grandCommMAB = 0 ;
-    this.grandCommOB = 0 ;
-
-    this.clearSubTotal();
+    this.drawingcctodatalist = [];
   }
 
+
   showDatas(){
+    this.clearData();
+    this.month = this.month_str;
     this.cdf.reattach();
-    this.month = this.month_desc;
-    this.clearProperties();
-    this.http.doPost("/fttransaction/getOBREncashCCSIDatalist?branch="+this.branch_code
-    +"&date="+this.month+"&cusid="+this.cusID,"OBR Encash CCSI").subscribe(
+    
+    this.http.doPost("/fttransaction/getCCTODrawingReversalDatalist?branch="+this.branch_code
+    +"&date="+this.month+"&auth="+this.auth+"&drawingtype="+this.drawingtype,"CCTO Drawing Reversal").subscribe(
       data => {
         if(data != null){
 
-          this.month_desc = this.month;
-          
+          this.month_str = this.month;
+
           this.totNoOfTrans = data.length;
           this._showData = true;
           
-          let result = Array.from(new Set(data.map(x => x.other_bank)));
+          let result = Array.from(new Set(data.map(x => x.other_bank_name)));
           
-          this.g_obrencashccsidatalist  = this.groupBy(data, otherbank => otherbank.other_bank);
+          this.g_drawingcctodatalist  = this.groupBy(data, otherbank => otherbank.other_bank_name);
           for(let i=0; i<result.length;i++){
-            let mdata = {"otherbank" : result[i]+"", "datalist" : this.g_obrencashccsidatalist.get(result[i])};
-            this.obrencashccsidatalist.push(mdata);          
+            let mdata = {"otherbank" : result[i]+"", "datalist" : this.g_drawingcctodatalist.get(result[i])};
+            this.drawingcctodatalist.push(mdata);          
           }
         }else{
           this._noData = true;
@@ -154,20 +163,22 @@ export class DwObrencashccsiComponent implements OnInit {
   }
 
   getTotals(data){
-    this.subEncashAmt += data.encashamount;
-    this.subCommMAB += data.comm1;
-    this.subCommOB += data.comm2;
+    this.subDrAmt += data.dr_amount;
+    this.subComm1 += data.comm1;
+    this.subComm2 += data.comm2;
+    this.subComm3 += data.comm3;
 
-    let total = data.encashamount + data.comm1 + data.comm2;
+    let total = data.dr_amount + data.comm1 + data.comm2 + data.comm3;
     this.subTotal += total;
     return total;
   }
 
   clearSubTotal(){
    
-    this.subEncashAmt = 0;
-    this.subCommMAB  = 0;
-    this.subCommOB  = 0;
+    this.subDrAmt = 0;
+    this.subComm1  = 0;
+    this.subComm2  = 0;
+    this.subComm3  = 0;
     this.subTotal = 0;
   }
 
@@ -175,7 +186,7 @@ export class DwObrencashccsiComponent implements OnInit {
     this.error="";
     this.loading = true;
   
-    this.http.export_PDF("/fttransaction/exportOBREncashCCSIPDF?date="+this.month+"&cusid="+this.cusID+"&branch="+
+    this.http.export_PDF("/fttransaction/exportCCTODrawingReversalPDF?date="+this.month+"&auth="+this.auth+"&drawingtype="+this.drawingtype+"&branch="+
       this.branch_code+"&branchname="+this.branch_name).pipe(
       map((data: any) => {
         
@@ -187,16 +198,16 @@ export class DwObrencashccsiComponent implements OnInit {
         var fileURL = URL.createObjectURL(file);
         a.href = fileURL;
         a.target     = '_blank'; 
-        a.download="OBREncashCCSI_" + this.branch_code+"_"+this.month + ".pdf";
+        a.download="CCTODrawingReversal_" + this.branch_code+"_"+this.month + ".pdf";
         document.body.appendChild(a);
         a.click();
       })).subscribe(
         res => {this.loading = false; },
         error => {
-          console.log(" OBR Encash CCSIError >>> "+error)
+          console.log(" CCTO Drawing Reversal Error >>> "+error)
           debugger;
           if(error != ""){
-          this.error = "(The system cannot cannot generate OBR Encash CCSI!.. Have the error)";
+          this.error = "(The system cannot cannot generate CCTO Drawing Reversal!.. Have the error)";
             }
           this.loading = false;
         });

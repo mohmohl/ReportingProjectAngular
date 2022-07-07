@@ -3,7 +3,7 @@
         <div class="card">
             
             <div class="card-header">
-                <h5>OBR ENCASH SCHEDULE (FPTI) </h5>
+                <h5>OBR ENCASHMENT SCHEDULE </h5>
                 <div *ngIf="loading" class="d-flex justify-content-center">
                     <div class="spinner-border spinner-border-sm text-warning"></div>
                       <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -21,21 +21,21 @@
                     <code *ngIf="error">{{error}}</code>
 					
                     <div class="form-group row">
+    
+                        <label class="col-sm-1"> Branch </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="branch_code" (change)="changeBranchCombo($event.target.options.selectedIndex)">
+                                <option *ngFor="let branch of branchList" value="{{branch.branch_code}}" selected>{{branch.branch_code}}</option>
+                            </select>
+                        </div>
 
                         <label class="col-sm-1">Date</label>
                         <div class="col-xs-2 date-picker">
-                            <select [(ngModel)]="month_desc">
+                            <select [(ngModel)]="month_desc"  (change)="changeDateCombo($event.target.options.selectedIndex)">
                                 <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
                             </select>
                         </div>
-     
-                        <label class="col-sm-1"> Branch </label>
-                        <div class="col-xs-2">
-                            <select [(ngModel)]="branch_code">
-                                <option value="{{branch_code}}" selected>{{branch_code}}</option>
-                            </select>
-                        </div>
-
+ 
                         <label class="col-sm-2"> OBR Customer ID </label>
                         <div class="col-xs-2">
                             <select [(ngModel)]="cusID">
@@ -60,7 +60,7 @@
                         </div>
 
                         <div>
-                            <p class="pgsubtitle">OBR Encashment Schedule (FPTI)  ( {{cusID}} )</p>
+                            <p class="pgsubtitle">OBR Encashment Schedule</p>
                         </div>
                        
                     </div>
@@ -73,11 +73,11 @@
                     <table class="table table table-hover" id="content" #content>
                         <thead class="text-uppercase">
                           <th style="text-align: center;">Sr. No.</th>
-                          <th style="text-align: center;">TRN Date</th>
-                          <th style="text-align: center;">Contract No.</th>
-                          <th style="text-align: center;">Receiver Information</th>
+                          <th style="text-align: center;">Date</th>
+                          <th style="text-align: center;">Fax No.</th>
+                          <th style="text-align: center;">Name of Payee</th>
+                          <th style="text-align: center;">NRC. No.</th>
                           <th style="text-align: center;">From Bank</th>
-                          <th style="text-align: center;">Other Branches Name</th>
                           <th style="text-align: center;">To Bank(MAB)</th>
                           <th style="text-align: center;">Encashment Amount</th>
                           <th style="text-align: center;">Comm(MAB)</th>
@@ -85,33 +85,32 @@
                           <th style="text-align: center;">Total</th>
                         </thead>
                           
-                        <tbody *ngFor="let m_data of obrencashfptidatalist; ">
+                        <tbody *ngFor="let m_data of g_obrencashdatalist | keyvalue; ">
                            
-                            <tr *ngFor="let data of m_data.datalist; let i = index;">
+                            <tr *ngFor="let data of m_data.value; let i = index;">
                                 
                                 <td> {{(i+1)}}</td>
 
-                                <td> {{data.trn_dt }}</td>
-                                <td> {{data.trn_ref_no}}</td>
-                                <td> {{data.beneficiary}}</td>
-                                <td> {{data.other_bank}}</td>
-                                <td> {{data.other_bank_name}} </td>
-                                <td> {{data.tobranch}} </td>
-                                <td  class="number"> {{data.encashamount | number : '1.2-3'}} </td>
+                                <td> {{data.trn_dt | date : 'dd/MM/yyyy'}}</td>
+                                <td> {{data.faxno}}</td>
+                                <td> {{data.benef_name}}</td>
+                                <td> {{data.nrcno}}</td>
+                                <td> {{data.frombank}} </td>
+                                <td> {{data.tobank}} </td>
+                                <td  class="number"> {{data.encashAmount | number : '1.2-3'}} </td>
                                 <td  class="number"> {{data.comm1 | number : '1.2-3'}} </td>
                                 <td  class="number"> {{data.comm2 | number : '1.2-3'}}  </td>
                                 <td class="number"> {{getTotals(data) | number : '1.2-3'}}</td>
                             </tr>
 
                             <tr>
-                                <td colspan="7" class="stotal"> ({{m_data.otherbank}}) Sub Total</td>
+                                <td colspan="7" class="stotal"> ({{m_data.key}}) Sub Total</td>
                                 <td class="stotal"> {{subEncashAmt | number : '1.2-3'}} </td>
                                 <td class="stotal"> {{subCommMAB | number : '1.2-3'}} </td>
                                 <td class="stotal"> {{subCommOB | number : '1.2-3'}} </td>
                                 <td class="stotal"> {{subTotal | number : '1.2-3'}} {{clearSubTotal()}}</td>
                                 
-                            </tr>
-                    
+                            </tr>                    
                         </tbody>
                        
                         <tr>

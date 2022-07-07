@@ -3,7 +3,7 @@
         <div class="card">
             
             <div class="card-header">
-                <h5>OBR ENCASH SCHEDULE (FPTI) </h5>
+                <h5>CCTO Drawing Reversal Schedule </h5>
                 <div *ngIf="loading" class="d-flex justify-content-center">
                     <div class="spinner-border spinner-border-sm text-warning"></div>
                       <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -24,22 +24,29 @@
 
                         <label class="col-sm-1">Date</label>
                         <div class="col-xs-2 date-picker">
-                            <select [(ngModel)]="month_desc">
+                            <select [(ngModel)]="month_str">
                                 <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
                             </select>
                         </div>
      
                         <label class="col-sm-1"> Branch </label>
                         <div class="col-xs-2">
-                            <select [(ngModel)]="branch_code">
-                                <option value="{{branch_code}}" selected>{{branch_code}}</option>
+                            <select [(ngModel)]="branch_code" (change)="changeBranchCombo($event.target.options.selectedIndex)">
+                                <option *ngFor="let branch of branchList" value="{{branch.branch_code}}" selected>{{branch.branch_code}}</option>
                             </select>
                         </div>
 
-                        <label class="col-sm-2"> OBR Customer ID </label>
+                        <label class="col-sm-2"> Authorized Status </label>
                         <div class="col-xs-2">
-                            <select [(ngModel)]="cusID">
-                                <option value="{{cusID}}" selected>{{cusID}}</option>
+                            <select [(ngModel)]="auth">
+                                <option value="{{auth}}" selected>{{auth}}</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2"> Drawing Type </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="drawingtype">
+                                <option value="{{drawingtype}}" selected>{{drawingtype}}</option>
                             </select>
                         </div>
                         
@@ -60,7 +67,7 @@
                         </div>
 
                         <div>
-                            <p class="pgsubtitle">OBR Encashment Schedule (FPTI)  ( {{cusID}} )</p>
+                            <p class="pgsubtitle">CCTO Drawing Reversal Schedule({{drawingtype}})</p>
                         </div>
                        
                     </div>
@@ -73,41 +80,47 @@
                     <table class="table table table-hover" id="content" #content>
                         <thead class="text-uppercase">
                           <th style="text-align: center;">Sr. No.</th>
-                          <th style="text-align: center;">TRN Date</th>
+                          <th style="text-align: center;">Date</th>
                           <th style="text-align: center;">Contract No.</th>
-                          <th style="text-align: center;">Receiver Information</th>
-                          <th style="text-align: center;">From Bank</th>
+                          <th style="text-align: center;">MAB Branch</th>
                           <th style="text-align: center;">Other Branches Name</th>
-                          <th style="text-align: center;">To Bank(MAB)</th>
-                          <th style="text-align: center;">Encashment Amount</th>
-                          <th style="text-align: center;">Comm(MAB)</th>
-                          <th style="text-align: center;">Comm(Other Bank)</th>
+                          <th style="text-align: center;">Other Bank Name</th>
+                          <th style="text-align: center;">Debited Account</th>
+                          <th style="text-align: center;">Sender Information</th>
+                          <th style="text-align: center;">Receiver Information</th>
+                          <th style="text-align: center;">Drawing Amount</th>
+                          <th style="text-align: center;">Charges1</th>
+                          <th style="text-align: center;">Charges2</th>
+                          <th style="text-align: center;">Charges3</th>
                           <th style="text-align: center;">Total</th>
                         </thead>
                           
-                        <tbody *ngFor="let m_data of obrencashfptidatalist; ">
-                           
-                            <tr *ngFor="let data of m_data.datalist; let i = index;">
-                                
-                                <td> {{(i+1)}}</td>
+                        <tbody *ngFor="let m_data of drawingcctodatalist; ">    
 
-                                <td> {{data.trn_dt }}</td>
+                            <tr *ngFor="let data of m_data.datalist; let i = index;">  
+
+                                <td> {{(i+1)}}</td>
+                                <td> {{data.trns_dt}}</td>
                                 <td> {{data.trn_ref_no}}</td>
-                                <td> {{data.beneficiary}}</td>
-                                <td> {{data.other_bank}}</td>
-                                <td> {{data.other_bank_name}} </td>
-                                <td> {{data.tobranch}} </td>
-                                <td  class="number"> {{data.encashamount | number : '1.2-3'}} </td>
+                                <td> {{data.mab_branch}}</td>
+                                <td> {{data.to_branch}}</td>
+                                <td> {{data.other_bank_name}}</td>
+                                <td> {{data.dr_account}} </td>
+                                <td> {{data.drawee}} </td>
+                                <td> {{data.beneficiary}} </td>
+                                <td  class="number"> {{data.dr_amount | number : '1.2-3'}} </td>
                                 <td  class="number"> {{data.comm1 | number : '1.2-3'}} </td>
                                 <td  class="number"> {{data.comm2 | number : '1.2-3'}}  </td>
+                                <td  class="number"> {{data.comm3 | number : '1.2-3'}}  </td>
                                 <td class="number"> {{getTotals(data) | number : '1.2-3'}}</td>
                             </tr>
 
                             <tr>
-                                <td colspan="7" class="stotal"> ({{m_data.otherbank}}) Sub Total</td>
-                                <td class="stotal"> {{subEncashAmt | number : '1.2-3'}} </td>
-                                <td class="stotal"> {{subCommMAB | number : '1.2-3'}} </td>
-                                <td class="stotal"> {{subCommOB | number : '1.2-3'}} </td>
+                                <td colspan="9" class="stotal"> ({{m_data.otherbank}}) Sub Total</td>
+                                <td class="stotal"> {{subDrAmt | number : '1.2-3'}} </td>
+                                <td class="stotal"> {{subComm1 | number : '1.2-3'}} </td>
+                                <td class="stotal"> {{subComm2 | number : '1.2-3'}} </td>
+                                <td class="stotal"> {{subComm3 | number : '1.2-3'}} </td>
                                 <td class="stotal"> {{subTotal | number : '1.2-3'}} {{clearSubTotal()}}</td>
                                 
                             </tr>
@@ -115,10 +128,11 @@
                         </tbody>
                        
                         <tr>
-                            <td colspan="7" class="title"> Grand Total </td>
-                            <td class="stotal"> {{ grandEncashAmt | number : '1.2-3'}} </td>
-                            <td class="stotal"> {{ grandCommMAB | number : '1.2-3'}} </td>
-                            <td class="stotal"> {{ grandCommOB | number : '1.2-3'}} </td>
+                            <td colspan="9" class="title"> Grand Total </td>
+                            <td class="stotal"> {{ grandDrAmt | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandComm1 | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandComm2 | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandComm3 | number : '1.2-3'}} </td>
                             <td class="stotal"> {{ grandTotal | number : '1.2-3'}} </td>
                         </tr>
                     </table>
@@ -145,5 +159,3 @@
         </div>
     </div>
 </div>
-
-

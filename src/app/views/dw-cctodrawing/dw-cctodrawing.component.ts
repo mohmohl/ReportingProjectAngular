@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpService } from 'src/services/HttpService';
 
@@ -19,6 +19,7 @@ export class DwCctodrawingComponent implements OnInit {
 
   monthList = [];
   month;
+  month_str;
 
   _showData;
   _noData;
@@ -40,7 +41,7 @@ export class DwCctodrawingComponent implements OnInit {
 
   totNoOfTrans : number = 0;
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService, private cdf : ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.readReference();
@@ -69,6 +70,7 @@ export class DwCctodrawingComponent implements OnInit {
         if(data != null){
           this.monthList = data;
           this.month = this.monthList[0];
+          this.month_str = this.monthList[0];
         }
         this.loading = false;
       },
@@ -100,16 +102,39 @@ export class DwCctodrawingComponent implements OnInit {
     return (map);
 }
 
-  showDatas(){
+changeDateCombo(index){
+  this.cdf.detach();
+}
+
+changeBranchCombo(index){
+  this.cdf.detach();
+  this.branch_code = this.branchList[index].branch_code;
+  this.branch_name = this.branchList[index].branch_name;
+}
+
+  clearProperties(){
+    this.grandDrAmt = 0;
+    this.grandComm1 = 0;
+    this.grandComm2 = 0;
+    this.grandComm3 = 0;
 
     this.loading = true;
     this._showData = false;
     this._noData = false;
     this.drawingcctodatalist = [];
+
+    this.clearSubTotal();
+  }
+
+  showDatas(){
+    this.cdf.reattach();
+    this.clearProperties();
+    this.month = this.month_str;
     this.http.doPost("/fttransaction/getCCTODrawingDatalist?branch="+this.branch_code
     +"&date="+this.month+"&auth="+this.auth+"&drawingtype="+this.drawingtype,"CCTO Drawing Schedule").subscribe(
       data => {
         if(data != null){
+          this.month_str = this.month;
 
           this.totNoOfTrans = data.length;
           this._showData = true;
