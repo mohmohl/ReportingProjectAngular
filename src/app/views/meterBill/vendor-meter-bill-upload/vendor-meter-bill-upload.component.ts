@@ -121,7 +121,7 @@ export class VendorMeterBillUploadComponent {
      }
  
    this.loading = true;
-	 //this.timeStart();
+	 this.timeStart();
    this.errorList = [];
 	 this.error = "";
    this.message = "";
@@ -186,28 +186,5 @@ export class VendorMeterBillUploadComponent {
         }
         ); });
  }
-
- removeAll() {
-  this.error = "";
-  this.loading = true;
-  this.meterService.deleteVendorMeterBill()
-  .pipe(
-    map((data: any) => {
-      this.response = data;
-      this.loading = false;
-      if(this.response){
-        this.message = "Clear Done !....";          
-      } else {
-        this.message = "Clear Fail !....";  
-      }
-    }))
-  .subscribe(res=>{
-    
-  },
-  error => {
-    this.error ="The system have the error";
-    this.loading = false;
-  });
-}
 
 }

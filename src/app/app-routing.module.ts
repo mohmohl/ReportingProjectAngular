@@ -284,11 +284,14 @@ const routes: Routes = [
       {
         path: 'role',
         loadChildren: () => import('./views/user-manual/settings2/settings2.module').then(m => m.Settings2Module)
-
       },
       {
         path: 'duplicate-channel-user',
         loadChildren: () => import('./views/fcdb/duplicate-channel-user/duplicate-channel-user.module').then(m => m.DuplicateChannelUserModule), canActivate: [AuthGuard]
+      },
+      {
+        path: 'duplicate-channel-user-checker',
+        loadChildren: () => import('./views/fcdb/duplicate-channel-user-checker/duplicate-channel-user-checker.module').then(m => m.DuplicateChannelUserCheckerModule), canActivate: [AuthGuard]
       },
       {
         path: 'dailyftransfer',
@@ -315,6 +318,7 @@ const routes: Routes = [
         loadChildren: () => import('./views/dw-obrencashfpti/dw_obrencashfpti.module').then(m => m.DWOBREncashFPTIModule)
       },
       {
+
         path: 'cctoencash',
         loadChildren: () => import('./views/dw-cctoencashschedule/dw_cctoencashschedule.module').then(m => m.DWCCTOEncashScheduleModule)
       },
@@ -325,7 +329,12 @@ const routes: Routes = [
       {
         path: 'obrencashtransfer',
         loadChildren: () => import('./views/dw-obrencashtransfer/dw_obrencashtransfer.module').then(m => m.DWObrEncashTransferModule)
+      },
+        {
+        path: 'fcubs-user-report',
+        loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
       }
+
     ]
   },
   {

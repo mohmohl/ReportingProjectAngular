@@ -11,6 +11,7 @@ import { MeterBill_Error } from 'src/models/meterBill/MeterBill_Error';
   templateUrl: './metre-bill-upload.component.html',
   styleUrls: ['./metre-bill-upload.component.css']
 })
+
 export class MetreBillUploadComponent implements OnInit {
   loading = false;
   error = '';
@@ -145,12 +146,12 @@ onChange(event: any){
       this.error = files[0].name + ' file format is not supported';
       return false;
     }
-    console.log("excel file size= "+files.item(0))
+    // console.log("excel file size= "+files.item(0))
     this.fileToUpload = files.item(0);
-    this.readExcel()
+    //this.readExcel()
   }
 
- 
+ /*
   readExcel() {  
     let readFile = new FileReader(); 
     readFile.onload = (e) => {  
@@ -170,12 +171,7 @@ onChange(event: any){
    
     readFile.readAsArrayBuffer(this.fileToUpload);          
   }
-
-
-
-
-
-
+  */
 
   validateFile(name: String) {
     var ext = name.substring(name.lastIndexOf('.') + 1);
@@ -189,6 +185,7 @@ onChange(event: any){
 
   submit() {
     //this.isDisabled = true;
+    debugger
     if (this.form.invalid) {
       this.error = "Data is required";
       return;
@@ -218,38 +215,39 @@ onChange(event: any){
        // this.isDisabled = false;
         if(this.response != null){
           if(this.response.flag == false){
-            if(this.response.totalCount >0){
-              this.totalCount = this.response.totalCount;
-              this.subscription.unsubscribe();
-              this.progress_subscription.unsubscribe();
-              this.progress=100;
-              console.log("upload finish = "+ this.progress);
-              this.message = this.totalCount + " Import Done!....";
-            }else{
-              this.subscription.unsubscribe();
-              this.progress_subscription.unsubscribe();
-              this.progress=0;
-              this.message = "Import Fail !....";
+            this.errorList = this.response.errorList;
+            if(this.errorList.length >0) {
+              this.message = "See below duplicate items!....";
+            } else {
+
+              if(this.response.totalCount >0){
+                this.totalCount = this.response.totalCount;
+                this.subscription.unsubscribe();
+                this.progress_subscription.unsubscribe();
+                this.progress=100;
+                console.log("upload finish = "+ this.progress);
+                this.message = this.totalCount + " Import Done!....";
+              }else{
+                // this.subscription.unsubscribe();
+                this.progress=0;
+                this.message = "Import Fail !....";
+              }
             }
           }else{
-            this.subscription.unsubscribe();
-            this.progress_subscription.unsubscribe();
+            // this.subscription.unsubscribe();
             this.progress=0;
             this.message = this.response.message;
           }
           
-          this.errorList = this.response.errorList;
         }
-        this.subscription.unsubscribe();
-        this.progress_subscription.unsubscribe();
+        // this.subscription.unsubscribe();
         this.progress=0;
       }))
     .subscribe(res=>{
       this.loading = false;
     },
     error => {
-      this.subscription.unsubscribe();
-      this.progress_subscription.unsubscribe();
+      // this.subscription.unsubscribe();
       this.error ="The system have the error";
       this.loading = false;
     });
@@ -257,6 +255,7 @@ onChange(event: any){
    this.progessbar_loadingCount(this.excel_row_count,divi,region,township); 
   }
 
+  /*
   removeAll() {
     this.error = "";
     this.loading = true;
@@ -279,6 +278,7 @@ onChange(event: any){
       this.loading = false;
     });
   }
+  */
 
   progessbar_loadingCount(data_count:number,divi:string,region:string,township:string){
     this.progress_subscription = interval(1000)
