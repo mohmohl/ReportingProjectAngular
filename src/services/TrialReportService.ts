@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders,HttpErrorResponse, HttpParams } from '@angular/
 import { environment } from "src/environments/environment";
 import { Observable } from "rxjs";
 import { AuthenticationService } from "./AuthenticationService";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,30 +22,29 @@ export class TrialReportService {
     }
 
     // detail trial
-    public getTrialReportData(fromDate:string,branchCode:string,ccy_code:string,version: string): Observable<any>{
-       return this.http.post<any>(`${environment.baseUrl}`+'/trial/get_trial_report?fromDate='+fromDate+'&branchCode='+branchCode+'&ccy_code='+ccy_code+'&version='+version,{title:"Detail Trail Report"});
+    public getTrialReportData(fromDate:string,branchCode:string,ccy_code:string): Observable<any>{
+       return this.http.post<any>(`${environment.baseUrl}`+'/trial/get_trial_report?fromDate='+fromDate+'&branchCode='+branchCode+'&ccy_code='+ccy_code,{title:"Detail Trail Report"});
     }
   
-    public exportDetailTrialExcel(fromDate:string,branchCode:string,ccy_code:string,version: string): Observable<any>{
-       return this.http.get<any>(`${environment.baseUrl}`+'/trial/get_excel_detail_trial_report?fromDate='+fromDate+'&branchCode='+branchCode+'&ccy_code='+ccy_code+'&version='+version,{responseType: 'arraybuffer' as 'json'});
+    public exportDetailTrialExcel(fromDate:string,branchCode:string,ccy_code:string): Observable<any>{
+       return this.http.get<any>(`${environment.baseUrl}`+'/trial/get_excel_detail_trial_report?fromDate='+fromDate+'&branchCode='+branchCode+'&ccy_code='+ccy_code,{responseType: 'arraybuffer' as 'json'});
     }
 
-    public exportDetailTrialPDF(fromDate:string,branchCode:string,ccy_code:string,version: string): Observable<any>{
-        return this.http.get<any>(`${environment.baseUrl}`+'/trial/get_pdf_detail_trial_report?fromDate='+fromDate+'&branchCode='+branchCode+'&ccy_code='+ccy_code+'&version='+version,{responseType: 'arraybuffer' as 'json'});
+    public exportDetailTrialPDF(fromDate:string,branchCode:string,ccy_code:string): Observable<any>{
+        return this.http.get<any>(`${environment.baseUrl}`+'/trial/get_pdf_detail_trial_report?fromDate='+fromDate+'&branchCode='+branchCode+'&ccy_code='+ccy_code,{responseType: 'arraybuffer' as 'json'});
     }
 
     // general trial
-    public getGeneralTrialReportData(fromDate:string,branchCode:string,ccy_code:string,version: string): Observable<any>{
-      return this.http.post<any>(`${environment.baseUrl}`+'/trial/get_general_trial_report?fromDate='+fromDate+'&branchCode='+branchCode+'&ccy_code='+ccy_code+'&version='+version,{title:"General Trail Report"});
+    public getGeneralTrialReportData(fromDate:string,branchCode:string,ccy_code:string): Observable<any>{
+      return this.http.post<any>(`${environment.baseUrl}`+'/trial/get_general_trial_report?fromDate='+fromDate+'&branchCode='+branchCode+'&ccy_code='+ccy_code,{title:"General Trail Report"});
     }
   
-    public exportGeneralTrialExcel(fromDate:string,branchCode:string,ccy_code:string,version: string): Observable<any>{
-        return this.http.get<any>(`${environment.baseUrl}`+'/trial/get_excel_general_trial_report?fromDate='+fromDate+'&branchCode='+branchCode+'&ccy_code='+ccy_code+'&version='+version,{responseType: 'arraybuffer' as 'json'});
+    public exportGeneralTrialExcel(fromDate:string,branchCode:string,ccy_code:string): Observable<any>{
+        return this.http.get<any>(`${environment.baseUrl}`+'/trial/get_excel_general_trial_report?fromDate='+fromDate+'&branchCode='+branchCode+'&ccy_code='+ccy_code,{responseType: 'arraybuffer' as 'json'});
     }
 
-    public exportGeneralTrialPDF(fromDate:string,branchCode:string,ccy_code:string,version: string): Observable<any>{
-        return this.http.get<any>(`${environment.baseUrl}`+'/trial/get_pdf_general_trial_report?fromDate='+fromDate+'&branchCode='+branchCode+'&ccy_code='+ccy_code+'&version='+version,{responseType: 'arraybuffer' as 'json'});
+    public exportGeneralTrialPDF(fromDate:string,branchCode:string,ccy_code:string): Observable<any>{
+        return this.http.get<any>(`${environment.baseUrl}`+'/trial/get_pdf_general_trial_report?fromDate='+fromDate+'&branchCode='+branchCode+'&ccy_code='+ccy_code,{responseType: 'arraybuffer' as 'json'});
     }
-
 
 }

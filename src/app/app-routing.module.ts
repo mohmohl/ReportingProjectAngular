@@ -316,10 +316,6 @@ const routes: Routes = [
       {
         path: 'fcubs-user-report',
         loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
-      },
-      {
-        path: 'check-trial-report',
-        loadChildren: () => import('./views/TrialReport/check-trial-report/check-trial-report.module').then(m => m.CheckTrialReportModule)
       }
 
     ]

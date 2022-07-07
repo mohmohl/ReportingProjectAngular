@@ -54,8 +54,7 @@ totalCredit_lcystr:string;
   form = new FormGroup({
     fromDate: new FormControl('', Validators.required),
     branchCode:new FormControl('', Validators.required),
-    currencyCode:new FormControl('', Validators.required),
-    version:new FormControl('', Validators.required) 
+    currencyCode:new FormControl('', Validators.required)
   });
 
   constructor(private service:TrialReportService){//,private dateAdapter: DateAdapter<Date>) {
@@ -106,9 +105,8 @@ totalCredit_lcystr:string;
     this.ccyCode = true;
   }
   this.bCode=this.form.get(["branchCode"])!.value;
-  let version = this.form.get(["version"])!.value;
 
-  this.service.getGeneralTrialReportData(fDate,this.bCode,this.currencyCode, version).subscribe((res:TrialReport)=>{
+  this.service.getGeneralTrialReportData(fDate,this.bCode,this.currencyCode).subscribe((res:TrialReport)=>{
     this.loading = false;
    
     if(res != null){
@@ -178,9 +176,8 @@ exportexcel(): void
   let f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
   this.bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;
-  let version = this.form.get(["version"])!.value;
 
-  this.service.exportGeneralTrialExcel(f_Date,this.bCode,this.currencyCode,version)
+  this.service.exportGeneralTrialExcel(f_Date,this.bCode,this.currencyCode)
   .pipe(
     map((data: any) => {
       debugger;
@@ -219,9 +216,8 @@ exportexcel(): void
   let f_date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
   this.bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;
-  let version = this.form.get(["version"])!.value;
 
-  this.service.exportGeneralTrialPDF(f_date,this.bCode,this.currencyCode, version)
+  this.service.exportGeneralTrialPDF(f_date,this.bCode,this.currencyCode)
   .pipe(
     map((data: any) => {
       let blob = new Blob([data], {
