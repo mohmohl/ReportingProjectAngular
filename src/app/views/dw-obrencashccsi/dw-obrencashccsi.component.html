@@ -24,14 +24,14 @@
 
                         <label class="col-sm-1">Date</label>
                         <div class="col-xs-2 date-picker">
-                            <select [(ngModel)]="month">
+                            <select [(ngModel)]="month_desc">
                                 <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
                             </select>
                         </div>
      
                         <label class="col-sm-1"> Branch </label>
                         <div class="col-xs-2">
-                            <select [(ngModel)]="branch_code">
+                            <select [(ngModel)]="branch_code" (change)="changeBranchCombo($event.target.options.selectedIndex)">
                                 <option *ngFor="let branch of branchList" value="{{branch.branch_code}}" selected>{{branch.branch_code}}</option>
                             </select>
                         </div>

@@ -314,13 +314,31 @@ const routes: Routes = [
         loadChildren: () => import('./views/dw-cctodrawing/dw_cctodrawing.module').then(m => m.DWCCTODrawingModule)
       },
       {
+        path: 'cctodrawingreversal',
+        loadChildren: () => import('./views/dw-cctodrawingreversal/dw_cctodrawingreversal.module').then(m => m.DWCCTODrawingReversalModule)
+      },
+      {
         path: 'obrencashfpti',
         loadChildren: () => import('./views/dw-obrencashfpti/dw_obrencashfpti.module').then(m => m.DWOBREncashFPTIModule)
       },
       {
+
+        path: 'cctoencash',
+        loadChildren: () => import('./views/dw-cctoencashschedule/dw_cctoencashschedule.module').then(m => m.DWCCTOEncashScheduleModule)
+      },
+      {
+        path: 'obrencashment',
+        loadChildren: () => import('./views/dw-obrencashment/dw_obrencashment.module').then(m => m.DWObrEncashmentModule)
+      },
+      {
+        path: 'obrencashtransfer',
+        loadChildren: () => import('./views/dw-obrencashtransfer/dw_obrencashtransfer.module').then(m => m.DWObrEncashTransferModule)
+      },
+        {
         path: 'fcubs-user-report',
         loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
       }
+
     ]
   },
   {

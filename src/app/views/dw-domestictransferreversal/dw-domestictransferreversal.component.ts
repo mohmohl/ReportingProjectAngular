@@ -55,13 +55,25 @@ export class DwDomestictransferreversalComponent implements OnInit {
   });
   }
 
-  showDatas(){
+  clearProperties(){
     this._showData =false;
     this._NoData = false;
     this.domesticftdatalist = [];
     this.g_domesticftdatalist = [];
     this.domesticftdataset = [];
     this.loading = true;
+
+    this.grandDrAmt   = 0;
+    this.grandCharge1 = 0;
+    this.grandCharge2 = 0;
+    this.grandCharge3 = 0;
+    this.grandTotal = 0;
+
+    this.clearSubTotal();
+  }
+
+  showDatas(){
+    this.clearProperties();
     this.http.doPost("/fttransaction/getDomesticTransferRevsList?date="+this.month+"&branch="+this.branch, "Domestic Fund Transfer Reversal").subscribe(
       res => {
         this.loading = false;

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -28,10 +28,20 @@ export class HttpService {
         return this.http.get<any>(`${api}`, {responseType: 'arraybuffer' as 'json'});
       
   }
+  
   public export_PDF(url:string){
     var api = environment.baseUrl+url;
-      let requestOptions = { headers: this.headers, responseType: 'arraybuffer' as 'json'};
       return this.http.get<any>(`${api}`, {responseType: 'arraybuffer' as 'json'});
+    
+  }
+
+  public export_POST_PDF(url:string, obj :any){
+
+    var api = environment.baseUrl+url;
+    let params = JSON.stringify(obj);
+    var headers = new HttpHeaders({'Content-Type':'application/json','Accept': 'application/json',});
+    
+      return this.http.post<any>(`${api}`, params,{headers : headers,responseType: 'arraybuffer' as 'json'});
     
   }
 }

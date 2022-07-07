@@ -1,8 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { ChannelUser } from 'src/models/fcdb/ChannelUser';
 import { FcdbChannelUserService } from 'src/services/FcdbChannelUserService';
+import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'app-duplicate-channel-user',
@@ -20,10 +22,16 @@ export class DuplicateChannelUserComponent implements OnInit {
     name: new FormControl('', Validators.required),
   });
 
-  constructor(private service: FcdbChannelUserService) { }
+  constructor(private service: FcdbChannelUserService, public datepipe: DatePipe) { }
 
   ngOnInit() {
     this.loading = false;
+  }
+
+  saveFile(data: any, fileName?: string, fileType?: string): void {
+    const blob = new Blob([data], { type: fileType });
+    fileSaver.saveAs(blob, fileName);
+
   }
 
   submit() {
@@ -34,7 +42,7 @@ export class DuplicateChannelUserComponent implements OnInit {
     var buttonName = document.activeElement.getAttribute("name");
 
     console.log(buttonName);
-    if (buttonName == 'search') {
+    if (buttonName == null || buttonName == 'search') {
 
       if (user_id == '' || user_id == undefined || user_id == null) {
         this.error = 'User ID is required';
@@ -55,16 +63,19 @@ export class DuplicateChannelUserComponent implements OnInit {
     else {
       this.service.getDuplicatedUser().pipe(
         map((data: any) => {
-          let blob = new Blob([data], {
-            type: 'application/octet-stream'
-          });
-          var link = document.createElement('a');
-          link.download = 'Fcdb_duplicate_users.xlsx'
-          link.href = window.URL.createObjectURL(blob);
-          link.target = '_blank';
+          // let blob = new Blob([data], {
+          //   type: 'application/vnd.ms-excel'
+          // });
+          // var link = document.createElement('a');
+          // link.download = 'Fcdb_duplicate_users_'+ this.datepipe.transform(new Date(), 'dd-MM-yyyy HH:mm:ss') +'.xlsx'
+          // link.href = window.URL.createObjectURL(blob);
+          // link.target = '_blank';
 
-          link.click();
-          window.URL.revokeObjectURL(link.href);
+          // link.click();
+          // window.URL.revokeObjectURL(link.href);
+
+          this.saveFile(data, 'Fcdb_duplicate_users_' + this.datepipe.transform(new Date(), 'dd-MM-yyyy HH:mm:ss') + '.xlsx', 'application/vnd.ms-excel');
+
           this.loading = false;
           console.log("Finish >>>")
           this.error = '';

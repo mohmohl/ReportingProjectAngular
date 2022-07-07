@@ -1,0 +1,130 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            
+            <div class="card-header">
+                <h5>CCTO Encashment Schedule </h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+
+                  <div class="page-header-breadcrumb">
+                    <button type="button" class="btn-danger" (click)="exportPDF()">
+                      <i class="ti-printer"></i>PDF
+                    </button> 
+                   </div>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    
+                    <code *ngIf="error">{{error}}</code>
+					
+                    <div class="form-group row">
+
+                        <label class="col-sm-1">Date</label>
+                        <div class="col-xs-2 date-picker">
+                            <select [(ngModel)]="month">
+                                <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
+                            </select>
+                        </div>
+     
+                        <label class="col-sm-1"> Branch </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="branchCode" (change)="changeBranchCombo($event.target.options.selectedIndex)">
+                                <option *ngFor="let branch of l_branch" value="{{branch.branch_code}}" selected>{{branch.branch_code}}</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2"> OBR Customer ID </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="cusID">
+                                <option value="{{cusID}}" selected>{{cusID}}</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <button type="button" (click)="showDatas()" class="btn-primary">Show</button>
+                            
+                        </div>
+                        
+                    </div>
+                <div *ngIf="_showData" id="data">
+                    <div class="title" *ngIf="_showData">
+                        <div>
+                            <p class="pgtitle">{{branchSetupData.bank_name}}</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">{{branchSetupData.branch_name}}</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">CCTO Encashment Schedule ( ALL)</p>
+                        </div>
+                       
+                    </div>
+
+                    <div>
+                        <table class="headertbl">
+                            <tr>
+                                <td class="td col-md-2" >Local Branch :</td>
+                                <td class="td">{{branchSetupData.branch_name}}</td>
+                            </tr>
+                            <tr>
+                                <td class="td">Tr Date :</td>
+                                <td class="td">{{trn_date | date : 'dd/MM/yyyy'}}</td>
+                                <td class="prtDate td" style="text-align: right;">{{month}}</td> 
+                            </tr>
+                            
+                        </table>
+
+                    </div>
+
+                    <table class="table table table-hover" id="content" #content>
+                        <thead class="text-uppercase">
+                          <th style="text-align: center;">Sr. No.</th>
+                          <th style="text-align: center;">Drawing Name and NRC</th>
+                          <th style="text-align: center;">Payee Name and NRC and Account No.</th>
+                          <th style="text-align: center;">Ref. No.</th>
+                          <th style="text-align: center;">Amount</th>
+                        </thead>
+                          
+                        <tbody *ngFor="let m_data of g_cctoencashdatalist | keyvalue;">
+                           <tr>
+                               <td colspan="5"><b>From  Branch :</b> {{m_data.key}} </td>
+                           </tr>
+                            <tr *ngFor="let data of m_data.value;">
+                                
+                                <td> {{ getIndex() }}</td>
+                                <td> {{ data.narrative }}</td>
+                                <td> {{data.benef_name}} {{data.payee_name_nrc}}</td>
+                                <td> {{data.po_no}}</td>
+                                <td class="number"> {{data.instr_amount | number : '1.2-3'}}  {{calculateSubTotal(data)}}</td>
+                                
+                            </tr>
+
+                            <tr>
+                                <td colspan="4" class="stotal"> Sub Total</td>
+                                <td class="stotal"> {{ subTotal | number : '1.2-3'}} {{ clearSubTotal()}} </td>
+                            </tr>
+                    
+                        </tbody>
+                       
+                    </table>
+
+                </div>
+
+                
+                <div *ngIf="_noData">
+                    <p class="nodata"> No records found.</p>
+                </div>
+                   
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
