@@ -43,6 +43,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/UserAccount/search-user/search-user.module').then(m => m.SearchUserModule), canActivate: [AuthGuard]
       },
       {
+        path: 'manage-role',
+        loadChildren: () => import('./views/UserAccount/manage-role/manage-role.moudle').then(m => m.ManageRoleModule)
+      },
+      {
         path: 'user-registration/:userId',
         loadChildren: () => import('./views/UserAccount/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
       },
