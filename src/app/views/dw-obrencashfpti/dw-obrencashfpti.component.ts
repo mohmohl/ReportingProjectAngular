@@ -16,6 +16,7 @@ export class DwObrencashfptiComponent implements OnInit {
 
   monthList = [];
   month;
+  month_desc;
 
   cusID = 'ALL';
   _showData;
@@ -50,6 +51,7 @@ export class DwObrencashfptiComponent implements OnInit {
         if(data != null){
           this.monthList = data;
           this.month = this.monthList[0];
+          this.month_desc = this.monthList[0];
         }
         this.loading = false;
       },
@@ -80,12 +82,23 @@ export class DwObrencashfptiComponent implements OnInit {
     return (map);
 }
 
-  showDatas(){
+  clearProperties(){
+    this.grandEncashAmt = 0;
+    this.grandCommMAB = 0;
+    this.grandCommOB = 0;
+    this.grandTotal = 0;
 
     this.loading = true;
     this._showData = false;
     this._noData = false;
     this.obrencashfptidatalist = [];
+
+    this.clearSubTotal();
+  }
+
+  showDatas(){
+    this.month = this.month_desc;
+    this.clearProperties();
     this.http.doPost("/fttransaction/getOBREncashFPTIDatalist?branch="+this.branch_code
     +"&date="+this.month+"&cusid="+this.cusID,"OBR Encash FPTI").subscribe(
       data => {
@@ -93,7 +106,7 @@ export class DwObrencashfptiComponent implements OnInit {
 
           this.totNoOfTrans = data.length;
           this._showData = true;
-          
+          this.month_desc = this.month;
           let result = Array.from(new Set(data.map(x => x.other_bank)));
           
           this.g_obrencashfptidatalist  = this.groupBy(data, otherbank => otherbank.other_bank);

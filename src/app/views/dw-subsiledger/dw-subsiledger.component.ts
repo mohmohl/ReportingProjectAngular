@@ -161,6 +161,10 @@ export class DwSubsiledgerComponent implements OnInit {
         if(this.subsidarydataset != null){
           this.openingData = this.subsidarydataset.subsiOpening;
           this.subsidarydatalist = this.subsidarydataset.subsiData;
+          if(this.subsidarydatalist.length>0){
+            this.openingData.trn_dt = this.subsidarydatalist[0].trn_dt;
+          }
+          
           this.glData = this.subsidarydataset.gldata;
 
           this._showData = true;
