@@ -18,42 +18,44 @@
             </div>
             <div class="card-body">
               <code *ngIf="error">{{error}}</code>
-                <form [formGroup]="form" (ngSubmit)="submit()">
+              <form [formGroup]="form" (ngSubmit)="submit()">
                   
-                    <div class="container-fluid">
-                    <div class="form-group row">
-                        <label class="col-sm-1">Date</label>
-                        <div class="col-xs-2 date-picker">
-                              <mat-form-field>
-                                <input #minmaxInput matInput 
-                                  [matDatepicker]="minmaxvalidation" formControlName="fromDate" readonly>
-                                <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
-                                   </mat-datepicker-toggle>
-                                <mat-datepicker #minmaxvalidation></mat-datepicker>
-                              </mat-form-field>
-                        </div>
-                        
-                        <label class="col-sm-2">Branch</label>
-                      <div class="col-xs-2">
-                        <select class="" formControlName="branchCode" id="exampleFormControlSelect1">
-                          <option value="" selected>-- Select --</option>
-                          <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
-                        </select>
-                      </div>
-                      <label class="col-sm-2 ">Currency</label>
-                      <div class="col-xs-2">
-                        <select class="" formControlName="currencyCode" id="exampleFormControlSelect1">
-                          <option value="" selected>-- Select --</option>
-                          <option *ngFor="let c of currencyList" value="{{c}}">{{ c }}</option>
-                        </select>
-                      </div>
-                        <div class="col-sm-2">
-                            <button type="submit" class="btn-primary">Search</button>
-                          </div>
-                      </div>
-                      
+                <div class="container-fluid">
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label">Date</label>
+                    <div class="col-sm-2 date-picker">
+                         <!-- [min]="minDate"
+                              [max]="maxDate" -->
+                          <mat-form-field style="width:100px;">
+                            <input #minmaxInput matInput
+                              [matDatepicker]="minmaxvalidation" formControlName="fromDate" readonly>
+                            <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                               </mat-datepicker-toggle>
+                            <mat-datepicker #minmaxvalidation></mat-datepicker>
+                          </mat-form-field>
                     </div>
-                </form>
+                    <label class="col-sm-1">Branch</label>
+                  <div class="col-sm-2">
+                    <select class="" formControlName="branchCode" id="exampleFormControlSelect1">
+                      <option value="" selected>-- Select --</option>
+                      <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
+                    </select>
+                  </div>
+                  <label class="col-sm-1.5">Currency</label>
+                  <div class="col-sm-2">
+                    <select class="" formControlName="currencyCode" id="exampleFormControlSelect1">
+                      <option value="" selected>-- Select --</option>
+                      <option *ngFor="let c of currencyList" value="{{c}}">{{ c }}</option>
+                    </select>
+                  </div>
+                  
+                  <div class="col-sm-2">
+                      <button type="submit" class="btn-primary">Search</button>
+                    </div>
+                  </div>
+                  
+                </div>
+            </form>
                 
                 <p *ngIf="data_message" class="text-danger">{{data_message}}</p>
              

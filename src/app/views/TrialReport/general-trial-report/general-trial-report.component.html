@@ -22,9 +22,9 @@
                   
                     <div class="container-fluid">
                     <div class="form-group row">
-                        <label class="col-sm-1">Date</label>
-                        <div class="col-xs-2 date-picker">
-                              <mat-form-field>
+                        <label class="col-sm-1 col-form-label">Date</label>
+                        <div class="col-sm-2 date-picker">
+                              <mat-form-field style="width:100px;">
                                 <input #minmaxInput matInput 
                                   [matDatepicker]="minmaxvalidation" formControlName="fromDate" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
@@ -32,15 +32,15 @@
                                 <mat-datepicker #minmaxvalidation></mat-datepicker>
                               </mat-form-field>
                         </div>
-                        <label class="col-sm-2">Branch</label>
-                      <div class="col-xs-2">
+                        <label class="col-sm-1">Branch</label>
+                      <div class="col-sm-2">
                         <select class="" formControlName="branchCode" id="exampleFormControlSelect1">
                           <option value="" selected>-- Select --</option>
                           <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
                         </select>
                       </div>
-                      <label class="col-sm-2 ">Currency</label>
-                      <div class="col-xs-2">
+                      <label class="col-sm-1.5">Currency</label>
+                      <div class="col-sm-2">
                         <select class="" formControlName="currencyCode" id="exampleFormControlSelect1">
                           <option value="" selected>-- Select --</option>
                           <option *ngFor="let c of currencyList" value="{{c}}">{{ c }}</option>
