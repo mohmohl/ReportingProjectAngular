@@ -34,7 +34,7 @@ export class TrialReportComponent implements OnInit {
   loading = false;
   data:TrialReport;
   bCode:string;
-  minDate = new Date(2021, 5, 30);
+  minDate = new Date(2021, 4, 30);
   maxDate = new Date();
 totalDebit:number=0;
 totalDebit_lcy:number=0;
@@ -226,7 +226,8 @@ exportexcel(): void
       var file = new Blob([data], {type: 'application/pdf'});
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
-      a.target     = '_blank'; 
+      a.target = '_blank'; 
+      a.download = 'DetailTrial_'+this.bCode+'_'+this.currencyCode+'.pdf';
       a.click();
       
       this.loading = false;

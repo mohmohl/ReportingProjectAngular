@@ -229,6 +229,7 @@ exportexcel(): void
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
       a.target     = '_blank'; 
+      a.download = 'GeneralTrial_'+this.bCode+'_'+this.currencyCode+'.pdf';
       a.click();
       
       this.loading = false;
