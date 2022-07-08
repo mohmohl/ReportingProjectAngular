@@ -29,15 +29,17 @@ export class DuplicateChannelUserCheckerComponent implements OnInit {
   submit() {
     debugger;
     let user_id = this.form.controls['name'].value;
-
     this.loading = true;
+    this.duplicatedUsers = [];
     var buttonName = document.activeElement.getAttribute("name");
 
     console.log(buttonName);
     if (buttonName == null || buttonName == 'search') {
-
+      var regex = new RegExp(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/);
       if (user_id == '' || user_id == undefined || user_id == null) {
         this.error = 'User ID is required';
+      }else if(regex.test(user_id)){
+        this.error = 'Special characters are not allowed';
       }
       else {
         this.service.isUserExists(user_id).subscribe(res => {
