@@ -13,7 +13,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2">USER ID</label>
                         <div class="col-sm-2">
-                            <input type="text" formControlName="name" maxlength="19">
+                            <input type="text" (keydown.space)="$event.preventDefault();" formControlName="name" maxlength="15"/>
                             <code *ngIf="error">{{error}}</code>
                         </div>
                     </div>
