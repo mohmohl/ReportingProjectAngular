@@ -3,15 +3,16 @@
         <div class="card">
           
             <div class="card-header">
-                <h4>ASM Screening Report</h4>
+                <h4>Role Permission</h4>
                 <div *ngIf="loading" class="d-flex justify-content-center">
                     <div class="spinner-border spinner-border-sm text-warning"></div>
                       <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
                   </div>
-                <hr>
+                
                 
             </div>
             <div class="card-body">
+             
                 <form [formGroup]="form" (ngSubmit)="submit()">
                 <div class=" row" >
                     
@@ -52,7 +53,7 @@
                         <tr *ngFor="let menu of menuList">
                           <td><input type="checkbox" [(ngModel)]="menu.selected" (change)="onChange(menu.menu_id, $event.target.checked)" class="styled">
                           </td>
-                            <td>   {{menu.menu_name}}</td>
+                            <td> {{menu.menu_name}}</td>
                             <td> {{menu.category_name}}</td>
                             <td> {{menu.program}}</td>
                             <td> {{menu.menu_status}}</td>

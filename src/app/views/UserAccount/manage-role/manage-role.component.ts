@@ -16,6 +16,7 @@ export class ManageRoleComponent implements OnInit {
   role_list:string[];
   checkedList=[];
   menuList:MenuItem[];
+
   form = new FormGroup({
     role_id: new FormControl('')
   });
@@ -25,7 +26,7 @@ export class ManageRoleComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.menu_service.getRoleData().subscribe((res: string[]) => {
+    this.menu_service.getallrolelistData().subscribe((res: string[]) => {
       this.loading = false;
       this.role_list = res;
     },
@@ -43,6 +44,7 @@ export class ManageRoleComponent implements OnInit {
     }
 
   }
+  
   submit(){
     this.message=''
       this.checkedList=[];
