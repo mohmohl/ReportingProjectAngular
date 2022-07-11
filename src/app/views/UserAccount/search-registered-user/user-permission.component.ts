@@ -36,6 +36,11 @@ export class UserPermissionComponent implements OnInit {
     }
 
   }
+  userIdOnChange(event: any){
+    var value = event.target.value;
+    value=value.toUpperCase();
+    event.target.value = value.toUpperCase();
+    }
   submit(){
     this.checkedList=[];
     if (this.form.invalid) {
@@ -43,7 +48,8 @@ export class UserPermissionComponent implements OnInit {
       return;
   }
   this.error="";
-  this.user_id = this.form.get(["userId"])!.value;
+  this.user_id = this.form.get(["userId"])!.value.toUpperCase();
+ 
   this.loading = true;
   //console.log("Param = "+this.user_id)
   this.service.getRegisteredUserData(this.user_id).subscribe((res:UserInfo)=>{
