@@ -14,7 +14,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">User Id</label>
                         <div class="col-sm-3">
-                          <input type="text" formControlName="userId" class="form-control">
+                          <input type="text" formControlName="userId" (change)="userIdOnChange($event)" class="form-control">
                           <code *ngIf="error">{{error}}</code>
                         </div>
                         <div class="col-sm-2">
