@@ -54,7 +54,7 @@ totalCredit_lcystr:string;
   form = new FormGroup({
     fromDate: new FormControl('', Validators.required),
     branchCode:new FormControl('', Validators.required),
-    currencyCode:new FormControl('', Validators.required)
+    currencyCode:new FormControl('MMK', Validators.required)
   });
 
   constructor(private service:TrialReportService){//,private dateAdapter: DateAdapter<Date>) {
