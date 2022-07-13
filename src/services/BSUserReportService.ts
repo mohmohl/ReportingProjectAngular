@@ -17,4 +17,9 @@ export class BSUserReportService {
     return this.http.post<any>(api,{date,branch},{responseType: 'arraybuffer' as 'json'});
   }
 
+  public getBranchList(): Observable<any>{
+    var userId=this.authService.currentUserValue.userId;
+    return this.http.get<any>(`${environment.baseUrl}`+'/bs-report/get_branchList?userId='+userId);
+  }
+
 }

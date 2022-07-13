@@ -39,10 +39,10 @@ export class BsUserReportComponent implements OnInit {
     branch: new FormControl('', Validators.required)
   }); 
 
-  constructor(private service:TrialReportService, private bsService: BSUserReportService, public datepipe: DatePipe) { 
+  constructor(private bsService: BSUserReportService, public datepipe: DatePipe) { 
 
     this.loading = true;
-    service.getBranchList().subscribe((res:string[])=>{
+    bsService.getBranchList().subscribe((res:string[])=>{
       this.loading = false;
       this.branchList = res;
     });
