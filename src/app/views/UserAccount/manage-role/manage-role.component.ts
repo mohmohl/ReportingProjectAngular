@@ -9,7 +9,7 @@ import { MenuService } from 'src/services/MenuService';
   styleUrls: ['./manage-role.component.scss']
 })
 export class ManageRoleComponent implements OnInit {
-  loading = true;
+  loading = false;
   error='';
   message='';
   role_id:string;
@@ -25,7 +25,7 @@ export class ManageRoleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loading = true;
+   /* this.loading = true;
     this.menu_service.getallrolelistData().subscribe((res: string[]) => {
       this.loading = false;
       this.role_list = res;
@@ -33,7 +33,7 @@ export class ManageRoleComponent implements OnInit {
     error => {
       this.error ="The system have the error";
       this.loading = false;
-    });
+    });*/
   }
   onChange(val: string, isChecked: boolean) {
     if (isChecked) {
@@ -48,6 +48,7 @@ export class ManageRoleComponent implements OnInit {
   submit(){
     this.message=''
       this.checkedList=[];
+      this.menuList=[];
       if (this.form.invalid) {
         this.error = "Data is required";
         return;
