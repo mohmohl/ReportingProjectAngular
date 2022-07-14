@@ -30,11 +30,25 @@
                           <option value="" selected>-- Select --</option>
                           <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
                         </select>
+                      </div>
+                      
+                      <div class="row form-group col-md-12">
+                          <label class="col-sm-2 col-form-label">Include Role<code>*</code></label>
+                          <div class="col-sm-1">
+                            <input type="radio"  formControlName="role" value="yes" /> YES
+                          </div> 
+                          
+                          <div class="col-sm-1">
+                            <input type="radio"  formControlName="role" value="no" /> NO
+                          </div>  
+                      </div>
+
+                      <div class="row form-group col-md-12">
                         <div class="col-sm-2">
                           <button type="submit" class="btn-primary btn-sm">Export Excel</button>
-                        </div>
+                        </div> 
                       </div>
-                      </div>
+                    </div>
 
                       
                 </form>
