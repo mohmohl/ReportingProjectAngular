@@ -36,13 +36,14 @@ export class BsUserReportComponent implements OnInit {
 
   form = new FormGroup({
     date: new FormControl(new Date(), Validators.required),
-    branch: new FormControl('', Validators.required)
+    branch: new FormControl('', Validators.required),
+    role: new FormControl('', Validators.required)
   }); 
 
-  constructor(private service:TrialReportService, private bsService: BSUserReportService, public datepipe: DatePipe) { 
+  constructor(private bsService: BSUserReportService, public datepipe: DatePipe) { 
 
     this.loading = true;
-    service.getBranchList().subscribe((res:string[])=>{
+    bsService.getBranchList().subscribe((res:string[])=>{
       this.loading = false;
       this.branchList = res;
     });
@@ -60,18 +61,19 @@ export class BsUserReportComponent implements OnInit {
 
     let fromDate = this.form.get(["date"])!.value
     let branch = this.form.get(["branch"])!.value
+    let role = this.form.get(["role"])!.value
 
     let fDate = `${fromDate.getFullYear()}-${fromDate.getMonth()+1}-${fromDate.getDate()}`;
 
     this.loading = true; 
-    this.bsService.exportExcel(fDate, branch).pipe(
+    this.bsService.exportExcel(fDate, branch,role).pipe(
       map((data: any) => {
         let blob = new Blob([data], {
           type: "application/vnd.ms-excel" 
         });
           var link = document.createElement('a');
           link.href = window.URL.createObjectURL(blob);
-          link.download = 'FCUB_UserReport_' + this.datepipe.transform(new Date(), 'dd-MM-yyyy HH:mm:ss') +'.xlsx';
+          link.download = 'Active_UserReport_' + this.datepipe.transform(new Date(), 'dd-MM-yyyy HH:mm:ss') +'.xlsx';
           link.click();
           window.URL.revokeObjectURL(link.href);
         
@@ -79,9 +81,9 @@ export class BsUserReportComponent implements OnInit {
       })).subscribe(
         res => { },
         error => {
-          console.log("FCUB_UserReport Error >>> "+error)
+          console.log("Active_UserReport Error >>> "+error)
           if(error != ""){
-          this.error = "(The system cannot generate FCUB_User Report!.. Have the error)";
+          this.error = "(The system cannot generate Active_User Report!.. Have the error)";
             }
           this.loading = false;
         });

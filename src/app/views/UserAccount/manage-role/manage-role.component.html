@@ -3,24 +3,27 @@
         <div class="card">
           
             <div class="card-header">
-                <h4>ASM Screening Report</h4>
+                <h4>Role Permission</h4>
                 <div *ngIf="loading" class="d-flex justify-content-center">
                     <div class="spinner-border spinner-border-sm text-warning"></div>
                       <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
                   </div>
-                <hr>
+                
                 
             </div>
             <div class="card-body">
+             
                 <form [formGroup]="form" (ngSubmit)="submit()">
                 <div class=" row" >
                     
                     <label class="col-sm-3">Role ID</label>
                     <div class="col-sm-4">
+                        <input type="text" formControlName="role_id" class="form-control">
+                        <!--
                     <select formControlName="role_id">
                       <option *ngFor="let arr of role_list" value="{{arr}}">
                           {{arr}}</option>
-                  </select>
+                  </select>-->
                   </div>
                   <div class="col-sm-3">
                     <button type="submit" class="btn-primary">
@@ -52,7 +55,7 @@
                         <tr *ngFor="let menu of menuList">
                           <td><input type="checkbox" [(ngModel)]="menu.selected" (change)="onChange(menu.menu_id, $event.target.checked)" class="styled">
                           </td>
-                            <td>   {{menu.menu_name}}</td>
+                            <td> {{menu.menu_name}}</td>
                             <td> {{menu.category_name}}</td>
                             <td> {{menu.program}}</td>
                             <td> {{menu.menu_status}}</td>

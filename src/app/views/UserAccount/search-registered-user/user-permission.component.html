@@ -14,7 +14,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">User Id</label>
                         <div class="col-sm-3">
-                          <input type="text" formControlName="userId" class="form-control">
+                          <input type="text" formControlName="userId" (change)="userIdOnChange($event)" class="form-control">
                           <code *ngIf="error">{{error}}</code>
                         </div>
                         <div class="col-sm-2">
@@ -65,6 +65,41 @@
                       <td> {{menu.category_name}}</td>
                       <td> {{menu.program}}</td>
                       <td> {{menu.menu_status}}</td>
+                  </tr>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="row" *ngIf="data">
+    <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>{{data.user_id}}</h5>
+            <code *ngIf="message">{{message}}</code>
+            <div class="page-header-breadcrumb">
+              <button type="button" (click)="rolePermit()" class="btn-primary">
+                Permit
+              </button>&nbsp;
+            </div>
+          </div>
+          <div class="card-body p-t-10">
+            <div class="form-group row">
+              <div class="col-sm-2"></div>
+              <div class="col-sm-8">
+              <table>
+                  <tr>
+                      <th>Choose</th>
+                      <th>ROLE ID</th>
+                      <th>ROLE NAME</th>
+                  </tr>
+                  <tr *ngFor="let role of data.roleList">
+                    <td><input type="checkbox" [(ngModel)]="role.selected" (change)="roleonChange(role.role_id, $event.target.checked)" class="styled">
+                    </td>
+                      <td> {{role.role_id}}</td>
+                      <td> {{role.role_name}}</td>
                   </tr>
               </table>
               </div>

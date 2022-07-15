@@ -16,28 +16,35 @@ export class UserRegistrationComponent implements OnInit {
   error='';
   successMsg=''
   pass_error='';
+  role_list:string[];
   checkedList=[];
   menuList:MenuItem[];
-  form = new FormGroup({
+  /*form = new FormGroup({
     userId: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
     confirm_password: new FormControl('', Validators.required)
-  });  
+  }); */ 
+  form = new FormGroup({
+    userId: new FormControl('', Validators.required),
+    home_branch: new FormControl('')
+  });
   constructor(private userService: UserDataService,private route: ActivatedRoute,private menuService:MenuService) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.paramId = params.get('userId');
-})
-this.form.setValue({
-  userId: this.paramId ,
-  password:'',
-  confirm_password:''
-});
 this.loading = true;
+/*
 this.menuService.getMenuData().subscribe((res:MenuItem[])=>{
   this.loading = false;
   this.menuList = res;
+});
+*/
+this.menuService.getRoleData().subscribe((res: string[]) => {
+  this.loading = false;
+  this.role_list = res;
+},
+error => {
+  this.error ="The system have the error";
+  this.loading = false;
 });
   }
 
@@ -50,24 +57,28 @@ this.menuService.getMenuData().subscribe((res:MenuItem[])=>{
     }
 
   }
-
-
+  userIdOnChange(event: any){
+  var value = event.target.value;
+  value=value.toUpperCase();
+  event.target.value = value.toUpperCase();
+  }
   submit(){
     if (this.form.invalid) {
-      this.error = "Data is required";
+      this.error = "User ID is  required";
       return;
   }
-  if(this.form.get(["password"])!.value != this.form.get(["confirm_password"])!.value){
+ /* if(this.form.get(["password"])!.value != this.form.get(["confirm_password"])!.value){
     this.pass_error="Password does not match!..";
     return;
-  }
+  }*/
   this.error="";
   this.pass_error="";
   this.loading = true;
-  let userId = this.form.get(["userId"])!.value;
-  let password=this.form.get(["password"])!.value;
-
-  this.userService.createApplicationAccount(userId, password, this.checkedList).subscribe(res =>{
+  let userId = this.form.get(["userId"])!.value.toUpperCase();
+  let home_branch = this.form.get(["home_branch"])!.value;
+  //let password=this.form.get(["password"])!.value;
+debugger
+  this.userService.createApplicationAccount(userId,home_branch ,this.checkedList).subscribe(res =>{
   this.loading = false;
   if(res){
   this.successMsg = "User ID "+userId +" Successful Registered!..."
@@ -75,6 +86,10 @@ this.menuService.getMenuData().subscribe((res:MenuItem[])=>{
   else{
     this.error="User ID "+userId +" already exist!..."
   }
+  },
+  error => {
+    this.error ="The system have the error";
+    this.loading = false;
   });
 }
 }

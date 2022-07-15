@@ -47,7 +47,11 @@ const routes: Routes = [
         loadChildren: () => import('./views/UserAccount/manage-role/manage-role.moudle').then(m => m.ManageRoleModule)
       },
       {
-        path: 'user-registration/:userId',
+        path: 'role-setup',
+        loadChildren: () => import('./views/UserAccount/role-setup/role-setup.moudle').then(m => m.RoleSetupModule)
+      },
+      {
+        path: 'user-registration',
         loadChildren: () => import('./views/UserAccount/user-registration/user-registration.module').then(m => m.UserRegistrationModule)
       },
       {

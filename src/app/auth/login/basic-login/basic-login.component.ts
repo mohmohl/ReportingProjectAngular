@@ -143,7 +143,7 @@ check_isNumber(n:string) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
       return;
   }
   this.error="";
-  this.userId = this.form.get(["userId"])!.value.toUpperCase();;
+  this.userId = this.form.get(["userId"])!.value.toUpperCase();
   this.user_password= this.form.get(["password"])!.value;
   this.loading = true;
   if(this.mobileLoginFlag){

@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+          
+            <div class="card-header">
+                <h4>Custom Role Setup</h4>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+            </div>
+            <div class="card-body">
+                <code *ngIf="error">{{error}}</code>
+                  <label class="col-form-label text-warning" *ngIf="message">{{message}}</label>
+                <form [formGroup]="saveform" (ngSubmit)="save_role()">
+                <div class=" row" >
+                    
+                    <label class="col-sm-3">Role ID</label>
+                    <div class="col-sm-4">
+                    <input formControlName="cust_role_id">
+                      
+                  </div>
+                  <div class="col-sm-3">
+                    <button type="submit" class="btn-primary">
+                        Save
+                      </button> 
+                  </div>
+                
+                </div>
+            </form>
+        </div>
+      
+    </div>
+</div>
+</div>
