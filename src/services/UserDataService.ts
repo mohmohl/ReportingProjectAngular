@@ -28,6 +28,10 @@ import { AuthenticationService } from "./AuthenticationService";
     var createdUserId = this.authenticationService.currentUserValue.userId;
     return this.http.post(`${environment.baseUrl}/user/permitMenuApplicationUser`, { user_id,menuId,createdUserId });
   }
+  public PermitRoleToApplicationAccount(user_id: string,roleId:string[]) {
+    var createdUserId = this.authenticationService.currentUserValue.userId;
+    return this.http.post(`${environment.baseUrl}/user/permitRoleApplicationUser`, { user_id,roleId,createdUserId });
+  }
 
   public UpdateUserStatus(user_id: string, user_status: string) {
     return this.http.post(`${environment.baseUrl}/user/updateUserStatus/`, { user_id, user_status });
