@@ -17,14 +17,14 @@ export class UserPermissionComponent implements OnInit {
   loading = false;
   menuList:MenuItem[];
   checkedList=[];
+  rolecheckedList=[];
   data:UserInfo;
   form = new FormGroup({
     userId: new FormControl('', Validators.required)
   });
+  
   constructor(private service:UserDataService) { 
-    
   }
-
   ngOnInit() {
   }
   onChange(val: string, isChecked: boolean) {
@@ -36,6 +36,15 @@ export class UserPermissionComponent implements OnInit {
     }
 
   }
+  role_onChange(val: string, isChecked: boolean) {
+    if (isChecked) {
+      this.rolecheckedList.push(val);
+    } else {
+      const index = this.rolecheckedList.findIndex(x => x === val);
+     this.rolecheckedList = this.rolecheckedList.filter(item => item !== val);
+    }
+
+  }
   userIdOnChange(event: any){
     var value = event.target.value;
     value=value.toUpperCase();
@@ -43,6 +52,8 @@ export class UserPermissionComponent implements OnInit {
     }
   submit(){
     this.checkedList=[];
+    this.rolecheckedList=[];
+    
     if (this.form.invalid) {
       this.error = "Data is required";
       return;
@@ -59,6 +70,9 @@ export class UserPermissionComponent implements OnInit {
       this.data = res;
       this.data.menuItem.forEach(e =>{
         if(e.selected)this.checkedList.push(e.menu_id);
+      })
+      this.data.roleList.forEach(e =>{
+        if(e.selected)this.rolecheckedList.push(e.role_id);
       })
     }
     else{
@@ -90,7 +104,24 @@ onPermit(){
     console.log(error);
   });
 }
-
+rolePermit(){
+  this.loading=true;
+  this.message='';
+  this.service.PermitRoleToApplicationAccount(this.user_id,this.rolecheckedList).subscribe((res:boolean)=>{
+    this.loading = false;
+    if(res){
+      this.message="Successful Permit";
+    }else{
+      this.message="Not Successful Permit";
+    }
+   
+  },(error) => {
+    this.message='';
+    this.loading = false;
+    this.error="Internal Server Error";
+    console.log(error);
+  });
+}
 onUpdateStatus(userId: string, status: string) {
   debugger
   this.loading=true;
