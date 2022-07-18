@@ -5,6 +5,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { BsUserReportComponent } from './bs-user-report.component';
 import { BsUserReportRoutingModule } from './bs-user-report-routing.module';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule,MatFormFieldModule } from '@angular/material';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
+
 
 @NgModule({
   imports: [
@@ -14,7 +17,8 @@ import { MatDatepickerModule, MatInputModule, MatNativeDateModule,MatFormFieldMo
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   declarations: [BsUserReportComponent]
 })

@@ -7,7 +7,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BSUserReportService } from 'src/services/BSUserReportService';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
-
+import { IDropdownSettings } from '../../../ng-multiselect-dropdown/src';
 export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
   display: {
@@ -33,7 +33,9 @@ export class BsUserReportComponent implements OnInit {
   msg='';
   loading = false;
   branchList:string[];
-
+  selectedItems = [];
+  dropdownList = [];
+  dropdownSettings:IDropdownSettings={};
   form = new FormGroup({
     date: new FormControl(new Date(), Validators.required),
     branch: new FormControl('', Validators.required),
@@ -49,9 +51,23 @@ export class BsUserReportComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.branchList.forEach(b=>{
+      this.dropdownList.push({item_id: b, item_text: b});
+    })
+   
+    this.selectedItems = [
+      { item_id: 3, item_text: 'Pune' },
+      { item_id: 4, item_text: 'Navsari' }
+    ];
+    this.dropdownSettings = {
+      idField: 'item_id',
+      textField: 'item_text',
+    };
+   }
 
   submit() {
+    debugger
     this.error="";
     this.msg = "";
     if (this.form.invalid) {

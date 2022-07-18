@@ -31,7 +31,16 @@
                           <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
                         </select>
                       </div>
-                      
+                      <!--
+                      <div class="row form-group col-md-12">
+                        <label class="col-sm-2 col-form-label">Branch 2</label>
+                        <div style="width:50%">
+                          <ng-multiselect-dropdown 
+                          [settings]="dropdownSettings"
+                          [data]="branchList">
+                          </ng-multiselect-dropdown>
+                      </div>
+                      </div>-->
                       <div class="row form-group col-md-12">
                           <label class="col-sm-2 col-form-label">Include Role<code>*</code></label>
                           <div class="col-sm-1">
