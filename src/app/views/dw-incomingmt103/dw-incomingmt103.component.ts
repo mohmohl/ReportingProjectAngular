@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from 'src/services/HttpService';
 //import { jsPDF } from "jspdf";
 import { map } from 'rxjs/operators';
@@ -13,43 +13,51 @@ import { map } from 'rxjs/operators';
  
 export class DwIncomingmt103Component implements OnInit  {
 
-
-  @ViewChild('content', { static: false }) pdfcontent: ElementRef;
-  
-
   branch : string;
   currency : string;
   month : string;
+  month_desc : string;
   rmtbank : string = "ALL";
   authStatus : string = 'A';
   ccyList = [];
   monthList = [];
   incomingmt103list = [];
+  g_incomingmt103list : any;
   totalAmount=0;
   totalCommission=0;
+
+  subTotalAmount=0;
+  subTotalCommission=0;
+
   loading;
   error;
   titleCCy : string;
 
-  _showData = false;
+  _showFCY = false;
+  _noData = false;
 
-  branchData : any;
+  _showMMK = false;
+
+  branchData = {"bank_name" : "", "branch_name":"" , "branch_code":""};
+  branchData_all = {"bank_name" : "", "branch_name":"", "branch_code":""};
+  branchData_996 = {"bank_name" : "", "branch_name":"", "branch_code":""};
 
 
   constructor(private http: HttpService) { }
 
   ngOnInit(): void {
     this.readReferenceData();
+    this.readBranchData();
   }
 
   readReferenceData(){
     this.loading = true;
     //read months
-    this.http.doGet('/fttransaction/getMonthNameList').subscribe(res=>{
+    this.http.doGet('/fttransaction/getIncomingMT103Months').subscribe(res=>{
         this.loading = false;
         this.monthList = res;
         if(this.monthList.length>0){
-          this.month = this.monthList[0];
+          this.month = this.monthList[0];          
         }
     },
     error => {
@@ -65,7 +73,15 @@ export class DwIncomingmt103Component implements OnInit  {
         this.ccyList = res;
         if(this.ccyList.length>0){
           this.currency = this.ccyList[0].code;
-          this.changeCurrencyCode(0) ;
+          
+
+          if(this.ccyList[0].code == "MMK"){
+            this.branch = "ALL";
+            this.branchData = this.branchData_all;
+          }else{
+            this.branch = "996";
+            this.branchData = this.branchData_996;
+          }
         }
     },
     error => {
@@ -84,10 +100,28 @@ export class DwIncomingmt103Component implements OnInit  {
       this.branch = "996";
     }
 
-    this.http.doGet("/fttransaction/getBranchSetup?branch="+ this.branch).subscribe(
+  }
+
+  readBranchData(){
+    
+    this.http.doGet("/fttransaction/getBranchSetup?branch=ALL").subscribe(
       res => {
         this.loading = false;
-        this.branchData = res;        
+        this.branchData_all = res;        
+      },
+      error => {
+        console.log("Read Incoming MT 103 Error >>> "+error)
+        debugger;
+        this.loading = false;
+      }
+
+    );
+
+
+    this.http.doGet("/fttransaction/getBranchSetup?branch=996").subscribe(
+      res => {
+        this.loading = false;
+        this.branchData_996 = res;        
       },
       error => {
         console.log("Read Incoming MT 103 Error >>> "+error)
@@ -99,18 +133,49 @@ export class DwIncomingmt103Component implements OnInit  {
       
   }
 
+  clearProperties(){
+    this.totalAmount = 0;
+    this.totalCommission = 0;
+
+    this.subTotalAmount = 0;
+    this.subTotalCommission = 0;
+
+    this.g_incomingmt103list = [];
+  }
+
   showDatas(){
+    this.clearProperties();
     this.loading = true;
     this.http.doPost("/fttransaction/getIncomingMT103DataList?date="+this.month+"&ccy="+this.currency+"&branch="+
     this.branch+"&rmtBank="+this.rmtbank+"&status="+this.authStatus, "Incoming MT 103 Message").subscribe(
       res => {
         this.loading = false;
-        this.incomingmt103list = res;
-        if(this.incomingmt103list != null){
-          this._showData = true;
+        
+        if(res != null){
+          this.month_desc = this.month;
+          this._noData = false;
           this.titleCCy = this.currency;
-          this.getTotals();
+
+          if(this.currency == 'MMK'){
+            this._showMMK = true;
+            this._showFCY = false;
+            this.branchData = this.branchData_all;
+            this.g_incomingmt103list = this.groupBy(res, data => data.branch_name);
+          }
+          else{
+            this._showMMK = false;
+            this._showFCY = true;
+            this.branchData = this.branchData_996;
+            this.incomingmt103list = res;
+            this.getTotals();
+          }
         }
+        else{
+          this._showMMK = false;
+          this._showFCY = false;
+          this._noData = true;
+        }
+        
         
       },
       error => {
@@ -122,6 +187,26 @@ export class DwIncomingmt103Component implements OnInit  {
     );
   }
 
+  
+  groupBy(list, keyGetter) {
+    const map = new Map();
+    list.forEach((item) => {
+        
+          this.totalAmount += item.cr_amount;
+          this.totalCommission += item.comission;
+          
+         const key = keyGetter(item);
+         const collection = map.get(key);
+         if (!collection) {
+             map.set(key, [item]);
+         } else {
+             collection.push(item);
+         }
+    });
+   
+    return (map);
+}
+
   getTotals(){
     for(let i=0; i<this.incomingmt103list.length;i++){
       this.totalAmount += this.incomingmt103list[i].cr_amount;
@@ -129,62 +214,32 @@ export class DwIncomingmt103Component implements OnInit  {
     }
   }
 
-/*
-  downloadPDF(){
-    let content=this.pdfcontent.nativeElement;  
-    let doc = new jsPDF({
-      orientation: "landscape",
-      unit: "in",
-      format: [4, 2]
-    });  
-    let _elementHandlers =  
-    {  
-      '#editor':function(element,renderer){  
-        return true;  
-      }  
-    };  
-
-    doc.html(content, {
-      callback: (doc) => {
-        doc.output("dataurlnewwindow");
-      }
-   });
-    doc.save('Incoming MT 103_'+this.month+'_'+this.branch+'.pdf');  
+  calculateSubTotals(data){
+      this.subTotalAmount += data.cr_amount;
+      this.subTotalCommission += data.comission;
   }
 
-  exportPDF(){
-   
-  this.error="";
-  this.loading = true;
- 
-  this.http.doGet("/fttransaction/exportIncomingMT103PDF?date="+this.month+"&ccy="+this.currency+"&branch="+
-    this.branch+"&rmtBank="+this.rmtbank+"&status="+this.authStatus).pipe(
-    map((data: any) => {
-      let blob = new Blob([data], {
-        type: "application/pdf"
-      });
-      var a = document.createElement("a");
-      document.body.appendChild(a);
-      var file = new Blob([data], {type: 'application/pdf'});
-      var fileURL = URL.createObjectURL(file);
-      a.href = fileURL;
-      a.target     = '_blank'; 
-      a.click();
-      
-      this.loading = false;
-    })).subscribe(
-      res => { },
-      error => {
-        console.log("Detail Trial Error >>> "+error)
-        debugger;
-        if(error != ""){
-        this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
-          }
-        this.loading = false;
-      });
+  clearSubTotal(){
+    this.subTotalAmount = 0;
+    this.subTotalCommission = 0;
   }
-*/
+
 exportPDF(){
-  
+  this.error="";
+    this.loading = true;
+    //exportIncomingMT103PDF
+    let fileName = "IncomingMT103_"+this.currency+"_" + this.branch+"_"+this.month + ".pdf";
+    this.http.generatePost_PDF("/fttransaction/exportIncomingMT103PDF?date="+this.month+"&ccy="+this.currency+"&rmtBank="+this.rmtbank+"&status="+this.authStatus,this.branchData,
+    fileName).subscribe(
+        res => {this.loading = false; },
+        error => {
+          console.log("Incoming MT 103 Error >>> "+error)
+          debugger;
+          if(error != ""){
+          this.error = "(The system cannot cannot generate Incoming MT 103 !.. Have the error)";
+            }
+          this.loading = false;
+        });
+        
 }
 }

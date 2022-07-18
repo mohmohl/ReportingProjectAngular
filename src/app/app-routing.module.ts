@@ -3,7 +3,6 @@ import { Routes, RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthGuard } from 'src/helpers/auth.guard';
 import { AdminComponent } from './layouts/admin/admin.component';
 import { AuthComponent } from './layouts/auth/auth.component';
-import { SimplePageComponent } from './simple-page/simple-page.component';
 
 const routes: Routes = [
   {
@@ -333,7 +332,27 @@ const routes: Routes = [
         {
         path: 'fcubs-user-report',
         loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
-      }
+      },
+      {
+      path: 'rmtobrdrawing',
+      loadChildren: () => import('./views/dw-rmtobrdrawing/dw_rmtobrdrawing.module').then(m => m.DWRMTOBRDrawingModule)
+      },
+      {
+      path: 'rmtobrencash',
+      loadChildren: () => import('./views/dw-rmtobrencash/dw_rmtobrencash.module').then(m => m.DWRMTOBREncashModule)
+     },
+     {
+     path: 'remittance',
+     loadChildren: () => import('./views/dw-remittance/dw_remittance.module').then(m => m.DWRemittanceModule)
+    },
+    {
+      path: 'incomingmt103',
+      loadChildren: () => import('./views/dw-incomingmt103/dw_incomingmt103.module').then(m => m.DWIncomingMT103Module)
+    },
+    {
+      path: 'outgoingmt103',
+      loadChildren: () => import('./views/dw-outgoingmt103/dw_outgoingmt103.module').then(m => m.DWOutgoingMT103Module)
+    }
 
     ]
   },
