@@ -3,7 +3,7 @@
         <div class="card">
             
             <div class="card-header">
-                <h5>OBR ENCASH TRANSFER </h5>
+                <h5> Remittance Drawing (OBR)_Branch</h5>
                 <div *ngIf="loading" class="d-flex justify-content-center">
                     <div class="spinner-border spinner-border-sm text-warning"></div>
                       <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -24,14 +24,14 @@
 
                         <label class="col-sm-1"> Branch </label>
                         <div class="col-xs-2">
-                            <select [(ngModel)]="branchCode" (change)="changeBranchCombo($event.target.options.selectedIndex)">
+                            <select [(ngModel)]="brCode" (change)="changeBranchCombo($event.target.options.selectedIndex)">
                                 <option *ngFor="let branch of l_branch" value="{{branch.branch_code}}" selected>{{branch.branch_code}}</option>
                             </select>
                         </div>
 
                         <label class="col-sm-1">Date</label>
                         <div class="col-xs-2 date-picker">
-                            <select [(ngModel)]="month">
+                            <select [(ngModel)]="month" (change)="changeDateCombo($event.target.options.selectedIndex)">
                                 <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
                             </select>
                         </div>
@@ -60,77 +60,68 @@
                         </div>
 
                         <div>
-                            <p class="pgsubtitle">OBR Encash Transfer</p>
+                            <p class="pgsubtitle">Remittance Drawing (OBR) Report</p>
                         </div>
                        
                     </div>
 
                     <div>
-                        <table class="headertbl">
-                            <tr>
-                                <td class="td col-md-2" >Local Branch :</td>
-                                <td class="td">{{branchSetupData.branch_name}}</td>
-                                <td class="prtDate td" style="text-align: right;">{{month}}</td> 
-                            </tr>
-                        </table>
-
+                        <p class="prtDate"> {{month_desc}}</p>
                     </div>
-                    
 
                     <table class="table table table-hover" id="content" #content>
                         <thead class="text-uppercase">
                           <th style="text-align: center;">Sr. No.</th>
                           <th style="text-align: center;">Date</th>
+                          <th style="text-align: center;">Trn. Ref. No.</th>
+                          <th style="text-align: center;">To Branch</th>
+                          <th style="text-align: center;">Cr. Value Date</th>
                           <th style="text-align: center;">Fax No.</th>
-                          <th style="text-align: center;">Drawee Name</th>
-                          <th style="text-align: center;">Payee Name</th>
-                          <th style="text-align: center;">Ref. No.</th>
-                          <th style="text-align: center;">Comm(MAB)</th>
-                          <th style="text-align: center;">Comm(Other Bank)</th>
-                          <th style="text-align: center;">Transfer Amount</th>
+                          <th style="text-align: center;">Drawee</th>
+                          <th style="text-align: center;">Beneficiary</th>
+                          <th style="text-align: center;">Dr Amount</th>
+                          <th style="text-align: center;">Commission1</th>
+                          <th style="text-align: center;">Commission2</th>
+                          <th style="text-align: center;">Fax Charges</th>
                         </thead>
                           
-                        <tbody *ngFor="let m_data of g_obrencashtransferdatalist | keyvalue; ">
-                            <tr>
-                                <td colspan="9"><b>From  Branch :</b> {{m_data.key}} </td>
-                            </tr>
-
-                            <tr *ngFor="let data of m_data.value;">
+                        <tbody *ngFor="let m_data of g_rmtobrdrawingdatalist | keyvalue; ">
+                            
+                            <tr *ngFor="let data of m_data.value; let i=index;">
                                 
-                                <td> {{ getIndex() }}</td>
+                                <td> {{ (i+1) }}</td>
 
                                 <td> {{data.trn_dt | date : 'dd/MM/yyyy'}}</td>
+                                <td> {{data.trn_ref_no}}</td>
+                                <td> {{data.to_branch}}</td>
+                                <td> {{data.cr_value_date | date : 'dd/MM/yyyy'}}</td>
                                 <td> {{data.fax_no}}</td>
-                                <td> {{data.internal_remarks}}</td>
-                                <td> {{data.cr_account}},{{data.ult_beneficiary1}}</td>
-                                <td> {{data.trn_ref_no}} </td>
-                                <td  class="number"> {{data.comm1 | number : '1.2-3'}} </td>
-                                <td  class="number"> {{data.comm2 | number : '1.2-3'}}  </td>
-                                <td  class="number"> {{data.dr_amount | number : '1.2-3'}} {{calculateSubTotal(data)}}</td>
+                                <td> {{data.drawee}} </td>
+                                <td> {{data.beneficiary}} </td>
+                                <td  class="number"> {{data.dr_amount | number : '1.2-3'}}</td>
+                                <td  class="number"> {{data.commission1 | number : '1.2-3'}} </td>
+                                <td  class="number"> {{data.commission2 | number : '1.2-3'}}  </td>
+                                <td  class="number"> {{data.fax_charges | number : '1.2-3'}} {{calculateTotal(data)}} </td>
                             </tr>
 
                             <tr>
-                                <td colspan="8" class="stotal"> Sub Total</td>
-                                <td class="stotal"> {{subTotal | number : '1.2-3'}} {{clearSubTotal()}}</td>
-                                
+                                <td colspan="8" class="stotal"> Sub Total  </td>
+                                <td class="stotal"> {{subDrAmt | number : '1.2-3'}}</td>
+                                <td class="stotal"> {{subComm1 | number : '1.2-3'}}</td>
+                                <td class="stotal"> {{subComm2 | number : '1.2-3'}}</td>
+                                <td class="stotal"> {{subFaxCharges | number : '1.2-3'}} {{clearSubTotal()}}</td>
                             </tr>                    
                         </tbody>
                        
                         <tr>
                             <td colspan="8" class="title"> Grand Total </td>
-                            <td class="stotal"> {{ grandTotal | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandDrAmt | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandComm1 | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandComm2 | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandFaxCharges | number : '1.2-3'}} </td>
                         </tr>
                     </table>
 
-                    
-                    <div class="col-md-4" >
-                        <table>
-                            <tr>
-                                <td style="background-color:#fcf6d6">Number of Tranfer Total</td>
-                                <td>{{totNoOfTrans}}</td>
-                            </tr>
-                        </table>
-                    </div>
                 </div>
 
                 
@@ -144,5 +135,3 @@
         </div>
     </div>
 </div>
-
-

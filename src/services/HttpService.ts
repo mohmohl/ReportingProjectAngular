@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -43,5 +44,28 @@ export class HttpService {
     
       return this.http.post<any>(`${api}`, params,{headers : headers,responseType: 'arraybuffer' as 'json'});
     
+  }
+
+  public generatePost_PDF(url:string, obj :any, filename: string){
+
+    var api = environment.baseUrl+url;
+    let params = JSON.stringify(obj);
+    var headers = new HttpHeaders({'Content-Type':'application/json','Accept': 'application/json',});
+    
+      return this.http.post<any>(`${api}`, params,{headers : headers,responseType: 'arraybuffer' as 'json'}).pipe(
+        map((data: any) => {
+          
+          let blob = new Blob([data], {
+            type: "application/pdf"
+          });
+          var a = document.createElement("a");
+          var file = new Blob([data], {type: 'application/pdf'});
+          var fileURL = URL.createObjectURL(file);
+          a.href = fileURL;
+          a.target     = '_blank'; 
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+        }));
   }
 }
