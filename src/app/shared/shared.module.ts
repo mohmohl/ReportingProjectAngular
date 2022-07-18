@@ -24,6 +24,8 @@ import {SpinnerComponent} from './spinner/spinner.component';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {NotificationsService} from 'angular2-notifications';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -45,6 +47,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       MatInputModule,
       MatDatepickerModule,
       MatNativeDateModule,
+      NgMultiSelectDropDownModule.forRoot(),
   ],
   declarations: [
       AccordionAnchorDirective,

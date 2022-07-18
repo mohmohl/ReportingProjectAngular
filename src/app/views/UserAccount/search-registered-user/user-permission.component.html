@@ -96,7 +96,7 @@
                       <th>ROLE NAME</th>
                   </tr>
                   <tr *ngFor="let role of data.roleList">
-                    <td><input type="checkbox" [(ngModel)]="role.selected" (change)="roleonChange(role.role_id, $event.target.checked)" class="styled">
+                    <td><input type="checkbox" [(ngModel)]="role.selected" (change)="role_onChange(role.role_id, $event.target.checked)" class="styled">
                     </td>
                       <td> {{role.role_id}}</td>
                       <td> {{role.role_name}}</td>
