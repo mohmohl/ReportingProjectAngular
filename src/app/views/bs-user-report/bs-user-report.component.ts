@@ -7,7 +7,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BSUserReportService } from 'src/services/BSUserReportService';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
-import { IDropdownSettings } from '../../../ng-multiselect-dropdown/src';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
   display: {
@@ -48,24 +48,48 @@ export class BsUserReportComponent implements OnInit {
     bsService.getBranchList().subscribe((res:string[])=>{
       this.loading = false;
       this.branchList = res;
+      this.branchList.forEach(b=>{
+        this.dropdownList.push({item_id: "'"+b+"'", item_text: b});
+      })
     });
   }
 
   ngOnInit() {
-    this.branchList.forEach(b=>{
-      this.dropdownList.push({item_id: b, item_text: b});
-    })
+    
    
-    this.selectedItems = [
+   /* this.selectedItems = [
       { item_id: 3, item_text: 'Pune' },
       { item_id: 4, item_text: 'Navsari' }
-    ];
+    ];*/
     this.dropdownSettings = {
       idField: 'item_id',
       textField: 'item_text',
     };
    }
-
+   onItemSelect(item:any){
+    console.log(item);
+    this.selectedItems.push(item)
+    console.log(this.selectedItems);
+}
+OnItemDeSelect(item:any){
+    console.log(item);
+    this.selectedItems = this.selectedItems.filter(e => e !== item);
+    console.log(this.selectedItems);
+}
+onSelectAll(items: any){
+  this.selectedItems=[];
+  let data:string=items
+    console.log("select all = "+items);
+    var array:[] = items+''.split(',');
+    console.log("splice array= "+array);
+    array.forEach(e=>{
+      console.log("branch= "+e);
+    });
+    //console.log("select all array= "+this.selectedItems);
+}
+onDeSelectAll(items: any){
+    console.log(items);
+}
   submit() {
     debugger
     this.error="";
