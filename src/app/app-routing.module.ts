@@ -360,8 +360,10 @@ const routes: Routes = [
     {
       path: 'outgoingmt103',
       loadChildren: () => import('./views/dw-outgoingmt103/dw_outgoingmt103.module').then(m => m.DWOutgoingMT103Module)
+    },{
+      path: 'user-branch-setup',
+      loadChildren: () => import('./views/user-branch-setup/user-branch-setup.module').then(m => m.UserBranchSetupModule)
     }
-
     ]
   },
   {

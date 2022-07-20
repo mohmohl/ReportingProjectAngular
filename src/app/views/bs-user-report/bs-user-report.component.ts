@@ -39,7 +39,7 @@ export class BsUserReportComponent implements OnInit {
   form = new FormGroup({
     date: new FormControl(new Date(), Validators.required),
     branch: new FormControl('', Validators.required),
-    role: new FormControl('', Validators.required)
+    role: new FormControl('yes', Validators.required)
   }); 
 
   constructor(private bsService: BSUserReportService, public datepipe: DatePipe) { 
