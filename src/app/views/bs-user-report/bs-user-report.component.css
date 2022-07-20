@@ -1,0 +1,12 @@
+.multiselect-dropdown .dropdown-btn .selected-item {
+    border: 1px solid maroon !important;
+    background:maroon !important;
+}
+.multiselect-dropdown .dropdown-btn .selected-item:hover {
+    border: 1px solid maroon !important;
+    background:maroon !important;
+}
+.multiselect-item-checkbox input[type=checkbox]+div:before{
+    color:maroon !important;
+    border:2px solid #691c31 !important;
+}
