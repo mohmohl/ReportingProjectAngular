@@ -25,7 +25,6 @@ import { DatePipe } from '@angular/common';
     TitleComponent,
     BreadcrumbsComponent,
     AuthComponent
-    
  ],
   imports: [
     BrowserModule,
