@@ -31,7 +31,7 @@
 
                         <label class="col-sm-1">Date</label>
                         <div class="col-xs-2 date-picker">
-                            <select [(ngModel)]="month">
+                            <select [(ngModel)]="month" (change)="onChangeMonthCombo()">
                                 <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
                             </select>
                         </div>

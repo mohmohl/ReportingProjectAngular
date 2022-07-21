@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpService } from 'src/services/HttpService';
 
@@ -39,7 +39,7 @@ export class DwDailyfundtransferComponent implements OnInit {
   _showData = false;
   totNoOfTrans = 0;
 
-  constructor(private http : HttpService) { }
+  constructor(private http : HttpService, private cdf:ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.readReference();
@@ -74,8 +74,13 @@ export class DwDailyfundtransferComponent implements OnInit {
     this.loading = false;
   });
 }
+
+onChangeMonthCombo(){
+  this.cdf.detach();
+}
   
 showDatas(){
+  this.cdf.reattach();
   this.totNoOfTrans = 0;
   this.subDrAmt = 0;
   this.subCrAmt = 0;
