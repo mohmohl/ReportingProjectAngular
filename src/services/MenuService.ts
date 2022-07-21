@@ -44,7 +44,7 @@ import { MenuItem } from "src/models/menuItem";
      return this.http.get<any>(api);
 }
   public getAccessMenuData(role_id:string): Observable<any>{
-    return this.http.post<any>(`${environment.baseUrl}`+'/menu/get_accessed_menu_data?role_id='+role_id,{title:"Role Menu"});
+    return this.http.post<any>(`${environment.baseUrl}`+'/menu/get_accessed_menu_data',{role_id});
   }
   public PermitMenuToRole(role_id: string,menuId:string[]) {
    
