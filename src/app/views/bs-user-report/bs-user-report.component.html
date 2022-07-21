@@ -3,7 +3,7 @@
         <div class="card">
           <form [formGroup]="form" (ngSubmit)="submit()">
             <div class="card-header">
-              <h5>FCUB User List Report</h5>
+              <h5>FCUBS User List Report</h5>
               <div *ngIf="loading" class="d-flex justify-content-center">
                 <div class="spinner-border spinner-border-sm text-warning"></div>
                   <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -37,7 +37,7 @@
                         </select>
                       </div> -->
                       
-                      <div class="row form-group col-md-12">
+                     <!-- <div class="row form-group col-md-12">
                         <label class="col-sm-2 col-form-label">Branch</label>
                         <div style="width:50%">
                           <ng-multiselect-dropdown 
@@ -49,7 +49,7 @@
                           (onDeSelectAll)="onDeSelectAll($event)">
                           </ng-multiselect-dropdown>
                       </div>
-                      </div>
+                      </div>-->
                       <div class="row form-group col-md-12">
                           <label class="col-sm-2 col-form-label">Include Role<code>*</code></label>
                           <div class="col-sm-1">
