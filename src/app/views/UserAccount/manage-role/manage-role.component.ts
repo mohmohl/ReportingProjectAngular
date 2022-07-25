@@ -57,7 +57,7 @@ export class ManageRoleComponent implements OnInit {
     
     this.role_id = this.form.get(["role_id"])!.value;
     this.loading = true;
-    //console.log("Param = "+this.user_id)
+    console.log("Param = "+this.role_id+"//")
     this.menu_service.getAccessMenuData(this.role_id).subscribe((res:MenuItem[])=>{
       this.loading = false;
       if(res){
