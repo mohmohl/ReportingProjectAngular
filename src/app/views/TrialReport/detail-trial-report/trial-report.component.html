@@ -57,7 +57,7 @@
                 </div>
             </form>
                 
-                <p *ngIf="data_message" class="text-danger">{{data_message}}</p>
+            <p *ngIf="data_message" class="text-danger">{{data_message}}</p>
              
             <div class="table-responsive">
               <div *ngIf="data" class="col-sm-12 text-center">
@@ -70,6 +70,7 @@
                 <tr class="text-uppercase table-header-txt" width="100%">
                   <th [attr.colspan]="ccyCode == true ? '2' : ''">Debit</th>
                   <th rowspan="2" width="80px">Account</th>
+                  <th rowspan="2" >Old GL</th> <!--- For UAT2 Version -->
                   <th rowspan="2">Description</th>
                   <th [attr.colspan]="ccyCode == true ? '2' : ''">Credit</th>
                 </tr>
@@ -90,6 +91,7 @@
                           {{list.debit_lcy < 0 ? list.debit_lcystr : list.debit_lcy === 0 ? "" :list.debit_lcy | number: '1.2-2'}}
                         </td>
                         <td class="txt">{{list.account}}</td>
+                        <td class="txt">{{list.old_gl}}</td> <!--- For UAT2 Version -->
                         <td class="des-txt">{{list.gl_desc}}</td>
                         <td class="num-txt" *ngIf="ccyCode">
                           {{list.credit < 0 ? list.creditstr : list.credit === 0 ? "" :list.credit | number: '1.2-2'}}
