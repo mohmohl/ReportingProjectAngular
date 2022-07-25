@@ -19,6 +19,7 @@ export class UserBranchSetupComponent implements OnInit {
   menuList:MenuItem[];
   checkedList=[];
   rolecheckedList=[];
+  branchCheckedList = [];
   data:UserInfo;
   form = new FormGroup({
     userId: new FormControl('', Validators.required)
@@ -37,6 +38,7 @@ export class UserBranchSetupComponent implements OnInit {
     }
 
   }
+
   role_onChange(val: string, isChecked: boolean) {
     if (isChecked) {
       this.rolecheckedList.push(val);
@@ -44,13 +46,23 @@ export class UserBranchSetupComponent implements OnInit {
       const index = this.rolecheckedList.findIndex(x => x === val);
      this.rolecheckedList = this.rolecheckedList.filter(item => item !== val);
     }
-
   }
+
   userIdOnChange(event: any){
     var value = event.target.value;
     value=value.toUpperCase();
     event.target.value = value.toUpperCase();
-    }
+  }
+
+  branch_onChange(val: string, isChecked: boolean) {
+      if (isChecked) {
+        this.branchCheckedList.push(val);
+      } else {
+        const index = this.branchCheckedList.findIndex(x => x === val);
+       this.branchCheckedList = this.branchCheckedList.filter(item => item !== val);
+      }
+  }
+
   submit(){
     this.checkedList=[];
     this.rolecheckedList=[];
@@ -69,11 +81,8 @@ export class UserBranchSetupComponent implements OnInit {
     debugger
     if(res){
       this.data = res;
-      this.data.menuItem.forEach(e =>{
-        if(e.selected)this.checkedList.push(e.menu_id);
-      })
-      this.data.roleList.forEach(e =>{
-        if(e.selected)this.rolecheckedList.push(e.role_id);
+      this.data.branchList.forEach(e =>{
+        if(e.selected)this.branchCheckedList.push(e.branchCode);
       })
     }
     else{
@@ -143,7 +152,6 @@ onUpdateStatus(userId: string, status: string) {
     this.error="Internal Server Error";
     console.log(error);
   });
-
 }
 
 }
