@@ -337,10 +337,6 @@ const routes: Routes = [
         path: 'obrencashtransfer',
         loadChildren: () => import('./views/dw-obrencashtransfer/dw_obrencashtransfer.module').then(m => m.DWObrEncashTransferModule)
       },
-        {
-        path: 'fcubs-user-report',
-        loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
-      },
       {
       path: 'rmtobrdrawing',
       loadChildren: () => import('./views/dw-rmtobrdrawing/dw_rmtobrdrawing.module').then(m => m.DWRMTOBRDrawingModule)
@@ -363,6 +359,14 @@ const routes: Routes = [
     },{
       path: 'user-branch-setup',
       loadChildren: () => import('./views/user-branch-setup/user-branch-setup.module').then(m => m.UserBranchSetupModule)
+    },
+    {
+      path: 'active-user-home-branch-report',
+      loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
+    },
+    {
+    path: 'active-user-report',
+    loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
     }
     ]
   },

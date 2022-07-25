@@ -34,52 +34,6 @@
             <h5>{{data.user_id}}</h5>
             <code *ngIf="message">{{message}}</code>
             <div class="page-header-breadcrumb">
-              <button type="button" (click)="onPermit()" class="btn-primary">
-                Permit
-              </button>&nbsp;
-              <button type="button" (click)="onUpdateStatus(data.user_id,data.user_status)" class="btn-primary" *ngIf="data.user_status == 'D' || data.user_status == null"  >
-                Enable
-              </button> 
-              <button type="button" (click)="onUpdateStatus(data.user_id,data.user_status)" class="btn-primary" *ngIf="data.user_status == 'E'">
-                Disable
-              </button> 
-            </div>
-          </div>
-          <div class="card-body p-t-10">
-
-            <div class="form-group row">
-              <div class="col-sm-2"></div>
-              <div class="col-sm-8">
-              <table>
-                  <tr>
-                      <th>Choose</th>
-                      <th>Menus</th>
-                      <th>Menu Category</th>
-                      <th>Program</th>
-                      <th>Status</th>
-                  </tr>
-                  <tr *ngFor="let menu of data.menuItem">
-                    <td><input type="checkbox" [(ngModel)]="menu.selected" (change)="onChange(menu.menu_id, $event.target.checked)" class="styled">
-                    </td>
-                      <td>   {{menu.menu_name}}</td>
-                      <td> {{menu.category_name}}</td>
-                      <td> {{menu.program}}</td>
-                      <td> {{menu.menu_status}}</td>
-                  </tr>
-              </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-  <div class="row" *ngIf="data">
-    <div class="col-md-12">
-        <div class="card">
-          <div class="card-header">
-            <h5>{{data.user_id}}</h5>
-            <code *ngIf="message">{{message}}</code>
-            <div class="page-header-breadcrumb">
               <button type="button" (click)="rolePermit()" class="btn-primary">
                 Permit
               </button>&nbsp;
@@ -92,14 +46,14 @@
               <table>
                   <tr>
                       <th>Choose</th>
-                      <th>ROLE ID</th>
-                      <th>ROLE NAME</th>
+                      <th>Branch Code</th>
+                      <th>Branch NAME</th>
                   </tr>
-                  <tr *ngFor="let role of data.roleList">
-                    <td><input type="checkbox" [(ngModel)]="role.selected" (change)="role_onChange(role.role_id, $event.target.checked)" class="styled">
+                  <tr *ngFor="let branch of data.branchList">
+                    <td><input type="checkbox" [(ngModel)]="branch.selected" (change)="branch_onChange(branch.branchCode, $event.target.checked)" class="styled">
                     </td>
-                      <td> {{role.role_id}}</td>
-                      <td> {{role.role_name}}</td>
+                      <td> {{branch.branchCode}}</td>
+                      <td> {{branch.branchName}}</td>
                   </tr>
               </table>
               </div>
