@@ -108,7 +108,8 @@
                       <td class="num-txt">
                          {{totalDebit_lcy < 0 ? totalDebit_lcystr : totalDebit_lcy === 0 ? "" :  totalDebit_lcy | number: '1.2-2'}}
                       </td>
-                      <td class="txt" colspan="2"> Grand Total</td>
+                      <!-- <td class="txt" colspan="2"> Grand Total</td> -->
+                      <td class="txt" colspan="3"> Grand Total</td>  <!--UAT2 Version -->
                       
                       <td class="num-txt" *ngIf="ccyCode">
                         {{totalCredit < 0 ? totalCreditstr : totalCredit === 0 ? "" :  totalCredit | number: '1.2-2'}}
