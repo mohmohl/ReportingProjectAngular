@@ -25,7 +25,9 @@ export class UserManualComponent implements OnInit {
       });
   }
 
-  submit(id: string,fileType: string) {
+  submit(id: string,fileType: string,fullPath: string) {
+    var fileExtenstion = fullPath.substring(fullPath.lastIndexOf('.'));
+    fileType = "video";
     debugger
     this.loading = true;
     this.error = "";
@@ -33,8 +35,10 @@ export class UserManualComponent implements OnInit {
     if(fileType ==="excel"){
       appfiletype = "application/vnd.ms-excel";
     }
-    else{
+    else if(fileType ==="pdf"){
       appfiletype = "application/pdf";
+    } else {
+      appfiletype = "application/video";
     }
     
     this.service.searchManualFile(id,fileType).pipe(
@@ -49,7 +53,7 @@ export class UserManualComponent implements OnInit {
             link.download = 'UserManual.xlsx';
             link.click();
             window.URL.revokeObjectURL(link.href);
-            }else{
+            }else if(fileType ==="pdf"){
               var a = document.createElement("a");
               document.body.appendChild(a);
               var file = new Blob([data], {type: 'application/pdf'});
@@ -57,7 +61,12 @@ export class UserManualComponent implements OnInit {
               a.href = fileURL;
               a.target     = '_blank'; 
               a.click();
- 
+            } else {
+              var link = document.createElement('a');
+              link.href = window.URL.createObjectURL(blob);
+              link.download = 'UserManual' + fileExtenstion;
+              link.click();
+              window.URL.revokeObjectURL(link.href);
             }
           this.loading = false;
         })).subscribe(
