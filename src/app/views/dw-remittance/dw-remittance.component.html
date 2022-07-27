@@ -65,6 +65,7 @@
                     <table class="table table table-hover" id="content" #content>
                         <thead class="text-uppercase">
                           <th style="text-align: center;">Date</th>
+                          <th style="text-align: center;">Contract No.</th>
                           <th style="text-align: center;">Branch</th>
                           <th style="text-align: center;">Product/Batch</th>
                           <th style="text-align: center;">Remitter</th>
@@ -81,6 +82,7 @@
                             <tr *ngFor="let data of remittancedatalist;">
                                 
                                 <td> {{data.trn_dt | date : 'dd/MM/yyyy'}}</td>
+                                <td> {{data.trn_ref_no}}</td>
                                 <td> {{data.branch}}</td>
                                 <td> {{data.product_batch}}</td>
                                 <td> {{data.remitter}}</td>
@@ -89,7 +91,7 @@
                                 <td style="text-align: center;"> {{data.trn_code}} </td>
                                 <td style="text-align: center;"> {{data.drcr_ind}}</td>
                                 <td  class="number"> {{data.lcy_amount | number : '1.2-3'}} </td>
-                                <td  class="number"> {{data.instrument_code | number : '1.2-3'}}  </td>
+                                <td  class="number"> {{data.instrument_code}}  </td>
                             </tr>
                         </tbody>
                     </table>

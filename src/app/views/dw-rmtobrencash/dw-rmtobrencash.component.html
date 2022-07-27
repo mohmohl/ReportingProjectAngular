@@ -65,7 +65,11 @@
                        
                     </div>
 
-                    
+                    <div class="prtDate">
+                        <p>{{month_desc}}</p>
+                    </div>
+
+                    <!--
                     <div>
                         <table class="headertbl">
                             <tr>
@@ -73,18 +77,22 @@
                                 <td class="td">{{branchSetupData.branch_name}}</td>
                                 <td class="prtDate td" style="text-align: right;">{{month_desc}}</td> 
                             </tr>
+                           
                             <tr>
                                 <td class="td col-md-2" >Tr Date :</td>
                                 <td class="td">{{tr_date | date : 'dd/MM/yyyy'}}</td>
                             </tr>
+                            
+                           
                         </table>
 
                     </div>
-                    
+                    -->
 
                     <table class="table table table-hover" id="content" #content>
                         <tr class="text-uppercase">
                           <th rowspan="2" style="vertical-align: middle;">Sr. No.</th>
+                          <th rowspan="2" style="vertical-align: middle;">Date</th>
                           <th rowspan="2" style="vertical-align: middle;">Fax No.</th>
                           <th rowspan="2" style="vertical-align: middle;">Test No.</th>
                           <th rowspan="2" style="vertical-align: middle;">Drawee Name and NRC</th>
@@ -100,12 +108,12 @@
                           
                         <tbody *ngFor="let m_data of g_rmtobrencashdatalist | keyvalue; ">
                             <tr>
-                                <td colspan="8"><b>To Branch : </b> {{m_data.key}}</td>
+                                <td colspan="9"><b>To Branch : </b> {{m_data.key.toString().split("|")[1]}}</td>
                             </tr>
                             <tr *ngFor="let data of m_data.value; let i=index;">
                                 
                                 <td> {{ getIndex() }}</td>
-
+                                <td> {{data.trn_dt | date : 'dd/MM/yyyy'}}</td>
                                 <td> {{data.fax_no}}</td>
                                 <td> </td>
                                 <td> {{data.narrative}}</td>
@@ -116,7 +124,7 @@
                             </tr>
 
                             <tr>
-                                <td colspan="6" class="stotal"> Sub Total  </td>
+                                <td colspan="7" class="stotal"> Sub Total  </td>
                                 <td class="stotal"> {{subChAmt | number : '1.2-3'}} </td>
                                 <td class="stotal"> {{subTrAmt | number : '1.2-3'}} {{clearSubTotal()}}</td>
                             </tr>                    
@@ -128,20 +136,20 @@
                        
                         <tr>
                             <td colspan="3" class="headertbl" style=" border-collapse: collapse; border: none;"></td>
-                            <td colspan="3" class="headertbl" style=" border-collapse: collapse; border: none;"> <b>Number of Cash Total =  {{count_cash}}</b>  </td>
+                            <td colspan="4" class="headertbl" style=" border-collapse: collapse; border: none;"> <b>Number of Cash Total =  {{count_cash}}</b>  </td>
                             <td class="stotal" style="text-align: left;"> Cash </td>
                             <td class="stotal"> {{ grandChAmt | number : '1.2-3'}} </td>
                         </tr>
 
                         <tr>
                             <td colspan="3" class="headertbl" style=" border-collapse: collapse; border: none;"></td>
-                            <td colspan="3" class="headertbl" style=" border-collapse: collapse; border: none;"> <b>Number of Transfer Total =  {{count_transfer}}</b>  </td>
+                            <td colspan="4" class="headertbl" style=" border-collapse: collapse; border: none;"> <b>Number of Transfer Total =  {{count_transfer}}</b>  </td>
                             <td class="stotal" style="text-align: left;"> Transfer </td>
                             <td class="stotal"> {{ grandTrAmt | number : '1.2-3'}} </td>
                         </tr>
 
                         <tr>
-                            <td colspan="6" class="headertbl" style=" border-collapse: collapse; border: none;"> </td>
+                            <td colspan="7" class="headertbl" style=" border-collapse: collapse; border: none;"> </td>
                             <td class="stotal"> Grand Total </td>
                             <td class="stotal"> {{ (grandChAmt + grandTrAmt) | number : '1.2-3'}} </td>
                         </tr>

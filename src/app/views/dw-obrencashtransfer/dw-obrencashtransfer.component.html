@@ -92,7 +92,7 @@
                           
                         <tbody *ngFor="let m_data of g_obrencashtransferdatalist | keyvalue; ">
                             <tr>
-                                <td colspan="9"><b>From  Branch :</b> {{m_data.key}} </td>
+                                <td colspan="9"><b>From  Branch :</b> {{m_data.key.toString().split("|")[2]}} </td>
                             </tr>
 
                             <tr *ngFor="let data of m_data.value;">

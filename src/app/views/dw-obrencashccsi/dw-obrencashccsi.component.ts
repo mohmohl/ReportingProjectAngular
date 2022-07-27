@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpService } from 'src/services/HttpService';
 
+
 @Component({
   selector: 'app-dw-obrencashccsi',
   templateUrl: './dw-obrencashccsi.component.html',
@@ -23,7 +24,7 @@ export class DwObrencashccsiComponent implements OnInit {
   _showData;
   _noData;
 
-  obrencashccsidatalist = [];
+  obrencashccsidatalist : any;
   g_obrencashccsidatalist : any;
 
   grandEncashAmt : number = 0;
@@ -83,23 +84,28 @@ export class DwObrencashccsiComponent implements OnInit {
     this.branch_code = this.branchList[index].branch_code;
     this.branch_name = this.branchList[index].branch_name;
   }
-
+  
   groupBy(list, keyGetter) {
     const map = new Map();
+    
     list.forEach((item) => {
         //calculate total
+       
         this.grandEncashAmt += item.encashamount;
         this.grandCommMAB += item.comm1;
         this.grandCommOB += item.comm2;
 
-         const key = keyGetter(item);
-         const collection = map.get(key);
-         if (!collection) {
-             map.set(key, [item]);
-         } else {
-             collection.push(item);
-         }
+        const keyOB = keyGetter(item);
+        const collection = map.get(keyOB);
+  
+          if (!collection) {
+              map.set(keyOB, [item]);
+          } else {
+              collection.push(item);
+          }
+         
     });
+
     this.grandTotal =  this.grandEncashAmt +  this.grandCommMAB + this.grandCommOB;
     return (map);
 }
@@ -133,13 +139,8 @@ export class DwObrencashccsiComponent implements OnInit {
           this.totNoOfTrans = data.length;
           this._showData = true;
           
-          let result = Array.from(new Set(data.map(x => x.other_bank)));
+          this.g_obrencashccsidatalist = this.groupBy(data, ob => ( ob.trans_dt +'|'+ ob.other_bank) );
           
-          this.g_obrencashccsidatalist  = this.groupBy(data, otherbank => otherbank.other_bank);
-          for(let i=0; i<result.length;i++){
-            let mdata = {"otherbank" : result[i]+"", "datalist" : this.g_obrencashccsidatalist.get(result[i])};
-            this.obrencashccsidatalist.push(mdata);          
-          }
         }else{
           this._noData = true;
         }
@@ -200,6 +201,7 @@ export class DwObrencashccsiComponent implements OnInit {
             }
           this.loading = false;
         });
+        
         
   }
 

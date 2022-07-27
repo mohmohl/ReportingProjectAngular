@@ -85,9 +85,9 @@
                           <th style="text-align: center;">Total</th>
                         </thead>
                           
-                        <tbody *ngFor="let m_data of obrencashfptidatalist; ">
+                        <tbody *ngFor="let m_data of g_obrencashfptidatalist|keyvalue; ">
                            
-                            <tr *ngFor="let data of m_data.datalist; let i = index;">
+                            <tr *ngFor="let data of m_data.value; let i = index;">
                                 
                                 <td> {{(i+1)}}</td>
 
@@ -104,7 +104,7 @@
                             </tr>
 
                             <tr>
-                                <td colspan="7" class="stotal"> ({{m_data.otherbank}}) Sub Total</td>
+                                <td colspan="7" class="stotal"> ({{m_data.key.toString().split("|")[1]}}) Sub Total</td>
                                 <td class="stotal"> {{subEncashAmt | number : '1.2-3'}} </td>
                                 <td class="stotal"> {{subCommMAB | number : '1.2-3'}} </td>
                                 <td class="stotal"> {{subCommOB | number : '1.2-3'}} </td>

@@ -95,9 +95,9 @@
                           <th style="text-align: center;">Total</th>
                         </thead>
                           
-                        <tbody *ngFor="let m_data of drawingcctodatalist; ">    
+                        <tbody *ngFor="let m_data of g_drawingcctodatalist | keyvalue; ">    
 
-                            <tr *ngFor="let data of m_data.datalist; let i = index;">  
+                            <tr *ngFor="let data of m_data.value; let i = index;">  
 
                                 <td> {{(i+1)}}</td>
                                 <td> {{data.trns_dt}}</td>
@@ -116,7 +116,7 @@
                             </tr>
 
                             <tr>
-                                <td colspan="9" class="stotal"> ({{m_data.otherbank}}) Sub Total</td>
+                                <td colspan="9" class="stotal"> ({{m_data.key.toString().split("|")[1]}}) Sub Total</td>
                                 <td class="stotal"> {{subDrAmt | number : '1.2-3'}} </td>
                                 <td class="stotal"> {{subComm1 | number : '1.2-3'}} </td>
                                 <td class="stotal"> {{subComm2 | number : '1.2-3'}} </td>

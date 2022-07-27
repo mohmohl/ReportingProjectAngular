@@ -141,11 +141,8 @@ changeBranchCombo(index){
           
           let result = Array.from(new Set(data.map(x => x.other_bank_name)));
           
-          this.g_drawingcctodatalist  = this.groupBy(data, otherbank => otherbank.other_bank_name);
-          for(let i=0; i<result.length;i++){
-            let mdata = {"otherbank" : result[i]+"", "datalist" : this.g_drawingcctodatalist.get(result[i])};
-            this.drawingcctodatalist.push(mdata);          
-          }
+          this.g_drawingcctodatalist  = this.groupBy(data, otherbank => (otherbank.trns_dt + '|'+ otherbank.other_bank_name));
+          
         }else{
           this._noData = true;
         }

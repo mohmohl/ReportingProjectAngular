@@ -65,7 +65,14 @@
                        
                     </div>
 
-                    <div>
+                    
+                    <div class="prtDate">
+                        <p>{{month}}</p>
+                    </div>
+                    
+                    <!--
+
+                        <div>
                         <table class="headertbl">
                             <tr>
                                 <td class="td col-md-2" >Local Branch :</td>
@@ -81,9 +88,14 @@
 
                     </div>
 
+                    -->
+                    
+
                     <table class="table table table-hover" id="content" #content>
                         <thead class="text-uppercase">
                           <th style="text-align: center;">Sr. No.</th>
+                          <th style="text-align: center;">Trn Date</th>
+                          <th style="text-align: center;">Contract No.</th>
                           <th style="text-align: center;">Drawing Name and NRC</th>
                           <th style="text-align: center;">Payee Name and NRC and Account No.</th>
                           <th style="text-align: center;">Ref. No.</th>
@@ -92,11 +104,13 @@
                           
                         <tbody *ngFor="let m_data of g_cctoencashdatalist | keyvalue;">
                            <tr>
-                               <td colspan="5"><b>From  Branch :</b> {{m_data.key}} </td>
+                               <td colspan="7"><b>From  Branch :</b> {{m_data.key.toString().split("|")[1]}} </td>
                            </tr>
                             <tr *ngFor="let data of m_data.value;">
                                 
                                 <td> {{ getIndex() }}</td>
+                                <td> {{ data.trn_date | date : 'dd/MM/yyyy'}}</td>
+                                <td> {{ data.contract_ref_no }}</td>
                                 <td> {{ data.narrative }}</td>
                                 <td> {{data.benef_name}} {{data.payee_name_nrc}}</td>
                                 <td> {{data.po_no}}</td>
@@ -105,7 +119,7 @@
                             </tr>
 
                             <tr>
-                                <td colspan="4" class="stotal"> Sub Total</td>
+                                <td colspan="6" class="stotal"> Sub Total</td>
                                 <td class="stotal"> {{ subTotal | number : '1.2-3'}} {{ clearSubTotal()}} </td>
                             </tr>
                     

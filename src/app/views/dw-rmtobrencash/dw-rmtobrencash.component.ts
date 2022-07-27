@@ -128,7 +128,7 @@ showDatas(){
           this.tr_date = data[0].trn_dt;
         }
         
-        this.g_rmtobrencashdatalist  = this.groupBy(data, otherbranchdata => otherbranchdata.other_branch);
+        this.g_rmtobrencashdatalist  = this.groupBy(data, otherbranchdata => (otherbranchdata.trn_dt +"|"+ otherbranchdata.other_branch));
      
         this._showData = true;
         this._noData = false;
