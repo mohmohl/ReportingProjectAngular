@@ -127,7 +127,7 @@ changeDateCombo(index){
 
           this.totNoOfTrans = data.length;
           this._showData = true;          
-          this.g_obrencashdatalist  = this.groupBy(data, otherbank => otherbank.other_bank);
+          this.g_obrencashdatalist  = this.groupBy(data, otherbank => (otherbank.trn_dt + '|' + otherbank.other_bank) );
           
         }else{
           this._noData = true;

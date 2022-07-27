@@ -109,11 +109,8 @@ export class DwObrencashfptiComponent implements OnInit {
           this.month_desc = this.month;
           let result = Array.from(new Set(data.map(x => x.other_bank)));
           
-          this.g_obrencashfptidatalist  = this.groupBy(data, otherbank => otherbank.other_bank);
-          for(let i=0; i<result.length;i++){
-            let mdata = {"otherbank" : result[i]+"", "datalist" : this.g_obrencashfptidatalist.get(result[i])};
-            this.obrencashfptidatalist.push(mdata);          
-          }
+          this.g_obrencashfptidatalist  = this.groupBy(data, otherbank => (otherbank.trn_dt +"|"+ otherbank.other_bank));
+          
         }else{
           this._noData = true;
         }

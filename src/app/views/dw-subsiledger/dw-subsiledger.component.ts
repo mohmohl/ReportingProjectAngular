@@ -13,6 +13,7 @@ export class DwSubsiledgerComponent implements OnInit {
   branch : string;
   currency : string;
   month : string;
+  month_desc : string;
   l_SubsiAccs = [];
   m_SubsiAccs = [];
   l_branch = [];
@@ -142,6 +143,7 @@ export class DwSubsiledgerComponent implements OnInit {
     this.clearProperties();
     this.http.doGet("/fttransaction/getBranchSetup?branch="+ this.branch).subscribe(
       res => {
+        this.month_desc = this.month;
         this.loading = false;
         this.branchData = res;        
       },

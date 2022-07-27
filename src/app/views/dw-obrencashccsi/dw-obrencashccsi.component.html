@@ -70,7 +70,7 @@
                     </div>
                     
 
-                    <table class="table table table-hover" id="content" #content>
+                    <table  class="table table table-hover" id="content" #content>
                         <thead class="text-uppercase">
                           <th style="text-align: center;">Sr. No.</th>
                           <th style="text-align: center;">Date</th>
@@ -85,12 +85,10 @@
                           <th style="text-align: center;">Total</th>
                         </thead>
                           
-                        <tbody *ngFor="let m_data of obrencashccsidatalist; ">
-                           
-                            <tr *ngFor="let data of m_data.datalist; let i = index;">
-                                
-                                <td> {{(i+1)}}</td>
+                        <tbody *ngFor="let m_data of g_obrencashccsidatalist | keyvalue; " >
 
+                            <tr *ngFor="let data of m_data.value; let i = index;">                        
+                                <td> {{(i+1)}}</td>
                                 <td> {{data.trans_dt}}</td>
                                 <td> {{data.trn_ref_no}}</td>
                                 <td> {{data.beneficiary}}</td>
@@ -102,17 +100,16 @@
                                 <td  class="number"> {{data.comm2 | number : '1.2-3'}}  </td>
                                 <td class="number"> {{getTotals(data) | number : '1.2-3'}}</td>
                             </tr>
-
+                            
                             <tr>
-                                <td colspan="7" class="stotal"> ({{m_data.otherbank}}) Sub Total</td>
+                                <td colspan="7" class="stotal"> ({{m_data.key.toString().split("|")[1]}}) Sub Total</td>
                                 <td class="stotal"> {{subEncashAmt | number : '1.2-3'}} </td>
                                 <td class="stotal"> {{subCommMAB | number : '1.2-3'}} </td>
                                 <td class="stotal"> {{subCommOB | number : '1.2-3'}} </td>
                                 <td class="stotal"> {{subTotal | number : '1.2-3'}} {{clearSubTotal()}}</td>
                                 
                             </tr>
-                    
-                        </tbody>
+                        </tbody>                       
                        
                         <tr>
                             <td colspan="7" class="title"> Grand Total </td>
@@ -123,7 +120,6 @@
                         </tr>
                     </table>
 
-                    
                     <div class="col-md-4" >
                         <table>
                             <tr>

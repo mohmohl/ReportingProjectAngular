@@ -112,7 +112,7 @@ showDatas(){
         this.clearProperties();
         this.month_desc = this.month;
         
-        this.g_rmtobrdrawingdatalist  = this.groupBy(data, typedata => typedata.type);
+        this.g_rmtobrdrawingdatalist  = this.groupBy(data, typedata => (typedata.trn_dt +"|"+ typedata.type));
      
         this._showData = true;
         this._noData = false;

@@ -94,7 +94,7 @@ export class DwCctoencashscheduleComponent implements OnInit {
         if(data != null){
           this.trn_date = data[0].trn_date;
             
-          this.g_cctoencashdatalist  = this.groupBy(data, otherbranch => otherbranch.other_branch);
+          this.g_cctoencashdatalist  = this.groupBy(data, otherbranch => (otherbranch.trn_date +"|"+ otherbranch.other_branch));
        
           this.loading = false;
           this._showData = true;
