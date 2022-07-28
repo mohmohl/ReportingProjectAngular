@@ -27,4 +27,8 @@ export class FcdbChannelUserService {
     return this.http.get<any>(`${environment.baseUrl}` + '/fcdb/new-user');
   }
 
+  public downloadNewUsers() {
+    return this.http.get<any>(`${environment.baseUrl}` + '/fcdb/new-user/excel', { responseType: 'arraybuffer' as 'json' });
+  }
+
 }

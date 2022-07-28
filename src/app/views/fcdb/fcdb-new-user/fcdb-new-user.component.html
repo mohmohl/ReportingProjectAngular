@@ -15,7 +15,10 @@
                             iBanking User List changed from
                             website
                         </label>
+                        <button type="submit" name="download" class="btn-primary"
+                            style="margin-right: 20px; float:right;" (click)="download()">Download</button>
                     </div>
+
                 </div>
 
                 <div class="row" *ngIf="users != undefined && users !=null">
@@ -25,6 +28,7 @@
                                 <thead>
                                     <tr class="text-uppercase">
                                         <th> # </th>
+                                        <th>Updated Date</th>
                                         <th>Old User ID</th>
                                         <th>New User ID</th>
                                         <th>Customer Name</th>
@@ -36,6 +40,7 @@
                                 <tbody>
                                     <tr *ngFor="let list of users; let i = index">
                                         <td> {{i+1}} </td>
+                                        <td>{{list.updated_date | date:'dd-MM-yyyy hh:mm a'}}</td>
                                         <td>{{list.user_id}}</td>
                                         <td>{{list.new_user_id}}</td>
                                         <td>{{list.cust_name}}</td>

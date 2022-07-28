@@ -5,4 +5,5 @@ export class FcdbNewUser {
     cust_name: string;
     email: string;
     new_user_id: string;
+    updated_date: Date;
 }
