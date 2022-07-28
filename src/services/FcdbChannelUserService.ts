@@ -23,4 +23,8 @@ export class FcdbChannelUserService {
     return this.http.get<any>(`${environment.baseUrl}` + '/fcdb/idchanneluser/' + user_id);
   }
 
+  public getNewUsers() {
+    return this.http.get<any>(`${environment.baseUrl}` + '/fcdb/new-user');
+  }
+
 }

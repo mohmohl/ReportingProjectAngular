@@ -301,6 +301,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/fcdb/duplicate-channel-user-checker/duplicate-channel-user-checker.module').then(m => m.DuplicateChannelUserCheckerModule), canActivate: [AuthGuard]
       },
       {
+        path: 'fcdb-new-user',
+        loadChildren: () => import('./views/fcdb/fcdb-new-user/fcdb-new-user.module').then(m => m.FcdbNewUserModule), canActivate: [AuthGuard]
+      },
+      {
         path: 'dailyftransfer',
         loadChildren: () => import('./views/dw-dailyfundtransfer/dw_dailyfundtransfer.module').then(m => m.DWDailyFundTransferModule)
       },
@@ -338,36 +342,36 @@ const routes: Routes = [
         loadChildren: () => import('./views/dw-obrencashtransfer/dw_obrencashtransfer.module').then(m => m.DWObrEncashTransferModule)
       },
       {
-      path: 'rmtobrdrawing',
-      loadChildren: () => import('./views/dw-rmtobrdrawing/dw_rmtobrdrawing.module').then(m => m.DWRMTOBRDrawingModule)
+        path: 'rmtobrdrawing',
+        loadChildren: () => import('./views/dw-rmtobrdrawing/dw_rmtobrdrawing.module').then(m => m.DWRMTOBRDrawingModule)
       },
       {
-      path: 'rmtobrencash',
-      loadChildren: () => import('./views/dw-rmtobrencash/dw_rmtobrencash.module').then(m => m.DWRMTOBREncashModule)
-     },
-     {
-     path: 'remittance',
-     loadChildren: () => import('./views/dw-remittance/dw_remittance.module').then(m => m.DWRemittanceModule)
-    },
-    {
-      path: 'incomingmt103',
-      loadChildren: () => import('./views/dw-incomingmt103/dw_incomingmt103.module').then(m => m.DWIncomingMT103Module)
-    },
-    {
-      path: 'outgoingmt103',
-      loadChildren: () => import('./views/dw-outgoingmt103/dw_outgoingmt103.module').then(m => m.DWOutgoingMT103Module)
-    },{
-      path: 'user-branch-setup',
-      loadChildren: () => import('./views/user-branch-setup/user-branch-setup.module').then(m => m.UserBranchSetupModule)
-    },
-    {
-      path: 'active-user-home-branch-report',
-      loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
-    },
-    {
-    path: 'active-user-report',
-    loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
-    }
+        path: 'rmtobrencash',
+        loadChildren: () => import('./views/dw-rmtobrencash/dw_rmtobrencash.module').then(m => m.DWRMTOBREncashModule)
+      },
+      {
+        path: 'remittance',
+        loadChildren: () => import('./views/dw-remittance/dw_remittance.module').then(m => m.DWRemittanceModule)
+      },
+      {
+        path: 'incomingmt103',
+        loadChildren: () => import('./views/dw-incomingmt103/dw_incomingmt103.module').then(m => m.DWIncomingMT103Module)
+      },
+      {
+        path: 'outgoingmt103',
+        loadChildren: () => import('./views/dw-outgoingmt103/dw_outgoingmt103.module').then(m => m.DWOutgoingMT103Module)
+      }, {
+        path: 'user-branch-setup',
+        loadChildren: () => import('./views/user-branch-setup/user-branch-setup.module').then(m => m.UserBranchSetupModule)
+      },
+      {
+        path: 'active-user-home-branch-report',
+        loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
+      },
+      {
+        path: 'active-user-report',
+        loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
+      }
     ]
   },
   {
