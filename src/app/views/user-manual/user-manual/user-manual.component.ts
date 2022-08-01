@@ -25,8 +25,10 @@ export class UserManualComponent implements OnInit {
       });
   }
 
-  submit(id: string,fileType: string,fullPath: string) {
+  submit(id: string,fileType: string,fullPath: string,fileName: string) {
     var fileExtenstion = fullPath.substring(fullPath.lastIndexOf('.'));
+
+
     fileType = "video";
     debugger
     this.loading = true;
@@ -50,7 +52,7 @@ export class UserManualComponent implements OnInit {
           if(fileType ==="excel"){
             var link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = 'UserManual.xlsx';
+            link.download = fileName+ '.xlsx';
             link.click();
             window.URL.revokeObjectURL(link.href);
             }else if(fileType ==="pdf"){
@@ -59,12 +61,13 @@ export class UserManualComponent implements OnInit {
               var file = new Blob([data], {type: 'application/pdf'});
               var fileURL = URL.createObjectURL(file);
               a.href = fileURL;
+              a.download = fileName +'.pdf';
               a.target     = '_blank'; 
               a.click();
             } else {
               var link = document.createElement('a');
               link.href = window.URL.createObjectURL(blob);
-              link.download = 'UserManual' + fileExtenstion;
+              link.download = fileName + fileExtenstion;
               link.click();
               window.URL.revokeObjectURL(link.href);
             }
