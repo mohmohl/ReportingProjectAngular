@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { CCS_REPORT } from 'src/models/CCS_REPORT';
 import { ACH_REPORT } from "src/models/ACH_REPORT";
 import { CCSStatus } from 'src/models/CCSStatus';
+import { FcdbViewModel } from "src/models/fcdb/FcdbViewModel";
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +21,7 @@ export class FcdbChannelUserService {
   }
 
   public isUserExists(user_id: String) {
-    return this.http.get<any>(`${environment.baseUrl}` + '/fcdb/idchanneluser/' + user_id);
+    return this.http.get<FcdbViewModel[]>(`${environment.baseUrl}` + '/fcdb/idchanneluser/' + user_id);
   }
 
   public getNewUsers() {

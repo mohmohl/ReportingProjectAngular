@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { ChannelUser } from 'src/models/fcdb/ChannelUser';
+import { FcdbViewModel } from 'src/models/fcdb/FcdbViewModel';
 import { FcdbChannelUserService } from 'src/services/FcdbChannelUserService';
 
 @Component({
@@ -14,7 +15,7 @@ export class DuplicateChannelUserCheckerComponent implements OnInit {
   loading = false;
 
   error = '';
-  duplicatedUsers: ChannelUser[];
+  duplicatedUsers: FcdbViewModel[];
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -27,7 +28,7 @@ export class DuplicateChannelUserCheckerComponent implements OnInit {
   }
 
   submit() {
-    debugger;
+    this.duplicatedUsers = null;
     let user_id = this.form.controls['name'].value;
     this.loading = true;
     var buttonName = document.activeElement.getAttribute("name");
@@ -44,7 +45,7 @@ export class DuplicateChannelUserCheckerComponent implements OnInit {
         this.service.isUserExists(user_id).subscribe(res => {
           this.loading = false;
           this.error = '';
-          this.duplicatedUsers = [];
+
           this.duplicatedUsers = res;
           console.log(this.duplicatedUsers);
         },

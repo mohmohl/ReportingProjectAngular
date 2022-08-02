@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { ChannelUser } from 'src/models/fcdb/ChannelUser';
 import { FcdbChannelUserService } from 'src/services/FcdbChannelUserService';
 import * as fileSaver from 'file-saver';
+import { FcdbViewModel } from 'src/models/fcdb/FcdbViewModel';
 
 @Component({
   selector: 'app-duplicate-channel-user',
@@ -17,7 +18,7 @@ export class DuplicateChannelUserComponent implements OnInit {
 
   error = '';
 
-  duplicatedUsers: ChannelUser[];
+  duplicatedUsers: FcdbViewModel[];
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -36,7 +37,7 @@ export class DuplicateChannelUserComponent implements OnInit {
   }
 
   submit() {
-    debugger;
+    this.duplicatedUsers = null;
     let user_id = this.form.controls['name'].value;
     this.loading = true;
     var buttonName = document.activeElement.getAttribute("name");
@@ -53,7 +54,7 @@ export class DuplicateChannelUserComponent implements OnInit {
         this.service.isUserExists(user_id).subscribe(res => {
           this.loading = false;
           this.error = '';
-          this.duplicatedUsers = [];
+
           this.duplicatedUsers = res;
           console.log(this.duplicatedUsers);
         },
