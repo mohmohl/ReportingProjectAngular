@@ -40,7 +40,7 @@ export class MetreBillUploadComponent implements OnInit {
     public minutesToDday;
     public hoursToDday;
     subscription: any;
-    progress_subscription : any;
+    //progress_subscription : any;
 townshipMultiFile =new FormData();
   form = new FormGroup({
     fileData: new FormControl('', Validators.required),
@@ -129,7 +129,7 @@ onChange(event: any){
         this.tspList = res;
       }
     });
- }	
+ }    
   
   ngOnInit(): void {
   }
@@ -219,40 +219,39 @@ onChange(event: any){
             if(this.errorList.length >0) {
               this.message = "See below duplicate items!....";
             } else {
-
               if(this.response.totalCount >0){
                 this.totalCount = this.response.totalCount;
                 this.subscription.unsubscribe();
-                this.progress_subscription.unsubscribe();
+                //this.progress_subscription.unsubscribe();
                 this.progress=100;
                 console.log("upload finish = "+ this.progress);
                 this.message = this.totalCount + " Import Done!....";
               }else{
-                // this.subscription.unsubscribe();
+                this.subscription.unsubscribe();
                 this.progress=0;
                 this.message = "Import Fail !....";
               }
             }
           }else{
-            // this.subscription.unsubscribe();
+            this.subscription.unsubscribe();
             this.progress=0;
             this.message = this.response.message;
           }
           
         }
-        // this.subscription.unsubscribe();
+        this.subscription.unsubscribe();
         this.progress=0;
       }))
     .subscribe(res=>{
       this.loading = false;
     },
     error => {
-      // this.subscription.unsubscribe();
+      this.subscription.unsubscribe();
       this.error ="The system have the error";
       this.loading = false;
     });
     
-   this.progessbar_loadingCount(this.excel_row_count,divi,region,township); 
+   //this.progessbar_loadingCount(this.excel_row_count,divi,region,township); 
   }
 
   /*
@@ -278,7 +277,7 @@ onChange(event: any){
       this.loading = false;
     });
   }
-  */
+  
 
   progessbar_loadingCount(data_count:number,divi:string,region:string,township:string){
     this.progress_subscription = interval(1000)
@@ -301,5 +300,6 @@ onChange(event: any){
         
         });
    }
+*/
 
 }

@@ -31,14 +31,14 @@
                     <thead>
                         <th>Township Name</th>
                         <th>Uploaded File Name</th>
-                        <!-- <th>Count</th> -->
+                        <th>Count</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of uploadedList;">
                            <td>{{item.townshipName}}</td>
                            <td>{{item.fileName}}</td>
-                           <!-- <td>{{item.dataCount}}</td> -->
+                           <td>{{item.dataCount}}</td>
                           <td><button type="button" class="btn btn-primary btn-sm" (click)="clear(item.townshipId)">Delete</button></td>
                         </tr>
                     </tbody>

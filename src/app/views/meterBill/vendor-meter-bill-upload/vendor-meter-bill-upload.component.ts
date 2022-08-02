@@ -168,9 +168,10 @@ export class VendorMeterBillUploadComponent {
        this.subscription.unsubscribe();
      });
 
-     this.progessbar_loadingCount(vendor); 
+     //this.progessbar_loadingCount(vendor); 
  }
 
+ /*
  progessbar_loadingCount(vendor:string){
   this.subscription = interval(1000)
          .subscribe(x => { this.meterService.get_vendor_upload_progress(vendor).subscribe(res=>{
@@ -186,5 +187,6 @@ export class VendorMeterBillUploadComponent {
         }
         ); });
  }
+ */
 
 }
