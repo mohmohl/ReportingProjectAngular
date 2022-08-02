@@ -46,17 +46,14 @@
                                     <tr class="text-uppercase">
                                         <th> # </th>
                                         <th>User ID</th>
-                                        <th>Primary Branch</th>
-                                        <th>Secondary Branch</th>
+                                        <th>Message</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let list of duplicatedUsers; let i = index">
                                         <td> {{i+1}} </td>
                                         <td>{{list.user_id}}</td>
-                                        <td>{{list.primary_branch}}</td>
-                                        <td>{{list.secondary_branch}}</td>
-
+                                        <td>{{list.duplicated_at}}</td>
                                     </tr>
                                 </tbody>
                             </table>
