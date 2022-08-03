@@ -24,8 +24,8 @@
                             <td>{{item.description}}</td>
                             <td style="max-width:500px;white-space: pre-wrap;">{{item.manualType}}</td>
                             <td>
-                              <button *ngIf="item.manualType!='video'" type="button" class="btn btn-primary btn-sm" (click)="submit(item.id,item.manualType,item.fullPath,item.description)">Other Download</button>
-                              <button *ngIf="item.manualType =='video' && valid == true" type="button" class="btn btn-primary btn-sm" (click)="submit(item.id,item.manualType,item.fullPath,item.description)">Video Download</button>
+                              <button *ngIf="item.manualType!='video'" type="button" class="btn btn-primary btn-sm" (click)="submit(item.id,item.manualType,item.fullPath,item.description)">Download</button>
+                              <button *ngIf="item.manualType =='video' && valid == true" type="button" class="btn btn-primary btn-sm" (click)="submit(item.id,item.manualType,item.fullPath,item.description)">Download</button>
                             </td>
                           </tr>
                       </tbody>
