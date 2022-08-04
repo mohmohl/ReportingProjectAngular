@@ -44,11 +44,13 @@ export class DuplicateChannelUserComponent implements OnInit {
 
     console.log(buttonName);
     if (buttonName == null || buttonName == 'search') {
-      var regex = new RegExp(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/);
+      //var regex = new RegExp(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/);
+      let regex = new RegExp('^(?=.*[0-9])(?=.*[A-Z])([A-Z0-9]){7,15}$');
+
       if (user_id == '' || user_id == undefined || user_id == null) {
         this.error = 'User ID is required';
-      } else if (regex.test(user_id)) {
-        this.error = 'Special characters are not allowed';
+      } else if (regex.test(user_id) == false) {
+        this.error = 'Invalid User ID format';
       }
       else {
         this.service.isUserExists(user_id).subscribe(res => {
