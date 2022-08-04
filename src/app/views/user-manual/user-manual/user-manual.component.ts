@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { UserManualService } from 'src/services/UserManualService';
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-user-manual',
@@ -12,8 +13,11 @@ export class UserManualComponent implements OnInit {
   error = '';
   loading = false;
   fileList: any=[];
+  valid: boolean = false;
+  validTime; 
 
-  constructor(private service:UserManualService) { }
+
+  constructor(private service:UserManualService, public datepipe: DatePipe) { }
 
   ngOnInit() {
     this.loading = true;
@@ -23,14 +27,22 @@ export class UserManualComponent implements OnInit {
         this.fileList = res;
         }
       });
+
+      setInterval(() => {
+        this.validTime = this.datepipe.transform(new Date(), 'HH:mm');
+       // console.log("Time: " + this.validTime);
+        this.valid = false;
+       // console.log("Flag: " + this.valid);
+        if(this.validTime >= '17:02') {
+          this.valid = true;
+        }
+      }, 1000)
+  
   }
 
   submit(id: string,fileType: string,fullPath: string,fileName: string) {
     var fileExtenstion = fullPath.substring(fullPath.lastIndexOf('.'));
 
-
-    fileType = "video";
-    debugger
     this.loading = true;
     this.error = "";
     var appfiletype = "";

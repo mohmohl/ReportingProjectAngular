@@ -367,11 +367,11 @@ const routes: Routes = [
       {
         path: 'active-user-home-branch-report',
         loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
-      },
-      {
-        path: 'active-user-report',
-        loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
       }
+      // {
+      //   path: 'active-user-report',
+      //   loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
+      // }
     ]
   },
   {

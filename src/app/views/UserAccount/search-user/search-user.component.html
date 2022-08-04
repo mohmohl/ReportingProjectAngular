@@ -41,15 +41,15 @@
                 <tr class="text-uppercase">
                   <th>#</th>
                   <th>User Id</th>
-                  <th>User Name</th>
+                  <th>Role Name</th>
                   <th>User Status</th>
                   <th>Record Status</th>
                   <!-- <th>Create User Account</th> -->
                 </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let list of data_list">
-                        <td></td>
+                    <tr *ngFor="let list of data_list;let i=index;">
+                        <td>{{i+1}}</td>
                         <td>{{list.user_id}}</td>
                         <td>{{list.user_name}}</td>
                         <td>{{list.user_status}}</td>
