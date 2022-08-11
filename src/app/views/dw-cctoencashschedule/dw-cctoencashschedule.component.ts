@@ -22,6 +22,7 @@ export class DwCctoencashscheduleComponent implements OnInit {
   trn_date;
   g_cctoencashdatalist;
   subTotal : number = 0;
+  grandTotal : number = 0;
   idx : number = 0;
 
   constructor(private http : HttpService, private cdr: ChangeDetectorRef) {  }
@@ -115,6 +116,7 @@ export class DwCctoencashscheduleComponent implements OnInit {
     const map = new Map();
     list.forEach((item) => {
         
+      this.grandTotal = this.grandTotal + item.instr_amount;
          const key = keyGetter(item);
          const collection = map.get(key);
          if (!collection) {
