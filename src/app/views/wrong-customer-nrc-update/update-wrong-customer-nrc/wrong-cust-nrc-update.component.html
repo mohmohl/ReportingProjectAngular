@@ -1,0 +1,192 @@
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Customer NRC Update</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="loading" class="d-flex justify-content-center">
+            <div class="spinner-border spinner-border-sm text-warning"></div>
+              <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+          </div>
+
+          <code *ngIf="error">{{error}}</code>
+          <code  *ngIf="message" class="text-info">{{message}}</code>
+          <form [formGroup]="editForm" >
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2  col-form-label">Customer No.:</label>
+              <!--
+              <input type="text" class="col-sm-4 form-control" placeholder="Customer No." formControlName="customerNo" >
+               --> 
+              <div class="input-group col-sm-4 col-xs-4 mb-0" style="padding: 0px !important;">
+                <input type="text" readonly  placeholder="Customer No." formControlName="customerNo"  
+                  class="form-control input-sm" style="height:auto; background:white;" (click)="searchCustomer()">
+                <div class="input-group-append">
+                  <span class="input-group-btn input-sm"> 
+                    <button type="button" class="btn btn-primary btn-sm" (click)="searchCustomer()">
+                      Search
+                    </button>
+                  </span>
+                </div>
+              </div>
+              <div class = "col-sm-4" style="margin-top: 10px !important;">
+                <input type="checkbox" (change)="onCustomerNoChange($event)" /> <span>&nbsp;CIF Based</span>
+              </div>
+              
+            </div>
+
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2 col-form-label">NRC No.:</label>
+              <input type="text" readonly class="col-sm-4 form-control" placeholder="NRC No." formControlName="nrcNo" style="background:white;">
+            </div>
+
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2 col-form-label">New NRC No.:</label>
+                <div class="row mb-0">
+                  <div  class="col-sm-12 col-xs-12">
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <select class="form-control"  placeholder="" name="nrcState" formControlName="nrcState" (change)="onStateChange($event)">
+                                  <option [value]="obj.value" *ngFor="let obj of stateList;">{{ obj.caption }}</option>
+                              </select>
+                          </div>
+                          <!--
+                          <div class="input-group-append">
+                            <span class="form-control input-group-text span-bg">/</span>
+                          </div>
+                          -->
+                          <div class="input-group-append">
+                            <select class="form-control"  placeholder="" name="nrcPrefix" formControlName="nrcPrefix" >
+                              <option [value]="obj.code_eng" *ngFor="let obj of nrcPrefixList;">{{ obj.code_eng }}</option>
+                          </select>
+                          </div>
+                          
+                          <div class="input-group-append">
+                              <select class="form-control"  placeholder="" name="nrcCitizen" formControlName="nrcCitizen">
+                                  <option [value]="obj.value" *ngFor="let obj of citizenList;">{{ obj.caption }}</option>
+                              </select>
+                          </div>
+                          <div  style="padding-left:8px !important;">
+                            <input type="text" class="form-control" name="newNrcNo" formControlName="newNrcNo"/>
+                          </div>
+                      </div>
+                  </div>
+                  
+              </div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-sm-1">
+                <button class="btn btn-sm btn-primary" (click)="search()">Search</button>
+              </div>
+
+              <div class="col-sm-1">
+                <button class="btn btn-sm btn-primary" (click)="update()">Update</button>
+              </div>
+            </div>
+
+            <div class="row form-group col-md-12">
+              <ngb-tabset [destroyOnHide]="false" #tabSet style="width: 100%;">
+                
+                <ngb-tab title="Customer Info" id="tab-2">
+                  <ng-template ngbTabContent>
+                    <div class="table-responsive" style="margin-top: 8px !important;">
+                      <table class="table table-hover" id="export-table" style="width: 100%;">
+                        <thead>
+                          <tr class="text-uppercase">
+                            <th class = "first-child-header">#</th>
+                            <th class = "second-child-header">CUSTOMER_NO</th>
+                            <th class = "third-child-header">NRC</th>
+                            <th>NRC_TYPE</th>
+                            <th>CUSTOMER_TYPE</th>
+                            <th>CUSTOMER_NAME</th>
+                            <th>TELEPHONE</th>
+                            <th>MOBILE_NO</th>
+                            <th>EMAIL</th>
+                            <th>ADDRESS</th>
+                            <th>SHORT_NAME</th>
+                            <th>LOCAL_BRANCH</th>
+                            <th>DATE_OF_BIRTH</th>
+                            <th>EXT_REF_NO</th>
+                            <th>REMARK</th>
+                            <th>CMS</th>
+                            <th>TAGIT</th>
+                            <th>FCDB</th>
+                            <th>LOAN</th>
+                            <th>TRADE</th>
+                          </tr>
+                          <tr *ngFor="let data of dataRes.customerData; let i = index">
+                            <td class = "first-child-body"><input type="checkbox" [value]="data.customerNo" [checked]="data.checkFlag" (change)="onCustomerCheckedChange($event)" /></td>
+                            <td class = "second-child-body">{{data.customerNo}}</td>
+                            <td class = "third-child-body">{{data.nrc}}</td>
+                            <td>{{data.nrcType}}</td>
+                            <td>{{data.customerType}}</td>
+                            <td>{{data.customerName}}</td>
+                            <td>{{data.telephone}}</td>
+                            <td>{{data.mobileNumber}}</td>
+                            <td>{{data.email}}</td>
+                            <td>{{getAddress(data)}}</td>
+                            <td>{{data.shortName}}</td>
+                            <td>{{data.localBranch}}</td>
+                            <td>{{data.dateOfBirth}}</td>
+                            <td>{{data.extRefNo}}</td>
+                            <td>{{data.remark}}</td>
+                            <td>{{data.cmsFlag}}</td>
+                            <td>{{data.tagitFlag}}</td>
+                            <td>{{data.fcdbFlag}}</td>
+                            <td>{{data.loanFlag}}</td>
+                            <td>{{data.tradeFlag}}</td>
+                          </tr>
+                        </thead>
+                      </table>
+                    </div>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Account Info" id="tab-3">
+                  <ng-template ngbTabContent>
+                    <div class="table-responsive" style="margin-top: 8px !important;">
+                      <table class="table table-hover" id="export-table" style="width: 100%;">
+                        <thead>
+                          <tr class="text-uppercase">
+                            <th>CUSTOMER_NO</th>
+                            <th>NRC</th>
+                            <th>CUSTOMER_NAME</th>
+                            <th>ACCOUNT_NUMBER</th>
+                            <th>ACCOUNT_CLASS</th>
+                            <th>ACCOUNT_DESCRIPTION</th>
+                            <th>BRANCH_CODE</th>
+                            <th>RECORD_STATUS</th>
+                            <th>OPENING_DATE</th>
+                            <th>CLOSING_DATE</th>
+                            <th>CURRENT_BALANCE</th>
+                            <th>CURRENCY</th>
+                          </tr>
+                          <tr *ngFor="let data of dataRes.accountData; let i = index">
+                            <td>{{data.customerNo}}</td>
+                            <td>{{data.nrc}}</td>
+                            <td>{{data.customerName}}</td>
+                            <td>{{data.custAcNo}}</td>
+                            <td>{{data.accountClass}}</td>
+                            <td>{{data.description}}</td>
+                            <td>{{data.branchCode}}</td>
+                            <td>{{data.recordStat}}</td>
+                            <td>{{data.openingDate}}</td>
+                            <td>{{data.closingDate}}</td>
+                            <td style="text-align:right;">{{formatMoney(data.currentBalance)}}</td>
+                            <td>{{data.currency}}</td>
+                          </tr>
+                        </thead>
+                      </table>
+                    </div>
+                  </ng-template>
+                </ngb-tab>
+
+              </ngb-tabset>
+            </div>
+                  
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

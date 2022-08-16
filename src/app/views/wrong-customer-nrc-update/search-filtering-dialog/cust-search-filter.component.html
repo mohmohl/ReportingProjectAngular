@@ -1,0 +1,59 @@
+
+<div class="modal-header bg-primary">
+    <h6 class="modal-title">Customer Information</h6>
+
+    <button type="button" class="close color-white" data-dismiss="modal" aria-hidden="true" title="close"
+            (click)="cancel()">&times;</button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="editForm" >
+        <div class="form-group col-sm-12" style="margin: 8px !important;">
+          <div *ngIf="loading" class="d-flex justify-content-center">
+            <div class="spinner-border spinner-border-sm text-warning"></div>
+              <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+          </div>
+          <code *ngIf="error">{{error}}</code>
+
+            <div class="input-group stylish-input-group col-sm-8"  style="margin-left: -16px !important;">
+              <div class="input-group-prepend">
+                <label class="input-group-text col-form-label" style="background-color: white !important; border:none;">Search By:</label>
+              </div>
+              <input type="text" formControlName="searchStr" placeholder="Customer No. or Nrc No. or Customer Name"
+                class="form-control input-sm" style="width:200px; height:auto; background:white;">
+              <span class="input-group-btn input-sm"> 
+                <button type="button" class="btn btn-primary btn-sm" (click)="search()">Search</button>
+              </span>
+            </div>
+            
+            <div class="table-responsive">
+
+              <table class="table table table-hover" id="export-table">
+                <thead>
+                <tr class="text-uppercase">
+                  <th style="width: 20%;">Customer No.</th>
+                  <th style="width: 10%;">Customer Type</th>
+                  <th style="width: 10%;">NRC No.</th>
+                  <th style="width: 10%;">NRC Type</th>
+                  <th style="width: 40%;">Customer Name</th>
+                  <th style="width: 10%;">Local Branch</th>
+                </tr>
+                </thead>
+                <tbody>
+                 
+                  <tr *ngFor="let data of dataList">
+                    <td><a (click)="select(data)">{{data.customerNo}}</a></td>
+                    <td>{{data.customerType}}</td>
+                    <td>{{data.nrc}}</td>
+                    <td>{{data.nrcType}}</td>
+                    <td>{{data.customerName}}</td>
+                    <td>{{data.localBranch}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+    </form>
+    
+
+</div>
