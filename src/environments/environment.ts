@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl :'http://localhost:7071' 
+  baseUrl : 'http://localhost:7071' 
+  //'http://172.30.10.90:7503/reporting_frontend_service_UAT_V2' 
   //'http://172.30.4.51:7003/reporting_frontend_service' 
   // 'http://172.30.4.51:7003/reporting_frontend_service_backdate' 
   // baseUrl :'http://172.30.10.90:7503/reporting_frontend_service' 

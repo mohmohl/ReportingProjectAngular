@@ -38,6 +38,7 @@
     "jquery-sparkline": "^2.4.0",
     "jquery-ui-dist": "^1.12.1",
     "ng-click-outside": "^3.2.0",
+    "ng-multiselect-dropdown": "^0.2.11",
     "ng2-toasty": "^4.0.3",
     "ng2-validation": "^4.2.0",
     "ngx-perfect-scrollbar": "^5.3.5",

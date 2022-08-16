@@ -102,6 +102,12 @@ import { Vendor } from "src/models/meterBill/Vendor";
     return this.http.get<any>(`${environment.baseUrl}`+'/meterBill/exportExcel?divisionId='+divisionId+'&vendorId='+vendorId+'&regionId='+regionId+'&tspId='+tspId+'&searchData='+searchData,{responseType: 'arraybuffer' as 'json'});
   }
 
-    
+  public get_meter_upload_progress(data_count:number,divi:string,region:string,township:string){
+    return this.http.get<any>(`${environment.baseUrl}`+'/meterBill/get_government_file_upload_progress_count?data_count='+data_count+'&division_id='+divi+'&region_id='+region+'&township_id='+township);
+  }
+
+  public get_vendor_upload_progress(vendor:string){
+    return this.http.get<any>(`${environment.baseUrl}`+'/meterBill/get_vendor_file_upload_progress_count?vendor='+vendor);
+  }
  
   }

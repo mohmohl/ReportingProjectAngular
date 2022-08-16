@@ -12,4 +12,5 @@ export class TrialData{
 	  branch:string;
 	  gl_desc:string;
 	  t_date:string;
+	  old_gl:string;
 }

@@ -1,0 +1,149 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            
+            <div class="card-header">
+                <h5>OBR ENCASH SCHEDULE (FPTI) </h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+
+                  <div class="page-header-breadcrumb">
+                    <button type="button" class="btn-danger" (click)="exportPDF()">
+                      <i class="ti-printer"></i>PDF
+                    </button> 
+                   </div>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    
+                    <code *ngIf="error">{{error}}</code>
+					
+                    <div class="form-group row">
+
+                        <label class="col-sm-1">Date</label>
+                        <div class="col-xs-2 date-picker">
+                            <select [(ngModel)]="month_desc">
+                                <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
+                            </select>
+                        </div>
+     
+                        <label class="col-sm-1"> Branch </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="branch_code">
+                                <option value="{{branch_code}}" selected>{{branch_code}}</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-2"> OBR Customer ID </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="cusID">
+                                <option value="{{cusID}}" selected>{{cusID}}</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <button type="button" (click)="showDatas()" class="btn-primary">Show</button>
+                            
+                        </div>
+                        
+                    </div>
+                <div *ngIf="_showData" id="data">
+                    <div class="title" *ngIf="_showData">
+                        <div>
+                            <p class="pgtitle">Myanmar Apex Bank</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">{{branch_name}}</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">OBR Encashment Schedule (FPTI)  ( {{cusID}} )</p>
+                        </div>
+                       
+                    </div>
+
+                    <div class="prtDate">
+                        <p>{{month}}</p>
+                    </div>
+                    
+
+                    <table class="table table table-hover" id="content" #content>
+                        <thead class="text-uppercase">
+                          <th style="text-align: center;">Sr. No.</th>
+                          <th style="text-align: center;">TRN Date</th>
+                          <th style="text-align: center;">Contract No.</th>
+                          <th style="text-align: center;">Receiver Information</th>
+                          <th style="text-align: center;">From Bank</th>
+                          <th style="text-align: center;">Other Branches Name</th>
+                          <th style="text-align: center;">To Bank(MAB)</th>
+                          <th style="text-align: center;">Encashment Amount</th>
+                          <th style="text-align: center;">Comm(MAB)</th>
+                          <th style="text-align: center;">Comm(Other Bank)</th>
+                          <th style="text-align: center;">Total</th>
+                        </thead>
+                          
+                        <tbody *ngFor="let m_data of g_obrencashfptidatalist|keyvalue; ">
+                           
+                            <tr *ngFor="let data of m_data.value; let i = index;">
+                                
+                                <td> {{(i+1)}}</td>
+
+                                <td> {{data.trn_dt }}</td>
+                                <td> {{data.trn_ref_no}}</td>
+                                <td> {{data.beneficiary}}</td>
+                                <td> {{data.other_bank}}</td>
+                                <td> {{data.other_bank_name}} </td>
+                                <td> {{data.tobranch}} </td>
+                                <td  class="number"> {{data.encashamount | number : '1.2-3'}} </td>
+                                <td  class="number"> {{data.comm1 | number : '1.2-3'}} </td>
+                                <td  class="number"> {{data.comm2 | number : '1.2-3'}}  </td>
+                                <td class="number"> {{getTotals(data) | number : '1.2-3'}}</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="7" class="stotal"> ({{m_data.key.toString().split("|")[1]}}) Sub Total</td>
+                                <td class="stotal"> {{subEncashAmt | number : '1.2-3'}} </td>
+                                <td class="stotal"> {{subCommMAB | number : '1.2-3'}} </td>
+                                <td class="stotal"> {{subCommOB | number : '1.2-3'}} </td>
+                                <td class="stotal"> {{subTotal | number : '1.2-3'}} {{clearSubTotal()}}</td>
+                                
+                            </tr>
+                    
+                        </tbody>
+                       
+                        <tr>
+                            <td colspan="7" class="title"> Grand Total </td>
+                            <td class="stotal"> {{ grandEncashAmt | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandCommMAB | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandCommOB | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandTotal | number : '1.2-3'}} </td>
+                        </tr>
+                    </table>
+
+                    
+                    <div class="col-md-4" >
+                        <table>
+                            <tr>
+                                <td style="background-color:#fcf6d6">Total number of transaction</td>
+                                <td>{{totNoOfTrans}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                
+                <div *ngIf="_noData">
+                    <p class="nodata"> No records found.</p>
+                </div>
+                   
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,155 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            
+            <div class="card-header">
+                <h5>Outgoing MT 103 Message</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+
+                  <div class="page-header-breadcrumb">
+                    <button type="button" class="btn-danger" (click)="exportPDF()">
+                      <i class="ti-printer"></i>PDF
+                    </button> 
+                   </div>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    
+                    <code *ngIf="error">{{error}}</code>
+					
+                    <div class="form-group row">
+
+                        <label class="col-sm-1">Date</label>
+                            <div class="col-xs-2 date-picker">
+                                <select [(ngModel)]="month">
+                                    <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
+                                </select>
+                            </div>
+    
+                        <label class="col-sm-1"> Currency </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="currency">                               
+                                <option *ngFor="let arr of ccyList" value="{{arr.code}}">{{arr.code}}</option>
+                            </select>
+                        </div>
+                        
+                        <label class="col-sm-1"> Branch </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="branch">
+                                <option value="{{branch}}" selected>{{branch}}</option>
+                            </select>
+                        </div>
+                        
+                        <label class="col-sm-2"> Remitting Bank </label>
+                        <div class="col-xs-2">
+                          <select id="exampleFormControlSelect1" [(ngModel)]="rcvbank">
+                            <option value="ALL" disabled>ALL</option>
+                          </select>
+                        </div>
+
+                        <label class="col-sm-1"> Status </label>
+                        <div class="col-xs-2">
+                          <select id="exampleFormControlSelect1" [(ngModel)]="authStatus">
+                            <option value="A" disabled>Authorized</option>
+                          </select>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <button type="button" (click)="showDatas()" class="btn-primary">Show</button>
+                            
+                        </div>
+                        
+                    </div>
+
+                    <div class="title" *ngIf="_showData">
+                        <div>
+                            <p class="pgtitle">{{branchData.bank_name}}</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">{{branchData.branch_name}}</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">Incoming MT 103 Message({{titleCCy}})</p>
+                        </div>
+
+                    </div>
+
+                    <div class="prtDate" *ngIf="_showData">                        
+                        <p>{{month_desc}}<p> 
+                     </div>
+
+                    <table  *ngIf="_showData" class="table table table-hover" id="content" #content>
+                        <thead class="text-uppercase">
+                            <th> Sr. No.</th>
+                            <th>Receiver Bank</th>
+                            <th> Ref. No.</th>
+                            <th> ISN No.</th>
+                            <th> Currency</th>
+                            <th> Amount</th>
+                            <th> Exchange Rate </th>
+                            <th> Value Date</th>
+                            <th> Ordering Cutomer Account No.</th>
+                            <th> Ordering Cutomer</th>
+                            <th> Beneficiary Account </th>
+                            <th> Beneficiary</th>
+                            <th> Account With Institution</th>
+                            <th> Intermediary</th>
+                            <th> Remittance Information</th>
+                            <th> Regulatory Reporting Details</th>
+                            <th> Comission</th>
+                            <th> Switft Charges</th>
+
+                        </thead>
+                            <tbody>
+                                <tr *ngFor="let data of outgoingmt103list; let i = index">
+                                    <td>{{(i + 1) }}</td>
+                                    <td>{{data.recbank}}</td>
+                                    <td>{{data.contract_ref_no}}</td>
+                                    <td>{{data.isnno}}</td>
+                                    <td>{{data.dr_ccy}}</td>
+                                    <td class="number">{{data.dr_amount | number:'1.0-3'}}</td>
+                                    <td class="number">{{data.exch_rate  | number:'1.0-3'}}</td>
+                                    <td>{{ data.dr_value_date | date:'dd/MM/yyyy'}}</td>
+                                    <td>{{data.ordering_ac_no}}</td>
+                                    <td>{{data.sendername}}</td>
+                                    <td>{{data.beneficiary_acc}}</td>
+                                    <td>{{data.recname}}</td>
+                                    <td>{{data.acc_inst}}</td>
+                                    <td>{{data.intermediary}}</td>
+                                    <td>{{data.purpose}}</td>
+                                    <td>{{data.regulatory_rep1}}</td>
+                                    <td class="number">{{ data.comission| number:'1.0-3'}}</td>
+                                    <td class="number">{{ data.swift| number:'1.0-3'}}</td>
+                                </tr>
+    
+                                <tr>
+                                    <td colspan="5" class="title"><b>Total</b></td>
+                                    <td class="stotal">{{ totalAmount | number:'1.0-3'}}</td>
+                                    
+                                    <td colspan="10" class="title"><b>Total</b></td>
+                                    <td class="stotal">{{ totalCommission| number:'1.0-3'}}</td>
+                                    <td class="stotal">{{ totalSwift| number:'1.0-3'}}</td>
+                                    
+                                </tr>
+                           
+                            </tbody>
+                        </table>
+
+                </div>
+                
+                <div *ngIf="_noData">
+                    <p class="nodata"> No records found.</p>
+                </div>
+                  
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
