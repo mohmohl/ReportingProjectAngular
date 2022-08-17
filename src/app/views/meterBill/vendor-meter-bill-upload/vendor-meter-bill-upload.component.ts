@@ -105,13 +105,14 @@ export class VendorMeterBillUploadComponent {
    }
  
    validateFile(name: String) {
-     var ext = name.substring(name.lastIndexOf('.') + 1);
-     if (ext.toLowerCase() == 'xlsx') {
-       return true;
-     }
-     else {
-       return false;
-     }
+    debugger
+    var ext = name.substring(name.lastIndexOf('.') + 1);
+    if (ext.toLowerCase() == 'xlsx' || ext.toLowerCase() == 'xls') {
+      return true;
+    }
+    else {
+      return false;
+    }
    }
  
    submit() {
@@ -141,15 +142,15 @@ export class VendorMeterBillUploadComponent {
          this.loading = false;
          if(this.response != null){
            if(this.response.flag == false){
-            this.message = "Import Done !....";
+            //this.message = "Import Done !....";
             this.subscription.unsubscribe();
             this.progress=100;
-              // if(this.response.totalCount >0){
-              //   this.totalCount = this.response.totalCount;
-              //   this.message = "Import Done !....";
-              // }else{
-              //   this.message = "Import Fail !....";
-              // }
+              if(this.response.totalCount >0){
+                this.totalCount = this.response.totalCount;
+                this.message = this.totalCount + " Import Done!....";
+              }else{
+                this.message = "Import Fail !....";
+              }
            }else{
             this.subscription.unsubscribe();
             this.progress=0;
