@@ -216,7 +216,7 @@ onChange(event: any){
         if(this.response != null){
           if(this.response.flag == false){
             this.errorList = this.response.errorList;
-            if(this.errorList.length >0) {
+            if(this.errorList != null && this.errorList.length >0) {
               this.message = "See below duplicate items!....";
             } else {
               if(this.response.totalCount >0){

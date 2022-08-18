@@ -82,11 +82,7 @@ export class VendorMeterBillUploadComponent {
  
    reChange(){
      this.error = '';
-        // this.form = new FormGroup({
-        //  fileData: new FormControl('', Validators.required),
-        //   vendorId: new FormControl(this.form.get(["vendorId"])!.value)
-        // });
-   
+     this.message = '';
    }
  
    handleFileInput(files: FileList) {
@@ -105,16 +101,18 @@ export class VendorMeterBillUploadComponent {
    }
  
    validateFile(name: String) {
-     var ext = name.substring(name.lastIndexOf('.') + 1);
-     if (ext.toLowerCase() == 'xlsx') {
-       return true;
-     }
-     else {
-       return false;
-     }
+    debugger
+    var ext = name.substring(name.lastIndexOf('.') + 1);
+    if (ext.toLowerCase() == 'xlsx' || ext.toLowerCase() == 'xls') {
+      return true;
+    }
+    else {
+      return false;
+    }
    }
  
    submit() {
+    debugger
      if (this.form.invalid) {
        this.error = "Data is required";
        return;
@@ -141,21 +139,24 @@ export class VendorMeterBillUploadComponent {
          this.loading = false;
          if(this.response != null){
            if(this.response.flag == false){
-            this.message = "Import Done !....";
+            this.errorList = this.response.errorList;
+            if(this.errorList != null && this.errorList.length >0) {
+              this.message = "See below duplicate items!....";
+            } else {
+              if(this.response.totalCount >0){
+                this.totalCount = this.response.totalCount;
+                this.message = this.totalCount + " Import Done!....";
+              }else{
+                this.message = "Import Fail !....";
+              }
+            }
             this.subscription.unsubscribe();
-            this.progress=100;
-              // if(this.response.totalCount >0){
-              //   this.totalCount = this.response.totalCount;
-              //   this.message = "Import Done !....";
-              // }else{
-              //   this.message = "Import Fail !....";
-              // }
            }else{
             this.subscription.unsubscribe();
             this.progress=0;
             this.message = this.response.message;
            }
-           this.errorList = this.response.errorList;
+           
          }
          this.subscription.unsubscribe();
          this.progress=0;
