@@ -209,6 +209,7 @@ onChange(event: any){
     this.metreService.fileUpload(formData) 
     .pipe(
       map((data: any) => {
+        this.form.reset();
         this.subscription.unsubscribe();
         this.response = data;
         this.loading = false;
@@ -246,6 +247,7 @@ onChange(event: any){
       this.loading = false;
     },
     error => {
+      this.form.reset();
       this.subscription.unsubscribe();
       this.error ="The system have the error";
       this.loading = false;

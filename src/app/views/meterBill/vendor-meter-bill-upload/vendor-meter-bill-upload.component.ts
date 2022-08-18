@@ -133,6 +133,7 @@ export class VendorMeterBillUploadComponent {
      this.meterService.oneFileUpload(formData)
      .pipe(
        map((data: any) => {
+        this.form.reset();
         debugger
         this.subscription.unsubscribe();
          this.response = data;
@@ -164,6 +165,7 @@ export class VendorMeterBillUploadComponent {
      .subscribe(res=>{
      },
      error => {
+       this.form.reset();
        this.error ="The system have the error";
        this.loading = false;
        this.subscription.unsubscribe();
