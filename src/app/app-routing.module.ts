@@ -275,8 +275,7 @@ const routes: Routes = [
         path: 'duplicate-nrc-customer-update',
         loadChildren: () => import('./views/wrong-customer-nrc-update/update-wrong-customer-nrc/wrong-cust-nrc-update.module').then(m => m.WrongCustomerNRCUpdateModule)
       },
-
-
+      {
         path: 'user_manual',
         loadChildren: () => import('./views/user-manual/user-manual/user-manual.module').then(m => m.UserManualModule)
       },
