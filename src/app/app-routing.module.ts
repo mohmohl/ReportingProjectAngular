@@ -276,7 +276,7 @@ const routes: Routes = [
         loadChildren: () => import('./views/wrong-customer-nrc-update/update-wrong-customer-nrc/wrong-cust-nrc-update.module').then(m => m.WrongCustomerNRCUpdateModule)
       },
 
-
+      {
         path: 'user_manual',
         loadChildren: () => import('./views/user-manual/user-manual/user-manual.module').then(m => m.UserManualModule)
       },
@@ -376,6 +376,10 @@ const routes: Routes = [
       {
         path: 'active-user-home-branch-report',
         loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
+      },
+      {
+        path: 'question-form-submit',
+        loadChildren: () => import('./views/question-form/question-form-submit/question-form-submit.module').then(m => m.QuestionFormSubmitModule)
       }
       // {
       //   path: 'active-user-report',

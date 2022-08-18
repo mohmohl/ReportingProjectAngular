@@ -1,0 +1,88 @@
+{
+    "id": "1",
+    "created_date": "Aug 18, 2022",
+    "created_by": "EOD002",
+    "name": "Java Questions",
+    "description": "Java multiple choice questions for inhouse developers. Your result will be sent out automatically to your office mail after you submit the form.",
+    "questions": [
+        {
+            "id": "1",
+            "description": "Which of the following option leads to the portability and security of Java?",
+            "mark": 10,
+            "type": "radio",
+            "options": [
+                {
+                    "id": "1",
+                    "description": "Bytecode is executed by JVM",
+                    "user_chosen": 0
+                },
+                {
+                    "id": "2",
+                    "description": "The applet makes the Java code secure and portable",
+                    "user_chosen": 0
+                },
+                {
+                    "id": "3",
+                    "description": "Use of exception handling",
+                    "user_chosen": 0
+                },
+                {
+                    "id": "4",
+                    "description": "Dynamic binding between objects",
+                    "user_chosen": 0
+                }
+            ]
+        },
+        {
+            "id": "2",
+            "description": "Which of the following are Java features?",
+            "mark": 5,
+            "type": "checkbox",
+            "options": [
+                {
+                    "id": "8",
+                    "description": "Object-oriented",
+                    "user_chosen": 0
+                },
+                {
+                    "id": "5",
+                    "description": "Dynamic",
+                    "user_chosen": 0
+                },
+                {
+                    "id": "6",
+                    "description": "Architecture Neutral",
+                    "user_chosen": 0
+                },
+                {
+                    "id": "7",
+                    "description": "Use of pointers",
+                    "user_chosen": 0
+                }
+            ]
+        },
+        {
+            "id": "3",
+            "description": "What will be the output? \r\npublic static void main(String[] args){ \r\\n\tint i\u003d5;\r\n\tSystem.out.println(i++;);\r\n}",
+            "mark": 10,
+            "type": "radio",
+            "options": [
+                {
+                    "id": "9",
+                    "description": "4",
+                    "user_chosen": 0
+                },
+                {
+                    "id": "10",
+                    "description": "5",
+                    "user_chosen": 0
+                },
+                {
+                    "id": "11",
+                    "description": "6",
+                    "user_chosen": 0
+                }
+            ]
+        }
+    ]
+}
