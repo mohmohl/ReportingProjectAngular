@@ -1,4 +1,4 @@
-import { Topic } from 'src/models/question_form/Topic';
+import { TopicDetail } from 'src/models/question_form/TopicDetail';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 
@@ -17,7 +17,7 @@ export class FcdbChannelUserService {
         return this.http.get<any>(`${environment.baseUrl}` + '');
     }
 
-    public submitQuestion(topic: Topic) {
+    public submitQuestion(topic: TopicDetail) {
         return this.http.post<any>(`${environment.baseUrl}` + '', topic);
     }
 

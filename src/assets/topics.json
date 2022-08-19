@@ -1,0 +1,22 @@
+[
+    {
+        "id": "1",
+        "created_date": "17-08-2022",
+        "created_by": "yya",
+        "name": "Java Exam",
+        "description": "Test Java Skills",
+        "submitted": 1,
+        "result": 28,
+        "total": 30
+    },
+    {
+        "id": "2",
+        "created_date": "19-08-2022",
+        "created_by": "kkk",
+        "name": "August Exam",
+        "description": "Internal exam for MAB Staff",
+        "submitted": 0,
+        "result": 28,
+        "total": 30
+    }
+]

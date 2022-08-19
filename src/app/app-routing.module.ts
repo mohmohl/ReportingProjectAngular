@@ -378,8 +378,12 @@ const routes: Routes = [
         loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
       },
       {
-        path: 'question-form-submit',
+        path: 'question-form-submit/:param1',
         loadChildren: () => import('./views/question-form/question-form-submit/question-form-submit.module').then(m => m.QuestionFormSubmitModule)
+      },
+      {
+        path: 'question-form-list',
+        loadChildren: () => import('./views/question-form/question-form-list/question-form-list.module').then(m => m.QuestionFormListModule)
       }
       // {
       //   path: 'active-user-report',

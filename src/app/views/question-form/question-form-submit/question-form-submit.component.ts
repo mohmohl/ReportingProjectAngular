@@ -1,7 +1,8 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Option } from 'src/models/question_form/Option';
 import { Question } from 'src/models/question_form/Question';
-import { Topic } from 'src/models/question_form/Topic';
+import { TopicDetail } from 'src/models/question_form/TopicDetail';
 import { User } from 'src/models/User';
 import SampleJson from '../../../../assets/question_form.json';
 
@@ -12,11 +13,11 @@ import SampleJson from '../../../../assets/question_form.json';
 })
 export class QuestionFormSubmitComponent implements OnInit {
 
-  topic: Topic;
+  topic: TopicDetail;
   remaningQuestions: Question[] = [];
   remainWarningMsg = 'No answer is choosen';
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.topic = JSON.parse(JSON.stringify(SampleJson));
@@ -24,22 +25,22 @@ export class QuestionFormSubmitComponent implements OnInit {
 
   onChange(question: Question, option: Option) {
     if (question.type == 'checkbox') {
-      option.user_chosen = option.user_chosen == "0" ? "1" : "0";
+      option.user_chosen = option.user_chosen == 0 ? 1 : 0;
     }
     else if (question.type == 'radio') {
       for (let opt of question.options) {
         if (opt.id == option.id) {
-          opt.user_chosen = "1";
+          opt.user_chosen = 1;
         }
         else {
-          opt.user_chosen = "0";
+          opt.user_chosen = 0;
         }
       }
     }
   }
 
   onSubmit() {
-    this.remaningQuestions = this.topic.questions.filter(q => q.options.every(op => op.user_chosen == '0') == true);
+    this.remaningQuestions = this.topic.questions.filter(q => q.options.every(op => op.user_chosen == 0) == true);
 
     // this.remaningQuestions = this.topic.questions.filter(q => {
     //   let total = q.options.reduce((sum, current) => {
@@ -62,5 +63,12 @@ export class QuestionFormSubmitComponent implements OnInit {
     else {
       console.log(JSON.stringify(this.topic));
     }
+  }
+
+  onBack() {
+    if (confirm("Your data will be lost. Do you want to leave this page?") == true) {
+      this.router.navigate(["/question-form-list"]);
+    }
+
   }
 }

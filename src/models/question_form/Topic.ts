@@ -1,11 +1,9 @@
-import { Question } from "./Question";
-
 export class Topic {
-    id: string;
-    created_date: string;
-    created_by: string;
-    name: string;
-    description: string;
-    user_id: string;
-    questions: Question[];
+    id: String;
+    created_date: String;
+    created_by: String;
+    name: String;
+    description: String;
+    result: number;
+    total: number;
 }
