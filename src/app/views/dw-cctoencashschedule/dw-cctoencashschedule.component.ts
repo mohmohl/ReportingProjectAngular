@@ -88,6 +88,7 @@ export class DwCctoencashscheduleComponent implements OnInit {
     this._noData = false;
     this.g_cctoencashdatalist = [];
     this.idx = 0;
+    this.grandTotal = 0;
     this.cdr.reattach();
 
     this.http.doPost("/fttransaction/getCCTOEncashDatalist?date="+this.month+"&cusid="+this.cusID+"&branch="+ this.branchSetupData.branch_code,"CCTO Encash Schedule").subscribe(
