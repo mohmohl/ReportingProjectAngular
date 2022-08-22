@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>ADD TOPIC</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="form-group row">
+                        <label class="col-sm-1 col-form-label">Topic Name</label>
+                        <div class="col-sm-4">
+                            <input type="text" formControlName="name" class="form-control" id="name"
+                                [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.name.touched) && form.controls.name.errors }">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-1 col-form-label">Topic Description</label>
+                        <div class="col-sm-4">
+                            <textarea formControlName="description" class="form-control"
+                                [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.description.touched) && form.controls.description.errors }"></textarea>
+                        </div>
+                    </div>
+                    <!-- <div class="form-group row">
+                        <label class="col-sm-1 col-form-label">Is Opened</label>
+                        <div class="col-sm-2">
+                            <input type="checkbox" formControlName="is_open" style="margin-top:10px;">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-1 col-form-label">Is Active</label>
+                        <div class="col-sm-2">
+                            <input type="checkbox" formControlName="is_active" style="margin-top:10px;">
+                        </div>
+                    </div> 
+                    <div class="form-group row">
+                        <div class="col-sm-1 col-form-label">
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary btn-sm"
+                                style="margin-right: 10px;">Save</button>
+                            <button class="btn btn-danger btn-sm" (click)="onBack()">Back</button>
+                        </div>
+                    </div> -->
+                </form>
+
+                <div class="row" *ngIf="topic">
+                    <div class="col-sm-12">
+                        <div class="card" *ngFor="let question of topic.questions">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div style="font-size: medium;">
+                                            <textarea formControlName="question.description"
+                                                class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngFor="let option of question.options">
+                                    <div class="col-sm-12">
+                                        <input [type]="question.type" style="margin-right: 10px;" value="option.id"
+                                            name="question.id">
+                                        <label>{{option.description}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <a (click)="onBack()" class="float-back">
+                    <i class="fa fa-arrow-left my-float"></i>
+                </a>
+
+                <a (click)="onSubmit()" class="float-save">
+                    <i class="fa fa-save my-float"></i>
+                </a>
+
+                <a (click)="onAddQuestion()" class="float-add">
+                    <i class="fa fa-plus my-float"></i>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,8 +2,8 @@ export class Topic {
     id: String;
     created_date: String;
     created_by: String;
+    is_active: number;
     name: String;
     description: String;
-    result: number;
-    total: number;
+    total_mark: number;
 }

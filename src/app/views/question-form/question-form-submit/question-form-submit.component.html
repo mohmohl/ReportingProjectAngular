@@ -1,55 +1,58 @@
-<div class="row">
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header">
-                <h5>{{topic.name}}</h5>
-                <div *ngIf="loading" class="d-flex justify-content-center">
-                    <div class="spinner-border spinner-border-sm text-warning"></div>
-                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <label style="font-size: medium;">{{topic.description}}</label>
+<div *ngIf="topic">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>{{topic.name}}</h5>
+                    <div *ngIf="loading" class="d-flex justify-content-center">
+                        <div class="spinner-border spinner-border-sm text-warning"></div>
+                        <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-12">
-        <div class="card" *ngFor="let question of topic.questions">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div style="font-size: medium;">
-                            <pre>{{question.description}}</pre>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label style="font-size: medium;">{{topic.description}}</label>
                         </div>
                     </div>
                 </div>
-                <div class="row" *ngFor="let option of question.options">
-                    <div class="col-sm-12">
-                        <input [type]="question.type" style="margin-right: 10px;" value="option.id" name="question.id"
-                            [checked]="option.user_chosen == 1" (change)="onChange(question,option)">
-                        <label>{{option.description}}</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card" *ngFor="let question of topic.questions">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div style="font-size: medium;">
+                                <pre>{{question.description}}</pre>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row" *ngIf="remaningQuestions.includes(question)">
-                    <div class="col-sm-12">
-                        <label style="color:red;">{{remainWarningMsg}}</label>
+                    <div class="row" *ngFor="let option of question.options">
+                        <div class="col-sm-12">
+                            <input [type]="question.type" style="margin-right: 10px;" value="option.id"
+                                name="question.id" [checked]="option.user_chosen == 1"
+                                (change)="onChange(question,option)">
+                            <label>{{option.description}}</label>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="remaningQuestions.includes(question)">
+                        <div class="col-sm-12">
+                            <label style="color:red;">{{remainWarningMsg}}</label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="row">
-    <div class="col-sm-12">
-        <button class="btn btn-primary btn-sm" (click)="onSubmit()">Submit</button>
-        <button class="btn btn-secondary btn-sm" (click)="onBack()" style="margin-left: 20px;">Back</button><br><br>
+    <div class="row">
+        <div class="col-sm-12">
+            <button class="btn btn-primary btn-sm" (click)="onSubmit()">Submit</button>
+            <button class="btn btn-secondary btn-sm" (click)="onBack()" style="margin-left: 20px;">Back</button><br><br>
+        </div>
     </div>
 </div>

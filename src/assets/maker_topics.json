@@ -3,20 +3,22 @@
         "id": "1",
         "created_date": "17-08-2022",
         "created_by": "yya",
+        "is_active": 1,
         "name": "Java Exam",
         "description": "Test Java Skills",
-        "submitted": 1,
-        "result": 28,
-        "total": 30
+        "total_mark": 30,
+        "is_open": 0,
+        "candidates_count": 0
     },
     {
         "id": "2",
         "created_date": "19-08-2022",
         "created_by": "kkk",
-        "name": "August Exam",
-        "description": "Internal exam for MAB Staff",
-        "submitted": 0,
-        "result": 28,
-        "total": 30
+        "is_active": 1,
+        "name": "C# Exam",
+        "description": "Test C# Skills",
+        "total_mark": 50,
+        "is_open": 0,
+        "candidates_count": 0
     }
 ]

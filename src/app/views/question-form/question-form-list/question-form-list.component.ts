@@ -1,7 +1,6 @@
+import { CandidateTopic } from './../../../../models/question_form/CandidiateTopic';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Topic } from 'src/models/question_form/Topic';
-import SampleJson from '../../../../assets/topics.json';
+import { QuestionFormService } from 'src/services/QuestionFormService';
 
 @Component({
   selector: 'app-question-form-list',
@@ -10,11 +9,15 @@ import SampleJson from '../../../../assets/topics.json';
 })
 export class QuestionFormListComponent implements OnInit {
 
-  topics: Topic[] = [];
+  topics: CandidateTopic[] = [];
 
-  constructor() { }
+  constructor(private questionFormService: QuestionFormService) {
+
+  }
 
   ngOnInit() {
-    this.topics = JSON.parse(JSON.stringify(SampleJson));
+    this.questionFormService.getQuestionForms().subscribe((res) => {
+      this.topics = res;
+    });
   }
 }

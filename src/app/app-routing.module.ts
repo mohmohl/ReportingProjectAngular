@@ -384,7 +384,20 @@ const routes: Routes = [
       {
         path: 'question-form-list',
         loadChildren: () => import('./views/question-form/question-form-list/question-form-list.module').then(m => m.QuestionFormListModule)
+      },
+      {
+        path: 'topic-new',
+        loadChildren: () => import('./views/question-form/topic-new/topic-new.module').then(m => m.TopicNewModule)
+      },
+      {
+        path: 'topic-new/:param1',
+        loadChildren: () => import('./views/question-form/topic-new/topic-new.module').then(m => m.TopicNewModule)
+      },
+      {
+        path: 'topic-list',
+        loadChildren: () => import('./views/question-form/topic-list/topic-list.module').then(m => m.TopicListModule)
       }
+
       // {
       //   path: 'active-user-report',
       //   loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
