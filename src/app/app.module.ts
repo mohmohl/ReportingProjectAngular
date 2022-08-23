@@ -17,6 +17,8 @@ import { BnNgIdleService } from 'bn-ng-idle';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { CommonUtil } from './shared/common-util';
+import { ConsoLiabilitiesComponent } from './views/mis-reports/conso-liabilities/conso-liabilities.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { DatePipe } from '@angular/common';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     BnNgIdleService,
-    DatePipe
+    DatePipe,
+    CommonUtil
  ],
   bootstrap: [AppComponent]
 })

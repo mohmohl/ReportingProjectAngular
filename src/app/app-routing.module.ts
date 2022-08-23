@@ -352,6 +352,14 @@ const routes: Routes = [
     {
       path: 'outgoingmt103',
       loadChildren: () => import('./views/dw-outgoingmt103/dw_outgoingmt103.module').then(m => m.DWOutgoingMT103Module)
+    },
+    {
+      path: 'conso-asset',
+      loadChildren: () => import('./views/mis-reports/conso-assets/conso-assets.module').then(m => m.ConsoAssetsModule)
+    },
+    {
+      path: 'conso-liabilities',
+      loadChildren: () => import('./views/mis-reports/conso-liabilities/conso-liabilities.module').then(m => m.ConsoLiabilitiesModule)
     }
 
     ]
