@@ -1,4 +1,4 @@
-import { MakerTopic } from './../../../../models/question_form/MakerTopic';
+import { Topic } from './../../../../models/question_form/Topic';
 import { Component, OnInit } from '@angular/core';
 import SampleJson from '../../../../assets/maker_topics.json'
 
@@ -9,7 +9,7 @@ import SampleJson from '../../../../assets/maker_topics.json'
 })
 export class TopicListComponent implements OnInit {
 
-  topics: MakerTopic[] = [];
+  topics: Topic[] = [];
 
   constructor() { }
 

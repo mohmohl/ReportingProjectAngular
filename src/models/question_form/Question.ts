@@ -6,7 +6,6 @@ export class Question {
     description: string;
     mark: number;
     type: string;
-    role_id: string;
     options: Option[];
     answers: Answer[];
 }

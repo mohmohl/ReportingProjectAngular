@@ -9,68 +9,100 @@
                 </div>
             </div>
             <div class="card-body">
-                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <form [formGroup]="form">
                     <div class="form-group row">
-                        <label class="col-sm-1 col-form-label">Topic Name</label>
-                        <div class="col-sm-4">
-                            <input type="text" formControlName="name" class="form-control" id="name"
-                                [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.name.touched) && form.controls.name.errors }">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-1 col-form-label">Topic Description</label>
-                        <div class="col-sm-4">
-                            <textarea formControlName="description" class="form-control"
-                                [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.description.touched) && form.controls.description.errors }"></textarea>
-                        </div>
-                    </div>
-                    <!-- <div class="form-group row">
-                        <label class="col-sm-1 col-form-label">Is Opened</label>
-                        <div class="col-sm-2">
-                            <input type="checkbox" formControlName="is_open" style="margin-top:10px;">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-1 col-form-label">Is Active</label>
-                        <div class="col-sm-2">
-                            <input type="checkbox" formControlName="is_active" style="margin-top:10px;">
-                        </div>
-                    </div> 
-                    <div class="form-group row">
-                        <div class="col-sm-1 col-form-label">
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="submit" class="btn btn-primary btn-sm"
-                                style="margin-right: 10px;">Save</button>
-                            <button class="btn btn-danger btn-sm" (click)="onBack()">Back</button>
-                        </div>
-                    </div> -->
-                </form>
-
-                <div class="row" *ngIf="topic">
-                    <div class="col-sm-12">
-                        <div class="card" *ngFor="let question of topic.questions">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div style="font-size: medium;">
-                                            <textarea formControlName="question.description"
-                                                class="form-control"></textarea>
-                                        </div>
-                                    </div>
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <div class="col-sm-6">
+                                    <input type="text" formControlName="name" class="form-control" id="name"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.name.touched) && form.controls.name.errors }"
+                                        placeholder="Enter your topic name">
                                 </div>
-                                <div class="row" *ngFor="let option of question.options">
-                                    <div class="col-sm-12">
-                                        <input [type]="question.type" style="margin-right: 10px;" value="option.id"
-                                            name="question.id">
-                                        <label>{{option.description}}</label>
-                                    </div>
+                                <div class="col-sm-3">
+                                    <mat-form-field appearance="outline">
+                                        <input matInput [matDatepicker]="fromDatePicker" formControlName="from_date"
+                                            placeholder="From Date">
+                                        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #fromDatePicker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-3">
+                                    <mat-form-field appearance="outline">
+                                        <input matInput [matDatepicker]="toDatePicker" formControlName="to_date"
+                                            placeholder="To Date">
+                                        <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #toDatePicker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <textarea type="text" formControlName="description" class="form-control" id="name"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.description.touched) && form.controls.description.errors }"
+                                        placeholder="Enter your topic description"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div formArrayName="questions">
+                        <div *ngFor="let question of questions().controls; let questIndex = index"
+                            class="question-card">
+                            <label>Question : {{questIndex + 1}} </label>
+                            <span class="fa fa-trash fa-2x delete_quest" (click)="removeQuestion(questIndex)"></span>
+                            <div [formGroupName]="questIndex">
+                                <div class="form-group row">
+                                    <div class="col-sm-7">
+                                        <div style="font-size: medium;">
+                                            <textarea formControlName="description" class="form-control"
+                                                placeholder="Enter your question"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <input type="number" formControlName="mark" class="form-control"
+                                            placeholder="Mark">
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <select formControlName="type" class="form-control">
+                                            <option value="{{type}}" *ngFor='let type of question_type'>
+                                                {{type}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-primary btn-sm" (click)="addOption(questIndex)">Add
+                                            Option</button>
+                                    </div>
+                                </div>
+                                <div formArrayName="options">
+                                    <div *ngFor="let option of options(questIndex).controls; let optionIndex = index">
+                                        <div [formGroupName]="optionIndex ">
+                                            <div class="form-group row">
+                                                <div class="col-sm-8">
+                                                    <textarea type="text" class="form-control"
+                                                        formControlName="description"
+                                                        placeholder="Enter your option description"></textarea>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <input type="checkbox" formControlName="isAnswer"
+                                                        [id]="'q_'+questIndex+'_opt_'+optionIndex"
+                                                        (change)="onCheckChange(questIndex,optionIndex)"> <label
+                                                        style="margin-left: 5px;"> Is
+                                                        Answer</label>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <span class="fa fa-times fa-lg delete_opt"
+                                                        (click)="removeOptoin(questIndex,optionIndex)"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
 
                 <a (click)="onBack()" class="float-back">
                     <i class="fa fa-arrow-left my-float"></i>
@@ -80,7 +112,7 @@
                     <i class="fa fa-save my-float"></i>
                 </a>
 
-                <a (click)="onAddQuestion()" class="float-add">
+                <a (click)="addQuestion()" class="float-add">
                     <i class="fa fa-plus my-float"></i>
                 </a>
 
