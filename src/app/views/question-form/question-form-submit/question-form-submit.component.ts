@@ -31,22 +31,22 @@ export class QuestionFormSubmitComponent implements OnInit {
 
   onChange(question: Question, option: Option) {
     if (question.type == 'checkbox') {
-      option.user_chosen = option.user_chosen == 0 ? 1 : 0;
+      option.is_chosen = option.is_chosen == 0 ? 1 : 0;
     }
     else if (question.type == 'radio') {
       for (let opt of question.options) {
         if (opt.id == option.id) {
-          opt.user_chosen = 1;
+          opt.is_chosen = 1;
         }
         else {
-          opt.user_chosen = 0;
+          opt.is_chosen = 0;
         }
       }
     }
   }
 
   onSubmit() {
-    this.remaningQuestions = this.topic.questions.filter(q => q.options.every(op => op.user_chosen == 0) == true);
+    this.remaningQuestions = this.topic.questions.filter(q => q.options.every(op => op.is_chosen == 0) == true);
 
     // this.remaningQuestions = this.topic.questions.filter(q => {
     //   let total = q.options.reduce((sum, current) => {

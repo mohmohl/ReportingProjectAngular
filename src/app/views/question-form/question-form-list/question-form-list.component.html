@@ -13,7 +13,7 @@
                     <div class="col-sm-3 col-md-3 col-lg-3 question_card" *ngFor="let topic of topics"
                         [routerLink]="['/question-form-submit',topic.id]">
                         <label style="font-size: medium;">{{topic.name}}</label><br>
-                        <label style="font-size: medium;">{{topic.description}}</label><br>
+                        <label>{{topic.description}}</label><br>
                         <label>Date : {{topic.created_date}}</label> <br>
                         <label>Result : ({{topic.result}}/{{topic.total_mark}})</label><br>
                         <a class="btn btn-primary btn-sm" *ngIf="topic.submitted"

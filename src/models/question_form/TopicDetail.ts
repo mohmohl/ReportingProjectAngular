@@ -6,6 +6,8 @@ export class TopicDetail {
     created_by: string;
     name: string;
     description: string;
+    from_date: Date;
+    to_date: Date;
     user_id: string;
     questions: Question[];
 }

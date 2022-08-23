@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { TopicNewRoutingModule } from './topic-new-routing.module';
 import { TopicNewComponent } from './topic-new.component';
+import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 
 
 @NgModule({
@@ -12,6 +13,9 @@ import { TopicNewComponent } from './topic-new.component';
     CommonModule,
     TopicNewRoutingModule,
     SharedModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class TopicNewModule { }
