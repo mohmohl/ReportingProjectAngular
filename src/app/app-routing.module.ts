@@ -281,15 +281,15 @@ const routes: Routes = [
       },
       {
         path: 'subsidaryledger',
-        loadChildren: () => import('./views/dw-subsiledger/dw_subsiledger.module').then(m => m.DWSubsiLedgerModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-subsiledger/dw_subsiledger.module').then(m => m.DWSubsiLedgerModule)
       },
       {
         path: 'domesticftransfer',
-        loadChildren: () => import('./views/dw-domesticsfundtransfer/dw_domesticsfundtransfer.module').then(m => m.DWDomesticsFundTransferModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-domesticsfundtransfer/dw_domesticsfundtransfer.module').then(m => m.DWDomesticsFundTransferModule)
       },
       {
         path: 'domesticftransferreversal',
-        loadChildren: () => import('./views/dw-domestictransferreversal/dw_domestictransferreversal.module').then(m => m.DWDomesticTransferReversalModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-domestictransferreversal/dw_domestictransferreversal.module').then(m => m.DWDomesticTransferReversalModule)
       }
       ,
       {
@@ -314,60 +314,60 @@ const routes: Routes = [
       },
       {
         path: 'dailyftransfer',
-        loadChildren: () => import('./views/dw-dailyfundtransfer/dw_dailyfundtransfer.module').then(m => m.DWDailyFundTransferModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-dailyfundtransfer/dw_dailyfundtransfer.module').then(m => m.DWDailyFundTransferModule)
       },
       {
         path: 'crossccytransfer',
-        loadChildren: () => import('./views/dw-cctransfer/dw_cctransfer.module').then(m => m.DWCCTransferModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-cctransfer/dw_cctransfer.module').then(m => m.DWCCTransferModule)
       },
       {
         path: 'obrencashccsi',
-        loadChildren: () => import('./views/dw-obrencashccsi/dw_obrencashccsi.module').then(m => m.DWOBREncashCCSIModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-obrencashccsi/dw_obrencashccsi.module').then(m => m.DWOBREncashCCSIModule)
       },
       {
         path: 'cctodrawing',
-        loadChildren: () => import('./views/dw-cctodrawing/dw_cctodrawing.module').then(m => m.DWCCTODrawingModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-cctodrawing/dw_cctodrawing.module').then(m => m.DWCCTODrawingModule)
       },
       {
         path: 'cctodrawingreversal',
-        loadChildren: () => import('./views/dw-cctodrawingreversal/dw_cctodrawingreversal.module').then(m => m.DWCCTODrawingReversalModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-cctodrawingreversal/dw_cctodrawingreversal.module').then(m => m.DWCCTODrawingReversalModule)
       },
       {
         path: 'obrencashfpti',
-        loadChildren: () => import('./views/dw-obrencashfpti/dw_obrencashfpti.module').then(m => m.DWOBREncashFPTIModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-obrencashfpti/dw_obrencashfpti.module').then(m => m.DWOBREncashFPTIModule)
       },
       {
 
         path: 'cctoencash',
-        loadChildren: () => import('./views/dw-cctoencashschedule/dw_cctoencashschedule.module').then(m => m.DWCCTOEncashScheduleModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-cctoencashschedule/dw_cctoencashschedule.module').then(m => m.DWCCTOEncashScheduleModule)
       },
       {
         path: 'obrencashment',
-        loadChildren: () => import('./views/dw-obrencashment/dw_obrencashment.module').then(m => m.DWObrEncashmentModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-obrencashment/dw_obrencashment.module').then(m => m.DWObrEncashmentModule)
       },
       {
         path: 'obrencashtransfer',
-        loadChildren: () => import('./views/dw-obrencashtransfer/dw_obrencashtransfer.module').then(m => m.DWObrEncashTransferModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-obrencashtransfer/dw_obrencashtransfer.module').then(m => m.DWObrEncashTransferModule)
       },
       {
         path: 'rmtobrdrawing',
-        loadChildren: () => import('./views/dw-rmtobrdrawing/dw_rmtobrdrawing.module').then(m => m.DWRMTOBRDrawingModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-rmtobrdrawing/dw_rmtobrdrawing.module').then(m => m.DWRMTOBRDrawingModule)
       },
       {
         path: 'rmtobrencash',
-        loadChildren: () => import('./views/dw-rmtobrencash/dw_rmtobrencash.module').then(m => m.DWRMTOBREncashModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-rmtobrencash/dw_rmtobrencash.module').then(m => m.DWRMTOBREncashModule)
       },
       {
         path: 'remittance',
-        loadChildren: () => import('./views/dw-remittance/dw_remittance.module').then(m => m.DWRemittanceModule)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-remittance/dw_remittance.module').then(m => m.DWRemittanceModule)
       },
       {
         path: 'incomingmt103',
-        loadChildren: () => import('./views/dw-incomingmt103/dw_incomingmt103.module').then(m => m.DWIncomingMT103Module)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-incomingmt103/dw_incomingmt103.module').then(m => m.DWIncomingMT103Module)
       },
       {
         path: 'outgoingmt103',
-        loadChildren: () => import('./views/dw-outgoingmt103/dw_outgoingmt103.module').then(m => m.DWOutgoingMT103Module)
+        loadChildren: () => import('./views/ft-transaction-reports/dw-outgoingmt103/dw_outgoingmt103.module').then(m => m.DWOutgoingMT103Module)
       }, {
         path: 'user-branch-setup',
         loadChildren: () => import('./views/user-branch-setup/user-branch-setup.module').then(m => m.UserBranchSetupModule)
@@ -383,6 +383,14 @@ const routes: Routes = [
       {
         path: 'clink-export-report',
         loadChildren: () => import('./views/clink-export/clink-export.module').then(m => m.CLinkExportModule)
+      },
+      {
+        path: 'conso-asset',
+        loadChildren: () => import('./views/mis-reports/conso-assets/conso-assets.module').then(m => m.ConsoAssetsModule)
+      },
+      {
+        path: 'conso-liabilities',
+        loadChildren: () => import('./views/mis-reports/conso-liabilities/conso-liabilities.module').then(m => m.ConsoLiabilitiesModule)
       }
     ]
   },
