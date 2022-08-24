@@ -30,10 +30,10 @@ export class QuestionFormSubmitComponent implements OnInit {
   }
 
   onChange(question: Question, option: Option) {
-    if (question.type == 'checkbox') {
+    if (question.type.type == 'checkbox') {
       option.is_chosen = option.is_chosen == 0 ? 1 : 0;
     }
-    else if (question.type == 'radio') {
+    else if (question.type.type == 'radio') {
       for (let opt of question.options) {
         if (opt.id == option.id) {
           opt.is_chosen = 1;

@@ -18,6 +18,14 @@ export class QuestionFormService {
         return this.http.get<any>(`${environment.baseUrl}` + '/api/qna/topic/candidate-view/' + user_id, { headers: this.headers });
     }
 
+    public getTopics(): Observable<any> {
+        return this.http.get<any>(`${environment.baseUrl}` + '/api/qna/topic', { headers: this.headers });
+    }
+
+    public getTopicsById(topic_id): Observable<any> {
+        return this.http.get<any>(`${environment.baseUrl}` + '/api/qna/topic/setup/' + topic_id, { headers: this.headers });
+    }
+
     public getQuestionFormByID(id: number): Observable<any> {
         return this.http.get<any>(`${environment.baseUrl}` + '/api/qna/topic/' + id, { headers: this.headers });
     }

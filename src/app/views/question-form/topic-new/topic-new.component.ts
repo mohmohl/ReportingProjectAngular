@@ -1,3 +1,4 @@
+import { QuestionType } from './../../../../models/question_form/QuestionType';
 import { Option } from 'src/models/question_form/Option';
 import { TopicDetail } from './../../../../models/question_form/TopicDetail';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -5,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import SampleJson from '../../../../assets/maker_topic.json';
 import { Question } from 'src/models/question_form/Question';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter, TransitionCheckState } from '@angular/material';
+import { QuestionFormService } from 'src/services/QuestionFormService';
 
 @Component({
   selector: 'app-topic-new',
@@ -16,7 +18,7 @@ export class TopicNewComponent implements OnInit {
 
   formSubmitted = false;
   topic: TopicDetail;
-  question_type: string[] = ['radio', 'checkbox'];
+  question_type: QuestionType[] = [{ id: '1', type: 'checkbox' }, { id: '2', type: 'radio' }];
 
   form = this.fb.group({
     name: new FormControl('', Validators.required),
@@ -26,7 +28,8 @@ export class TopicNewComponent implements OnInit {
     questions: this.fb.array([]),
   });
 
-  constructor(private router: Router, private activeRoute: ActivatedRoute, private fb: FormBuilder, private dateAdapter: DateAdapter<Date>) {
+  constructor(private router: Router, private activeRoute: ActivatedRoute, private fb: FormBuilder,
+    private dateAdapter: DateAdapter<Date>, private questionFormService: QuestionFormService) {
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
   }
 
@@ -37,7 +40,7 @@ export class TopicNewComponent implements OnInit {
   newQuestion(): FormGroup {
     return this.fb.group({
       description: '',
-      type: 'radio',
+      type: '1',
       mark: 1,
       options: this.fb.array([]),
       // answers: this.fb.array([]),
@@ -73,27 +76,6 @@ export class TopicNewComponent implements OnInit {
     this.options(questIndex).removeAt(index);
   }
 
-  // answers(questIndex: number): FormArray {
-  //   return this.questions()
-  //     .at(questIndex)
-  //     .get('options') as FormArray;
-  // }
-
-  // newAnswer(): FormGroup {
-  //   return this.fb.group({
-  //     option_id: ''
-  //   });
-  // }
-
-  // addAnswer(questIndex: number) {
-  //   this.answers(questIndex).push(this.newAnswer());
-  // }
-
-  // removeAnswer(questIndex: number, index: number) {
-  //   this.answers(questIndex).removeAt(index);
-  // }
-
-
   ngOnInit() {
     this.form.reset();
 
@@ -102,13 +84,44 @@ export class TopicNewComponent implements OnInit {
       let topic_id = params['param1'];
       if (topic_id) {
         //get from service
-        this.topic = JSON.parse(JSON.stringify(SampleJson));
-        this.form.patchValue({
-          name: this.topic.name,
-          description: this.topic.description,
+        // this.topic = JSON.parse(JSON.stringify(SampleJson));
+
+        this.questionFormService.getTopicsById(topic_id).subscribe((res) => {
+          console.log(res);
+          this.topic = res;
+          console.log(JSON.stringify(this.topic));
+
+          this.form.patchValue({
+            name: this.topic.name,
+            description: this.topic.description,
+            from_date: this.topic.from_date,
+            to_date: this.topic.to_date,
+            //questions: this.fb.array([]),
+          });
+
+          let questIndex = 0;
+          for (let q of this.topic.questions) {
+            let form_q = this.fb.group({
+              description: q.description,
+              type: q.type.id,
+              mark: q.mark,
+              options: this.fb.array([]),
+            })
+            this.questions().push(form_q);
+
+            for (let opt of q.options) {
+              let o = this.fb.group({
+                description: opt.description,
+                isAnswer: opt.is_chosen,
+              });
+
+              this.options(questIndex).push(o);
+            }
+
+            questIndex++;
+          }
         });
       }
-
     });
   }
 
