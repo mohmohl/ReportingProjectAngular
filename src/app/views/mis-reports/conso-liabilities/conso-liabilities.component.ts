@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
 import { map } from 'rxjs/operators';
 import { CommonUtil } from 'src/app/shared/common-util';
+import { PickDateAdapter } from 'src/models/PickDateAdapter';
 import { HttpService } from 'src/services/HttpService';
 
 export const PICK_FORMATS = {
@@ -16,7 +18,11 @@ export const PICK_FORMATS = {
 @Component({
   selector: 'app-conso-liabilities',
   templateUrl: './conso-liabilities.component.html',
-  styleUrls: ['./conso-liabilities.component.css']
+  styleUrls: ['./conso-liabilities.component.css'],
+  providers: [
+    {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
+]
 })
 export class ConsoLiabilitiesComponent implements OnInit {
 
@@ -41,9 +47,6 @@ export class ConsoLiabilitiesComponent implements OnInit {
 
   fromDate: Date;
   toDate: Date;
-
-  minDate = new Date(2021, 5, 30);
-  maxDate = new Date();
 
   _totOPN : number = 0;
   _totDrCash : number = 0;

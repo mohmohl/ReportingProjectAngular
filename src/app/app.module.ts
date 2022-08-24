@@ -8,17 +8,17 @@ import { AdminComponent } from './layouts/admin/admin.component';
 import { TitleComponent } from './layouts/admin/title/title.component';
 import { BreadcrumbsComponent } from './layouts/admin/breadcrumbs/breadcrumbs.component';
 import { AuthComponent } from './layouts/auth/auth.component';
-import {SharedModule} from './shared/shared.module';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { SharedModule } from './shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from 'src/helpers/jwt.interceptor';
 import { ErrorInterceptor } from 'src/helpers/error.interceptor';
-import { BnNgIdleService } from 'bn-ng-idle'; 
+import { BnNgIdleService } from 'bn-ng-idle';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { FcdbNewUserComponent } from './views/fcdb/fcdb-new-user/fcdb-new-user.component';
 import { CommonUtil } from './shared/common-util';
-import { ConsoLiabilitiesComponent } from './views/mis-reports/conso-liabilities/conso-liabilities.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +26,8 @@ import { ConsoLiabilitiesComponent } from './views/mis-reports/conso-liabilities
     AdminComponent,
     TitleComponent,
     BreadcrumbsComponent,
-    AuthComponent
-    
- ],
+    AuthComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -46,7 +45,7 @@ import { ConsoLiabilitiesComponent } from './views/mis-reports/conso-liabilities
     BnNgIdleService,
     DatePipe,
     CommonUtil
- ],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { ChannelUser } from 'src/models/fcdb/ChannelUser';
+import { FcdbViewModel } from 'src/models/fcdb/FcdbViewModel';
 import { FcdbChannelUserService } from 'src/services/FcdbChannelUserService';
 
 @Component({
@@ -14,7 +15,7 @@ export class DuplicateChannelUserCheckerComponent implements OnInit {
   loading = false;
 
   error = '';
-  duplicatedUsers: ChannelUser[];
+  duplicatedUsers: FcdbViewModel[];
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -27,22 +28,26 @@ export class DuplicateChannelUserCheckerComponent implements OnInit {
   }
 
   submit() {
-    debugger;
+    this.duplicatedUsers = null;
     let user_id = this.form.controls['name'].value;
-
     this.loading = true;
     var buttonName = document.activeElement.getAttribute("name");
 
     console.log(buttonName);
     if (buttonName == null || buttonName == 'search') {
+      //var regex = new RegExp(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/);
+      let regex = new RegExp('^(?=.*[0-9])(?=.*[A-Z])([A-Z0-9]){7,15}$');
 
       if (user_id == '' || user_id == undefined || user_id == null) {
         this.error = 'User ID is required';
+      } else if (regex.test(user_id) == false) {
+        this.error = 'Invalid User ID format';
       }
       else {
         this.service.isUserExists(user_id).subscribe(res => {
           this.loading = false;
           this.error = '';
+
           this.duplicatedUsers = res;
           console.log(this.duplicatedUsers);
         },
@@ -55,5 +60,9 @@ export class DuplicateChannelUserCheckerComponent implements OnInit {
     this.loading = false;
   }
 
+  reset() {
+    this.duplicatedUsers = null;
+    this.error = '';
+  }
 
 }

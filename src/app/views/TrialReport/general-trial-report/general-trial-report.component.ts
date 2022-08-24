@@ -54,7 +54,7 @@ totalCredit_lcystr:string;
   form = new FormGroup({
     fromDate: new FormControl('', Validators.required),
     branchCode:new FormControl('', Validators.required),
-    currencyCode:new FormControl('', Validators.required)
+    currencyCode:new FormControl('MMK', Validators.required)
   });
 
   constructor(private service:TrialReportService){//,private dateAdapter: DateAdapter<Date>) {
@@ -229,6 +229,7 @@ exportexcel(): void
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
       a.target     = '_blank'; 
+      a.download = 'GeneralTrial_'+this.bCode+'_'+this.currencyCode+'.pdf';
       a.click();
       
       this.loading = false;

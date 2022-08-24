@@ -34,7 +34,7 @@ export class TrialReportComponent implements OnInit {
   loading = false;
   data:TrialReport;
   bCode:string;
-  minDate = new Date(2021, 5, 30);
+  minDate = new Date(2021, 4, 30);
   maxDate = new Date();
 totalDebit:number=0;
 totalDebit_lcy:number=0;
@@ -53,7 +53,7 @@ totalCredit_lcystr:string;
   form = new FormGroup({
     fromDate: new FormControl('', Validators.required),
     branchCode:new FormControl('', Validators.required),
-    currencyCode:new FormControl('', Validators.required)
+    currencyCode:new FormControl('MMK', Validators.required)
   });
 
   constructor(private service:TrialReportService){//,private dateAdapter: DateAdapter<Date>) {
@@ -68,6 +68,9 @@ totalCredit_lcystr:string;
       this.loading = false;
       this.currencyList = res;
     });
+
+    // date list 
+
    }
 
   ngOnInit() {
@@ -78,6 +81,10 @@ totalCredit_lcystr:string;
     } else {
      return false
     }
+   }
+
+   checkMonthEndDate(fromDate: string) {
+      
    }
    
   submit(){
@@ -226,7 +233,8 @@ exportexcel(): void
       var file = new Blob([data], {type: 'application/pdf'});
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
-      a.target     = '_blank'; 
+      a.target = '_blank'; 
+      a.download = 'DetailTrial_'+this.bCode+'_'+this.currencyCode+'.pdf';
       a.click();
       
       this.loading = false;

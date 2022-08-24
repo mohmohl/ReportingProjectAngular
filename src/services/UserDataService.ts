@@ -19,14 +19,18 @@ import { AuthenticationService } from "./AuthenticationService";
       return this.http.post<any>(`${environment.baseUrl}`+'/user/searchRegisteredUser?userId='+user_id,{title:"Fcub User"});
   }
 
-  public createApplicationAccount(user_id: string, password: string,menuId:string[]) {
+  public createApplicationAccount(user_id: string,home_branch:string,roleId:string[]) {
       var createdUserId = this.authenticationService.currentUserValue.userId;
-      return this.http.post(`${environment.baseUrl}/user/createApplicationAccount`, { user_id, password,menuId,createdUserId });
+      return this.http.post(`${environment.baseUrl}/user/createApplicationAccount`, { user_id,roleId,home_branch,createdUserId });
 
   }
   public PermitMenuToApplicationAccount(user_id: string,menuId:string[]) {
     var createdUserId = this.authenticationService.currentUserValue.userId;
     return this.http.post(`${environment.baseUrl}/user/permitMenuApplicationUser`, { user_id,menuId,createdUserId });
+  }
+  public PermitRoleToApplicationAccount(user_id: string,roleId:string[]) {
+    var createdUserId = this.authenticationService.currentUserValue.userId;
+    return this.http.post(`${environment.baseUrl}/user/permitRoleApplicationUser`, { user_id,roleId,createdUserId });
   }
 
   public UpdateUserStatus(user_id: string, user_status: string) {

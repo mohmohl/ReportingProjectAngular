@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { ConsoLiabilitiesRoutingModule } from './conso-liabilities-routing.module';
+import { ConsoLiabilitiesComponent } from './conso-liabilities.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { ConsoLiabilitiesRoutingModule } from './conso-liabilities-routing.modul
     MatNativeDateModule,
     MatFormFieldModule
   ],
-  declarations: [ConsoLiabilitiesRoutingModule]
+  declarations: [ConsoLiabilitiesComponent]
 })
 export class ConsoLiabilitiesModule { }

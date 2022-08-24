@@ -1,4 +1,6 @@
+import { BranchData } from "./BranchData";
 import { MenuItem } from "./menuItem";
+import { ReportRole } from "./ReportRole";
 
 export class UserInfo{
       user_id: string;
@@ -8,5 +10,7 @@ export class UserInfo{
 	  login_status: string;
 	  user_status: string;
 	  menuItem:MenuItem[];
+	  roleList:ReportRole[];
+	  branchList: BranchData[];
 	  record_stat : string;
 }

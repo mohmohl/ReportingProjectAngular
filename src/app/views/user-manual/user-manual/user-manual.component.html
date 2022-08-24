@@ -13,19 +13,20 @@
                     <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
                 </div>
 
-                  <table class="table table-bordered">  
+                <table class="table table-bordered">  
                       <thead>
-                          <th>Type</th>
-                          <th>Description</th>
-                          <th>File Path</th>
+                          <th>File Name</th>
+                          <th>File Type</th>
                           <th>Action</th>
                       </thead>
                       <tbody>
                           <tr *ngFor="let item of fileList;">
-                            <td>{{item.type}}</td>
                             <td>{{item.description}}</td>
-                            <td style="max-width:500px;white-space: pre-wrap;">{{item.fullPath}}</td>
-                            <td><button type="button" class="btn btn-primary btn-sm" (click)="submit(item.id,item.manualType)">Download</button></td>
+                            <td style="max-width:500px;white-space: pre-wrap;">{{item.manualType}}</td>
+                            <td>
+                              <button *ngIf="item.manualType!='video'" type="button" class="btn btn-primary btn-sm" (click)="submit(item.id,item.manualType,item.fullPath,item.description)">Download</button>
+                              <button *ngIf="item.manualType =='video' && valid == true" type="button" class="btn btn-primary btn-sm" (click)="submit(item.id,item.manualType,item.fullPath,item.description)">Download</button>
+                            </td>
                           </tr>
                       </tbody>
                   </table>
