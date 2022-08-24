@@ -391,7 +391,12 @@ const routes: Routes = [
       {
         path: 'conso-liabilities',
         loadChildren: () => import('./views/mis-reports/conso-liabilities/conso-liabilities.module').then(m => m.ConsoLiabilitiesModule)
+      },
+        {
+        path: 'fcubs-user-report',
+        loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
       }
+
     ]
   },
   {
