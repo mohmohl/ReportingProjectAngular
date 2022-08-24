@@ -18,6 +18,8 @@ export class DwRemittanceComponent implements OnInit {
   month_desc;
   remittancedatalist = [];
 
+  _grandTotal = 0;
+
   brCode = "";
   branchSetupData= {"bank_name" : "", "branch_name" : "" , "branch_code" : ""};
 
@@ -77,6 +79,7 @@ export class DwRemittanceComponent implements OnInit {
   clearProperties()
   {
     this.remittancedatalist = [];
+    this._grandTotal = 0;
   }  
   
   showDatas(){
@@ -92,6 +95,8 @@ export class DwRemittanceComponent implements OnInit {
       
           this._showData = true;
           this._noData = false;
+
+          this.calculateTotal(this.remittancedatalist);
         }else{
           this._showData = false;
           this._noData = true;
@@ -103,6 +108,12 @@ export class DwRemittanceComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  calculateTotal(datalist){
+    datalist.forEach(element => {
+      this._grandTotal = this._grandTotal + element.lcy_amount;
+    });
   }
 
 
