@@ -134,15 +134,15 @@
                                             
                                             <td> {{data.gl}}</td>
                                             <td class="number"> {{data.opn | number:'1.2-3'}} {{calculateOPNTotal(data.opn)}}</td>
-                                            <td class="number"> {{data.dr_cash | number:'1.2-3'}} {{calculateTotal()}}</td>
-                                            <td class="number"> {{data.dr_trf | number:'1.2-3'}} {{calculateTotal()}}</td>
-                                            <td class="number"> {{data.dr_clg | number:'1.2-3'}} {{calculateTotal()}}</td>
-                                            <td class="number"> {{data.dr | number:'1.2-3'}} {{calculateTotal()}}</td>
-                                            <td class="number"> {{data.cr_cash | number:'1.2-3'}} {{calculateTotal()}}</td>
-                                            <td class="number"> {{data.cr_trf | number:'1.2-3'}}  {{calculateTotal()}}</td>
-                                            <td class="number"> {{data.cr_clg | number:'1.2-3'}} {{calculateTotal()}}</td>
-                                            <td class="number"> {{data.cr | number : '1.2-3'}} {{calculateTotal()}}</td>
-                                            <td class="number"> {{data.clo | number : '1.2-3'}} {{calculateTotal()}}</td>
+                                            <td class="number"> {{data.dr_cash | number:'1.2-3'}} {{calculateDrCashTotal()}}</td>
+                                            <td class="number"> {{data.dr_trf | number:'1.2-3'}} {{calculateDrTransferTotal()}}</td>
+                                            <td class="number"> {{data.dr_clg | number:'1.2-3'}} {{calculateDrClearingTotal()}}</td>
+                                            <td class="number"> {{data.dr | number:'1.2-3'}} {{calculateDrTotal()}}</td>
+                                            <td class="number"> {{data.cr_cash | number:'1.2-3'}} {{calculateCrCashTotal()}}</td>
+                                            <td class="number"> {{data.cr_trf | number:'1.2-3'}}  {{calculateCrTransferTotal()}}</td>
+                                            <td class="number"> {{data.cr_clg | number:'1.2-3'}} {{calculateCrClearingTotal()}}</td>
+                                            <td class="number"> {{data.cr | number : '1.2-3'}} {{calculateCrTotal()}}</td>
+                                            <td class="number"> {{data.clo | number : '1.2-3'}} {{calculateCLOTotal()}}</td>
                                         </tr>
             
                                         <tr>
