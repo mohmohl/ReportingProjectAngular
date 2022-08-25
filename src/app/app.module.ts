@@ -26,7 +26,7 @@ import { CommonUtil } from './shared/common-util';
     AdminComponent,
     TitleComponent,
     BreadcrumbsComponent,
-    AuthComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,

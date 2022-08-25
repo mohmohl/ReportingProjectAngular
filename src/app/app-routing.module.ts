@@ -385,6 +385,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/clink-export/clink-export.module').then(m => m.CLinkExportModule)
       },
       {
+        path: 'fcdb_fcubs_cust',
+        loadChildren: () => import('./views/fcdb/cust-fcdb-fcubs/cust-fcdb-fcubs.module').then(m => m.CustFcdbFcubsModule)
+        },
+      {
         path: 'conso-asset',
         loadChildren: () => import('./views/mis-reports/conso-assets/conso-assets.module').then(m => m.ConsoAssetsModule)
       },
