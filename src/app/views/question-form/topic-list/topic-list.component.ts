@@ -1,6 +1,7 @@
+import { QuestionFormService } from 'src/services/QuestionFormService';
 import { Topic } from './../../../../models/question_form/Topic';
 import { Component, OnInit } from '@angular/core';
-import SampleJson from '../../../../assets/maker_topics.json'
+//import SampleJson from '../../../../assets/maker_topics.json'
 
 @Component({
   selector: 'app-topic-list',
@@ -11,10 +12,12 @@ export class TopicListComponent implements OnInit {
 
   topics: Topic[] = [];
 
-  constructor() { }
+  constructor(private questionFormService: QuestionFormService) { }
 
   ngOnInit() {
-    this.topics = JSON.parse(JSON.stringify(SampleJson));
+    this.questionFormService.getTopics().subscribe((res) => {
+      this.topics = res;
+    });
   }
 
 }

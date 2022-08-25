@@ -1,6 +1,7 @@
 import { CandidateTopic } from './../../../../models/question_form/CandidiateTopic';
 import { Component, OnInit } from '@angular/core';
 import { QuestionFormService } from 'src/services/QuestionFormService';
+import { User } from 'src/models/User';
 
 @Component({
   selector: 'app-question-form-list',
@@ -16,7 +17,9 @@ export class QuestionFormListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.questionFormService.getQuestionForms().subscribe((res) => {
+    let login_user: User = JSON.parse(localStorage.getItem('currentUser'));
+
+    this.questionFormService.getQuestionForms(login_user.userId).subscribe((res) => {
       this.topics = res;
     });
   }

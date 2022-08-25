@@ -1,3 +1,4 @@
+import { QuestionType } from './../../../../models/question_form/QuestionType';
 import { Option } from 'src/models/question_form/Option';
 import { TopicDetail } from './../../../../models/question_form/TopicDetail';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -5,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import SampleJson from '../../../../assets/maker_topic.json';
 import { Question } from 'src/models/question_form/Question';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter, TransitionCheckState } from '@angular/material';
+import { QuestionFormService } from 'src/services/QuestionFormService';
+import { User } from 'src/models/User';
 
 @Component({
   selector: 'app-topic-new',
@@ -16,9 +19,11 @@ export class TopicNewComponent implements OnInit {
 
   formSubmitted = false;
   topic: TopicDetail;
-  question_type: string[] = ['radio', 'checkbox'];
+  question_type: QuestionType[] = [{ id: '1', type: 'checkbox' }, { id: '2', type: 'radio' }];
+  loading = false;
 
   form = this.fb.group({
+    id: '',
     name: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     from_date: new FormControl(new Date(), Validators.required),
@@ -26,7 +31,8 @@ export class TopicNewComponent implements OnInit {
     questions: this.fb.array([]),
   });
 
-  constructor(private router: Router, private activeRoute: ActivatedRoute, private fb: FormBuilder, private dateAdapter: DateAdapter<Date>) {
+  constructor(private router: Router, private activeRoute: ActivatedRoute, private fb: FormBuilder,
+    private dateAdapter: DateAdapter<Date>, private questionFormService: QuestionFormService) {
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
   }
 
@@ -36,8 +42,9 @@ export class TopicNewComponent implements OnInit {
 
   newQuestion(): FormGroup {
     return this.fb.group({
+      id: '',
       description: '',
-      type: 'radio',
+      type: '2',
       mark: 1,
       options: this.fb.array([]),
       // answers: this.fb.array([]),
@@ -60,6 +67,7 @@ export class TopicNewComponent implements OnInit {
 
   newOption(): FormGroup {
     return this.fb.group({
+      id: '',
       description: '',
       isAnswer: false,
     });
@@ -73,52 +81,74 @@ export class TopicNewComponent implements OnInit {
     this.options(questIndex).removeAt(index);
   }
 
-  // answers(questIndex: number): FormArray {
-  //   return this.questions()
-  //     .at(questIndex)
-  //     .get('options') as FormArray;
-  // }
-
-  // newAnswer(): FormGroup {
-  //   return this.fb.group({
-  //     option_id: ''
-  //   });
-  // }
-
-  // addAnswer(questIndex: number) {
-  //   this.answers(questIndex).push(this.newAnswer());
-  // }
-
-  // removeAnswer(questIndex: number, index: number) {
-  //   this.answers(questIndex).removeAt(index);
-  // }
-
-
   ngOnInit() {
     this.form.reset();
+    this.loading = true;
 
     this.activeRoute.params.subscribe(params => {
 
       let topic_id = params['param1'];
       if (topic_id) {
         //get from service
-        this.topic = JSON.parse(JSON.stringify(SampleJson));
-        this.form.patchValue({
-          name: this.topic.name,
-          description: this.topic.description,
+        // this.topic = JSON.parse(JSON.stringify(SampleJson));
+
+        this.questionFormService.getTopicsById(topic_id).subscribe((res) => {
+
+          this.topic = res;
+          console.log(JSON.stringify(this.topic));
+
+          this.form.patchValue({
+            id: topic_id,
+            name: this.topic.name,
+            description: this.topic.description,
+            from_date: new Date(this.topic.from_date),
+            to_date: new Date(this.topic.to_date),
+            //questions: this.fb.array([]),
+          });
+
+          let questIndex = 0;
+          for (let q of this.topic.questions) {
+            let form_q = this.fb.group({
+              id: q.id,
+              description: q.description,
+              type: q.type.id,
+              mark: q.mark,
+              options: this.fb.array([]),
+            })
+            this.questions().push(form_q);
+
+            for (let opt of q.options) {
+              let o = this.fb.group({
+                id: opt.id,
+                description: opt.description,
+                isAnswer: opt.is_chosen,
+              });
+
+              this.options(questIndex).push(o);
+            }
+
+            questIndex++;
+          }
+        }, () => {
+          this.loading = false;
+        }, () => {
+          this.loading = false;
         });
       }
-
     });
+
   }
 
   onSubmit() {
     debugger;
     this.formSubmitted = true;
     if (this.form.valid) {
-      console.log(JSON.stringify(this.form.value));
 
       this.prepareSubmitData();
+
+      this.questionFormService.submitQuestion(this.topic).subscribe((res) => {
+
+      });
 
       console.log(JSON.stringify(this.topic));
     }
@@ -126,6 +156,11 @@ export class TopicNewComponent implements OnInit {
 
   prepareSubmitData() {
     this.topic = new TopicDetail();
+
+    let login_user: User = JSON.parse(localStorage.getItem('currentUser'));
+
+    this.topic.id = this.form.value.id;
+    this.topic.created_by = login_user.userId;
     this.topic.name = this.form.value.name;
     this.topic.description = this.form.value.description;
     this.topic.from_date = this.form.value.from_date;
@@ -135,14 +170,16 @@ export class TopicNewComponent implements OnInit {
 
     for (let quest of this.form.value.questions) {
       let l_question = new Question();
+      l_question.id = quest.id;
       l_question.description = quest.description;
       l_question.mark = quest.mark;
-      l_question.type = quest.type;
+      l_question.type = { id: quest.type, type: '' };
 
       let l_options: Option[] = [];
 
       for (let opt of quest.options) {
         let l_option = new Option();
+        l_option.id = opt.id;
         l_option.description = opt.description;
         l_option.is_chosen = opt.isAnswer ? 1 : 0;
 

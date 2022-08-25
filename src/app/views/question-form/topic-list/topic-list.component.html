@@ -14,10 +14,9 @@
                     <div class="col-sm-3 col-md-3 col-lg-3 question_card" *ngFor="let topic of topics"
                         [routerLink]="['/topic-new',topic.id]">
                         <label style="font-size: medium;">{{topic.name}}</label><br>
-                        <label style="font-size: medium;">{{topic.description}}</label><br>
+                        <label>{{topic.description}}</label><br>
                         <label>Date : {{topic.created_date}}</label> <br>
-                        <label>Open : {{topic.is_open ? 'true' : 'false'}}</label><br>
-                        <label>Active : {{topic.is_active ? 'true' : 'false'}}</label><br>
+                        <!-- <label>Active : {{topic.is_active ? 'true' : 'false'}}</label><br> -->
                         <a class="btn btn-primary btn-sm" [routerLink]="['/topic-new',topic.id]"
                             style="margin-right:10px;">Edit</a>
                     </div>
