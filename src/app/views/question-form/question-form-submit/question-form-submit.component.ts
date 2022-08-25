@@ -57,8 +57,7 @@ export class QuestionFormSubmitComponent implements OnInit {
     //       return ++sum;
     //   }, 0);
     //   return total == 0;
-    // })
-    debugger;
+    // }) 
 
     let login_user: User = JSON.parse(localStorage.getItem('currentUser'));
     this.topic.user_id = login_user.userId;

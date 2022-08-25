@@ -21,6 +21,7 @@ export class TopicNewComponent implements OnInit {
   topic: TopicDetail;
   question_type: QuestionType[] = [{ id: '1', type: 'checkbox' }, { id: '2', type: 'radio' }];
   loading = false;
+  message = '';
 
   form = this.fb.group({
     id: '',
@@ -83,12 +84,13 @@ export class TopicNewComponent implements OnInit {
 
   ngOnInit() {
     this.form.reset();
-    this.loading = true;
+   
 
     this.activeRoute.params.subscribe(params => {
 
       let topic_id = params['param1'];
       if (topic_id) {
+        this.loading = true;
         //get from service
         // this.topic = JSON.parse(JSON.stringify(SampleJson));
 
@@ -147,7 +149,8 @@ export class TopicNewComponent implements OnInit {
       this.prepareSubmitData();
 
       this.questionFormService.submitQuestion(this.topic).subscribe((res) => {
-
+        this.loading = false;
+        this.message = "Question was successfully saved.";
       });
 
       console.log(JSON.stringify(this.topic));
