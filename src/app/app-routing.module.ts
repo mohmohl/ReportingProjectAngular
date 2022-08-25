@@ -382,6 +382,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/question-form/question-form-submit/question-form-submit.module').then(m => m.QuestionFormSubmitModule)
       },
       {
+        path: 'question-form-result/:param1',
+        loadChildren: () => import('./views/question-form/question-form-result/question-form-result.module').then(m => m.QuestionFormResultModule)
+      },
+      {
         path: 'question-form-list',
         loadChildren: () => import('./views/question-form/question-form-list/question-form-list.module').then(m => m.QuestionFormListModule)
       },

@@ -31,7 +31,10 @@ export class QuestionFormService {
     }
 
     public submitQuestion(topic: TopicDetail): Observable<any> {
-        return this.http.post<any>(`${environment.baseUrl}` + '/api/qna/topic', topic, { headers: this.headers });
+        return this.http.post<any>(`${environment.baseUrl}` + '/api/qna/topic/answer', topic, { headers: this.headers });
     }
 
+    public checkCandidateAnswersByTopicAndCandidate(topicId: number): Observable<any> {
+        return this.http.get<any>(`${environment.baseUrl}` + `/api/qna/topic/${topicId}/check-answers/`, { headers: this.headers });
+    }
 }
