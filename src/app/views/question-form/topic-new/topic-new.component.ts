@@ -8,6 +8,7 @@ import SampleJson from '../../../../assets/maker_topic.json';
 import { Question } from 'src/models/question_form/Question';
 import { DateAdapter, TransitionCheckState } from '@angular/material';
 import { QuestionFormService } from 'src/services/QuestionFormService';
+import { User } from 'src/models/User';
 
 @Component({
   selector: 'app-topic-new',
@@ -19,8 +20,10 @@ export class TopicNewComponent implements OnInit {
   formSubmitted = false;
   topic: TopicDetail;
   question_type: QuestionType[] = [{ id: '1', type: 'checkbox' }, { id: '2', type: 'radio' }];
+  loading = false;
 
   form = this.fb.group({
+    id: '',
     name: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
     from_date: new FormControl(new Date(), Validators.required),
@@ -39,8 +42,9 @@ export class TopicNewComponent implements OnInit {
 
   newQuestion(): FormGroup {
     return this.fb.group({
+      id: '',
       description: '',
-      type: '1',
+      type: '2',
       mark: 1,
       options: this.fb.array([]),
       // answers: this.fb.array([]),
@@ -63,6 +67,7 @@ export class TopicNewComponent implements OnInit {
 
   newOption(): FormGroup {
     return this.fb.group({
+      id: '',
       description: '',
       isAnswer: false,
     });
@@ -78,6 +83,7 @@ export class TopicNewComponent implements OnInit {
 
   ngOnInit() {
     this.form.reset();
+    this.loading = true;
 
     this.activeRoute.params.subscribe(params => {
 
@@ -87,21 +93,23 @@ export class TopicNewComponent implements OnInit {
         // this.topic = JSON.parse(JSON.stringify(SampleJson));
 
         this.questionFormService.getTopicsById(topic_id).subscribe((res) => {
-          console.log(res);
+
           this.topic = res;
           console.log(JSON.stringify(this.topic));
 
           this.form.patchValue({
+            id: topic_id,
             name: this.topic.name,
             description: this.topic.description,
-            from_date: this.topic.from_date,
-            to_date: this.topic.to_date,
+            from_date: new Date(this.topic.from_date),
+            to_date: new Date(this.topic.to_date),
             //questions: this.fb.array([]),
           });
 
           let questIndex = 0;
           for (let q of this.topic.questions) {
             let form_q = this.fb.group({
+              id: q.id,
               description: q.description,
               type: q.type.id,
               mark: q.mark,
@@ -111,6 +119,7 @@ export class TopicNewComponent implements OnInit {
 
             for (let opt of q.options) {
               let o = this.fb.group({
+                id: opt.id,
                 description: opt.description,
                 isAnswer: opt.is_chosen,
               });
@@ -120,18 +129,26 @@ export class TopicNewComponent implements OnInit {
 
             questIndex++;
           }
+        }, () => {
+          this.loading = false;
+        }, () => {
+          this.loading = false;
         });
       }
     });
+
   }
 
   onSubmit() {
     debugger;
     this.formSubmitted = true;
     if (this.form.valid) {
-      console.log(JSON.stringify(this.form.value));
 
       this.prepareSubmitData();
+
+      this.questionFormService.submitQuestion(this.topic).subscribe((res) => {
+
+      });
 
       console.log(JSON.stringify(this.topic));
     }
@@ -139,6 +156,11 @@ export class TopicNewComponent implements OnInit {
 
   prepareSubmitData() {
     this.topic = new TopicDetail();
+
+    let login_user: User = JSON.parse(localStorage.getItem('currentUser'));
+
+    this.topic.id = this.form.value.id;
+    this.topic.created_by = login_user.userId;
     this.topic.name = this.form.value.name;
     this.topic.description = this.form.value.description;
     this.topic.from_date = this.form.value.from_date;
@@ -148,14 +170,16 @@ export class TopicNewComponent implements OnInit {
 
     for (let quest of this.form.value.questions) {
       let l_question = new Question();
+      l_question.id = quest.id;
       l_question.description = quest.description;
       l_question.mark = quest.mark;
-      l_question.type = quest.type;
+      l_question.type = { id: quest.type, type: '' };
 
       let l_options: Option[] = [];
 
       for (let opt of quest.options) {
         let l_option = new Option();
+        l_option.id = opt.id;
         l_option.description = opt.description;
         l_option.is_chosen = opt.isAnswer ? 1 : 0;
 
