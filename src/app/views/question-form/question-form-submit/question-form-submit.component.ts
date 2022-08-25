@@ -24,6 +24,7 @@ export class QuestionFormSubmitComponent implements OnInit {
       if (params && params['param1']) {
         this.questionFormServie.getQuestionFormByID(params['param1']).subscribe((res) => {
           this.topic = res;
+          console.log(JSON.stringify(res));
         });
       }
     });
