@@ -14,8 +14,8 @@ export class QuestionFormService {
     constructor(private http: HttpClient) {
     }
 
-    public getQuestionForms(user_id): Observable<any> {
-        return this.http.get<any>(`${environment.baseUrl}` + '/api/qna/topic/candidate-view/' + user_id, { headers: this.headers });
+    public getQuestionForms(): Observable<any> {
+        return this.http.get<any>(`${environment.baseUrl}` + '/api/qna/topic/candidate-view', { headers: this.headers });
     }
 
     public getTopics(): Observable<any> {
