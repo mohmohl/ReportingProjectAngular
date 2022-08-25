@@ -17,9 +17,9 @@ export class QuestionFormListComponent implements OnInit {
   }
 
   ngOnInit() {
-    let login_user: User = JSON.parse(localStorage.getItem('currentUser'));
+    //let login_user: User = JSON.parse(localStorage.getItem('currentUser'));
 
-    this.questionFormService.getQuestionForms(login_user.userId).subscribe((res) => {
+    this.questionFormService.getQuestionForms().subscribe((res) => {
       this.topics = res;
     });
   }
