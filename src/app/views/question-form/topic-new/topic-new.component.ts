@@ -217,16 +217,20 @@ export class TopicNewComponent implements OnInit {
       let indexOfOptionsOfCurrentQuestion = 0;
 
       for (let option of this.form.value.questions[questIndex].options) {
+        let chkOption = document.getElementById('q_' + questIndex + '_opt_' + indexOfOptionsOfCurrentQuestion) as HTMLInputElement;
         if (option == this.form.value.questions[questIndex].options[optionIndex]) {
-          option.isAnswer = true;
+
+          chkOption.checked = true;
+          this.form.value.questions[questIndex].options[indexOfOptionsOfCurrentQuestion].isAnswer = 1;
         }
         else {
-          const chkOption = document.getElementById('q_' + questIndex + '_opt_' + indexOfOptionsOfCurrentQuestion) as HTMLInputElement;
           chkOption.checked = false;
-          option.isAnswer = false;
+          this.form.value.questions[questIndex].options[indexOfOptionsOfCurrentQuestion].isAnswer = 0;
         }
         indexOfOptionsOfCurrentQuestion++;
       }
     }
+
+    console.log(this.form);
   }
 }

@@ -88,7 +88,8 @@
                                                 <div class="col-sm-2">
                                                     <input type="checkbox" formControlName="isAnswer"
                                                         [id]="'q_'+questIndex+'_opt_'+optionIndex"
-                                                        (change)="onCheckChange(questIndex,optionIndex)"> <label
+                                                        (change)="onCheckChange(questIndex,optionIndex)">
+                                                    <label [for]="'q_'+questIndex+'_opt_'+optionIndex"
                                                         style="margin-left: 5px;"> Is
                                                         Answer</label>
                                                 </div>
