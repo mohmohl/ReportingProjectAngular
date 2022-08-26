@@ -7,18 +7,23 @@
                     <div class="spinner-border spinner-border-sm text-warning"></div>
                     <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
                 </div>
+                <div class="d-flex justify-content-center">
+                    <span class="text-warning">{{message}}</span>
+                </div>
             </div>
             <div class="card-body">
                 <button class="btn btn-primary btn-sm" [routerLink]="['/topic-new']">Create New Topic</button>
                 <div class="row">
-                    <div class="col-sm-3 col-md-3 col-lg-3 question_card" *ngFor="let topic of topics"
-                        [routerLink]="['/topic-new',topic.id]">
+                    <div class="col-sm-3 col-md-3 col-lg-3 question_card" *ngFor="let topic of topics">
                         <label style="font-size: medium;">{{topic.name}}</label><br>
                         <label>{{topic.description}}</label><br>
-                        <label>Date : {{topic.created_date}}</label> <br>
-                        <!-- <label>Active : {{topic.is_active ? 'true' : 'false'}}</label><br> -->
-                        <a class="btn btn-primary btn-sm" [routerLink]="['/topic-new',topic.id]"
-                            style="margin-right:10px;">Edit</a>
+                        <label>Created Date : {{topic.created_date}}</label> <br>
+                        <label>Start Date : {{topic.from_date}}</label> <br>
+                        <label>End Date : {{topic.to_date}}</label> <br>
+                        <a class="btn btn-primary btn-sm" [routerLink]="['/topic-new',topic.id]" style="margin-right:10px;">Edit</a>
+                        <a class="btn btn-primary btn-sm" (click)="changeActiveStatus(topic.id)" style="margin-right:10px;">
+                            Delete
+                        </a>
                     </div>
                 </div>
 
