@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-    constructor(private authenticationService: AuthenticationService, private router: Router) { 
+    constructor(private authenticationService: AuthenticationService, private router: Router) {
 
     }
 
@@ -18,7 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (err.status === 401) {
                 // auto logout if 401 response returned from api
                 console.log(">>>>> 401")
-                console.log("error exception >> "+err.error.exception);
+                console.log("error exception >> " + err.error.exception);
                 error = err.error.exception;
                 this.router.navigate(['/access-denied']);
                 //this.authenticationService.logout();
@@ -27,19 +27,19 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (err.status === 403) {
                 console.log(">>>>> 403")
                 //error = err.error.message;
-               // this.router.navigate(['/access-denied']);
+                // this.router.navigate(['/access-denied']);
                 // auto logout if 401 response returned from api
                 this.authenticationService.logout();
-        
+
             }
             if (err.status === 500) {
                 console.log(">>>>> 500")
                 error = err.error.message;
                 // auto logout if 401 response returned from api
-               // this.authenticationService.logout();
-        
+                // this.authenticationService.logout();
+
             }
-            return throwError(error);
+            return throwError(err);
         }))
     }
 }

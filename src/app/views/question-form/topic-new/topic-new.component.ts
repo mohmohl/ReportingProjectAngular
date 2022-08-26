@@ -22,6 +22,7 @@ export class TopicNewComponent implements OnInit {
   question_type: QuestionType[] = [{ id: '1', type: 'checkbox' }, { id: '2', type: 'radio' }];
   loading = false;
   message = '';
+  topic_id;
 
   form = this.fb.group({
     id: '',
@@ -85,22 +86,19 @@ export class TopicNewComponent implements OnInit {
   ngOnInit() {
     this.form.reset();
 
-
     this.activeRoute.params.subscribe(params => {
 
-      let topic_id = params['param1'];
-      if (topic_id) {
+      this.topic_id = params['param1'];
+      if (this.topic_id) {
         this.loading = true;
-        //get from service
-        // this.topic = JSON.parse(JSON.stringify(SampleJson));
 
-        this.questionFormService.getTopicsById(topic_id).subscribe((res) => {
+        this.questionFormService.getTopicsById(this.topic_id).subscribe((res) => {
 
           this.topic = res;
           console.log(JSON.stringify(this.topic));
 
           this.form.patchValue({
-            id: topic_id,
+            id: this.topic_id,
             name: this.topic.name,
             description: this.topic.description,
             from_date: new Date(this.topic.from_date),
@@ -142,18 +140,28 @@ export class TopicNewComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger;
     this.formSubmitted = true;
-    if (this.form.valid) {
 
+    if (this.form.valid) {
+      this.message = '';
       this.prepareSubmitData();
 
-      this.questionFormService.submitQuestion(this.topic).subscribe((res) => {
+      this.questionFormService.setupQuestion(this.topic).subscribe((res) => {
         this.loading = false;
         this.message = "Question was successfully saved.";
+
+        if (!this.topic_id) {
+          this.router.navigate(['/topic-list']);
+        }
+
+      }, (error) => {
+        this.message = 'Bad request. Date are required. Every question must has a answer. ';
       });
 
       console.log(JSON.stringify(this.topic));
+    }
+    else {
+      this.message = 'Please fill all required data.';
     }
   }
 
