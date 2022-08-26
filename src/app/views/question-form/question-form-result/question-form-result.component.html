@@ -33,7 +33,8 @@
                     </div>
                     <div class="row" *ngFor="let option of question.options">
                         <div class="col-sm-12">
-                            <input type="checkbox" style="margin-right: 10px;" value="option.id" name="question.id" [checked]="option.is_chosen == 1">
+                            <input [type]="question.type.type" style="margin-right: 10px;" value="option.id"
+                                [name]="question.id" [checked]="option.is_chosen">
 
                             <label>{{option.description}}</label>
                         </div>
