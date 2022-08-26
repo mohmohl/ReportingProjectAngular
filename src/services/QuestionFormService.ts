@@ -41,4 +41,12 @@ export class QuestionFormService {
     public checkCandidateAnswersByTopicAndCandidate(topicId: number): Observable<any> {
         return this.http.get<any>(`${environment.baseUrl}` + `/api/qna/topic/${topicId}/check-answers/`, { headers: this.headers });
     }
+
+    public isTopicRemovable(topicId: number): Observable<any> {
+        return this.http.get<any>(`${environment.baseUrl}` + `/api/qna/topic/isremovable/${topicId}`, { headers: this.headers });
+    }
+
+    public deleteTopic(id:number): Observable<any> {
+        return this.http.post<any>(`${environment.baseUrl}` + `/api/qna/topic/${id}`, { headers: this.headers });
+    }
 }
