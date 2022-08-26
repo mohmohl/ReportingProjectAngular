@@ -1,7 +1,7 @@
+import { Router } from '@angular/router';
 import { CandidateTopic } from './../../../../models/question_form/CandidiateTopic';
 import { Component, OnInit } from '@angular/core';
 import { QuestionFormService } from 'src/services/QuestionFormService';
-import { User } from 'src/models/User';
 
 @Component({
   selector: 'app-question-form-list',
@@ -12,7 +12,7 @@ export class QuestionFormListComponent implements OnInit {
 
   topics: CandidateTopic[] = [];
 
-  constructor(private questionFormService: QuestionFormService) {
+  constructor(private questionFormService: QuestionFormService, private router: Router) {
 
   }
 
@@ -22,5 +22,15 @@ export class QuestionFormListComponent implements OnInit {
     this.questionFormService.getQuestionForms().subscribe((res) => {
       this.topics = res;
     });
+  }
+
+  goNextPage(topic: CandidateTopic) {
+    if (topic.submitted) {
+      this.router.navigate(['/question-form-result', topic.id]);
+    }
+    else {
+      this.router.navigate(['/question-form-submit', topic.id]);
+    }
+
   }
 }
