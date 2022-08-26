@@ -84,7 +84,7 @@ export class TopicNewComponent implements OnInit {
 
   ngOnInit() {
     this.form.reset();
-   
+
 
     this.activeRoute.params.subscribe(params => {
 
@@ -197,12 +197,15 @@ export class TopicNewComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['/topic-list']);
+    if (confirm("Unsave data will be lost. Do you want to leave this page?") == true) {
+      this.router.navigate(['/topic-list']);
+    }
   }
 
 
   onCheckChange(questIndex: number, optionIndex: number) {
-    if (this.form.value.questions[questIndex].type == 'radio') {
+    debugger;
+    if (this.form.value.questions[questIndex].type == '2') {
       let indexOfOptionsOfCurrentQuestion = 0;
 
       for (let option of this.form.value.questions[questIndex].options) {

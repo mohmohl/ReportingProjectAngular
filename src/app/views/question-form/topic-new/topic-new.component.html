@@ -17,18 +17,22 @@
                         <div class="col-sm-12">
                             <div class="form-group row">
                                 <div class="col-sm-6">
-                                    <input type="text" formControlName="name" class="form-control" id="name" [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.name.touched) && form.controls.name.errors }" placeholder="Enter your topic name">
+                                    <input type="text" formControlName="name" class="form-control" id="name"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.name.touched) && form.controls.name.errors }"
+                                        placeholder="Enter your topic name">
                                 </div>
                                 <div class="col-sm-3">
                                     <mat-form-field appearance="outline">
-                                        <input matInput [matDatepicker]="fromDatePicker" formControlName="from_date" placeholder="From Date">
+                                        <input matInput [matDatepicker]="fromDatePicker" formControlName="from_date"
+                                            placeholder="From Date">
                                         <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
                                         <mat-datepicker #fromDatePicker></mat-datepicker>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-sm-3">
                                     <mat-form-field appearance="outline">
-                                        <input matInput [matDatepicker]="toDatePicker" formControlName="to_date" placeholder="To Date">
+                                        <input matInput [matDatepicker]="toDatePicker" formControlName="to_date"
+                                            placeholder="To Date">
                                         <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
                                         <mat-datepicker #toDatePicker></mat-datepicker>
                                     </mat-form-field>
@@ -37,29 +41,34 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-12">
-                                    <textarea type="text" formControlName="description" class="form-control" id="name" [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.description.touched) && form.controls.description.errors }" placeholder="Enter your topic description"></textarea>
+                                    <textarea type="text" formControlName="description" class="form-control" id="name"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.description.touched) && form.controls.description.errors }"
+                                        placeholder="Enter your topic description"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div formArrayName="questions">
-                        <div *ngFor="let question of questions().controls; let questIndex = index" class="question-card">
+                        <div *ngFor="let question of questions().controls; let questIndex = index"
+                            class="question-card">
                             <label>Question : {{questIndex + 1}} </label>
                             <span class="fa fa-trash fa-2x delete_quest" (click)="removeQuestion(questIndex)"></span>
                             <div [formGroupName]="questIndex">
                                 <div class="form-group row">
                                     <div class="col-sm-7">
                                         <div style="font-size: medium;">
-                                            <textarea formControlName="description" class="form-control" placeholder="Enter your question"></textarea>
+                                            <textarea formControlName="description" class="form-control"
+                                                placeholder="Enter your question"></textarea>
                                         </div>
                                     </div>
                                     <div class="col-sm-1">
-                                        <input type="number" formControlName="mark" class="form-control" placeholder="Mark">
+                                        <input type="number" formControlName="mark" class="form-control"
+                                            placeholder="Mark">
                                     </div>
                                     <div class="col-sm-2">
                                         <select formControlName="type" class="form-control">
-                                            <option value="{{type.id}}" *ngFor='let type of question_type'>
-                                                {{type.type}}</option>
+                                            <option value="{{t.id}}" *ngFor='let t of question_type'>
+                                                {{t.type}}</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
@@ -72,14 +81,20 @@
                                         <div [formGroupName]="optionIndex ">
                                             <div class="form-group row">
                                                 <div class="col-sm-8">
-                                                    <textarea type="text" class="form-control" formControlName="description" placeholder="Enter your option description"></textarea>
+                                                    <textarea type="text" class="form-control"
+                                                        formControlName="description"
+                                                        placeholder="Enter your option description"></textarea>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <input type="checkbox" formControlName="isAnswer" [id]="'q_'+questIndex+'_opt_'+optionIndex" (change)="onCheckChange(questIndex,optionIndex)"> <label style="margin-left: 5px;"> Is
+                                                    <input type="checkbox" formControlName="isAnswer"
+                                                        [id]="'q_'+questIndex+'_opt_'+optionIndex"
+                                                        (change)="onCheckChange(questIndex,optionIndex)"> <label
+                                                        style="margin-left: 5px;"> Is
                                                         Answer</label>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                    <span class="fa fa-times fa-lg delete_opt" (click)="removeOptoin(questIndex,optionIndex)"></span>
+                                                    <span class="fa fa-times fa-lg delete_opt"
+                                                        (click)="removeOptoin(questIndex,optionIndex)"></span>
                                                 </div>
                                             </div>
                                         </div>
