@@ -48,7 +48,7 @@ export class DwRemittanceComponent implements OnInit {
     );
 
     
-    this.http.doGet("/fttransaction/getRMTOBRDrawingMonth").subscribe(
+    this.http.doGet("/fttransaction/getRemittanceMonth").subscribe(
       data => {
         if(data != null){
           this.monthList = data;
