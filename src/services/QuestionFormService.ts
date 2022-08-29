@@ -46,7 +46,15 @@ export class QuestionFormService {
         return this.http.get<any>(`${environment.baseUrl}` + `/api/qna/topic/isremovable/${topicId}`, { headers: this.headers });
     }
 
-    public deleteTopic(id:number): Observable<any> {
+    public deleteTopic(id: number): Observable<any> {
         return this.http.post<any>(`${environment.baseUrl}` + `/api/qna/topic/${id}`, { headers: this.headers });
+    }
+
+    public getRoles(): Observable<any> {
+        return this.http.get<any>(`${environment.baseUrl}` + `/api/qna/topic/roles`, { headers: this.headers });
+    }
+
+    public getTopicsByRole(role_id: String): Observable<any> {
+        return this.http.get<any>(`${environment.baseUrl}` + `/api/qna/topic/topic_role/` + role_id, { headers: this.headers });
     }
 }

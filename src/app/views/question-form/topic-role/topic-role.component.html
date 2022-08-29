@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Add Topics to Role</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <span class="text-warning">{{message}}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-2">Roles : </div>
+                    <div class="col-sm-4">
+                        <select class="form-control" (change)="onRoleChange($event.target.value)">
+                            <option value="{{r.role_id}}" *ngFor='let r of roles'>
+                                {{r.role_id}}</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row" *ngIf="topics != undefined && topics !=null">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table table-hover">
+                                <thead>
+                                    <tr class="text-uppercase">
+                                        <th> # </th>
+                                        <th>Topic</th>
+                                        <th>Description</th>
+                                        <th>From Date</th>
+                                        <th>To Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let list of topics; let i = index">
+                                        <td>
+                                            <input type="checkbox" [(ngModel)]="list.selected"
+                                                (change)="onChkTopicChange(list.id, $event.target.checked)">
+                                        </td>
+                                        <td>{{list.topic_name}}</td>
+                                        <td>{{list.topic_description}}</td>
+                                        <td>{{list.topic_from_date}}</td>
+                                        <td>{{list.topic_to_date}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,14 +14,17 @@
             <div class="card-body">
                 <button class="btn btn-primary btn-sm" [routerLink]="['/topic-new']">Create New Topic</button>
                 <div class="row">
-                    <div class="col-sm-3 col-md-3 col-lg-3 question_card" *ngFor="let topic of topics">
+                    <div class="col-sm-3 col-md-3 col-lg-3 question_card" *ngFor="let topic of topics"
+                        [routerLink]="['/topic-new',topic.id]">
                         <label style="font-size: medium;">{{topic.name}}</label><br>
                         <label>{{topic.description}}</label><br>
                         <label>Created Date : {{topic.created_date}}</label> <br>
                         <label>Start Date : {{topic.from_date}}</label> <br>
                         <label>End Date : {{topic.to_date}}</label> <br>
-                        <a class="btn btn-primary btn-sm" [routerLink]="['/topic-new',topic.id]" style="margin-right:10px;">Edit</a>
-                        <a class="btn btn-primary btn-sm" (click)="changeActiveStatus(topic.id)" style="margin-right:10px;">
+                        <a class="btn btn-primary btn-sm" [routerLink]="['/topic-new',topic.id]"
+                            style="margin-right:10px;">Edit</a>
+                        <a class="btn btn-primary btn-sm" (click)="changeActiveStatus(topic.id)"
+                            style="margin-right:10px;">
                             Delete
                         </a>
                     </div>

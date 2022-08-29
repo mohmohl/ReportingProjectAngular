@@ -400,6 +400,10 @@ const routes: Routes = [
       {
         path: 'topic-list',
         loadChildren: () => import('./views/question-form/topic-list/topic-list.module').then(m => m.TopicListModule)
+      },
+      {
+        path: 'topic-role',
+        loadChildren: () => import('./views/question-form/topic-role/topic-role.module').then(m => m.TopicRoleModule)
       }
 
       // {

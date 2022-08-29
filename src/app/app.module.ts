@@ -17,7 +17,6 @@ import { BnNgIdleService } from 'bn-ng-idle';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { FcdbNewUserComponent } from './views/fcdb/fcdb-new-user/fcdb-new-user.component';
 
 @NgModule({
   declarations: [
