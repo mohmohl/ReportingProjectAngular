@@ -376,6 +376,34 @@ const routes: Routes = [
         path: 'active-user-home-branch-report',
         loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
       },
+      {
+        path: 'question-form-submit/:param1',
+        loadChildren: () => import('./views/question-form/question-form-submit/question-form-submit.module').then(m => m.QuestionFormSubmitModule)
+      },
+      {
+        path: 'question-form-result/:param1',
+        loadChildren: () => import('./views/question-form/question-form-result/question-form-result.module').then(m => m.QuestionFormResultModule)
+      },
+      {
+        path: 'question-form-list',
+        loadChildren: () => import('./views/question-form/question-form-list/question-form-list.module').then(m => m.QuestionFormListModule)
+      },
+      {
+        path: 'topic-new',
+        loadChildren: () => import('./views/question-form/topic-new/topic-new.module').then(m => m.TopicNewModule)
+      },
+      {
+        path: 'topic-new/:param1',
+        loadChildren: () => import('./views/question-form/topic-new/topic-new.module').then(m => m.TopicNewModule)
+      },
+      {
+        path: 'topic-list',
+        loadChildren: () => import('./views/question-form/topic-list/topic-list.module').then(m => m.TopicListModule)
+      },
+      {
+        path: 'topic-role',
+        loadChildren: () => import('./views/question-form/topic-role/topic-role.module').then(m => m.TopicRoleModule)
+      },
       // {
       //   path: 'active-user-report',
       //   loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)

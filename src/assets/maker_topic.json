@@ -1,0 +1,11 @@
+{
+    "id": "1",
+    "created_date": "17-08-2022",
+    "created_by": "yya",
+    "is_active": 1,
+    "name": "Java Exam",
+    "description": "Test Java Skills",
+    "total_mark": 30,
+    "is_open": 0,
+    "candidates_count": 0
+}

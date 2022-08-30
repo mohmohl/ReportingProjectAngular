@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Question List</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-3 col-md-3 col-lg-3 question_card" *ngFor="let topic of topics"
+                        (click)="goNextPage(topic)">
+                        <label style="font-size: medium;">{{topic.name}}</label><br>
+                        <label>{{topic.description}}</label><br>
+                        <label>Date : {{topic.created_date}}</label> <br>
+                        <label>Result : ({{topic.result}}/{{topic.total_mark}})</label><br>
+                        <a class="btn btn-primary btn-sm" *ngIf="topic.submitted" (click)="goNextPage(topic)">View</a>
+
+                        <a class="btn btn-primary btn-sm" *ngIf="!topic.submitted"
+                            (click)="goNextPage(topic)">Submit</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
