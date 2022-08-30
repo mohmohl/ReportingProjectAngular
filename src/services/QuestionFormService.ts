@@ -1,3 +1,4 @@
+import { TopicRole } from './../models/question_form/TopicRole';
 import { Observable } from 'rxjs';
 import { TopicDetail } from 'src/models/question_form/TopicDetail';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -56,5 +57,9 @@ export class QuestionFormService {
 
     public getTopicsByRole(role_id: String): Observable<any> {
         return this.http.get<any>(`${environment.baseUrl}` + `/api/qna/topic/topic_role/` + role_id, { headers: this.headers });
+    }
+
+    public saveTopicsByRole(topicRoles: TopicRole[]): Observable<number> {
+        return this.http.post<any>(`${environment.baseUrl}` + `/api/qna/topic/topic_role`, topicRoles, { headers: this.headers });
     }
 }
