@@ -39,14 +39,13 @@ export class QuestionFormSubmitComponent implements OnInit {
 
   ngOnInit() {
 
-
-
     this.activeRoute.params.subscribe((params) => {
       if (params && params['param1']) {
         let topicId = params['param1'];
         this.qNAAnswerLogService.getCandidateAnswerLog(topicId).subscribe((answerLog: AnswerLog) => {
 
-          if (answerLog != null && answerLog.try_count == 3) {
+          if (answerLog != null && answerLog.try_count >= 3) {
+            this.isSubmitted = true;
             this.router.navigate(['/question-form-list']);
           }
 
@@ -58,11 +57,13 @@ export class QuestionFormSubmitComponent implements OnInit {
               this.topic_id = this.topic.id;
 
             }, error => {
+              this.isSubmitted = true;
               this.router.navigate(['/question-form-list']);
             }
             );
 
           }, error => {
+            this.isSubmitted = true;
             this.router.navigate(['/question-form-list']);
           });
 
@@ -91,7 +92,8 @@ export class QuestionFormSubmitComponent implements OnInit {
 
     this.qNAAnswerLogService.getCandidateAnswerLog(this.topic.id).subscribe((answerLog: AnswerLog) => {
 
-      if (answerLog != null && answerLog.try_count == 3) {
+      if (answerLog != null && answerLog.try_count >= 3) {
+        this.isSubmitted = true;
         this.router.navigate(['/question-form-list']);
       } else {
         this.remaningQuestions = this.topic.questions.filter(q => q.options.every(op => op.is_chosen == 0) == true);
