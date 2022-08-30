@@ -59,7 +59,7 @@ export class QuestionFormService {
         return this.http.get<any>(`${environment.baseUrl}` + `/api/qna/topic/topic_role/` + role_id, { headers: this.headers });
     }
 
-    public saveTopicsByRole(topicRoles: TopicRole[]): Observable<number> {
-        return this.http.post<any>(`${environment.baseUrl}` + `/api/qna/topic/topic_role`, topicRoles, { headers: this.headers });
+    public saveTopicsByRole(topicRoles: TopicRole[], role_id: String): Observable<number> {
+        return this.http.post<any>(`${environment.baseUrl}` + `/api/qna/topic/topic_role/` + role_id, topicRoles, { headers: this.headers });
     }
 }

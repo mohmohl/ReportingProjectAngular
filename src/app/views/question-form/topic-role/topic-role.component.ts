@@ -82,7 +82,7 @@ export class TopicRoleComponent implements OnInit {
 
   onSave() {
     let selectedList = this.topics.filter(x => x.selected);
-    this.questionFormService.saveTopicsByRole(selectedList).subscribe((res) => {
+    this.questionFormService.saveTopicsByRole(selectedList, this.selectedRole).subscribe((res) => {
       debugger;
       if (res > 0) {
         this.message = "Save Successfully";
