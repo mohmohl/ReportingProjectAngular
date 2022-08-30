@@ -1,3 +1,4 @@
+import { DialogService } from './../../../../helpers/dialog.service';
 import { QuestionFormService } from 'src/services/QuestionFormService';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -5,6 +6,7 @@ import { Option } from 'src/models/question_form/Option';
 import { Question } from 'src/models/question_form/Question';
 import { TopicDetail } from 'src/models/question_form/TopicDetail';
 import { User } from 'src/models/User';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-question-form-submit',
@@ -16,8 +18,20 @@ export class QuestionFormSubmitComponent implements OnInit {
   topic: TopicDetail;
   remaningQuestions: Question[] = [];
   remainWarningMsg = 'No answer is choosen';
+  isSubmitted = false;
 
-  constructor(private router: Router, private activeRoute: ActivatedRoute, private questionFormServie: QuestionFormService) { }
+  constructor(
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    private questionFormServie: QuestionFormService,
+    private dialogService: DialogService) { }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (!this.isSubmitted) {
+      return this.dialogService.confirm('Your data will be lost. Are you sure to leave this page?');
+    }
+    return true;
+  }
 
   ngOnInit() {
     this.activeRoute.params.subscribe((params) => {
@@ -64,23 +78,21 @@ export class QuestionFormSubmitComponent implements OnInit {
 
     if (this.remaningQuestions && this.remaningQuestions.length > 0) {
       if (confirm("You have not choosen one or more questions. Do you want to submit?") == true) {
-        console.log(JSON.stringify(this.topic));
         this.questionFormServie.submitQuestion(this.topic).subscribe((res) => {
+          this.isSubmitted = true;
           this.router.navigate(['/question-form-list']);
         });
       }
     }
     else {
       this.questionFormServie.submitQuestion(this.topic).subscribe((res) => {
+        this.isSubmitted = true;
         this.router.navigate(['/question-form-list']);
       });
     }
   }
 
   onBack() {
-    if (confirm("Your data will be lost. Do you want to leave this page?") == true) {
-      this.router.navigate(["/question-form-list"]);
-    }
-
+    this.router.navigate(["/question-form-list"]);
   }
 }
