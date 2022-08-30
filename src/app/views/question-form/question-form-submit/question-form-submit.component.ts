@@ -65,12 +65,15 @@ export class QuestionFormSubmitComponent implements OnInit {
     if (this.remaningQuestions && this.remaningQuestions.length > 0) {
       if (confirm("You have not choosen one or more questions. Do you want to submit?") == true) {
         console.log(JSON.stringify(this.topic));
-        this.questionFormServie.submitQuestion(this.topic).subscribe((res) => { });
+        this.questionFormServie.submitQuestion(this.topic).subscribe((res) => {
+          this.router.navigate(['/question-form-list']);
+        });
       }
     }
     else {
-      this.questionFormServie.submitQuestion(this.topic).subscribe((res) => { });
-      console.log(JSON.stringify(this.topic));
+      this.questionFormServie.submitQuestion(this.topic).subscribe((res) => {
+        this.router.navigate(['/question-form-list']);
+      });
     }
   }
 

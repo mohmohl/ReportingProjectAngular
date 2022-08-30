@@ -1,3 +1,7 @@
 pre {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+input[type="radio"] {
+    vertical-align: -15%;
+}

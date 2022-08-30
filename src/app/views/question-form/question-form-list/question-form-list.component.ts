@@ -11,16 +11,18 @@ import { QuestionFormService } from 'src/services/QuestionFormService';
 export class QuestionFormListComponent implements OnInit {
 
   topics: CandidateTopic[] = [];
+  loading: boolean = false;
 
   constructor(private questionFormService: QuestionFormService, private router: Router) {
 
   }
 
   ngOnInit() {
-    //let login_user: User = JSON.parse(localStorage.getItem('currentUser'));
-
+    this.loading = true;
     this.questionFormService.getQuestionForms().subscribe((res) => {
       this.topics = res;
+    }, (err => { }), () => {
+      this.loading = false;
     });
   }
 
