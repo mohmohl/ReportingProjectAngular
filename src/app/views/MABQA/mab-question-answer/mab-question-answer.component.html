@@ -35,8 +35,10 @@
                                                     <input type="hidden" formControlName="qus_id" value="{{list.ques_id}}">
                                                     <textarea *ngIf="list.question_type === 'I'" [disabled]="disable_flag" type="text" formControlName="ans" cols="100"></textarea>
                                                    <p *ngIf="list.question_type == 'C'">
-                                                    <input  type="radio" formControlName="ans" [disabled]="disable_flag" value="Yes">Yes
-                                                    <input  type="radio" formControlName="ans" [disabled]="disable_flag" value="No">No
+                                                    <input  type="radio" formControlName="ans" [disabled]="disable_flag" value="Excellent">Excellent
+                                                    <input  type="radio" formControlName="ans" [disabled]="disable_flag" value="Good">Good
+                                                    <input  type="radio" formControlName="ans" [disabled]="disable_flag" value="Average">Average
+                                                    <input  type="radio" formControlName="ans" [disabled]="disable_flag" value="Below Average">Below Average
                                                     </p>
                                                    </div>
                                                 </td>

@@ -3,11 +3,11 @@ import { DateAdapter} from '@angular/material/core';
 import { PickDateAdapter } from 'src/models/PickDateAdapter';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { BSUserReportService } from 'src/services/BSUserReportService';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { MultiBranch } from 'src/models/MultiBranch';
+import { CLinkData } from 'src/models/CLinkData';
+import { CLinkReportService } from 'src/services/CLinkReportService';
+import { TwoDimensional } from 'src/models/TwoDimensional';
 
 export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
@@ -34,90 +34,162 @@ export class ClinkExportComponent implements OnInit {
   error='';
   msg='';
   loading = false;
-  branchList:string[];
-  selectedItems = [];
-  dropdownList = [];
-  dropdownSettings:IDropdownSettings={};
+  
+  indexFlag: Boolean = false;
+  list: Array<TwoDimensional> = [];
+  maxCount = 5000;
+  numberOfThreads = 0;
+  module;
+  disabled = true;
+
   form = new FormGroup({
-    // date: new FormControl(new Date(), Validators.required),
-    // branch: new FormControl('', Validators.required),
-    role: new FormControl('yes', Validators.required)
+     fromDate: new FormControl(new Date(), Validators.required),
+     toDate: new FormControl(new Date(), Validators.required),
+     reportType: new FormControl('domestic_company', Validators.required)
   }); 
 
-  constructor(private bsService: BSUserReportService, public datepipe: DatePipe) { 
+  constructor(private service: CLinkReportService, public datepipe: DatePipe) { }
 
-    this.loading = true;
-    bsService.getBranchList().subscribe((res:string[])=>{
-      this.loading = false;
-      this.branchList = res;
-      this.branchList.forEach(b=>{
-        this.dropdownList.push({item_id: "'"+b+"'", item_text: b});
-      })
-    });
-  }
+  ngOnInit() { }
 
-  ngOnInit() {
-   /* this.selectedItems = [
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' }
-    ];*/
-    this.dropdownSettings = {
-      idField: 'item_id',
-      textField: 'item_text',
-    };
-   }
-
-  onItemSelect(item:any){
-    console.log(item);
-    this.selectedItems.push(item)
-    console.log(this.selectedItems);
-  }
-
-  onItemDeSelect(item:any){
-    console.log(item);
-    this.selectedItems = this.selectedItems.filter(e => e !== item);
-    console.log(this.selectedItems);
-  }
-
-  onSelectAll(items: any){
-    this.selectedItems=[];
-    this.selectedItems = items
-  }
-
-  onDeSelectAll(items: any){
-    this.selectedItems=[];
-  }
-
-submit() {
-    debugger
+  dataPreparation() {
     this.error="";
     this.msg = "";
-    // || this.selectedItems.length == 0
     if (this.form.invalid ) {
       this.error = "Data is required";
       return;
     }
 
     this.loading = true; 
-    // let fromDate = this.form.get(["date"])!.value
 
-    // let fDate = `${fromDate.getFullYear()}-${fromDate.getMonth()+1}-${fromDate.getDate()}`;
+    let fromDate = this.form.get(["fromDate"])!.value
+    let fDate = `${fromDate.getDate()}-${fromDate.getMonth()+1}-${fromDate.getFullYear()}`;
+   
+    let toDate = this.form.get(["toDate"])!.value
+    let tDate = `${toDate.getDate()}-${toDate.getMonth()+1}-${toDate.getFullYear()}`;
+    
+    const data = new CLinkData();
+    data.fromDate = fDate;
+    data.toDate = tDate;
+    data.reportType = this.form.get(["reportType"])!.value;
+    
+    this.service.dataPreparation(data).subscribe(res =>{
+      this.loading = false;
+      if(res){
+        this.msg = "Preparation Successful!..."
+        this.disabled = false;
+      }
+      else{
+        this.error="Preparation Fail"
+      }
+    },
+    error => {
+      this.error = "(The system have the error!)";
+      this.loading = false; 
+    });
 
-  const branchData = new MultiBranch();
-  branchData.role = this.form.get(["role"])!.value;
- // branchData.branchList = this.selectedItems
+  }
 
-    this.bsService.exportExcel(branchData).pipe(
+  check() {
+    var reportType = this.form.get(["reportType"])!.value
+    var fileName = "";
+    if(reportType === "domestic_company") {
+			fileName += "Domestic_Company_";
+		} else if(reportType === "domestic_individual") {
+			fileName += "Domestic_Individual_";
+		} else if(reportType === "foreign_individual") {
+			fileName += "Foreign_Individual_";
+		}
+
+    this.service.getTotalRecords(this.form.get(["reportType"])!.value).subscribe(res =>{
+      this.loading = false;
+      if(res == 0 || res < this.maxCount){
+        this.export(0,0,fileName,0);
+      }
+      else{
+        this.separateCSV(res,fileName);
+      }
+    });
+  }
+
+  separateCSV(totalRecords: number,fileName: string) {
+    this.module = totalRecords % this.maxCount;  
+      
+    if (this.module > 0) {
+      this.numberOfThreads = Math.floor(totalRecords/this.maxCount) + 1;
+      this.indexFlag = true;
+    } else if (this.module < 0) {
+      this.numberOfThreads = 1;
+      this.indexFlag = true;
+    } else if (this.module == 0) {
+      this.numberOfThreads = Math.floor(totalRecords/this.maxCount);
+      this.indexFlag = false;
+    }
+      
+    var start = 1;
+    var end = 0;
+    for (let i = 1; i <= this.numberOfThreads; i++) {
+      end = this.maxCount * i;
+      if (i == this.numberOfThreads) {
+        if (this.indexFlag) {
+          end = totalRecords; 
+        }
+      }
+
+      // wanna to separate csv file depends on record counts
+      this.export(start,end,fileName,i);
+      start = end+1;
+    }
+  }
+
+  submit() {
+    debugger
+    this.error="";
+    this.msg = "";
+    if (this.form.invalid ) {
+      this.error = "Data is required";
+      return;
+    }
+
+    this.loading = true; 
+    this.check();
+  }
+
+  export(start: number, end: number,fileName: string,serial: number) {
+    let fromDate = this.form.get(["fromDate"])!.value
+    let fDate = `${fromDate.getDate()}-${fromDate.getMonth()+1}-${fromDate.getFullYear()}`;
+   
+    let toDate = this.form.get(["toDate"])!.value
+    let tDate = `${toDate.getDate()}-${toDate.getMonth()+1}-${toDate.getFullYear()}`;
+
+    let subFileName = `${toDate.getFullYear()}${toDate.getMonth()+1}${toDate.getDate()}`;
+    //console.log("Sub File Name: " + subFileName);
+
+    const data = new CLinkData();
+    data.fromDate = fDate;
+    data.toDate = tDate;
+    data.reportType = this.form.get(["reportType"])!.value;
+    data.start = start;
+    data.end = end;
+   
+    this.service.exportExcel(data).pipe(
       map((data: any) => {
         let blob = new Blob([data], {
-          type: "application/vnd.ms-excel" 
+          type: "text/csv;charset=utf-8;" 
         });
-          var link = document.createElement('a');
-          link.href = window.URL.createObjectURL(blob);
-          link.download = 'CLink_Data_Export_' + this.datepipe.transform(new Date(), 'dd-MM-yyyy HH:mm:ss') +'.xlsx';
-          link.click();
-          window.URL.revokeObjectURL(link.href);
-        
+
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+
+        if(serial === 0) {
+          link.download = fileName + subFileName +'.csv';
+        } else {
+          link.download = fileName + subFileName + '_' +serial +'.csv';
+        }
+
+        link.click();
+        window.URL.revokeObjectURL(link.href);
+
         this.loading = false;
       })).subscribe(
         res => { },
