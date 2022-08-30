@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Question } from 'src/models/question_form/Question';
 import { TopicDetail } from 'src/models/question_form/TopicDetail';
 import { QuestionFormService } from 'src/services/QuestionFormService';
 
@@ -10,7 +11,7 @@ import { QuestionFormService } from 'src/services/QuestionFormService';
 })
 export class QuestionFormResultComponent implements OnInit {
   topic: TopicDetail;
-  
+
   constructor(private router: Router, private activeRoute: ActivatedRoute, private questionFormServie: QuestionFormService) { }
 
   ngOnInit() {
@@ -26,7 +27,12 @@ export class QuestionFormResultComponent implements OnInit {
   }
 
   onBack() {
-      this.router.navigate(["/question-form-list"]);
+    this.router.navigate(["/question-form-list"]);
+  }
+
+  highlightAnswer(question: Question, option_id: String) {
+
+    return question.answers.find(x => x.option_id == option_id) ? 'green' : 'red';
   }
 
 }
