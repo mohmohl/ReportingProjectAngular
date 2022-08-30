@@ -209,6 +209,7 @@ onChange(event: any){
     this.metreService.fileUpload(formData) 
     .pipe(
       map((data: any) => {
+        this.form.reset();
         this.subscription.unsubscribe();
         this.response = data;
         this.loading = false;
@@ -216,7 +217,7 @@ onChange(event: any){
         if(this.response != null){
           if(this.response.flag == false){
             this.errorList = this.response.errorList;
-            if(this.errorList.length >0) {
+            if(this.errorList != null && this.errorList.length >0) {
               this.message = "See below duplicate items!....";
             } else {
               if(this.response.totalCount >0){
@@ -246,6 +247,7 @@ onChange(event: any){
       this.loading = false;
     },
     error => {
+      this.form.reset();
       this.subscription.unsubscribe();
       this.error ="The system have the error";
       this.loading = false;

@@ -21,7 +21,7 @@ export class DeleteViewComponent implements OnInit {
   }
 
   removeGovAll() {
-    console.log("Hello Gov remove")
+    // console.log("Hello Gov remove")
       this.error = "";
       this.loading = true;
       this.meterService.deleteMeterBill()
@@ -45,7 +45,7 @@ export class DeleteViewComponent implements OnInit {
   }
 
   removeVendorAll() {
-    console.log("Hello Vendor remove")
+    // console.log("Hello Vendor remove")
     this.error = "";
     this.loading = true;
     this.meterService.deleteVendorMeterBill()

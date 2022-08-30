@@ -25,6 +25,7 @@ export class MABQuestionAnswerComponent implements OnInit {
   constructor(private fb:FormBuilder,private service:QAService) { }
 
   ngOnInit() {
+    debugger
     this.loading = true;
     this.service.getQuestionList().subscribe((res: MABQuestion[]) => {
       this.loading = false;

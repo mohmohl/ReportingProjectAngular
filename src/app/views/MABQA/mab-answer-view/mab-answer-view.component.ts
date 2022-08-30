@@ -35,7 +35,7 @@ export class MABAnswerViewComponent implements OnInit {
 branchOnChange(event:any){
   this.loading = true;
   var value = event.target.value;
-  alert(value)
+  //alert(value)
   this.service.getAnsweredUserDataList(value).subscribe((res: string[]) => {
     this.loading = false;
     this.sno_list = res;
@@ -52,7 +52,7 @@ branchOnChange(event:any){
     if (this.form.invalid) {
       this.error = "Please Fill required field!....";
       return;
-  }
+    }
     
     this.loading = true;
 

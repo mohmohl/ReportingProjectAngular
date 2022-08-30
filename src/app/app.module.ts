@@ -17,6 +17,9 @@ import { BnNgIdleService } from 'bn-ng-idle';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { FcdbNewUserComponent } from './views/fcdb/fcdb-new-user/fcdb-new-user.component';
+import { CommonUtil } from './shared/common-util';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +27,7 @@ import { DatePipe } from '@angular/common';
     AdminComponent,
     TitleComponent,
     BreadcrumbsComponent,
-    AuthComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import { DatePipe } from '@angular/common';
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     BnNgIdleService,
-    DatePipe
+    DatePipe,
+    CommonUtil
   ],
   bootstrap: [AppComponent]
 })

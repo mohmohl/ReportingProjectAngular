@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from "src/environments/environment";
-import { Observable } from "rxjs";
-import { AuthenticationService } from "./AuthenticationService";
 import { MABAnsweringObj } from "src/models/MABAnsweringObj";
 import { MABQuestion } from "src/models/MABQuestion";
 import { MABSurvey } from "src/models/MABSurvey";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -55,11 +54,14 @@ export class QAService{
       public saveToQuestion(req: MABQuestion) {
         var api = environment.baseUrl + '/survey/saveQuestion';
         return this.http.post<any>(`${api}`, req);
-    
       }
+
       public saveToSurvey(req: MABSurvey) {
         var api = environment.baseUrl + '/survey/saveSurvey';
-        return this.http.post(`${api}`,req);
-    
+        return this.http.post(`${api}`,req, { responseType: 'text' });
+
+       // var url = "/user/authenticate_logout?userId=" + userId;
+
       }
+
 }
