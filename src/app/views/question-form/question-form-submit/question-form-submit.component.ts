@@ -22,6 +22,7 @@ export class QuestionFormSubmitComponent implements OnInit {
   remaningQuestions: Question[] = [];
   remainWarningMsg = 'No answer is choosen';
   isSubmitted = false;
+  loading = false;
 
   constructor(
     private router: Router,
@@ -35,7 +36,7 @@ export class QuestionFormSubmitComponent implements OnInit {
       return this.dialogService.confirm('Your data will be lost. Are you sure to leave this page?');
     }
     return true;
-  } 
+  }
 
   ngOnInit() {
 

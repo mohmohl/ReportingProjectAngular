@@ -11,6 +11,7 @@ import { QuestionFormService } from 'src/services/QuestionFormService';
 })
 export class QuestionFormResultComponent implements OnInit {
   topic: TopicDetail;
+  loading = false;
 
   constructor(private router: Router, private activeRoute: ActivatedRoute, private questionFormServie: QuestionFormService) { }
 

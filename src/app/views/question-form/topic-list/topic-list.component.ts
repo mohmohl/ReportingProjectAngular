@@ -11,6 +11,7 @@ export class TopicListComponent implements OnInit {
 
   message: String = "";
   topics: Topic[] = [];
+  loading = false;
 
   constructor(private questionFormService: QuestionFormService) { }
 
@@ -34,16 +35,16 @@ export class TopicListComponent implements OnInit {
           });
         }
       } else {
-          this.questionFormService.deleteTopic(id).subscribe((deleteResult) => {
-            this.fetchTopicList();
-          }, error => {
-            this.message = "Failed to delete!";      
-          });
+        this.questionFormService.deleteTopic(id).subscribe((deleteResult) => {
+          this.fetchTopicList();
+        }, error => {
+          this.message = "Failed to delete!";
+        });
       }
     }, (error) => {
-        this.message = "Failed to delete!";
+      this.message = "Failed to delete!";
     });
- 
-}
+
+  }
 
 }
