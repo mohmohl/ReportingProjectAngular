@@ -415,7 +415,7 @@ const routes: Routes = [
       {
         path: 'fcdb_fcubs_cust',
         loadChildren: () => import('./views/fcdb/cust-fcdb-fcubs/cust-fcdb-fcubs.module').then(m => m.CustFcdbFcubsModule)
-        },
+      },
       {
         path: 'conso-asset',
         loadChildren: () => import('./views/mis-reports/conso-assets/conso-assets.module').then(m => m.ConsoAssetsModule)
@@ -424,9 +424,13 @@ const routes: Routes = [
         path: 'conso-liabilities',
         loadChildren: () => import('./views/mis-reports/conso-liabilities/conso-liabilities.module').then(m => m.ConsoLiabilitiesModule)
       },
-        {
+      {
         path: 'fcubs-user-report',
         loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
+      },
+      {
+        path: 'tagit-check-sum',
+        loadChildren: () => import('./views/tagit/check-sum/check-sum.module').then(m => m.CheckSumModule)
       }
 
     ]
