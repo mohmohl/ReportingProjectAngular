@@ -389,6 +389,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/question-form/question-form-list/question-form-list.module').then(m => m.QuestionFormListModule)
       },
       {
+        path: 'question-report',
+        loadChildren: () => import('./views/question-form/question-report/question-report.module').then(m => m.QuestionReportModule)
+      },
+      {
         path: 'topic-new',
         loadChildren: () => import('./views/question-form/topic-new/topic-new.module').then(m => m.TopicNewModule)
       },
