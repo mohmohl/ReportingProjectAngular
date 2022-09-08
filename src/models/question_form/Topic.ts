@@ -1,9 +1,9 @@
 export class Topic {
-    id: String;
-    created_date: String;
-    created_by: String;
+    id: string;
+    created_date: string;
+    created_by: string;
     is_active: number;
-    name: String;
-    description: String;
+    name: string;
+    description: string;
     total_mark: number;
 }

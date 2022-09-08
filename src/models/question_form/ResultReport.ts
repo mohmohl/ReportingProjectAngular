@@ -1,8 +1,8 @@
 export class ResultReport {
-    id: String;
-    name: String;
-    description: String;
-    user_id: String;
+    id: string;
+    name: string;
+    description: string;
+    user_id: string;
     result: number;
     total_mark: number;
 }

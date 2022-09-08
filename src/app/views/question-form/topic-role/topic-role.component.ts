@@ -14,11 +14,11 @@ export class TopicRoleComponent implements OnInit {
 
   roles: ReportRole[];
   topics: TopicRole[];
-  selectedRole: String;
+  selectedRole: string;
   loading: boolean = false;
-  created_by: String;
+  created_by: string;
 
-  message: String;
+  message: string;
 
   constructor(private questionFormService: QuestionFormService) { }
 
@@ -71,7 +71,7 @@ export class TopicRoleComponent implements OnInit {
     this.message = "";
   }
 
-  onRoleChange(role_id: String) {
+  onRoleChange(role_id: string) {
     this.selectedRole = role_id;
     this.loadSelectedTopicByRoleID();
   }

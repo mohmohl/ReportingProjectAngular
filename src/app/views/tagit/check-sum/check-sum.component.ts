@@ -14,6 +14,7 @@ export class CheckSumComponent implements OnInit {
 
   formSubmitted = false;
   loading = false;
+  message;
 
   checksum: Checksum;
 

@@ -12,11 +12,16 @@ export class QuestionReportComponent implements OnInit {
   constructor(private questionService: QuestionFormService) {
   }
 
+  loading = false;
   resultReports: ResultReport[];
 
   ngOnInit() {
+    this.loading = true;
     this.questionService.getResultReport().subscribe((res) => {
       this.resultReports = res;
+    }, (err) => {
+    }, () => {
+      this.loading = false;
     });
   }
 
