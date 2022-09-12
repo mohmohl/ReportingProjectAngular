@@ -417,10 +417,6 @@ const routes: Routes = [
         loadChildren: () => import('./views/clink-export/clink-export.module').then(m => m.CLinkExportModule)
       },
       {
-        path: 'fcdb_fcubs_cust',
-        loadChildren: () => import('./views/fcdb/cust-fcdb-fcubs/cust-fcdb-fcubs.module').then(m => m.CustFcdbFcubsModule)
-      },
-      {
         path: 'conso-asset',
         loadChildren: () => import('./views/mis-reports/conso-assets/conso-assets.module').then(m => m.ConsoAssetsModule)
       },
@@ -435,7 +431,17 @@ const routes: Routes = [
       {
         path: 'tagit-check-sum',
         loadChildren: () => import('./views/tagit/check-sum/check-sum.module').then(m => m.CheckSumModule)
+      },
+      {
+        path: 'fcdb_fcubs_cust',
+        loadChildren: () => import('./views/fcdb/cust-fcdb-fcubs/cust-fcdb-fcubs.module').then(m => m.CustFcdbFcubsModule)
       }
+      // ,
+      // {
+      //   path: 'fcdb_fcubs_cust',
+      //   loadChildren: () => import('./views/fcdb/fcdb-info2/fcdb-info2.module').then(m => m.FcdbInfo2Module)
+      // }
+      
 
     ]
   },
