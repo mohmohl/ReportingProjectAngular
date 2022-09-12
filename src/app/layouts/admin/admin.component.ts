@@ -88,12 +88,6 @@ export class AdminComponent implements OnInit {
             name: 'Home',
             type: 'link',
             icon: 'icofont icofont-stylish-right text-danger'
-          },
-          {
-            state: 'mab-survey-form',
-            name: 'Survey Form',
-            type: 'link',
-            icon: 'icofont icofont-stylish-right text-danger'
           }
         ]
       }];

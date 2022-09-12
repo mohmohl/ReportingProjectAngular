@@ -18,4 +18,6 @@ export class FCDBAndFCUBSService{
       public export_fcub_fcdb_Excel(branchCode:string): Observable<any>{
         return this.http.get<any>(`${environment.baseUrl}`+'/fcdbAndFcubs/get_excel_fcubs_fcdb_report?branchCode='+branchCode,{responseType: 'arraybuffer' as 'json'});
      }
+
+     
 }
