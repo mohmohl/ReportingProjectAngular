@@ -1,0 +1,165 @@
+<div class="row">
+    <div class="col-md-12">
+  
+            <div class="card">
+                
+                <div class="card-header">
+                    <h5 class="h5MyanmarFont">နေ့စဥ်ဆောင်ရွက်မှုတိုးတက်မှတ်တမ်း (HOD3)</h5>
+                    <div *ngIf="loading" class="d-flex justify-content-center">
+                        <div class="spinner-border spinner-border-sm text-warning"></div>
+                        <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                    </div>
+
+                    <div class="page-header-breadcrumb">
+                        <button type="button" class="btn-danger" (click)="exportPDF()">
+                        <i class="ti-printer"></i>PDF
+                        </button> 
+
+                        <button type="button" class="btn-success" (click)="exportExcel()">
+                            <i class="ti-printer"></i>Excel
+                        </button> 
+                    </div>
+                </div>
+                <div class="card-body p-t-0">
+                    <div class="table-responsive">
+                        <code *ngIf="error">{{error}}</code>
+
+                        
+                        <!-- Filter Data -->
+                            <div class="container-fluid"  style="margin-top: 1.5%;">
+                                <div class="form-group row">
+                                    <label class="col-sm-1 col-form-label"> Branch</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" [(ngModel)]="branchCode">
+                                            <option *ngFor="let arr of _branchList"  value="{{arr.t1}}" selected>{{arr.t1}}</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <label class="col-sm-1 col-form-label">Date</label>
+                                    <div class="col-sm-2 date-picker">
+                                        <!-- [min]="minDate"
+                                            [max]="maxDate" -->
+                                        <mat-form-field >
+                                            <input #minmaxInput matInput
+                                            [matDatepicker]="minmaxvalidation" [(ngModel)]="fromDate" readonly>
+                                            <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #minmaxvalidation></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <label class="col-sm-1 col-form-label" style="text-align:center">-</label>
+                                    <div class="col-sm-2 date-picker">
+                                        <mat-form-field>
+                                            <input #minmaxInput matInput
+                                            [matDatepicker]="minmaxvalidation2" [(ngModel)]="toDate" readonly>
+                                            <mat-datepicker-toggle matSuffix [for]="minmaxvalidation2">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #minmaxvalidation2></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-sm-1">
+                                        <button   class="form-control" type="button" (click)="showData()" class="btn-primary">Show</button>                                    
+                                    </div>
+                                    
+                                </div>
+                                
+                            </div>
+                                        
+                        <!-- Filter Data -->
+
+                        <div class="title" *ngIf="_showData">
+
+                            <!-- Page Title -->
+                            <div>
+                                <p>လျို့ဝှက်</p>
+                            </div>
+                            <div>
+                                <p class="pgtitleMMFont">{{_branchData.bank_name}} ၏ နေ့စဥ်ဆောင်ရွက်မှုတိုးတက်မှတ်တမ်း</p>
+                            </div>
+
+                            <div>
+                                <p class="pgsubtitle">{{_branchData.branch_name}}</p>
+                            </div>
+
+                            <div>
+                               <p class="subpgtitle"> D3 </p> 
+                               <p class="subpgtitle"> {{p_toDate | date : 'dd/MM/yyyy'}} </p> 
+                               <p class="subpgtitle">(ကျပ်သန်းပေါင်း)</p>
+                            </div>
+                           
+                            <!-- Page Title -->
+
+                            
+                            <!-- Data List -->
+                            <div style="margin-top: 1.5%;">
+                                <table class="table table table-hover" id="content" #content>
+                                    <tr class="text-uppercase">
+                                        <th rowspan="2" style="vertical-align: middle;">နေ့စွဲ</th>
+                                        <th rowspan="2" style="vertical-align: middle;">အပ်ငွေလက်ကျန်</th>
+                                        <th rowspan="2" style="vertical-align: middle;">ချေးငွေလက်ကျန်</th>
+                                        <th colspan="3" style="text-align: center;">ငွေအဝင်</th>
+                                        <th colspan="3" style="text-align: center;">ငွေအထွက်</th>
+                                        <th colspan="3" style="text-align: center;">ချေးငွေအဝင်</th>
+                                       <!--
+                                        <th colspan="3" style="vertical-align: middle;">ချေးငွေအထွက်</th>
+                                       --> 
+                                        <th rowspan="2" style="vertical-align: middle;">ငွေသားလက်ကျန်</th>
+                                        <th rowspan="2" style="vertical-align: middle;">မှတ်ချက်</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center;">ငွေသား</th>
+                                        <th style="text-align: center;">Transfer</th>
+                                        <th style="text-align: center;">ပေါင်း</th>
+
+                                        <th style="text-align: center;">ငွေသား</th>
+                                        <th style="text-align: center;">Transfer</th>
+                                        <th style="text-align: center;">ပေါင်း</th>
+
+                                        <th style="text-align: center;">ငွေသား</th>
+                                        <th style="text-align: center;">Transfer</th>
+                                        <th style="text-align: center;">ပေါင်း</th>
+                                        <!--
+                                        <th style="text-align: center;">ငွေသား</th>
+                                        <th style="text-align: center;">Transfer</th>
+                                        <th style="text-align: center;">ပေါင်း</th>
+                                        -->
+                                        
+                                    </tr>
+                                    <tbody>
+                                    
+                                        <tr *ngFor="let data of _datalist; let i = index;">
+                                            <td> </td>
+                                            <td class="number"> {{data.n2 | number:'1.2-3'}} </td>
+                                            <td class="number"> {{data.n3 | number:'1.2-3'}} </td>
+                                            <td class="number"> {{data.n4 | number:'1.2-3'}} </td>
+                                            <td class="number"> {{data.n5 | number:'1.2-3'}} </td>
+                                            <td class="number"> {{ (data.n4 + data.n5) | number:'1.2-3'}} </td>
+                                            <td class="number"> {{data.n6 | number:'1.2-3'}} </td>
+                                            <td class="number"> {{data.n7 | number:'1.2-3'}}  </td>
+                                            <td class="number"> {{ (data.n6 + data.n7) | number:'1.2-3'}} </td>
+                                            <td class="number"> {{ (data.n9 - data.n8) | number : '1.2-3'}} </td>
+                                            <td class="number"> {{ (data.n11 - data.n10) | number : '1.2-3'}} </td>
+                                            <td class="number"> {{ (data.n9 - data.n8) + (data.n11 - data.n10) | number : '1.2-3'}} </td>
+                                            <td class="number"> {{data.n12 | number:'1.2-3'}} </td>
+                                        </tr>                
+                                    </tbody>                           
+                                </table>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="_noData">
+                        <p class="nodata"> No records found.</p>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        <!-- </form> -->
+    </div>
+</div>
+
+

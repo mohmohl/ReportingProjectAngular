@@ -372,14 +372,14 @@ const routes: Routes = [
         path: 'user-branch-setup',
         loadChildren: () => import('./views/user-branch-setup/user-branch-setup.module').then(m => m.UserBranchSetupModule)
       },
-      {
-        path: 'active-user-home-branch-report',
-        loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
-      },
       // {
-      //   path: 'active-user-report',
-      //   loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
-      // }
+      //   path: 'active-user-home-branch-report',
+      //   loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
+      // },
+       {
+         path: 'active-user-home-branch-report',
+         loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
+       },
       {
         path: 'clink-export-report',
         loadChildren: () => import('./views/clink-export/clink-export.module').then(m => m.CLinkExportModule)
@@ -392,9 +392,34 @@ const routes: Routes = [
         path: 'conso-liabilities',
         loadChildren: () => import('./views/mis-reports/conso-liabilities/conso-liabilities.module').then(m => m.ConsoLiabilitiesModule)
       },
+      {
+        path: 'hod2-report',
+        loadChildren: () => import('./views/mis-reports/hod2-report/hod2.module').then(m => m.HOD2Module)
+      },
+      {
+        path: 'hod3-report',
+        loadChildren: () => import('./views/mis-reports/hod3-report/hod3.module').then(m => m.HOD3Module)
+      },
         {
         path: 'fcubs-user-report',
         loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
+      },
+      {
+        path: 'conso-trial-report',
+        loadChildren: () => import('./views/mis-reports/conso-trial-report/conso-trial-report.module').then(m => m.ConsoTrialReportModule)
+      },
+      {
+        path: 'conso-income',
+        loadChildren: () => import('./views/mis-reports/conso-income/conso-income.module').then(m => m.ConsoIncomeModule)
+      }
+      ,
+      {
+        path: 'detail-trial-conso',
+        loadChildren: () => import('./views/mis-reports/detail-trial-conso-report/detail-trial-conso-report.module').then(m => m.DetailTrialConsoReportModule)
+      },
+      {
+        path: 'general-trial-conso',
+        loadChildren: () => import('./views/mis-reports/general-trial-conso-report/general-trial-conso-report.module').then(m => m.GeneralTrialConsoReportModule)
       }
 
     ]

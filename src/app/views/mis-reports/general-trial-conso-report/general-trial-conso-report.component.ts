@@ -20,16 +20,16 @@ import { map } from 'rxjs/operators';
 };
 
 @Component({
-  selector: 'app-general-trial-report',
-  templateUrl: './general-trial-report.component.html',
-  styleUrls: ['./general-trial-report.component.css'],
+  selector: 'app-general-trial-conso-report',
+  templateUrl: './general-trial-conso-report.component.html',
+  styleUrls: ['./general-trial-conso-report.component.css'],
   providers: [
     {provide: DateAdapter, useClass: PickDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
   ]
 })
 
-export class GeneralTrialReportComponent implements OnInit {
+export class GeneralTrialConsoReportComponent implements OnInit {
   error='';
   from_date:Date;
   loading = false;
@@ -48,18 +48,21 @@ totalCredit_lcystr:string;
   trialList:TrialData[];
   branchList:string[];
   currencyList:string[];
-  currencyCode='MMK';
+  currencyCode='';
   ccyCode = false;
   data_message='';
   form = new FormGroup({
     fromDate: new FormControl('', Validators.required),
     branchCode:new FormControl('', Validators.required),
-    currencyCode:new FormControl('MMK', Validators.required)
+    currencyCode:new FormControl('', Validators.required)
   });
 
   constructor(private service:TrialReportService){//,private dateAdapter: DateAdapter<Date>) {
     //this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
-    this.loading = true;
+    //this.loading = true;
+    this.branchList=['ALL'];
+    this.currencyList = ["Base"];
+    /*
     service.getBranchList().subscribe((res:string[])=>{
       this.loading = false;
       this.branchList = res;
@@ -69,6 +72,7 @@ totalCredit_lcystr:string;
       this.loading = false;
       this.currencyList = res;
     });
+    */
    }
 
   ngOnInit() {
@@ -106,7 +110,7 @@ totalCredit_lcystr:string;
   }
   this.bCode=this.form.get(["branchCode"])!.value;
 
-  this.service.getGeneralTrialReportData(fDate,this.bCode,this.currencyCode, 1).subscribe((res:TrialReport)=>{
+  this.service.getGeneralTrialReportData(fDate,this.bCode,this.currencyCode, 2).subscribe((res:TrialReport)=>{
     this.loading = false;
    
     if(res != null){
@@ -177,7 +181,7 @@ exportexcel(): void
   this.bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;
 
-  this.service.exportGeneralTrialExcel(f_Date,this.bCode,this.currencyCode, 1)
+  this.service.exportGeneralTrialExcel(f_Date,this.bCode,this.currencyCode, 2)
   .pipe(
     map((data: any) => {
       debugger;
@@ -217,7 +221,7 @@ exportexcel(): void
   this.bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;
 
-  this.service.exportGeneralTrialPDF(f_date,this.bCode,this.currencyCode, 1)
+  this.service.exportGeneralTrialPDF(f_date,this.bCode,this.currencyCode, 2)
   .pipe(
     map((data: any) => {
       let blob = new Blob([data], {

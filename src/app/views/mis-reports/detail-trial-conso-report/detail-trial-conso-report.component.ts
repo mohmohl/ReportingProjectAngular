@@ -20,22 +20,21 @@ import { map } from 'rxjs/operators';
 };
 
 @Component({
-  selector: 'app-general-trial-report',
-  templateUrl: './general-trial-report.component.html',
-  styleUrls: ['./general-trial-report.component.css'],
+  selector: 'app-detail-trial-conso-report',
+  templateUrl: './detail-trial-conso-report.component.html',
+  styleUrls: ['./detail-trial-conso-report.component.css'],
   providers: [
     {provide: DateAdapter, useClass: PickDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
-  ]
+]
 })
-
-export class GeneralTrialReportComponent implements OnInit {
+export class DetailTrialConsoReportComponent implements OnInit {
   error='';
   from_date:Date;
   loading = false;
   data:TrialReport;
   bCode:string;
-  minDate = new Date(2021, 5, 30);
+  minDate = new Date(2021, 4, 30);
   maxDate = new Date();
 totalDebit:number=0;
 totalDebit_lcy:number=0;
@@ -48,18 +47,21 @@ totalCredit_lcystr:string;
   trialList:TrialData[];
   branchList:string[];
   currencyList:string[];
-  currencyCode='MMK';
+  currencyCode:string;
   ccyCode = false;
   data_message='';
   form = new FormGroup({
     fromDate: new FormControl('', Validators.required),
     branchCode:new FormControl('', Validators.required),
-    currencyCode:new FormControl('MMK', Validators.required)
+    currencyCode:new FormControl('', Validators.required)
   });
 
   constructor(private service:TrialReportService){//,private dateAdapter: DateAdapter<Date>) {
     //this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
-    this.loading = true;
+   // this.loading = true;
+    this.branchList = ["ALL"];
+    this.currencyList = ["Base"];
+    /*
     service.getBranchList().subscribe((res:string[])=>{
       this.loading = false;
       this.branchList = res;
@@ -69,6 +71,9 @@ totalCredit_lcystr:string;
       this.loading = false;
       this.currencyList = res;
     });
+*/
+    // date list 
+
    }
 
   ngOnInit() {
@@ -79,6 +84,10 @@ totalCredit_lcystr:string;
     } else {
      return false
     }
+   }
+
+   checkMonthEndDate(fromDate: string) {
+      
    }
    
   submit(){
@@ -105,8 +114,7 @@ totalCredit_lcystr:string;
     this.ccyCode = true;
   }
   this.bCode=this.form.get(["branchCode"])!.value;
-
-  this.service.getGeneralTrialReportData(fDate,this.bCode,this.currencyCode, 1).subscribe((res:TrialReport)=>{
+  this.service.getTrialReportData(fDate,this.bCode,this.currencyCode, 2).subscribe((res:TrialReport)=>{
     this.loading = false;
    
     if(res != null){
@@ -169,15 +177,15 @@ exportexcel(): void
     if (this.form.invalid) {
       this.error = "Data is required";
       return;
-  }
-  this.error="";
-  this.loading = true;
-  this.from_date = this.form.get(["fromDate"])!.value;
-  let f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
-  this.bCode=this.form.get(["branchCode"])!.value;
-  this.currencyCode = this.form.get(["currencyCode"])!.value;
+    }
+    this.error="";
+    this.loading = true;
+    this.from_date = this.form.get(["fromDate"])!.value;
+    let f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
+    this.bCode=this.form.get(["branchCode"])!.value;
+    this.currencyCode = this.form.get(["currencyCode"])!.value;
 
-  this.service.exportGeneralTrialExcel(f_Date,this.bCode,this.currencyCode, 1)
+  this.service.exportDetailTrialExcel(f_Date,this.bCode,this.currencyCode, 2)
   .pipe(
     map((data: any) => {
       debugger;
@@ -186,7 +194,7 @@ exportexcel(): void
       });
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = 'GeneralTrial_'+this.bCode+'_'+this.currencyCode+'.xlsx';
+        link.download = 'DetailTrial_'+this.bCode+'_'+this.currencyCode+'.xlsx';
         link.click();
         window.URL.revokeObjectURL(link.href);
       
@@ -194,10 +202,10 @@ exportexcel(): void
     })).subscribe(
       res => { },
       error => {
-        console.log("General Trial Error >>> "+error)
+        console.log("Detail Trial Error >>> "+error)
         debugger;
         if(error != ""){
-        this.error = "(The system cannot cannot generate general trial!.. Have the error)";
+        this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
           }
         this.loading = false;
       });
@@ -217,7 +225,7 @@ exportexcel(): void
   this.bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;
 
-  this.service.exportGeneralTrialPDF(f_date,this.bCode,this.currencyCode, 1)
+  this.service.exportDetailTrialPDF(f_date,this.bCode,this.currencyCode, 2)
   .pipe(
     map((data: any) => {
       let blob = new Blob([data], {
@@ -228,21 +236,22 @@ exportexcel(): void
       var file = new Blob([data], {type: 'application/pdf'});
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
-      a.target     = '_blank'; 
-      a.download = 'GeneralTrial_'+this.bCode+'_'+this.currencyCode+'.pdf';
+      a.target = '_blank'; 
+      a.download = 'DetailTrial_'+this.bCode+'_'+this.currencyCode+'.pdf';
       a.click();
       
       this.loading = false;
     })).subscribe(
       res => { },
       error => {
-        console.log("General Trial Error >>> "+error)
+        console.log("Detail Trial Error >>> "+error)
         debugger;
         if(error != ""){
-        this.error = "(The system cannot cannot generate general trial!.. Have the error)";
+        this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
           }
         this.loading = false;
       });
   }
 
+// end tag
 }

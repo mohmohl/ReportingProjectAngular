@@ -4,7 +4,7 @@
             <div class="card">
                 
                 <div class="card-header">
-                    <h5>General Ledger Assets(By Currency)</h5>
+                    <h5>Statement of Comprehensive Income(ByCurrency)</h5>
                     <div *ngIf="loading" class="d-flex justify-content-center">
                         <div class="spinner-border spinner-border-sm text-warning"></div>
                         <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -91,25 +91,21 @@
                                         
                         <!-- Filter Data -->
 
-                        <div *ngIf="_showData">
+                        <div class="title" *ngIf="_showData">
 
-                            <div class="title">
-                                <!-- Page Title -->
-                                <div>
-                                    <p class="pgtitle">{{_branchData.bank_name}}</p>
-                                </div>
-
-                                <div>
-                                    <p class="pgsubtitle">{{_branchData.branch_name}}</p>
-                                </div>
-
-                                <div>
-                                    <p class="pgsubtitle">{{_rptTitle}}</p>
-                                </div>
-                                <!-- Page Title -->
-
+                            <!-- Page Title -->
+                            <div>
+                                <p class="pgtitle">{{_branchData.bank_name}}</p>
                             </div>
-                           
+
+                            <div>
+                                <p class="pgsubtitle">{{_branchData.branch_name}}</p>
+                            </div>
+
+                            <div>
+                                <p class="pgsubtitle">{{_rptTitle}}</p>
+                            </div>
+                            <!-- Page Title -->
 
                             
                             <!-- Data List -->
@@ -136,17 +132,17 @@
                                     
                                         <tr *ngFor="let data of _datalist; let i = index;">
                                             
-                                            <td style="text-align: left;"> {{data.gl}}</td>
-                                            <td class="number"> {{data.opn | number:'1.2-3'}} </td>
-                                            <td class="number"> {{data.dr_cash | number:'1.2-3'}} </td>
-                                            <td class="number"> {{data.dr_trf | number:'1.2-3'}} </td>
-                                            <td class="number"> {{data.dr_clg | number:'1.2-3'}} </td>
-                                            <td class="number"> {{data.dr | number:'1.2-3'}} </td>
-                                            <td class="number"> {{data.cr_cash | number:'1.2-3'}} </td>
-                                            <td class="number"> {{data.cr_trf | number:'1.2-3'}}  </td>
-                                            <td class="number"> {{data.cr_clg | number:'1.2-3'}} </td>
-                                            <td class="number"> {{data.cr | number : '1.2-3'}} </td>
-                                            <td class="number"> {{data.clo | number : '1.2-3'}} </td>
+                                            <td> {{data.gl}}</td>
+                                            <td class="number"> {{data.opn | number:'1.2-3'}} {{calculateOPNTotal(data.opn)}}</td>
+                                            <td class="number"> {{data.dr_cash | number:'1.2-3'}} {{calculateDrCashTotal(data.dr_cash)}}</td>
+                                            <td class="number"> {{data.dr_trf | number:'1.2-3'}} {{calculateDrTransferTotal(data.dr_trf)}}</td>
+                                            <td class="number"> {{data.dr_clg | number:'1.2-3'}} {{calculateDrClearingTotal(data.dr_clg)}}</td>
+                                            <td class="number"> {{data.dr | number:'1.2-3'}} {{calculateDrTotal(data.dr)}}</td>
+                                            <td class="number"> {{data.cr_cash | number:'1.2-3'}} {{calculateCrCashTotal(data.cr_cash)}}</td>
+                                            <td class="number"> {{data.cr_trf | number:'1.2-3'}}  {{calculateCrTransferTotal(data.cr_trf)}}</td>
+                                            <td class="number"> {{data.cr_clg | number:'1.2-3'}} {{calculateCrClearingTotal(data.cr_clg)}}</td>
+                                            <td class="number"> {{data.cr | number : '1.2-3'}} {{calculateCrTotal(data.cr)}}</td>
+                                            <td class="number"> {{data.clo | number : '1.2-3'}} {{calculateCLOTotal(data.clo)}}</td>
                                         </tr>
             
                                         <tr>

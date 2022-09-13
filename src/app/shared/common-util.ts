@@ -1,8 +1,25 @@
+import { DatePipe } from "@angular/common";
 import { Injectable } from "@angular/core";
 
 @Injectable()
 export class CommonUtil{
-    constructor() {
+    constructor(public datepipe: DatePipe) {
+    }
+
+    groupBy(list, keyGetter) {
+        const map = new Map();
+        list.forEach((item) => {
+            
+             const key = keyGetter(item);
+             const collection = map.get(key);
+             if (!collection) {
+                 map.set(key, [item]);
+             } else {
+                 collection.push(item);
+             }
+        });
+       
+        return (map);
     }
     
     getYYYYMMDD(objDT: Date){
@@ -12,8 +29,16 @@ export class CommonUtil{
        return '';
     }
 
+    getDDMMYYYY(objDT: Date){
+       
+        if(objDT != null){
+            return this.datepipe.transform(objDT, 'dd/MM/yyyy');
+        }
+       return '';
+    }
+
     getDDMMMYYYY(objDT: Date){
-        const month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+       
         if(objDT != null){
             return `${objDT.getDate()}-`+ this.getMonthName(objDT.getMonth(), 'S') +`-${objDT.getFullYear()}`;
         }
