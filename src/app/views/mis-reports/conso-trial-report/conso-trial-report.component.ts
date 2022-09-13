@@ -36,6 +36,7 @@ export class ConsoTrialReportComponent implements OnInit {
   fromDate : Date;
   _refData;
   _rptTitle;
+  data_message;
 
   totalDebit;
   totalCredit;
