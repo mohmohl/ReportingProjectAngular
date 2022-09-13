@@ -33,7 +33,6 @@ export class Hod3ReportComponent implements OnInit {
   _branchList;
   branchCode;
   _showData;
-  _noData;
   _branchData;
   _rptTitle;
   _datalist;
