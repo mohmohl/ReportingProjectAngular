@@ -37,7 +37,7 @@ export class MabSurveySettingComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.service.getSurveyDataList().subscribe((res: MABSurvey[]) => {
+    this.service.getSurveyDataList().subscribe( (res: MABSurvey[]) => {   
       this.loading = false;
       this.survey_list = res;
     },
@@ -54,12 +54,13 @@ export class MabSurveySettingComponent implements OnInit {
     due_dt: new FormControl(new Date(due_dt),Validators.required)
     });
     }
+
   save_survey(formdata){
       this.error='';
       if (this.form.invalid) {
         this.error = "Please Fill required field!....";
         return;
-    }
+      }
     let d_date = `${formdata.due_dt.getFullYear()}-${formdata.due_dt.getMonth()+1}-${formdata.due_dt.getDate()}`;
      
     const q : MABSurvey={
@@ -70,6 +71,7 @@ export class MabSurveySettingComponent implements OnInit {
       due_dt:new Date(d_date)
     };
       this.loading = true;
+
       this.service.saveToSurvey(q).pipe(
         map((data: any) => {
           this.loading = false;
@@ -100,5 +102,6 @@ export class MabSurveySettingComponent implements OnInit {
         this.error ="The system have the error aa";
         this.loading = false;
       });
-}
+
+  }
 }

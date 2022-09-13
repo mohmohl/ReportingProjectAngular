@@ -2,6 +2,7 @@
     <div class="col-sm-12">
         <div class="card">
           <form [formGroup]="form" (ngSubmit)="submit()">
+            
             <div class="card-header">
               <h5>CLink Data Export Report</h5>
               <div *ngIf="loading" class="d-flex justify-content-center">
@@ -9,78 +10,52 @@
                   <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
               </div>
               <div class="page-header-breadcrumb">
-                <button type="submit" class="btn-primary">
-                  Export Excel
-                </button> 
+                  <button class="btn btn-info btn-sm" type="button" (click)="dataPreparation()">
+                    <i class="ti-import"></i>Preparation</button> 
+                  <button class="btn btn-primary btn-sm" type="button" (click)="submit()" [disabled]="disabled">
+                    <i class="ti-printer"></i>Export</button> 
               </div>
             </div>
+
             <div class="card-body">
               <code *ngIf="error">{{error}}</code>
-                    <div class="container-fluid">
-                      <!-- <div class="row form-group col-md-12">
-                        <label class="col-sm-2 col-form-label">Date</label>
-                        <div class="col-sm-2">
-                          <mat-form-field style="width:100px;">
-                            <input #minmaxInput matInput [matDatepicker]="date" formControlName="date" readonly>
-                            <mat-datepicker-toggle matSuffix [for]="date">
-                               </mat-datepicker-toggle>
-                            <mat-datepicker #date></mat-datepicker>
-                          </mat-form-field>
-                        </div>
-                      </div> -->
+               <label  *ngIf="msg" class="text-info">{{msg}}</label>
 
-                      <!-- <div class="row form-group col-md-12">
-                        <label class="col-sm-2 col-form-label">Branch</label>
-                        <select class="col-sm-4 form-control" formControlName="branch" id="exampleFormControlSelect1">
-                          <option value="" selected>-- Select --</option>
-                          <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
-                        </select>
-                      </div> -->
-                      
-                      <!-- <div class="row form-group col-md-12">
-                        <label class="col-sm-2 col-form-label">Branch<code>*</code></label>
-                        <div style="width:50%;">
-                          <ng-multiselect-dropdown 
-                            [settings]="dropdownSettings" style="background: maroon;"
-                            [data]="branchList"
-                            (onSelect)="onItemSelect($event)" 
-                            (onDeSelect)="onItemDeSelect($event)"
-                            (onSelectAll)="onSelectAll($event)"
-                            (onDeSelectAll)="onDeSelectAll($event)">
-                          </ng-multiselect-dropdown>
-                      </div>
-                      </div> -->
-
-                      <div class="row form-group col-md-12">
-                          <label class="col-sm-2 col-form-label">Include Role<code>*</code></label>
-                          <div class="col-sm-1">
-                            <input type="radio"  formControlName="role" value="yes" /> YES
-                          </div> 
-                          
-                          <div class="col-sm-1">
-                            <input type="radio"  formControlName="role" value="no" /> NO
-                          </div>  
-                      </div>
+                <div class="container-fluid">
+                  <div class="row form-group col-md-12">
+                    <label class="col-sm-2 col-form-label">From Date</label>
+                    <div class="col-sm-2">
+                      <mat-form-field style="width:100px;">
+                        <input #minmaxInput matInput [matDatepicker]="fromDate" formControlName="fromDate" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="fromDate">
+                            </mat-datepicker-toggle>
+                        <mat-datepicker #fromDate></mat-datepicker>
+                      </mat-form-field>
                     </div>
 
-                      
-               
-           <!--  
-            <div class="table-responsive">
-              <div *ngIf="data" class="col-sm-12 text-center">
-                <p>{{data.companyName}}</p>
-                <p>{{data.branchName}}</p>
-                <p>{{data.title}}</p>
-              </div>
-              <table class="table table table-hover" id="export-table">
-                <thead>
-                
-                </thead>
-                <tbody>
-                    
-                </tbody>
-              </table>
-            </div>-->   
+                    <label class="col-sm-1 col-form-label">_</label>
+
+                    <label class="col-sm-2 col-form-label">To Date</label>
+                    <div class="col-sm-2">
+                      <mat-form-field style="width:100px;">
+                        <input #minmaxInput matInput [matDatepicker]="toDate" formControlName="toDate" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="toDate">
+                            </mat-datepicker-toggle>
+                        <mat-datepicker #toDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row form-group col-md-12">
+                    <label class="col-sm-2 col-form-label">Choose Report Type</label>
+                    <select class="col-sm-4 form-control" formControlName="reportType" id="exampleFormControlSelect1">
+                      <option value="domestic_company" selected>Domestic Company</option>
+                      <option value="domestic_individual">Domestic Individual</option>
+                      <option value="foreign_individual">Foreign Individual</option>
+                    </select>
+                  </div>
+                </div>
+
           </div>
         </form>
         </div>

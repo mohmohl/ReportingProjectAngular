@@ -1,0 +1,17 @@
+.question_card {
+    border-radius: 5px;
+    border: 1px solid #dfe1e5;
+    cursor: pointer;
+    padding: 10px;
+    margin: 10px;
+}
+
+.question_card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+}
+
+.txt-error {
+    color: maroon !important;
+    font-weight: bold;
+}

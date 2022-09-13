@@ -372,14 +372,50 @@ const routes: Routes = [
         path: 'user-branch-setup',
         loadChildren: () => import('./views/user-branch-setup/user-branch-setup.module').then(m => m.UserBranchSetupModule)
       },
-      // {
-      //   path: 'active-user-home-branch-report',
-      //   loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
-      // },
+      {
+        path: 'active-user-home-branch-report',
+        loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
+      },
+      {
+        path: 'question-form-submit/:param1',
+        loadChildren: () => import('./views/question-form/question-form-submit/question-form-submit.module').then(m => m.QuestionFormSubmitModule)
+      },
+      {
+        path: 'question-form-result/:param1',
+        loadChildren: () => import('./views/question-form/question-form-result/question-form-result.module').then(m => m.QuestionFormResultModule)
+      },
+      {
+        path: 'question-form-list',
+        loadChildren: () => import('./views/question-form/question-form-list/question-form-list.module').then(m => m.QuestionFormListModule)
+      },
+      {
+        path: 'question-report',
+        loadChildren: () => import('./views/question-form/question-report/question-report.module').then(m => m.QuestionReportModule)
+      },
+      {
+        path: 'topic-new',
+        loadChildren: () => import('./views/question-form/topic-new/topic-new.module').then(m => m.TopicNewModule)
+      },
+      {
+        path: 'topic-new/:param1',
+        loadChildren: () => import('./views/question-form/topic-new/topic-new.module').then(m => m.TopicNewModule)
+      },
+      {
+        path: 'topic-list',
+        loadChildren: () => import('./views/question-form/topic-list/topic-list.module').then(m => m.TopicListModule)
+      },
+      {
+        path: 'topic-role',
+        loadChildren: () => import('./views/question-form/topic-role/topic-role.module').then(m => m.TopicRoleModule)
+      },
        {
          path: 'active-user-home-branch-report',
-         loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
+         loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
        },
+     //  {
+      //   path: 'active-user-home-branch-report',
+      //   loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
+     //  },
       {
         path: 'clink-export-report',
         loadChildren: () => import('./views/clink-export/clink-export.module').then(m => m.CLinkExportModule)
@@ -420,7 +456,21 @@ const routes: Routes = [
       {
         path: 'general-trial-conso',
         loadChildren: () => import('./views/mis-reports/general-trial-conso-report/general-trial-conso-report.module').then(m => m.GeneralTrialConsoReportModule)
+},{
+        path: 'tagit-check-sum',
+        loadChildren: () => import('./views/tagit/check-sum/check-sum.module').then(m => m.CheckSumModule)
+      },
+      {
+        path: 'fcdb_fcubs_cust',
+        loadChildren: () => import('./views/fcdb/cust-fcdb-fcubs/cust-fcdb-fcubs.module').then(m => m.CustFcdbFcubsModule)
+
       }
+      // ,
+      // {
+      //   path: 'fcdb_fcubs_cust',
+      //   loadChildren: () => import('./views/fcdb/fcdb-info2/fcdb-info2.module').then(m => m.FcdbInfo2Module)
+      // }
+      
 
     ]
   },
