@@ -38,6 +38,7 @@
               "src/styles.scss",
               "src/assets/css/custom.scss",
               "src/assets/css/dwstyle.scss",
+              "src/assets/css/common.scss",
               "node_modules/jquery-ui-dist/jquery-ui.css"
             ],
             "scripts": [

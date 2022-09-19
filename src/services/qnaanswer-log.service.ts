@@ -13,11 +13,11 @@ export class QNAAnswerLogService {
   constructor(private http: HttpClient) {
   }
 
-  public getCandidateAnswerLog(id:string): Observable<AnswerLog> {
+  public getCandidateAnswerLog(id: string): Observable<AnswerLog> {
     return this.http.get<AnswerLog>(`${environment.baseUrl}` + `/api/qna/answerlogs?topic_id=${id}`, { headers: this.headers });
   }
 
-  public updateCandidateAnswerLog(id:string): Observable<any> {
+  public updateCandidateAnswerLog(id: string): Observable<any> {
     return this.http.post<any>(`${environment.baseUrl}` + `/api/qna/answerlogs?topic_id=${id}`, { headers: this.headers });
   }
 

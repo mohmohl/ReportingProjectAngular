@@ -1,3 +1,4 @@
+import { ResultReport } from './../models/question_form/ResultReport';
 import { TopicRole } from './../models/question_form/TopicRole';
 import { Observable } from 'rxjs';
 import { TopicDetail } from 'src/models/question_form/TopicDetail';
@@ -62,4 +63,9 @@ export class QuestionFormService {
     public saveTopicsByRole(topicRoles: TopicRole[], role_id: String): Observable<number> {
         return this.http.post<any>(`${environment.baseUrl}` + `/api/qna/topic/topic_role/` + role_id, topicRoles, { headers: this.headers });
     }
+
+    public getResultReport(): Observable<ResultReport[]> {
+        return this.http.get<any>(`${environment.baseUrl}` + `/api/qna/topic/result_report`, { headers: this.headers });
+    }
+
 }

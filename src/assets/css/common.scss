@@ -1,0 +1,21 @@
+.h5MMFont{
+    font-family:'Myanmar3';
+    src:local('./customfonts/mmrtext.ttf');
+    font-size: 20px;
+}
+
+
+.pgtitleMMFont{
+    font-family: 'Myanmar3';
+    src:local('./customfonts/mmrtext.ttf');
+    font-size: 16px;
+    color: grey;
+    align-items: center;
+}
+
+.subpgtitle{
+    font-family:'Myanmar3';
+    src:local('./customfonts/mmrtext.ttf');
+    font-size: 12px;
+    text-align: right;
+}

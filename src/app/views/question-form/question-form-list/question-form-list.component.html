@@ -3,6 +3,8 @@
         <div class="card">
             <div class="card-header">
                 <h5>Question List</h5>
+                <span class="txt-error">Submit Button အားနှိပ်၍ EXAM ROOM သို့ ဝင်ရောက်ဖြေဆိုခွင့် (၃)
+                    ကြိမ်သာရရှိပါမည်။</span>
                 <div *ngIf="loading" class="d-flex justify-content-center">
                     <div class="spinner-border spinner-border-sm text-warning"></div>
                     <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -18,8 +20,7 @@
                         <label>Result : ({{topic.result}}/{{topic.total_mark}})</label><br>
                         <a class="btn btn-primary btn-sm" *ngIf="topic.submitted" (click)="goNextPage(topic)">View</a>
 
-                        <a class="btn btn-primary btn-sm" *ngIf="!topic.submitted"
-                            (click)="goNextPage(topic)">Submit</a>
+                        <a class="btn btn-primary btn-sm" *ngIf="!topic.submitted">Submit</a>
                     </div>
                 </div>
 

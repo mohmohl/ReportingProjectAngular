@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Result Report</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row" *ngIf="resultReports != undefined && resultReports !=null">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table table-hover">
+                                <thead>
+                                    <tr class="text-uppercase">
+                                        <th> # </th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>User</th>
+                                        <th>Result</th>
+                                        <th>Total Mark</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let list of resultReports; let i = index">
+                                        <td> {{i+1}} </td>
+                                        <td>{{list.name}}</td>
+                                        <td>{{list.description}}</td>
+                                        <td>{{list.user_id}}</td>
+                                        <td>{{list.result}}</td>
+                                        <td>{{list.total_mark}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

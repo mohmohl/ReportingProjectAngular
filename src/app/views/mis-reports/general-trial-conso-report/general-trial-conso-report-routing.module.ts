@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from 'src/helpers/auth.guard';
-import { Hod2ReportComponent } from './hod2-report.component';
+import { GeneralTrialConsoReportComponent } from './general-trial-conso-report.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: Hod2ReportComponent,
+    component: GeneralTrialConsoReportComponent,
     canActivate: [AuthGuard],
     data: {
-      breadcrumb: 'Welcome',
+      breadcrumb: 'General Trial Report',
       icon: 'icofont icofont-file-document bg-c-pink',
       breadcrumb_caption: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit - Sample Page',
       status: true
@@ -21,4 +21,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class Hod2ReportRoutingModule { }
+
+export class GeneralTrialConsoReportRoutingModule { }

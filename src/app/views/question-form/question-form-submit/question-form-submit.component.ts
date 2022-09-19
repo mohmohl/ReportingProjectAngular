@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment.prod';
 import { DialogService } from './../../../../helpers/dialog.service';
 import { QuestionFormService } from 'src/services/QuestionFormService';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,8 +21,11 @@ export class QuestionFormSubmitComponent implements OnInit {
   topic_id: string;
   topic: TopicDetail;
   remaningQuestions: Question[] = [];
-  remainWarningMsg = 'No answer is choosen';
+  remainWarningMsg = 'ဖြေဆိုရန် ကျန်ရှိနေပါသည်';
   isSubmitted = false;
+  loading = false;
+  answerCount = 0;
+  totalCount = 0;
 
   constructor(
     private router: Router,
@@ -32,41 +36,42 @@ export class QuestionFormSubmitComponent implements OnInit {
 
   canDeactivate(): Observable<boolean> | boolean {
     if (!this.isSubmitted) {
-      return this.dialogService.confirm('Your data will be lost. Are you sure to leave this page?');
+      return this.dialogService.confirm('မေးခွန်းများအားလုံး ဖြေဆိုရန်လိုအပ်ပါသည်။ မဖြေဆိုပဲ OK အားနှိပ်၍ EXAM ROOM မှထွက်ပါက ဖြေဆိုခွင့် (၁) ကြိမ်ဆုံးရှုံးမည်ဖြစ်သည်။');
     }
     return true;
-  } 
+  }
 
   ngOnInit() {
 
     this.activeRoute.params.subscribe((params) => {
       if (params && params['param1']) {
         let topicId = params['param1'];
-        this.qNAAnswerLogService.getCandidateAnswerLog(topicId).subscribe((answerLog: AnswerLog) => {
 
+        this.loading = true;
+
+        this.qNAAnswerLogService.getCandidateAnswerLog(topicId).subscribe((answerLog: AnswerLog) => {
           if (answerLog != null && answerLog.try_count >= 3) {
             this.isSubmitted = true;
             this.router.navigate(['/question-form-list']);
           }
-
           this.questionFormServie.getQuestionFormByID(topicId).subscribe((res) => {
-
             this.qNAAnswerLogService.updateCandidateAnswerLog(topicId).subscribe((updateRes) => {
-
               this.topic = res;
               this.topic_id = this.topic.id;
 
+              this.totalCount = this.topic.questions.length;
             }, error => {
               this.isSubmitted = true;
               this.router.navigate(['/question-form-list']);
-            }
-            );
-
+            }, () => {
+              this.loading = false;
+            });
           }, error => {
             this.isSubmitted = true;
             this.router.navigate(['/question-form-list']);
+          }, () => {
+            this.loading = false;
           });
-
         });
       }
     });
@@ -86,10 +91,14 @@ export class QuestionFormSubmitComponent implements OnInit {
         }
       }
     }
+
+    console.log(this.topic);
+
+    let unAnswers = this.topic.questions.filter(q => q.options.every(op => op.is_chosen == 0) == true);
+    this.answerCount = this.totalCount - unAnswers.length
   }
 
   onSubmit() {
-
     this.qNAAnswerLogService.getCandidateAnswerLog(this.topic.id).subscribe((answerLog: AnswerLog) => {
 
       if (answerLog != null && answerLog.try_count >= 3) {
@@ -112,7 +121,7 @@ export class QuestionFormSubmitComponent implements OnInit {
         this.topic.user_id = login_user.userId;
 
         if (this.remaningQuestions && this.remaningQuestions.length > 0) {
-          if (confirm("You have not choosen one or more questions. Do you want to submit?") == true) {
+          if (confirm('ဖြေဆိုရန် မေးခွန်း ကျန်ရှိနေပါသည်။ မဖြေဆိုပဲ အဖြေလွှာအား အပ်လိုပါသလား') == true) {
             this.questionFormServie.submitQuestion(this.topic).subscribe((res) => {
               this.isSubmitted = true;
               this.router.navigate(['/question-form-list']);
@@ -126,7 +135,6 @@ export class QuestionFormSubmitComponent implements OnInit {
           });
         }
       }
-
     });
   }
 

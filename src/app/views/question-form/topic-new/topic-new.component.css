@@ -68,3 +68,12 @@
 .text-error {
     color: red !important;
 }
+
+.card-body {
+    padding: 1em !important;
+    padding-left: 1.5em !important;
+}
+
+.card {
+    margin-bottom: 1.5em !important;
+}

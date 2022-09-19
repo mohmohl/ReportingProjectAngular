@@ -389,6 +389,10 @@ const routes: Routes = [
         loadChildren: () => import('./views/question-form/question-form-list/question-form-list.module').then(m => m.QuestionFormListModule)
       },
       {
+        path: 'question-report',
+        loadChildren: () => import('./views/question-form/question-report/question-report.module').then(m => m.QuestionReportModule)
+      },
+      {
         path: 'topic-new',
         loadChildren: () => import('./views/question-form/topic-new/topic-new.module').then(m => m.TopicNewModule)
       },
@@ -404,18 +408,18 @@ const routes: Routes = [
         path: 'topic-role',
         loadChildren: () => import('./views/question-form/topic-role/topic-role.module').then(m => m.TopicRoleModule)
       },
-      // {
-      //   path: 'active-user-report',
+       {
+         path: 'active-user-home-branch-report',
+         loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
+       },
+     //  {
+      //   path: 'active-user-home-branch-report',
       //   loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
-      // }
+     //  },
       {
         path: 'clink-export-report',
         loadChildren: () => import('./views/clink-export/clink-export.module').then(m => m.CLinkExportModule)
       },
-      {
-        path: 'fcdb_fcubs_cust',
-        loadChildren: () => import('./views/fcdb/cust-fcdb-fcubs/cust-fcdb-fcubs.module').then(m => m.CustFcdbFcubsModule)
-        },
       {
         path: 'conso-asset',
         loadChildren: () => import('./views/mis-reports/conso-assets/conso-assets.module').then(m => m.ConsoAssetsModule)
@@ -424,10 +428,49 @@ const routes: Routes = [
         path: 'conso-liabilities',
         loadChildren: () => import('./views/mis-reports/conso-liabilities/conso-liabilities.module').then(m => m.ConsoLiabilitiesModule)
       },
+      {
+        path: 'hod2-report',
+        loadChildren: () => import('./views/mis-reports/hod2-report/hod2.module').then(m => m.HOD2Module)
+      },
+      {
+        path: 'hod3-report',
+        loadChildren: () => import('./views/mis-reports/hod3-report/hod3.module').then(m => m.HOD3Module)
+      },
         {
         path: 'fcubs-user-report',
         loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
+      },
+      {
+        path: 'conso-trial-report',
+        loadChildren: () => import('./views/mis-reports/conso-trial-report/conso-trial-report.module').then(m => m.ConsoTrialReportModule)
+      },
+      {
+        path: 'conso-income',
+        loadChildren: () => import('./views/mis-reports/conso-income/conso-income.module').then(m => m.ConsoIncomeModule)
       }
+      ,
+      {
+        path: 'detail-trial-conso',
+        loadChildren: () => import('./views/mis-reports/detail-trial-conso-report/detail-trial-conso-report.module').then(m => m.DetailTrialConsoReportModule)
+      },
+      {
+        path: 'general-trial-conso',
+        loadChildren: () => import('./views/mis-reports/general-trial-conso-report/general-trial-conso-report.module').then(m => m.GeneralTrialConsoReportModule)
+},{
+        path: 'tagit-check-sum',
+        loadChildren: () => import('./views/tagit/check-sum/check-sum.module').then(m => m.CheckSumModule)
+      },
+      {
+        path: 'fcdb_fcubs_cust',
+        loadChildren: () => import('./views/fcdb/cust-fcdb-fcubs/cust-fcdb-fcubs.module').then(m => m.CustFcdbFcubsModule)
+
+      }
+      // ,
+      // {
+      //   path: 'fcdb_fcubs_cust',
+      //   loadChildren: () => import('./views/fcdb/fcdb-info2/fcdb-info2.module').then(m => m.FcdbInfo2Module)
+      // }
+      
 
     ]
   },

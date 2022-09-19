@@ -1,5 +1,5 @@
-export class AnswerLog{
-    user_id: String;
-    topic_id: String;
-    try_count: Number;
+export class AnswerLog {
+    user_id: string;
+    topic_id: string;
+    try_count: number;
 }
