@@ -106,7 +106,7 @@ totalCredit_lcystr:string;
   }
   this.bCode=this.form.get(["branchCode"])!.value;
 
-  this.service.getGeneralTrialReportData(fDate,this.bCode,this.currencyCode).subscribe((res:TrialReport)=>{
+  this.service.getGeneralTrialReportData(fDate,this.bCode,this.currencyCode, 1).subscribe((res:TrialReport)=>{
     this.loading = false;
    
     if(res != null){
@@ -177,7 +177,7 @@ exportexcel(): void
   this.bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;
 
-  this.service.exportGeneralTrialExcel(f_Date,this.bCode,this.currencyCode)
+  this.service.exportGeneralTrialExcel(f_Date,this.bCode,this.currencyCode, 1)
   .pipe(
     map((data: any) => {
       debugger;
@@ -217,7 +217,7 @@ exportexcel(): void
   this.bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;
 
-  this.service.exportGeneralTrialPDF(f_date,this.bCode,this.currencyCode)
+  this.service.exportGeneralTrialPDF(f_date,this.bCode,this.currencyCode, 1)
   .pipe(
     map((data: any) => {
       let blob = new Blob([data], {

@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+              <h5>Consolidated Trial Report</h5>
+              <div *ngIf="loading" class="d-flex justify-content-center">
+                <div class="spinner-border spinner-border-sm text-warning"></div>
+                  <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+              </div>
+              <div class="page-header-breadcrumb">
+                <button type="button" class="btn-success" (click)="exportexcel()">
+                  <i class="ti-printer"></i>Excel
+                </button> 
+                <button type="button" class="btn-danger" (click)="exportPDF()">
+                  <i class="ti-printer"></i>PDF
+                </button> 
+              </div>
+            </div>
+            <div class="card-body">
+              <code *ngIf="error">{{error}}</code>
+                <div class="table-responsive">
+                  
+                <div class="container-fluid">
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label">Date</label>
+                    <div class="col-sm-2 date-picker">
+                         <!-- [min]="minDate"
+                              [max]="maxDate" -->
+                          <mat-form-field style="width:100px;">
+                            <input #minmaxInput matInput
+                              [matDatepicker]="minmaxvalidation"  [(ngModel)]="fromDate"  readonly>
+                            <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                               </mat-datepicker-toggle>
+                            <mat-datepicker #minmaxvalidation></mat-datepicker>
+                          </mat-form-field>
+                    </div>
+                    
+                  <label class="col-sm-1 col-form-label">Currency</label>
+                  <div class="col-sm-2">
+                    <select class="select" [(ngModel)]="ccyCode" id="exampleFormControlSelect1">
+                      <option *ngFor="let c of currencyList" value="{{c}}">{{ c }}</option>
+                    </select>
+                  </div>
+                  
+                  <div class="col-sm-2">
+                      <button type="button" class="btn-primary" (click)="showData()">Show</button>
+                    </div>
+                  </div>
+                  
+                </div>
+            </div>
+                
+            <p *ngIf="data_message" class="text-danger">{{data_message}}</p>
+             
+            <div *ngIf="_showData" class="table-responsive">
+              <div class="col-sm-12 text-center">
+                <p>{{_refData.t1}}</p>
+                <p>{{_rptTitle}}</p>
+              </div>
+              <div class="col-sm-12 text-center">
+                <p style="text-align: right;">{{_ccyCode}}</p>
+              </div>
+              <table class="table table table-hover" id="export-table">
+                <thead>
+                <tr class="text-uppercase table-header-txt" width="100%">
+                  <th>Debit</th>
+                  <th >Account</th>
+                  <th >Description</th>
+                  <th >Credit</th>
+                </tr>
+                
+                </thead>
+                <tbody>
+                    <tr *ngFor="let list of _datalist">
+                        <td class="num-txt">  {{ list.debit_lcy | number: '1.2-2' }}    </td>
+                        <td class="txt">{{list.account}}</td>
+                        <td class="des-txt">{{list.gl_desc}}</td>
+                        <td class="num-txt"> {{ list.credit_lcy | number: '1.2-2' }} </td>
+                    </tr>
+                    <tr>
+                      <td class="num-txtSummary">
+                        {{ totalDebit | number: '1.2-2'}}
+                      </td>
+                      
+                      <td class="txtSummary" colspan="2"> Total</td>
+                      
+                      <td class="num-txtSummary">
+                        {{totalCredit | number: '1.2-2'}}
+                      </td>
+                      
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+ 

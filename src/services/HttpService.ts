@@ -17,8 +17,9 @@ export class HttpService {
 
 
   public doPost(url:string, j:any): Observable<any>{
-
-   return this.http.post<any>(`${environment.baseUrl}`+ url,{title:j});
+    var headers = new HttpHeaders({'Content-Type':'application/json','Accept': 'application/json',});
+    let params = JSON.stringify(j);
+   return this.http.post<any>(`${environment.baseUrl}`+ url,params,{headers : headers});
   }
 
   headers = new HttpHeaders({'Content-Type':'application/pdf','Accept': 'application/pdf',});
@@ -64,6 +65,33 @@ export class HttpService {
           a.href = fileURL;
           a.target     = '_blank'; 
           a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+        }));
+  }
+
+
+  public downloadFile(url:string, obj :any, filename: string, filetype : string){
+
+    var api = environment.baseUrl+url;
+    let params = JSON.stringify(obj);
+    var headers = new HttpHeaders({'Content-Type':'application/json','Accept': 'application/json',});
+    
+      return this.http.post<any>(`${api}`, params,{headers : headers,responseType: 'arraybuffer' as 'json'}).pipe(
+        map((data: any) => {
+          var file;
+          if(filetype == 'xls' || filetype == 'xlsx'){
+            file = new Blob([data], {type: 'application/vnd.ms-excel'});
+          }
+          else if(filetype == 'pdf'){
+            file = new Blob([data], {type: 'application/pdf'});
+          }
+         
+          var a = document.createElement("a");          
+          var fileURL = URL.createObjectURL(file);
+          a.href = fileURL;
+          a.target     = '_blank'; 
+          a.download = filename+'.'+filetype;
           document.body.appendChild(a);
           a.click();
         }));

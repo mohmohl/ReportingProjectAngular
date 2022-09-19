@@ -1,0 +1,110 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Generate Checksum</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <span class="text-error">{{message}}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <div class="form-group row">
+                                <div class="col-sm-2"><label>Merchant ID : </label></div>
+                                <div class="col-sm-4">
+                                    <input type="text" formControlName="merchantId" class="form-control" id="merchantId"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.merchantId.touched) && form.controls.merchantId.errors }"
+                                        placeholder="Enter your merchant id">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"><label>Merchant Name : </label></div>
+                                <div class="col-sm-4">
+                                    <input type="text" formControlName="merchantName" class="form-control"
+                                        id="merchantName"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.merchantName.touched) && form.controls.merchantName.errors }"
+                                        placeholder="Enter your merchant name">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"><label>Order ID : </label></div>
+                                <div class="col-sm-4">
+                                    <input type="text" formControlName="orderId" class="form-control" id="orderId"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.orderId.touched) && form.controls.orderId.errors }"
+                                        placeholder="Enter your order id">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"><label>Order Details : </label></div>
+                                <div class="col-sm-4">
+                                    <input type="text" formControlName="orderDetails" class="form-control"
+                                        id="orderDetails"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.orderDetails.touched) && form.controls.orderDetails.errors }"
+                                        placeholder="Enter your order details">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"><label>Amount : </label></div>
+                                <div class="col-sm-4">
+                                    <input type="text" formControlName="amount" class="form-control" id="amount"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.amount.touched) && form.controls.amount.errors }"
+                                        placeholder="Enter your amount">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"><label>Currency : </label></div>
+                                <div class="col-sm-4">
+                                    <input type="text" formControlName="currency" class="form-control" id="currency"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.currency.touched) && form.controls.currency.errors }"
+                                        placeholder="Enter your currency">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"><label>Timestamp : </label></div>
+                                <div class="col-sm-4">
+                                    <input type="text" formControlName="timeStamp" class="form-control" id="timeStamp"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.timeStamp.touched) && form.controls.timeStamp.errors }"
+                                        placeholder="Enter your Timestamp">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"><label>Timeout : </label></div>
+                                <div class="col-sm-4">
+                                    <input type="text" formControlName="timeout" class="form-control" id="timeout"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.timeout.touched) && form.controls.timeout.errors }"
+                                        placeholder="Enter your timeout">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"><label>Call Back URL : </label></div>
+                                <div class="col-sm-4">
+                                    <input type="text" formControlName="callback" class="form-control" id="callback"
+                                        [ngClass]="{ 'is-invalid': (formSubmitted || form.controls.callback.touched) && form.controls.callback.errors }"
+                                        placeholder="Enter your callback url">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-2"></div>
+                                <div class="col-sm-4">
+                                    <button type="submit" class="btn btn-primary btn-sm">Generate</button>
+                                    <button type="reset" class="btn btn-secondary btn-sm"
+                                        style="margin-left: 10px;">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div *ngIf="checksum" class="row">
+                    Generated Checksum : {{checksum.checksum}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
