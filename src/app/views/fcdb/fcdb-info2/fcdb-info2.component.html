@@ -1,0 +1,37 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+              <h5>Info 2</h5>
+              <div *ngIf="loading" class="d-flex justify-content-center">
+                <div class="spinner-border spinner-border-sm text-warning"></div>
+                  <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+              </div>
+              
+            </div>
+            <div class="card-body">
+              <code *ngIf="error">{{error}}</code>
+              <form [formGroup]="form" (ngSubmit)="exportExcel()">
+                <div class="container-fluid">
+                    <div class="form-group row">
+                       
+                        <label class="col-sm-1">Branch</label>
+                      <div class="col-sm-2">
+                        <select class="" formControlName="branchCode" id="exampleFormControlSelect1">
+                          <option value="" selected>-- Select --</option>
+                          <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
+                        </select>
+                      </div>
+                      <div class="col-sm-2">
+                        <button type="submit" class="btn-success">
+                            <i class="ti-printer"></i>Excel
+                          </button> 
+                      </div>
+                 </div>
+                  
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

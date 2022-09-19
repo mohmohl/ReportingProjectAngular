@@ -31,8 +31,6 @@ export class MeterBillViewComponent implements OnInit {
 
   ngOnInit() {}
 
- 
-
   submit() {
     this.uploadedList = [];
     this.loading = true;

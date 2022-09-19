@@ -1,0 +1,148 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            
+            <div class="card-header">
+                <h5>OBR ENCASH TRANSFER </h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+
+                  <div class="page-header-breadcrumb">
+                    <button type="button" class="btn-danger" (click)="exportPDF()">
+                      <i class="ti-printer"></i>PDF
+                    </button> 
+                   </div>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    
+                    <code *ngIf="error">{{error}}</code>
+					
+                    <div class="form-group row">
+
+                        <label class="col-sm-1"> Branch </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="branchCode" (change)="changeBranchCombo($event.target.options.selectedIndex)">
+                                <option *ngFor="let branch of l_branch" value="{{branch.branch_code}}" selected>{{branch.branch_code}}</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-1">Date</label>
+                        <div class="col-xs-2 date-picker">
+                            <select [(ngModel)]="month">
+                                <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
+                            </select>
+                        </div>
+     
+                        <label class="col-sm-2"> OBR Customer ID </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="cusID">
+                                <option value="{{cusID}}" selected>{{cusID}}</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <button type="button" (click)="showDatas()" class="btn-primary">Show</button>
+                            
+                        </div>
+                        
+                    </div>
+                <div *ngIf="_showData" id="data">
+                    <div class="title" *ngIf="_showData">
+                        <div>
+                            <p class="pgtitle">{{branchSetupData.bank_name}}</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">{{branchSetupData.branch_name}}</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">OBR Encash Transfer</p>
+                        </div>
+                       
+                    </div>
+
+                    <div>
+                        <table class="headertbl">
+                            <tr>
+                                <td class="td col-md-2" >Local Branch :</td>
+                                <td class="td">{{branchSetupData.branch_name}}</td>
+                                <td class="prtDate td" style="text-align: right;">{{month}}</td> 
+                            </tr>
+                        </table>
+
+                    </div>
+                    
+
+                    <table class="table table table-hover" id="content" #content>
+                        <thead class="text-uppercase">
+                          <th style="text-align: center;">Sr. No.</th>
+                          <th style="text-align: center;">Date</th>
+                          <th style="text-align: center;">Fax No.</th>
+                          <th style="text-align: center;">Drawee Name</th>
+                          <th style="text-align: center;">Payee Name</th>
+                          <th style="text-align: center;">Ref. No.</th>
+                          <th style="text-align: center;">Comm(MAB)</th>
+                          <th style="text-align: center;">Comm(Other Bank)</th>
+                          <th style="text-align: center;">Transfer Amount</th>
+                        </thead>
+                          
+                        <tbody *ngFor="let m_data of g_obrencashtransferdatalist | keyvalue; ">
+                            <tr>
+                                <td colspan="9"><b>From  Branch :</b> {{m_data.key.toString().split("|")[2]}} </td>
+                            </tr>
+
+                            <tr *ngFor="let data of m_data.value;">
+                                
+                                <td> {{ getIndex() }}</td>
+
+                                <td> {{data.trn_dt | date : 'dd/MM/yyyy'}}</td>
+                                <td> {{data.fax_no}}</td>
+                                <td> {{data.internal_remarks}}</td>
+                                <td> {{data.cr_account}},{{data.ult_beneficiary1}}</td>
+                                <td> {{data.trn_ref_no}} </td>
+                                <td  class="number"> {{data.comm1 | number : '1.2-3'}} </td>
+                                <td  class="number"> {{data.comm2 | number : '1.2-3'}}  </td>
+                                <td  class="number"> {{data.dr_amount | number : '1.2-3'}} {{calculateSubTotal(data)}}</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="8" class="stotal"> Sub Total</td>
+                                <td class="stotal"> {{subTotal | number : '1.2-3'}} {{clearSubTotal()}}</td>
+                                
+                            </tr>                    
+                        </tbody>
+                       
+                        <tr>
+                            <td colspan="8" class="title"> Grand Total </td>
+                            <td class="stotal"> {{ grandTotal | number : '1.2-3'}} </td>
+                        </tr>
+                    </table>
+
+                    
+                    <div class="col-md-4" >
+                        <table>
+                            <tr>
+                                <td style="background-color:#fcf6d6">Number of Tranfer Total</td>
+                                <td>{{totNoOfTrans}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                
+                <div *ngIf="_noData">
+                    <p class="nodata"> No records found.</p>
+                </div>
+                   
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,239 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            
+            <div class="card-header">
+                <h5>Subsidiary Ledger</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+
+                  <div class="page-header-breadcrumb">
+                    <button type="button" class="btn-danger" (click)="exportPDF()">
+                      <i class="ti-printer"></i>PDF
+                    </button> 
+                   </div>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    
+                    <code *ngIf="error">{{error}}</code>
+					
+                    <div class="form-group row">
+
+                        <label class="col-sm-1">Account No.</label>
+                        <div class="col-xs-2 date-picker">
+                            <select [(ngModel)]="accno"  (change)="changeAccCombo($event.target.options.selectedIndex)">
+                                <option *ngFor="let data of l_SubsiAccs" value="{{data.old_gl}}">{{data.old_gl}}</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-1">Date</label>
+                        <div class="col-xs-2 date-picker">
+                            <select [(ngModel)]="month">
+                                <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
+                            </select>
+                        </div>
+    
+                        <label class="col-sm-1"> Currency </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="currency">                               
+                                <option *ngFor="let arr of m_SubsiAccs" value="{{arr.currency}}">{{arr.currency}}</option>
+                            </select>
+                        </div>
+                        
+                        <label class="col-sm-1"> Branch </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="branch">
+                                <option *ngFor="let branch of l_branch" value="{{branch.branch_code}}" selected>{{branch.branch_code}}</option>
+                            </select>
+                        </div>
+                        
+                        
+                        
+                        <div class="col-sm-2">
+                            <button type="button" (click)="showDatas()" class="btn-primary">Show</button>
+                            
+                        </div>
+                        
+                    </div>
+                <div *ngIf="_showData">
+                    <div class="title" *ngIf="_showData">
+                        <div>
+                            <p class="pgtitle">{{branchData.bank_name}}</p>
+                        </div>
+                        
+                        <div>
+                            <p class="pgsubtitle">{{branchData.branch_name}}</p>
+                        </div>
+                        
+                        <div>
+                            <p class="pgsubtitle">{{branchData.branch_addr2}} {{branchData.branch_addr3}}</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">Subsidiary Ledger  ({{titleCCy}})</p>
+                        </div>
+                    
+                    </div>
+                    
+                    <div>
+                        <table class="headertbl">
+                            <tr>
+                                <td class="td">{{glData.parent_gl}}</td>
+                                <td class="td">{{glData.p_desc}}</td>
+                            </tr>
+                            <tr>
+                                <td class="td">{{glData.gl_code}}</td>
+                                <td class="td">{{glData.gl_desc}}</td>
+                                <td class="prtDate td">{{month_desc}}</td> 
+                            </tr>
+                            
+                        </table>
+
+                    </div>
+
+                    <table *ngIf="_isLCY" class="table table table-hover" id="content" #content>
+                        <thead class="text-uppercase">
+                            <th> Date</th>
+                            <th> Particulars</th>
+                            <th> Contra Date</th>
+                            <th> Sub Ref. Code</th>
+                            <th> Debit</th>
+                            <th> Credit</th>
+                            <th> </th>
+                            <th> Balance </th>
+                            <th> Mgr. Sign</th>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td>{{ openingData.trn_dt }}</td>
+
+                                <td *ngIf="openingData.lcy_opening_bal != 0" >BALANCE FORWARD</td>
+                                <td *ngIf="openingData.lcy_opening_bal == 0" >OPENING BALANCE</td>
+
+                                <td></td>
+                                <td></td>
+                                <td class="number">0.00</td>
+                                <td class="number">0.00</td>
+
+                                <td *ngIf="openingData.lcy_opening_bal < 0" >Dr.</td>
+                                <td *ngIf="openingData.lcy_opening_bal >= 0" >Cr.</td>
+
+                                <td class="number">{{getLCYOpening(openingData.lcy_opening_bal)| number:'1.0-3'}}</td>
+                                <td></td>
+                               
+                            </tr>
+
+                            <tr *ngFor="let data of subsidarydatalist;">
+                                
+                                <td>{{data.trn_dt}}</td>
+                                <td>{{data.trn_desc}}</td>
+                                <td></td>
+                                <td></td>
+                                <td class="number">{{data.d_lcy_amt| number:'1.2-3'}}</td>
+                                <td class="number">{{data.c_lcy_amt| number:'1.2-3'}}</td>
+                                <td> {{data.status }}</td>
+                                <td class="number"> {{data.lcybalance | number:'1.2-3'}}</td>
+                                <td class="number"></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="number">{{ totalLCYDr | number:'1.2-3'}}</td>
+                                <td class="number">{{ totalLCYCr| number:'1.2-3'}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                    
+                        </tbody>
+                    </table>
+
+
+                    <table *ngIf="_isFCY" class="table table table-hover" id="content" #content>
+                        <thead class="text-uppercase">
+                            <th> Date</th>
+                            <th> Particulars</th>
+                            <th> Contra Date</th>
+                            <th> Sub Ref. Code</th>
+                            <th> FCY Debit</th>
+                            <th> LCY Debit</th>
+                            <th> FCY Credit</th>
+                            <th> LCY Credit</th>
+                            <th> </th>
+                            <th> FCY Balance </th>
+                            <th> LCY Balance </th>
+                            <th> Mgr. Sign</th>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td>{{ openingData.trn_dt }}</td>
+
+                                <td *ngIf="openingData.acy_opening_bal != 0" >BALANCE FORWARD</td>
+                                <td *ngIf="openingData.acy_opening_bal == 0" >OPENING BALANCE</td>
+
+                                <td></td>
+                                <td></td>
+                                <td class="number">0.00</td>
+                                <td class="number">0.00</td>
+                                <td class="number">0.00</td>
+                                <td class="number">0.00</td>
+
+                                <td *ngIf="openingData.lcy_opening_bal < 0" >Dr.</td>
+                                <td *ngIf="openingData.lcy_opening_bal >= 0" >Cr.</td>
+
+                                <td class="number">{{getFCY_FCYOpening(openingData.acy_opening_bal)| number:'1.2-3'}}</td>
+                                <td class="number">{{getFCY_LCYOpening(openingData.lcy_opening_bal)| number:'1.2-3'}}</td>
+                                <td></td>
+                               
+                            </tr>
+
+                            <tr *ngFor="let data of subsidarydatalist; ">
+                                
+                                <td>{{data.trn_dt}}</td>
+                                <td>{{data.trn_desc}}</td>
+                                <td></td>
+                                <td></td>
+                                <td class="number">{{data.d_fcy_amt| number:'1.2-3'}}</td>
+                                <td class="number">{{data.d_lcy_amt| number:'1.2-3'}}</td>
+                                <td class="number">{{data.c_fcy_amt| number:'1.2-3'}}</td>
+                                <td class="number">{{data.c_lcy_amt| number:'1.2-3'}}</td>
+                                <td> {{data.status}} </td>
+                                <td class="number"> {{ data.fcybalance | number:'1.2-3'}}</td>
+                                <td class="number">{{ data.lcybalance | number:'1.2-3'}}</td>
+                                <td ></td>
+                            </tr>
+
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="number">{{ totalFCYDr | number:'1.2-3'}}</td>
+                                <td class="number">{{ totalLCYDr | number:'1.2-3'}}</td>
+                                <td class="number">{{ totalFCYCr| number:'1.2-3'}}</td>
+                                <td class="number">{{ totalLCYCr| number:'1.2-3'}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                    
+                        </tbody>
+                    </table>
+
+                </div>
+                   
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+

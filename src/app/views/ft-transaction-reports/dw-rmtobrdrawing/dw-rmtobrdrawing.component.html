@@ -1,0 +1,137 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            
+            <div class="card-header">
+                <h5> Remittance Drawing (OBR)_Branch</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+
+                  <div class="page-header-breadcrumb">
+                    <button type="button" class="btn-danger" (click)="exportPDF()">
+                      <i class="ti-printer"></i>PDF
+                    </button> 
+                   </div>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    
+                    <code *ngIf="error">{{error}}</code>
+					
+                    <div class="form-group row">
+
+                        <label class="col-sm-1"> Branch </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="brCode" (change)="changeBranchCombo($event.target.options.selectedIndex)">
+                                <option *ngFor="let branch of l_branch" value="{{branch.branch_code}}" selected>{{branch.branch_code}}</option>
+                            </select>
+                        </div>
+
+                        <label class="col-sm-1">Date</label>
+                        <div class="col-xs-2 date-picker">
+                            <select [(ngModel)]="month" (change)="changeDateCombo($event.target.options.selectedIndex)">
+                                <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
+                            </select>
+                        </div>
+     
+                        <label class="col-sm-2"> OBR Customer ID </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="cusID">
+                                <option value="{{cusID}}" selected>{{cusID}}</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <button type="button" (click)="showDatas()" class="btn-primary">Show</button>
+                            
+                        </div>
+                        
+                    </div>
+                <div *ngIf="_showData" id="data">
+                    <div class="title" *ngIf="_showData">
+                        <div>
+                            <p class="pgtitle">{{branchSetupData.bank_name}}</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">{{branchSetupData.branch_name}}</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">Remittance Drawing (OBR) Report</p>
+                        </div>
+                       
+                    </div>
+
+                    <div>
+                        <p class="prtDate"> {{month_desc}}</p>
+                    </div>
+
+                    <table class="table table table-hover" id="content" #content>
+                        <thead class="text-uppercase">
+                          <th style="text-align: center;">Sr. No.</th>
+                          <th style="text-align: center;">Date</th>
+                          <th style="text-align: center;">Trn. Ref. No.</th>
+                          <th style="text-align: center;">To Branch</th>
+                          <th style="text-align: center;">Cr. Value Date</th>
+                          <th style="text-align: center;">Fax No.</th>
+                          <th style="text-align: center;">Drawee</th>
+                          <th style="text-align: center;">Beneficiary</th>
+                          <th style="text-align: center;">Dr Amount</th>
+                          <th style="text-align: center;">Commission1</th>
+                          <th style="text-align: center;">Commission2</th>
+                          <th style="text-align: center;">Fax Charges</th>
+                        </thead>
+                          
+                        <tbody *ngFor="let m_data of g_rmtobrdrawingdatalist | keyvalue; ">
+                            
+                            <tr *ngFor="let data of m_data.value; let i=index;">
+                                
+                                <td> {{ (i+1) }}</td>
+
+                                <td> {{data.trn_dt | date : 'dd/MM/yyyy'}}</td>
+                                <td> {{data.trn_ref_no}}</td>
+                                <td> {{data.to_branch}}</td>
+                                <td> {{data.cr_value_date | date : 'dd/MM/yyyy'}}</td>
+                                <td> {{data.fax_no}}</td>
+                                <td> {{data.drawee}} </td>
+                                <td> {{data.beneficiary}} </td>
+                                <td  class="number"> {{data.dr_amount | number : '1.2-3'}}</td>
+                                <td  class="number"> {{data.commission1 | number : '1.2-3'}} </td>
+                                <td  class="number"> {{data.commission2 | number : '1.2-3'}}  </td>
+                                <td  class="number"> {{data.fax_charges | number : '1.2-3'}} {{calculateTotal(data)}} </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="8" class="stotal"> Sub Total  </td>
+                                <td class="stotal"> {{subDrAmt | number : '1.2-3'}}</td>
+                                <td class="stotal"> {{subComm1 | number : '1.2-3'}}</td>
+                                <td class="stotal"> {{subComm2 | number : '1.2-3'}}</td>
+                                <td class="stotal"> {{subFaxCharges | number : '1.2-3'}} {{clearSubTotal()}}</td>
+                            </tr>                    
+                        </tbody>
+                       
+                        <tr>
+                            <td colspan="8" class="title"> Grand Total </td>
+                            <td class="stotal"> {{ grandDrAmt | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandComm1 | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandComm2 | number : '1.2-3'}} </td>
+                            <td class="stotal"> {{ grandFaxCharges | number : '1.2-3'}} </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                
+                <div *ngIf="_noData">
+                    <p class="nodata"> No records found.</p>
+                </div>
+                   
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

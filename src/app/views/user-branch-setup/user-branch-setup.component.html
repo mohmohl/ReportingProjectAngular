@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+              <h5>Registered User</h5>
+              <div *ngIf="loading" class="d-flex justify-content-center">
+                <div class="spinner-border spinner-border-sm text-warning"></div>
+                  <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+              </div>
+            </div>
+            <div class="card-body">
+               
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">User Id</label>
+                        <div class="col-sm-3">
+                          <input type="text" formControlName="userId" (change)="userIdOnChange($event)" class="form-control">
+                          <code *ngIf="error">{{error}}</code>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                          </div>
+                      </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="data">
+    <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>{{data.user_id}}</h5>
+            <code *ngIf="message">{{message}}</code>
+            <div class="page-header-breadcrumb">
+              <button type="button" (click)="rolePermit()" class="btn-primary">
+                Permit
+              </button>&nbsp;
+            </div>
+          </div>
+          <div class="card-body p-t-10">
+            <div class="form-group row">
+              <div class="col-sm-2"></div>
+              <div class="col-sm-8">
+              <table>
+                  <tr>
+                      <th>Choose</th>
+                      <th>Branch Code</th>
+                      <th>Branch NAME</th>
+                  </tr>
+                  <tr *ngFor="let branch of data.branchList">
+                    <td><input type="checkbox" [(ngModel)]="branch.selected" (change)="branch_onChange(branch.branchCode, $event.target.checked)" class="styled">
+                    </td>
+                      <td> {{branch.branchCode}}</td>
+                      <td> {{branch.branchName}}</td>
+                  </tr>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>

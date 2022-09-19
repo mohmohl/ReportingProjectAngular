@@ -89,7 +89,17 @@
                   </div>
                   
                 </div>
+                
+              <div class="col-md-10" *ngIf="progress != 0">
+                <div class="progress" style="height: 4px;">
+                  <div role="progressbar"  class="bg-warning progress-bar" [style.width.%]="progress">
+                  </div>
+               </div>
+              </div>
 
+              <div class="col-sm-2" *ngIf="progress != 0">
+              <label class="col-sm-12 col-form-label">{{progress}} % completed</label>
+             </div>
                 <div *ngIf="errorList" class="col-md-12">
                   <ul *ngFor="let item of errorList">
                     <li>
@@ -98,15 +108,13 @@
                     </li>
                   </ul>
                 </div>
-
           </form>
 
           <!-- <div class="col-sm-12 col-md-2">
             <button class="btn btn-primary btn-sm" (click)="removeAll()">All Clear</button>
           </div> -->
         
-
         </div>
-        
+       
   </div>
 </div>

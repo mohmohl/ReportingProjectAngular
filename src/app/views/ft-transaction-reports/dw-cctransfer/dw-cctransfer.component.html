@@ -1,0 +1,137 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            
+            <div class="card-header">
+                <h5>iBanking Cross Currency Fund Transfer Report </h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+
+                  <div class="page-header-breadcrumb">
+                    <button type="button" class="btn-danger" (click)="exportPDF()">
+                      <i class="ti-printer"></i>PDF
+                    </button> 
+                   </div>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    
+                    <code *ngIf="error">{{error}}</code>
+					
+                    <div class="form-group row">
+
+                        <label class="col-sm-1">Date</label>
+                        <div class="col-xs-2 date-picker">
+                            <select [(ngModel)]="month">
+                                <option *ngFor="let month of monthList" value="{{month}}">{{month}}</option>
+                            </select>
+                        </div>
+     
+                        <label class="col-sm-1"> Branch </label>
+                        <div class="col-xs-2">
+                            <select [(ngModel)]="branch">
+                                <option value="{{branch}}" selected>{{branch}}</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-sm-2">
+                            <button type="button" (click)="showDatas()" class="btn-primary">Show</button>
+                            
+                        </div>
+                        
+                    </div>
+                <div *ngIf="_showData" id="data">
+                    <div class="title" *ngIf="_showData">
+                        <div>
+                            <p class="pgtitle">Myanmar Apex Bank</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">ALL</p>
+                        </div>
+
+                        <div>
+                            <p class="pgsubtitle">iBanking Cross Currency Fund Transfer Report</p>
+                        </div>
+                       
+                    </div>
+
+                    <div class="prtDate">
+                        <p>{{month}}</p>
+                    </div>
+                    
+
+                    <table class="table table table-hover" id="content" #content>
+                        <tr class="text-uppercase">
+                          <th rowspan="2" style="vertical-align: middle;">Sr. No.</th>
+                          <th rowspan="2" style="vertical-align: middle;">Source Ref. No.</th>
+                          <th rowspan="2" style="vertical-align: middle;">Date</th>
+                          <th rowspan="2" style="vertical-align: middle;">Time</th>
+                          <th rowspan="2" style="vertical-align: middle;">Account Name</th>
+                          <th rowspan="2" style="vertical-align: middle;">From Account</th>
+                          <th rowspan="2" style="vertical-align: middle;">To Account</th>
+                          <th rowspan="2" style="vertical-align: middle;">From CCY</th>
+                          <th rowspan="2" style="vertical-align: middle;">To CCY</th>
+                          <th colspan="3" style="text-align: center;">Buy</th>
+                          <th colspan="3" style="text-align: center;" >Sell</th>
+                          </tr>
+                          <tr>
+                            <th style="text-align: center;">MMK</th>
+                            <th style="text-align: center;">Buy Rate</th>
+                            <th style="text-align: center;" >FCY Amount</th>
+                            <th style="text-align: center;">MMK</th>
+                            <th style="text-align: center;">Sell Rate</th>
+                            <th style="text-align: center;">FCY Amount</th>
+                          </tr>
+                        <tbody>
+                           
+                            <tr *ngFor="let data of cctransferdatalist; let i = index;">
+                                
+                                <td> {{(i+1)}}</td>
+                                <td> {{data.trn_ref_no}}</td>
+                                <td> {{data.trans_dt}}</td>
+                                <td> {{data.trans_time}}</td>
+                                <td> {{data.customer_name}} </td>
+                                <td> {{data.fr_acc}} </td>
+                                <td> {{data.to_acc}} </td>
+                                <td> {{data.fr_currency}} </td>
+                                <td> {{data.to_currency}}  </td>
+                                <td class="number"> {{data.buy_lcyamount | number:'1.2-3'}}</td>
+                                <td class="number"> {{data.buy_rate | number : '1.2-3'}}</td>
+                                <td class="number"> {{data.buy_fcyamount | number : '1.2-3'}}</td>
+                                <td class="number"> {{data.sell_lcyamount | number:'1.2-3'}}</td>
+                                <td class="number"> {{data.sell_rate | number : '1.2-3'}}</td>
+                                <td class="number"> {{data.sell_fcyamount | number : '1.2-3'}}</td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="9" class="title"> Total </td>
+                                <td class="stotal"> {{ totalBuyLCY_Amt | number : '1.2-3'}} </td>
+                                <td> </td>
+                                <td class="stotal"> {{ totalBuyFCY_Amt | number : '1.2-3'}} </td>
+                                <td class="stotal"> {{ totalSellLCY_Amt | number : '1.2-3'}} </td>
+                                <td> </td>
+                                <td class="stotal"> {{ totalSellFCY_Amt | number : '1.2-3'}} </td>
+                            </tr>
+                    
+                        </tbody>
+                       
+                    </table>
+
+                  
+                </div>
+                
+                <div *ngIf="_noData">
+                    <p class="nodata"> No records found.</p>
+                </div>
+                   
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+

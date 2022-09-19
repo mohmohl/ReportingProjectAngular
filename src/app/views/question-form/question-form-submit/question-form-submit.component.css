@@ -1,0 +1,25 @@
+pre {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+input[type="radio"] {
+    vertical-align: -15%;
+}
+
+.card-body {
+    padding: 1em !important;
+    padding-left: 1.5em !important;
+}
+
+.card {
+    margin-bottom: 1.5em !important;
+}
+
+.question-left {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    color: maroon;
+    font-weight: bold;
+    font-size: medium;
+}

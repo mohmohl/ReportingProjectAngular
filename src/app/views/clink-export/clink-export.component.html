@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            
+            <div class="card-header">
+              <h5>CLink Data Export Report</h5>
+              <div *ngIf="loading" class="d-flex justify-content-center">
+                <div class="spinner-border spinner-border-sm text-warning"></div>
+                  <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+              </div>
+              <div class="page-header-breadcrumb">
+                  <button class="btn btn-info btn-sm" type="button" (click)="dataPreparation()">
+                    <i class="ti-import"></i>Preparation</button> 
+                  <button class="btn btn-primary btn-sm" type="button" (click)="submit()" [disabled]="disabled">
+                    <i class="ti-printer"></i>Export</button> 
+              </div>
+            </div>
+
+            <div class="card-body">
+              <code *ngIf="error">{{error}}</code>
+               <label  *ngIf="msg" class="text-info">{{msg}}</label>
+
+                <div class="container-fluid">
+                  <div class="row form-group col-md-12">
+                    <label class="col-sm-2 col-form-label">From Date</label>
+                    <div class="col-sm-2">
+                      <mat-form-field style="width:100px;">
+                        <input #minmaxInput matInput [matDatepicker]="fromDate" formControlName="fromDate" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="fromDate">
+                            </mat-datepicker-toggle>
+                        <mat-datepicker #fromDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+
+                    <label class="col-sm-1 col-form-label">_</label>
+
+                    <label class="col-sm-2 col-form-label">To Date</label>
+                    <div class="col-sm-2">
+                      <mat-form-field style="width:100px;">
+                        <input #minmaxInput matInput [matDatepicker]="toDate" formControlName="toDate" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="toDate">
+                            </mat-datepicker-toggle>
+                        <mat-datepicker #toDate></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="row form-group col-md-12">
+                    <label class="col-sm-2 col-form-label">Choose Report Type</label>
+                    <select class="col-sm-4 form-control" formControlName="reportType" id="exampleFormControlSelect1">
+                      <option value="domestic_company" selected>Domestic Company</option>
+                      <option value="domestic_individual">Domestic Individual</option>
+                      <option value="foreign_individual">Foreign Individual</option>
+                    </select>
+                  </div>
+                </div>
+
+          </div>
+        </form>
+        </div>
+      </div>
+  </div>
+
+ 

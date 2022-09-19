@@ -7,7 +7,10 @@ const routes: Routes = [
     path: '',
     component: BasicLoginComponent,
     data: {
-      title: 'Login'
+      breadcrumb: 'Login',
+      icon: '',
+      breadcrumb_caption: '',
+      status: true
     }
   }
 ];

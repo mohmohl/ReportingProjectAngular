@@ -4,13 +4,11 @@ import { TrialReport } from 'src/models/TrialReport';
 import { DateAdapter} from '@angular/material/core';
 import { TrialReportService } from 'src/services/TrialReportService';
 import { TrialData } from 'src/models/TrialData';
-import * as XLSX from 'xlsx'; 
-import * as fs from 'file-saver';
-import { NativeDateAdapter,MAT_DATE_FORMATS } from '@angular/material';
+import { MAT_DATE_FORMATS } from '@angular/material';
 import { PickDateAdapter } from 'src/models/PickDateAdapter';
-import { isNumber } from '@ng-bootstrap/ng-bootstrap/util/util';
 import { formatNumber } from '@angular/common';
 import { map } from 'rxjs/operators';
+
  export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
   display: {
@@ -36,7 +34,7 @@ export class TrialReportComponent implements OnInit {
   loading = false;
   data:TrialReport;
   bCode:string;
-  minDate = new Date(2021, 5, 30);
+  minDate = new Date(2021, 4, 30);
   maxDate = new Date();
 totalDebit:number=0;
 totalDebit_lcy:number=0;
@@ -55,8 +53,9 @@ totalCredit_lcystr:string;
   form = new FormGroup({
     fromDate: new FormControl('', Validators.required),
     branchCode:new FormControl('', Validators.required),
-    currencyCode:new FormControl('', Validators.required)
+    currencyCode:new FormControl('MMK', Validators.required)
   });
+
   constructor(private service:TrialReportService){//,private dateAdapter: DateAdapter<Date>) {
     //this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
     this.loading = true;
@@ -69,6 +68,9 @@ totalCredit_lcystr:string;
       this.loading = false;
       this.currencyList = res;
     });
+
+    // date list 
+
    }
 
   ngOnInit() {
@@ -79,6 +81,10 @@ totalCredit_lcystr:string;
     } else {
      return false
     }
+   }
+
+   checkMonthEndDate(fromDate: string) {
+      
    }
    
   submit(){
@@ -105,7 +111,7 @@ totalCredit_lcystr:string;
     this.ccyCode = true;
   }
   this.bCode=this.form.get(["branchCode"])!.value;
-  this.service.getTrialReportData(fDate,this.bCode,this.currencyCode).subscribe((res:TrialReport)=>{
+  this.service.getTrialReportData(fDate,this.bCode,this.currencyCode, 1).subscribe((res:TrialReport)=>{
     this.loading = false;
    
     if(res != null){
@@ -175,7 +181,8 @@ exportexcel(): void
   let f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
   this.bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;
-  this.service.exportDetailTrialExcel(f_Date,this.bCode,this.currencyCode)
+
+  this.service.exportDetailTrialExcel(f_Date,this.bCode,this.currencyCode, 1)
   .pipe(
     map((data: any) => {
       debugger;
@@ -214,7 +221,8 @@ exportexcel(): void
   let f_date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
   this.bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;
-  this.service.exportDetailTrialPDF(f_date,this.bCode,this.currencyCode)
+
+  this.service.exportDetailTrialPDF(f_date,this.bCode,this.currencyCode, 1)
   .pipe(
     map((data: any) => {
       let blob = new Blob([data], {
@@ -225,7 +233,8 @@ exportexcel(): void
       var file = new Blob([data], {type: 'application/pdf'});
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
-      a.target     = '_blank'; 
+      a.target = '_blank'; 
+      a.download = 'DetailTrial_'+this.bCode+'_'+this.currencyCode+'.pdf';
       a.click();
       
       this.loading = false;

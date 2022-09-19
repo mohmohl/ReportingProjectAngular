@@ -32,9 +32,27 @@ import { MenuItem } from "src/models/menuItem";
       return this.http.post<any>(`${api}`,data);
     }
 
-
-
-
-
- 
+    public getRoleData(): Observable<any>{
+      var api = environment.baseUrl+'/menu/getrolelistData';
+     
+       return this.http.get<any>(api);
   }
+  
+  public getallrolelistData(): Observable<any>{
+    var api = environment.baseUrl+'/menu/getallrolelistData';
+   
+     return this.http.get<any>(api);
+}
+  public getAccessMenuData(role_id:string): Observable<any>{
+    return this.http.post<any>(`${environment.baseUrl}`+'/menu/get_accessed_menu_data',{role_id});
+  }
+  public PermitMenuToRole(role_id: string,menuId:string[]) {
+   
+    return this.http.post(`${environment.baseUrl}/menu/permitMenuToRole`, { role_id,menuId });
+  
+  }
+public save_custom_role(role_id:string){
+
+return this.http.post(`${environment.baseUrl}/menu/save_custom_role?role_id=`+role_id, null);
+  }
+}

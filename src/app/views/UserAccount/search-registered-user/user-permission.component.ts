@@ -17,14 +17,14 @@ export class UserPermissionComponent implements OnInit {
   loading = false;
   menuList:MenuItem[];
   checkedList=[];
+  rolecheckedList=[];
   data:UserInfo;
   form = new FormGroup({
     userId: new FormControl('', Validators.required)
   });
+  
   constructor(private service:UserDataService) { 
-    
   }
-
   ngOnInit() {
   }
   onChange(val: string, isChecked: boolean) {
@@ -36,14 +36,31 @@ export class UserPermissionComponent implements OnInit {
     }
 
   }
+  role_onChange(val: string, isChecked: boolean) {
+    if (isChecked) {
+      this.rolecheckedList.push(val);
+    } else {
+      const index = this.rolecheckedList.findIndex(x => x === val);
+     this.rolecheckedList = this.rolecheckedList.filter(item => item !== val);
+    }
+
+  }
+  userIdOnChange(event: any){
+    var value = event.target.value;
+    value=value.toUpperCase();
+    event.target.value = value.toUpperCase();
+    }
   submit(){
     this.checkedList=[];
+    this.rolecheckedList=[];
+    
     if (this.form.invalid) {
       this.error = "Data is required";
       return;
   }
   this.error="";
-  this.user_id = this.form.get(["userId"])!.value;
+  this.user_id = this.form.get(["userId"])!.value.toUpperCase();
+ 
   this.loading = true;
   //console.log("Param = "+this.user_id)
   this.service.getRegisteredUserData(this.user_id).subscribe((res:UserInfo)=>{
@@ -53,6 +70,9 @@ export class UserPermissionComponent implements OnInit {
       this.data = res;
       this.data.menuItem.forEach(e =>{
         if(e.selected)this.checkedList.push(e.menu_id);
+      })
+      this.data.roleList.forEach(e =>{
+        if(e.selected)this.rolecheckedList.push(e.role_id);
       })
     }
     else{
@@ -75,6 +95,45 @@ onPermit(){
       this.message="Successful Permit";
     }else{
       this.message="Not Successful Permit";
+    }
+   
+  },(error) => {
+    this.message='';
+    this.loading = false;
+    this.error="Internal Server Error";
+    console.log(error);
+  });
+}
+rolePermit(){
+  this.loading=true;
+  this.message='';
+  this.service.PermitRoleToApplicationAccount(this.user_id,this.rolecheckedList).subscribe((res:boolean)=>{
+    this.loading = false;
+    if(res){
+      this.message="Successful Permit";
+    }else{
+      this.message="Not Successful Permit";
+    }
+   
+  },(error) => {
+    this.message='';
+    this.loading = false;
+    this.error="Internal Server Error";
+    console.log(error);
+  });
+}
+onUpdateStatus(userId: string, status: string) {
+  debugger
+  this.loading=true;
+  this.message='';
+
+
+  this.service.UpdateUserStatus(userId,status).subscribe((res:boolean)=>{
+    this.loading = false;
+    if(res){
+      this.message="Successful Update User Status";
+    }else{
+      this.message="Not Successful Update User Status";
     }
    
   },(error) => {
