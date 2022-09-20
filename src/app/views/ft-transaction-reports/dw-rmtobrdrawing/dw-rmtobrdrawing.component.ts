@@ -16,6 +16,7 @@ export class DwRmtobrdrawingComponent implements OnInit {
   monthList;
   month;
   month_desc;
+  totNoOfTrans;
   cusID = 'ALL';
   g_rmtobrdrawingdatalist;
   subDrAmt : number = 0;
@@ -109,6 +110,7 @@ showDatas(){
   this.http.doPost("/fttransaction/getRMTOBRDrawingDatalist?date="+this.month+"&cusid="+this.cusID+"&branch="+ this.branchSetupData.branch_code,"RMT OBR Drawing").subscribe(
     data => {
       if(data != null){
+        this.totNoOfTrans = data.length;
         this.clearProperties();
         this.month_desc = this.month;
         

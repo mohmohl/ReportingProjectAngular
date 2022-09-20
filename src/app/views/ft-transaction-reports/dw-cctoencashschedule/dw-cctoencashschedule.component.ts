@@ -24,6 +24,7 @@ export class DwCctoencashscheduleComponent implements OnInit {
   subTotal : number = 0;
   grandTotal : number = 0;
   idx : number = 0;
+  totNoOfTrans;
 
   constructor(private http : HttpService, private cdr: ChangeDetectorRef) {  }
   //this.cdr.detach();
@@ -94,6 +95,7 @@ export class DwCctoencashscheduleComponent implements OnInit {
     this.http.doPost("/fttransaction/getCCTOEncashDatalist?date="+this.month+"&cusid="+this.cusID+"&branch="+ this.branchSetupData.branch_code,"CCTO Encash Schedule").subscribe(
       data => {
         if(data != null){
+          this.totNoOfTrans = data.length;
           this.trn_date = data[0].trn_date;
             
           this.g_cctoencashdatalist  = this.groupBy(data, otherbranch => (otherbranch.trn_date +"|"+ otherbranch.other_branch));

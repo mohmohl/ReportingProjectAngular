@@ -19,6 +19,7 @@ export class DwRemittanceComponent implements OnInit {
   remittancedatalist = [];
 
   _grandTotal = 0;
+  totNoOfTrans;
 
   brCode = "";
   branchSetupData= {"bank_name" : "", "branch_name" : "" , "branch_code" : ""};
@@ -89,6 +90,7 @@ export class DwRemittanceComponent implements OnInit {
     this.http.doPost("/fttransaction/getRemittanceDatalist?date="+this.month+"&branch="+ this.branchSetupData.branch_code,"Remittance Report").subscribe(
       data => {
         if(data != null){
+          this.totNoOfTrans = data.length;
           this.month_desc = this.month;
           
           this.remittancedatalist  = data;
