@@ -4,6 +4,7 @@ import {SharedModule} from '../../../shared/shared.module';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule,MatFormFieldModule } from '@angular/material';
 import { DetailTrialConsoReportRoutingModule } from './detail-trial-conso-report-routing.module';
 import { DetailTrialConsoReportComponent } from './detail-trial-conso-report.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 
 
@@ -15,7 +16,8 @@ import { DetailTrialConsoReportComponent } from './detail-trial-conso-report.com
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   declarations: [DetailTrialConsoReportComponent]
 })

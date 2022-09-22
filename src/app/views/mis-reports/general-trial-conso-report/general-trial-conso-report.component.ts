@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TrialReport } from 'src/models/TrialReport';
 import { DateAdapter} from '@angular/material/core';
@@ -8,6 +8,9 @@ import { MAT_DATE_FORMATS } from '@angular/material';
 import { PickDateAdapter } from 'src/models/PickDateAdapter';
 import { formatNumber } from '@angular/common';
 import { map } from 'rxjs/operators';
+import { HttpService } from 'src/services/HttpService';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { CommonUtil } from 'src/app/shared/common-util';
 
  export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
@@ -26,7 +29,8 @@ import { map } from 'rxjs/operators';
   providers: [
     {provide: DateAdapter, useClass: PickDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class GeneralTrialConsoReportComponent implements OnInit {
@@ -44,6 +48,7 @@ totalCredit_lcy:number=0;
 totalDebitstr:string;
 totalDebit_lcystr:string;
 totalCreditstr:string;
+migDate : Date;
 totalCredit_lcystr:string;
   trialList:TrialData[];
   branchList:string[];
@@ -51,18 +56,24 @@ totalCredit_lcystr:string;
   currencyCode='';
   ccyCode = false;
   data_message='';
+
+  selectedBrItems = [];
+  selectedCcyItems = [];
+  dropdownList = [];
+  dropdownSettings:IDropdownSettings={};
+  dropdownCcySettings:IDropdownSettings={};
+  isAllBranch;
+  isBaseCcy;
+
   form = new FormGroup({
     fromDate: new FormControl('', Validators.required),
     branchCode:new FormControl('', Validators.required),
     currencyCode:new FormControl('', Validators.required)
   });
 
-  constructor(private service:TrialReportService){//,private dateAdapter: DateAdapter<Date>) {
+  constructor(private service:TrialReportService, private http: HttpService, private _util:CommonUtil){//,private dateAdapter: DateAdapter<Date>) {
     //this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
-    //this.loading = true;
-    this.branchList=['ALL'];
-    this.currencyList = ["Base"];
-    /*
+    this.loading = true;
     service.getBranchList().subscribe((res:string[])=>{
       this.loading = false;
       this.branchList = res;
@@ -71,11 +82,67 @@ totalCredit_lcystr:string;
     service.getCurrencyList().subscribe((res:string[])=>{
       this.loading = false;
       this.currencyList = res;
+      this.currencyList = this._util.RemoveElementFromStringArray(this.currencyList, 'Base');
     });
-    */
+
+     // date list  
+     this.http.doGet("/misreport/getMISMigDate").subscribe(
+      (data) => {
+        if(data != null ){
+          this.migDate = new Date(data.t1) ;
+        }
+        this.loading = false;
+      },
+      error => {
+
+        this.loading = false;
+      }
+    );
+
    }
 
-  ngOnInit() {
+  ngOnInit() {  
+    
+    this.dropdownSettings = {
+    
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      enableCheckAll: true,
+      selectAllText: 'ALL',
+       unSelectAllText: 'ALL',
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      maxHeight: 197,
+      itemsShowLimit: 7,
+      searchPlaceholderText: 'Search',
+      noDataAvailablePlaceholderText: 'No Data Available',
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false,
+    };
+
+    this.dropdownCcySettings = {
+    
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      enableCheckAll: true,
+      selectAllText: 'Base',
+       unSelectAllText: 'Base',
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      maxHeight: 197,
+      itemsShowLimit: 7,
+      searchPlaceholderText: 'Search',
+      noDataAvailablePlaceholderText: 'No Data Available',
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false,
+    };
+
   }
   isNegitive(val: number): boolean {
     if (val < 0) {
@@ -102,13 +169,25 @@ totalCredit_lcystr:string;
   this.bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;
   
-  if(this.currencyCode == "Base" || this.currencyCode == "MMK"){
+  if(this.selectedCcyItems.length>1 || this.selectedCcyItems.includes("MMK")){
     this.ccyCode = false;
   }
   else{
     this.ccyCode = true;
   }
-  this.bCode=this.form.get(["branchCode"])!.value;
+  
+  if(this.isAllBranch){
+    this.bCode = 'ALL';
+  }
+  else{
+    this.bCode = this.selectedBrItems.join(",");
+  }
+
+  if(this.isBaseCcy){
+    this.currencyCode = "Base";
+  }else{
+    this.currencyCode = this.selectedCcyItems.join(",");
+  }
 
   this.service.getGeneralTrialReportData(fDate,this.bCode,this.currencyCode, 2).subscribe((res:TrialReport)=>{
     this.loading = false;
@@ -181,6 +260,21 @@ exportexcel(): void
   this.bCode=this.form.get(["branchCode"])!.value;
   this.currencyCode = this.form.get(["currencyCode"])!.value;
 
+  
+  if(this.isAllBranch){
+    this.bCode = 'ALL';
+  }
+  else{
+    this.bCode = this.selectedBrItems.join(",");
+  }
+
+  if(this.isBaseCcy){
+    this.currencyCode = "Base";
+  }else{
+    this.currencyCode = this.selectedCcyItems.join(",");
+  }
+  
+
   this.service.exportGeneralTrialExcel(f_Date,this.bCode,this.currencyCode, 2)
   .pipe(
     map((data: any) => {
@@ -190,7 +284,7 @@ exportexcel(): void
       });
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = 'GeneralTrial_'+this.bCode+'_'+this.currencyCode+'.xlsx';
+        link.download = 'GeneralTrial_'+f_Date+'.xlsx';
         link.click();
         window.URL.revokeObjectURL(link.href);
       
@@ -218,8 +312,23 @@ exportexcel(): void
   this.loading = true;
   this.from_date = this.form.get(["fromDate"])!.value;
   let f_date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
-  this.bCode=this.form.get(["branchCode"])!.value;
-  this.currencyCode = this.form.get(["currencyCode"])!.value;
+  //this.bCode=this.form.get(["branchCode"])!.value;
+  //this.currencyCode = this.form.get(["currencyCode"])!.value;
+
+  
+  if(this.isAllBranch){
+    this.bCode = 'ALL';
+  }
+  else{
+    this.bCode = this.selectedBrItems.join(",");
+  }
+
+  if(this.isBaseCcy){
+    this.currencyCode = "Base";
+  }else{
+    this.currencyCode = this.selectedCcyItems.join(",");
+  }
+  
 
   this.service.exportGeneralTrialPDF(f_date,this.bCode,this.currencyCode, 2)
   .pipe(
@@ -233,7 +342,7 @@ exportexcel(): void
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
       a.target     = '_blank'; 
-      a.download = 'GeneralTrial_'+this.bCode+'_'+this.currencyCode+'.pdf';
+      a.download = 'GeneralTrial_'+f_date+'.pdf';
       a.click();
       
       this.loading = false;
@@ -248,5 +357,57 @@ exportexcel(): void
         this.loading = false;
       });
   }
+
+  onBrItemSelect(item:any){
+    console.log(item);   
+    // this.selectedBrItems.push(item);  
+    console.log(this.selectedBrItems);
+  }
+  
+  onBrItemDeSelect(item:any){
+    console.log(item);
+    // this.selectedBrItems = this.selectedBrItems.filter(e => e !== item);
+    this.isAllBranch=false;
+    console.log(this.selectedBrItems);
+  }
+  
+  onBrSelectAll(items: any){
+    this.isAllBranch = true;
+   // this.selectedBrItems=[];
+   // this.selectedBrItems = items;
+  }
+  
+  onBrDeSelectAll(items: any){
+    this.isAllBranch = false;
+   // this.selectedBrItems=[];
+  }
+
+
+  //ccy
+  onCcyItemSelect(item:any){
+    console.log(item);   
+    // this.selectedCcyItems.push(item);  
+    console.log(this.selectedCcyItems);
+  }
+  
+  onCcyItemDeSelect(item:any){
+    console.log(item);
+    // this.selectedCcyItems = this.selectedCcyItems.filter(e => e !== item);
+    this.isBaseCcy = false;
+    console.log(this.selectedCcyItems);
+  }
+  
+  onCcySelectAll(items: any){
+   // this.selectedCcyItems=[];
+    //this.selectedCcyItems = items;
+    this.isBaseCcy = true;
+  }
+  
+  onCcyDeSelectAll(items: any){
+    this.isBaseCcy = false;
+    //this.selectedCcyItems=[];
+  }
+
+   
 
 }
