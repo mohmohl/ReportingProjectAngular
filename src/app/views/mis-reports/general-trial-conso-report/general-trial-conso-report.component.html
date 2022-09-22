@@ -22,17 +22,17 @@
                   
                     <div class="container-fluid">
                     <div class="form-group row">
-                        <label class="col-sm-1 col-form-label">Date</label>
-                        <div class="col-sm-2 date-picker">
-                              <mat-form-field style="width:100px;">
-                                <input #minmaxInput matInput 
-                                  [matDatepicker]="minmaxvalidation" formControlName="fromDate" readonly>
-                                <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
-                                   </mat-datepicker-toggle>
-                                <mat-datepicker #minmaxvalidation></mat-datepicker>
-                              </mat-form-field>
-                        </div>
-                        <label class="col-sm-1">Branch</label>
+                          <label class="col-sm-2 col-form-label">Date</label>
+                          <div class="col-sm-2 date-picker">
+                                <mat-form-field style="width:100px;">
+                                  <input #minmaxInput matInput 
+                                    [matDatepicker]="minmaxvalidation" formControlName="fromDate" [min]="migDate" readonly>
+                                  <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                                    </mat-datepicker-toggle>
+                                  <mat-datepicker #minmaxvalidation></mat-datepicker>
+                                </mat-form-field>
+                          </div>
+                        <!-- <label class="col-sm-1">Branch</label>
                       <div class="col-sm-2">
                         <select class="" formControlName="branchCode" id="exampleFormControlSelect1">
                           <option value="" selected>-- Select --</option>
@@ -50,9 +50,45 @@
                       <div class="col-sm-2">
                           <button type="submit" class="btn-primary">Search</button>
                         </div>
-                      </div>
-                      
+                      </div> -->
+
+                          <div class="row form-group col-md-12">
+                            <label class="col-sm-2 col-form-label">Branch</label>
+                            <div style="width:50%;">
+                              <ng-multiselect-dropdown 
+                              [settings]="dropdownSettings" style="background: maroon;"
+                              [data]="branchList"
+                              (onSelect)="onBrItemSelect($event)" 
+                              (onDeSelect)="onBrItemDeSelect($event)"
+                              (onSelectAll)="onBrSelectAll($event)"
+                              (onDeSelectAll)="onBrDeSelectAll($event)"
+                              formControlName="branchCode"
+                              [(ngModel)]="selectedBrItems">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          </div>
+
+                          <div class="row form-group col-md-12">
+                            <label class="col-sm-2 col-form-label">Currency</label>
+                            <div style="width:50%;">
+                              <ng-multiselect-dropdown 
+                              [settings]="dropdownCcySettings" style="background: maroon;"
+                              [data]="currencyList"
+                              (onSelect)="onCcyItemSelect($event)" 
+                              (onDeSelect)="onCcyItemDeSelect($event)"
+                              (onSelectAll)="onCcySelectAll($event)"
+                              (onDeSelectAll)="onCcyDeSelectAll($event)"
+                              [(ngModel)]="selectedCcyItems"
+                              formControlName="currencyCode">
+                              </ng-multiselect-dropdown>
+                            </div>
+                          
+                            <div class="col-sm-2">
+                              <button type="submit" class="btn-primary">Search</button>
+                            </div>
+                          </div>
                     </div>
+                      </div>
                 </form>
                 
                 <p *ngIf="data_message" class="text-danger">{{data_message}}</p>

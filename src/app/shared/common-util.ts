@@ -21,6 +21,13 @@ export class CommonUtil{
        
         return (map);
     }
+
+    RemoveElementFromStringArray(array, element: string) {
+        array.forEach((value,index)=>{
+            if(value==element) array.splice(index,1);
+        });
+        return array;
+    }
     
     getYYYYMMDD(objDT: Date){
         if(objDT != null){
