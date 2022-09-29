@@ -15,7 +15,7 @@ import { JwtInterceptor } from 'src/helpers/jwt.interceptor';
 import { ErrorInterceptor } from 'src/helpers/error.interceptor';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { MatDatepickerModule, MatInputModule, MatNativeDateModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { CommonUtil } from './shared/common-util';
 
@@ -37,7 +37,8 @@ import { CommonUtil } from './shared/common-util';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
