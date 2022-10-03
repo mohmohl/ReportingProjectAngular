@@ -68,16 +68,29 @@ export class Hod2ReportComponent implements OnInit {
 
   }
 
-  calculateProfitLoss(n9, n10){
+  calculateProfitLossSign(n9, n10){
     var profit = Math.abs(n9) - Math.abs(n10);
     let txtProfit;
     if(profit < 0){
-      txtProfit = "-";
+      txtProfit = "(-)";
     }
     else{
-      txtProfit = "+";
+      txtProfit = "(+)";
     }
-    return txtProfit + profit;
+    return txtProfit ;
+  }
+
+  calculateProfitLoss(n9, n10){
+    var profit = Math.abs(n9) - Math.abs(n10);    
+    return Math.abs(profit);
+  }
+
+  getAbsValue(value:number){
+    return Math.abs(value);
+  }
+
+  formatDate(pDate){
+    return this._util.formatDDMMYYYY(pDate);
   }
 
   showData(){
@@ -91,7 +104,7 @@ export class Hod2ReportComponent implements OnInit {
       if(res != null){
         this.p_toDate = this.toDate;
         this._branchData = res.branchData;
-        this._datalist = res.consoDataList;
+        this._datalist = res.datalist;
       }
       this.loading = false;
     },
@@ -128,10 +141,10 @@ export class Hod2ReportComponent implements OnInit {
       })).subscribe(
         res => { },
         error => {
-          console.log("HOD 3 Error >>> "+error)
+          console.log("HOD 2 Error >>> "+error)
           debugger;
           if(error != ""){
-          this.error = "(The system cannot cannot generate HOD 3!.. Have the error)";
+          this.error = "(The system cannot cannot generate HOD 2!.. Have the error)";
             }
           this.loading = false;
         });
@@ -162,10 +175,10 @@ export class Hod2ReportComponent implements OnInit {
       })).subscribe(
         res => { },
         error => {
-          console.log(" HOD 3 Error >>> "+error)
+          console.log(" HOD 2 Error >>> "+error)
           debugger;
           if(error != ""){
-          this.error = "(The system cannot cannot generate HOD 3!.. Have the error)";
+          this.error = "(The system cannot cannot generate HOD 2!.. Have the error)";
             }
           this.loading = false;
         });

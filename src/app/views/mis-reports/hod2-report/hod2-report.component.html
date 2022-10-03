@@ -68,26 +68,27 @@
                                         
                         <!-- Filter Data -->
 
-                        <div class="title" *ngIf="_showData">
+                        <div *ngIf="_showData">
 
                             <!-- Page Title -->
-                            <div>
-                                <p>လျို့ဝှက်</p>
-                            </div>
-                            <div>
-                                <p class="pgtitleMMFont">မြန်မာ့ရှေ့ဆောင်ဘဏ်၏ဘဏ္ဍာရေး‌အခြေအနေ</p>
-                            </div>
+                            <div  class="title">
+                                <div>
+                                    <p class="pgtitleMMFontC5">လျို့ဝှက်</p>
+                                </div>
+                                <div>
+                                    <p class="pgtitleMMFont">မြန်မာ့ရှေ့ဆောင်ဘဏ်၏ဘဏ္ဍာရေး‌အခြေအနေ</p>
+                                </div>
 
-                            <div>
-                                <p class="pgsubtitle">{{_branchData.branch_name}}</p>
-                            </div>
+                                <div>
+                                    <p class="pgsubtitle">{{_branchData.branch_name}}</p>
+                                </div>
 
-                            <div>
-                               <p class="subpgtitle"> D3 </p> 
-                               <p class="subpgtitle"> {{p_toDate | date : 'dd/MM/yyyy'}} </p> 
-                               <p class="subpgtitle">(ကျပ်သန်းပေါင်း)</p>
-                            </div>
-                           
+                                <div>
+                                <p class="subpgtitle"> D3 </p> 
+                                <p class="subpgtitle"> {{p_toDate | date : 'dd/MM/yyyy'}} </p> 
+                                <p class="subpgtitle">(ကျပ်သန်းပေါင်း)</p>
+                                </div>
+                        </div>
                             <!-- Page Title -->
 
                             
@@ -118,22 +119,22 @@
                                     <tbody>
                                     
                                         <tr *ngFor="let data of _datalist; let i = index;">
-                                            <td> </td>
+                                            <td> {{formatDate(data.p_Date)}} </td>
                                             <td class="number"> {{data.n2 | number:'1.2-3'}} </td>
                                             <td class="number"> {{data.n3 | number:'1.2-3'}} </td>
                                             <td class="number"> {{data.n4 | number:'1.2-3'}} </td>
                                             <td class="number"> {{data.n5 | number:'1.2-3'}} </td>
                                             <td class="number"> {{ data.n16 | number:'1.2-3'}} </td>
                                             <td class="number"> {{data.total1  | number:'1.2-3'}} </td>
-                                            <td class="number"> {{data.n7  | number:'1.2-3'}}  </td>
-                                            <td class="number"> {{ data.ratio  | number:'1.2-3'}} </td>
+                                            <td class="number"> {{getAbsValue(data.n7)  | number:'1.2-3'}}  </td>
+                                            <td class="number"> {{ getAbsValue(data.ratio)  | number:'1.2-3'}} % </td>
                                             <td class="number"> {{ data.n9 | number : '1.2-3'}} </td>
-                                            <td class="number"> {{ data.n10  | number : '1.2-3'}} </td>
-                                            <td class="number"> {{ calculateProfitLoss(data.n9, data.n10)}} </td>
-                                            <td class="number"> {{ data.n12  | number:'1.2-3'}} </td>
-                                            <td class="number"> {{ data.n13  | number:'1.2-3'}} </td>
-                                            <td class="number"> {{ data.n14  | number:'1.2-3'}} </td>
-                                            <td class="number"> {{ data.total2  | number:'1.2-3'}} </td>
+                                            <td class="number"> {{ getAbsValue(data.n10)  | number : '1.2-3'}} </td>
+                                            <td class="number"> {{ calculateProfitLossSign(data.n9, data.n10)}} {{ calculateProfitLoss(data.n9, data.n10) | number : '1.2-3'}} </td>
+                                            <td class="number"> {{ data.n12  | number:'1.2-3'}} </td> 
+                                            <td class="number"> {{ getAbsValue(data.n13)  | number:'1.2-3'}} </td>
+                                            <td class="number"> {{ getAbsValue(data.n14)  | number:'1.2-3'}} </td>
+                                            <td class="number"> {{ getAbsValue(data.total2)  | number:'1.2-3'}} </td>
                                         </tr>                
                                     </tbody>                           
                                 </table>

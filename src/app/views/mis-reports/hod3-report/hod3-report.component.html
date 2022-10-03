@@ -68,26 +68,28 @@
                                         
                         <!-- Filter Data -->
 
-                        <div class="title" *ngIf="_showData">
+                        <div *ngIf="_showData">
 
                             <!-- Page Title -->
-                            <div>
-                                <p>လျို့ဝှက်</p>
-                            </div>
-                            <div>
-                                <p class="pgtitleMMFont">{{_branchData.bank_name}} ၏ နေ့စဥ်ဆောင်ရွက်မှုတိုးတက်မှတ်တမ်း</p>
-                            </div>
-
-                            <div>
-                                <p class="pgsubtitle">{{_branchData.branch_name}}</p>
-                            </div>
-
-                            <div>
-                               <p class="subpgtitle"> D3 </p> 
-                               <p class="subpgtitle"> {{p_toDate | date : 'dd/MM/yyyy'}} </p> 
-                               <p class="subpgtitle">(ကျပ်သန်းပေါင်း)</p>
-                            </div>
-                           
+                            <div class="title">
+                                <div>
+                                    <p class="pgtitleMMFont">လျို့ဝှက်</p>
+                                </div>
+                                <div>
+                                    <p class="pgtitleMMFont">{{_branchData.bank_name}} ၏ နေ့စဥ်ဆောင်ရွက်မှုတိုးတက်မှတ်တမ်း</p>
+                                </div>
+    
+                                <div>
+                                    <p class="pgsubtitle">{{_branchData.branch_name}}</p>
+                                </div>
+    
+                                <div>
+                                   <p class="subpgtitle"> D3 </p> 
+                                   <p class="subpgtitle"> {{p_toDate | date : 'dd/MM/yyyy'}} </p> 
+                                   <p class="subpgtitle">(ကျပ်သန်းပေါင်း)</p>
+                                </div>
+                               
+                            </div>                            
                             <!-- Page Title -->
 
                             
@@ -105,7 +107,7 @@
                                         <th colspan="3" style="vertical-align: middle;">ချေးငွေအထွက်</th>
                                        --> 
                                         <th rowspan="2" style="vertical-align: middle;">ငွေသားလက်ကျန်</th>
-                                        <th rowspan="2" style="vertical-align: middle;">မှတ်ချက်</th>
+                                        <!-- <th rowspan="2" style="vertical-align: middle;">မှတ်ချက်</th> -->
                                     </tr>
                                     <tr>
                                         <th style="text-align: center;">ငွေသား</th>
