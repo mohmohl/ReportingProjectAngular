@@ -465,6 +465,7 @@ const routes: Routes = [
         loadChildren: () => import('./views/fcdb/cust-fcdb-fcubs/cust-fcdb-fcubs.module').then(m => m.CustFcdbFcubsModule)
 
       },
+
       {
         path: 'conso-expenditure',
         loadChildren: () => import('./views/mis-reports/conso-expenditure/conso-expenditure.module').then(m => m.ConsoExpenditureModule)
@@ -474,6 +475,11 @@ const routes: Routes = [
       //   path: 'fcdb_fcubs_cust',
       //   loadChildren: () => import('./views/fcdb/fcdb-info2/fcdb-info2.module').then(m => m.FcdbInfo2Module)
       // }
+      {
+        path: 'journal-listing',
+        loadChildren: () => import('./views/journal-listing/journal-listing.module').then(m => m.JournalListingModule)
+
+      },
       
 
     ]

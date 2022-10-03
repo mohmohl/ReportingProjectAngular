@@ -83,7 +83,15 @@ export class WrongCustomerNRCViewComponent implements OnInit {
     }
     this.service.download(branchCode).pipe(
         map((res: any) => {
-          this.saveFile(res, branchCode +"_wrong_nrc.xlsx", 'application/vnd.ms-excel');          
+          if(res !==null){
+            let i = 1;
+            res.forEach(element => {
+
+              this.saveFile(element, branchCode +"_wrong_nrc_"+i +".xlsx", 'application/vnd.ms-excel'); 
+              i = i+1;
+            });
+          }
+                   
           this.loading = false;
         })).subscribe(
           res => {this.loading = false; },

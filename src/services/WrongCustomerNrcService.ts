@@ -32,7 +32,7 @@ import { WrongCustomerData } from 'src/models/WrongCustomerData';
     }
 
     public download(branchCode: String): Observable<any> {
-      return this.http.post<any>(`${environment.baseUrl}` + '/wrongCustomerNrc/download', branchCode,{responseType: 'arraybuffer' as 'json'});
+      return this.http.post<any>(`${environment.baseUrl}` + '/wrongCustomerNrc/download', branchCode,{responseType: 'json'});
     }
 
     public search(data: WrongCustomerNrcFilter): Observable<any> {

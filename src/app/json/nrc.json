@@ -223,6 +223,14 @@
 					{"id_eng":"8","code_eng":"HtaLaNa","id_mm":"၈","code_mm":"ထလန","name_eng":"","name_mm":""},
 					{"id_eng":"8","code_eng":"KaHtaNa","id_mm":"၈","code_mm":"ကထန","name_eng":"","name_mm":""},
 
+					{"id_eng":"9","code_eng":"UTaTha","id_mm":"၉","code_mm":"ဥတသ","name_eng":"","name_mm":""},
+					{"id_eng":"9","code_eng":"ZaYaTha","id_mm":"၉","code_mm":"ဇယသ","name_eng":"","name_mm":""},
+					{"id_eng":"9","code_eng":"PaBaTha","id_mm":"၉","code_mm":"ပဗသ","name_eng":"","name_mm":""},
+					{"id_eng":"9","code_eng":"TaKaNa","id_mm":"၉","code_mm":"တကန","name_eng":"","name_mm":""},
+					{"id_eng":"9","code_eng":"DaKhaTha","id_mm":"၉","code_mm":"ဒခသ","name_eng":"","name_mm":""},
+					{"id_eng":"9","code_eng":"ZaBaTha","id_mm":"၉","code_mm":"ဇဘသ","name_eng":"","name_mm":""},
+					{"id_eng":"9","code_eng":"PaMaNa","id_mm":"၉","code_mm":"ပမန","name_eng":"","name_mm":""},
+					{"id_eng":"9","code_eng":"LaWaNa","id_mm":"၉","code_mm":"လဝန","name_eng":"","name_mm":""},
 
 					{"id_eng":"9","code_eng":"MaNaMa","id_mm":"၉","code_mm":"မနမ","name_eng":"","name_mm":""},
 					{"id_eng":"9","code_eng":"AMaZa","id_mm":"၉","code_mm":"အမဇ","name_eng":"","name_mm":""},
@@ -264,7 +272,7 @@
 					{"id_eng":"10","code_eng":"KaMaRa","id_mm":"၁၀","code_mm":"ကမရ","name_eng":"","name_mm":""},
 					{"id_eng":"10","code_eng":"KhaHsaNa","id_mm":"၁၀","code_mm":"ခဆန","name_eng":"","name_mm":""},
 					{"id_eng":"10","code_eng":"ThaHpaRa","id_mm":"၁၀","code_mm":"သပရ","name_eng":"","name_mm":""},
-					{"id_eng":"10","code_eng":"MaDana","id_mm":"၁၀","code_mm":"မဒန","name_eng":"","name_mm":""},
+					{"id_eng":"10","code_eng":"MaDaNa","id_mm":"၁၀","code_mm":"မဒန","name_eng":"","name_mm":""},
 					{"id_eng":"10","code_eng":"RaMaNa","id_mm":"၁၀","code_mm":"ရမန","name_eng":"","name_mm":""},
 					{"id_eng":"10","code_eng":"LaMaNa","id_mm":"၁၀","code_mm":"လမန","name_eng":"","name_mm":""},
 					{"id_eng":"10","code_eng":"KhaZaNa","id_mm":"၁၀","code_mm":"ခဇန","name_eng":"","name_mm":""},
@@ -340,6 +348,8 @@
 					{"id_eng":"12","code_eng":"HtaTaPa","id_mm":"၁၂","code_mm":"ထတပ","name_eng":"","name_mm":""},
 					{"id_eng":"12","code_eng":"RaPaTha","id_mm":"၁၂","code_mm":"ရပသ","name_eng":"","name_mm":""},
 					{"id_eng":"12","code_eng":"LaThaYa","id_mm":"၁၂","code_mm":"လသယ","name_eng":"","name_mm":""},
+					{"id_eng":"12","code_eng":"LaYaNa","id_mm":"၁၂","code_mm":"လယန","name_eng":"","name_mm":""},
+					{"id_eng":"12","code_eng":"LaYaRa","id_mm":"၁၂","code_mm":"လယရ","name_eng":"","name_mm":""},
 
 					{"id_eng":"13","code_eng":"TaKaNa","id_mm":"၁၃","code_mm":"တကန","name_eng":"","name_mm":""},
 					{"id_eng":"13","code_eng":"HaPaNa","id_mm":"၁၃","code_mm":"ဟပန","name_eng":"","name_mm":""},
@@ -427,7 +437,6 @@
 					{"id_eng":"13","code_eng":"TaLaNa","id_mm":"၁၃","code_mm":"တလန","name_eng":"","name_mm":""},
 					{"id_eng":"13","code_eng":"KaLaHta","id_mm":"၁၃","code_mm":"ကလထ","name_eng":"","name_mm":""},
 
-
 					{"id_eng":"14","code_eng":"PaThaNa","id_mm":"၁၄","code_mm":"ပသန","name_eng":"","name_mm":""},
 					{"id_eng":"14","code_eng":"RaThaYa","id_mm":"၁၄","code_mm":"ရသယ","name_eng":"","name_mm":""},
 					{"id_eng":"14","code_eng":"NgaHsaNa","id_mm":"၁၄","code_mm":"ငဆန","name_eng":"","name_mm":""},
@@ -461,17 +470,7 @@
 					{"id_eng":"14","code_eng":"MaMaKa","id_mm":"၁၄","code_mm":"မမက","name_eng":"","name_mm":""},
 					{"id_eng":"14","code_eng":"MaMaNa","id_mm":"၁၄","code_mm":"မမန","name_eng":"","name_mm":""},
 					{"id_eng":"14","code_eng":"AMaNa","id_mm":"၁၄","code_mm":"အမန","name_eng":"","name_mm":""},
-					{"id_eng":"14","code_eng":"WaKhaMa","id_mm":"၁၄","code_mm":"ဝခမ","name_eng":"","name_mm":""},
-
-
-					{"id_eng":"15","code_eng":"UTaTha","id_mm":"၁၅","code_mm":"ဥတသ","name_eng":"","name_mm":""},
-					{"id_eng":"15","code_eng":"ZaYaTha","id_mm":"၁၅","code_mm":"ဇယသ","name_eng":"","name_mm":""},
-					{"id_eng":"15","code_eng":"PaBaTha","id_mm":"၁၅","code_mm":"ပဗသ","name_eng":"","name_mm":""},
-					{"id_eng":"15","code_eng":"TaKaNa","id_mm":"၁၅","code_mm":"တကန","name_eng":"","name_mm":""},
-					{"id_eng":"15","code_eng":"DaKhaTha","id_mm":"၁၅","code_mm":"ဒခသ","name_eng":"","name_mm":""},
-					{"id_eng":"15","code_eng":"ZaBaTha","id_mm":"၁၅","code_mm":"ဇဘသ","name_eng":"","name_mm":""},
-					{"id_eng":"15","code_eng":"PaMaNa","id_mm":"၁၅","code_mm":"ပမန","name_eng":"","name_mm":""},
-					{"id_eng":"15","code_eng":"LaWaNa","id_mm":"၁၅","code_mm":"လဝန","name_eng":"","name_mm":""}
+					{"id_eng":"14","code_eng":"WaKhaMa","id_mm":"၁၄","code_mm":"ဝခမ","name_eng":"","name_mm":""}
 
 
 				]
