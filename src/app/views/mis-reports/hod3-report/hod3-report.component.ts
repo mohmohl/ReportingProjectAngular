@@ -79,7 +79,7 @@ export class Hod3ReportComponent implements OnInit {
       if(res != null){
         this.p_toDate = this.toDate;
         this._branchData = res.branchData;
-        this._datalist = res.consoDataList;
+        this._datalist = res.datalist;
       }
       this.loading = false;
     },
