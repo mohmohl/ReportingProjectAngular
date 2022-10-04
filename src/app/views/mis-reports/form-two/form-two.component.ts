@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonUtil } from 'src/app/shared/common-util';
 import { HttpService } from 'src/services/HttpService';
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import { PickDateAdapter } from 'src/models/PickDateAdapter';
 
 export const PICK_FORMATS = {
   parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
@@ -15,15 +13,11 @@ export const PICK_FORMATS = {
 };
 
 @Component({
-  selector: 'app-bank-cash',
-  templateUrl: './bank-cash.component.html',
-  styleUrls: ['./bank-cash.component.css'],
-  providers: [
-    { provide: DateAdapter, useClass: PickDateAdapter },
-    { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }
-  ]
+  selector: 'app-form-two',
+  templateUrl: './form-two.component.html',
+  styleUrls: ['./form-two.component.css']
 })
-export class BankCashComponent implements OnInit {
+export class FormTwoComponent implements OnInit {
 
   loading;
   error;
@@ -95,23 +89,14 @@ export class BankCashComponent implements OnInit {
     let reportDate = this._util.getDDMMMYYYY(this.fromDate);
     this.loading = true;
 
+    // let params = 'reportDate=' + reportDate + '&c=' + this.branchCode + '&ccy=' + this.ccy + '&fileType=' + this.type;
+
     let requestBody = {
       reportDate: reportDate,
       branchCode: this.branchCode,
       ccy: this.ccy,
-      fileType: 'xlsx'
+      fileType: this.type
     };
-
-    this.http.downloadFile("/misreport/downloadBankCashScrollFile", requestBody, `BankCashScroll_${reportDate}`, 'xlsx').subscribe(
-      (data: any) => {
-        this.loading = false;
-      },error => {
-        console.log("Bank Cash Scroll Excel Exporting Error >>> " + error)
-        if (error != "") {
-          this.error = "(The system cannot cannot export bank cash scroll excel file!.. Have the error)";
-        }
-        this.loading = false;
-      });
 
   }
 }
