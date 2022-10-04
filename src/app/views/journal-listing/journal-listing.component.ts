@@ -86,21 +86,14 @@ export const _filter = (opt: string[], value: string): string[] => {
   isAllBranch;
   isAllCcy;
   isAllTrns;
-
-  dropdownList = [];
   dropdownSettings:IDropdownSettings={};
-  dropdownCcySettings:IDropdownSettings={};
 
   selectedUserID = 'ALL';
-
   selectedOption = ['ALL'];
-
-  
 
   form = new FormGroup({
     date: new FormControl('', Validators.required),
     branchCode: new FormControl(this.selectedOption, Validators.required),
-
     //branchCode: [this.selectedOption, [Validators.required]],
     currencyCode: new FormControl(''),
     trnsCode: new FormControl(''),
@@ -143,7 +136,7 @@ export const _filter = (opt: string[], value: string): string[] => {
       limitSelection: -1,
       clearSearchFilter: true,
       maxHeight: 197,
-      itemsShowLimit: 6,
+      itemsShowLimit: 3,
       searchPlaceholderText: 'Search',
       noDataAvailablePlaceholderText: 'No Data Available',
       closeDropDownOnSelection: false,
