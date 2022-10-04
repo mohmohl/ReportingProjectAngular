@@ -19,7 +19,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { CommonUtil } from './shared/common-util';
 
-
 @NgModule({
   declarations: [
     AppComponent,

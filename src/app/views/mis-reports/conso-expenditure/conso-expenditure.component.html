@@ -4,7 +4,7 @@
             <div class="card">
                 
                 <div class="card-header">
-                    <h5>Statement of Comprehensive Income(ByCurrency)</h5>
+                    <h5>Statement of Comprehensive Expenditure(ByCurrency)</h5>
                     <div *ngIf="loading" class="d-flex justify-content-center">
                         <div class="spinner-border spinner-border-sm text-warning"></div>
                         <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -116,7 +116,7 @@
                                 <table class="table table table-hover" id="content" #content>
                                     <tr class="text-uppercase">
                                         <th rowspan="2" style="vertical-align: middle;">Sr. No.</th>
-                                        <th rowspan="2" style="vertical-align: middle;">INCOME</th>
+                                        <th rowspan="2" style="vertical-align: middle;">EXPENDITURE</th>
                                         <th rowspan="2" style="vertical-align: middle;">OPENING BALANCE</th>
                                         <th colspan="4" style="text-align: center;">DEBIT</th>
                                         <th colspan="4" style="text-align: center;">CREDIT</th>
@@ -132,7 +132,7 @@
                                         <th style="text-align: center;">Clearing</th>
                                         <th style="text-align: center;">Total</th>
                                     </tr>
-                                    <tbody  *ngFor="let m_data of g_datalist | keyvalue; let i = index;">
+                                    <tbody  *ngFor="let m_data of g_datalist | keyvalue :keepOriginalOrder; let i = index;">
                                             <td>{{ (i+1) }}</td>
                                             <td style=" font-weight: bold;" colspan="11">{{ getGLGroup(m_data.key) }} {{calculateSubTotal(m_data.value)}}</td>
                                             

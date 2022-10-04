@@ -1,3 +1,5 @@
+import { TrialSheetComponent } from './views/mis-reports/trial-sheet/trial-sheet.component';
+import { CleanCashModule } from './views/mis-reports/clean-cash/clean-cash.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, ActivatedRoute } from '@angular/router';
 import { AuthGuard } from 'src/helpers/auth.guard';
@@ -395,14 +397,14 @@ const routes: Routes = [
         path: 'topic-role',
         loadChildren: () => import('./views/question-form/topic-role/topic-role.module').then(m => m.TopicRoleModule)
       },
-       {
-         path: 'active-user-home-branch-report',
-         loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
-       },
-     //  {
+      {
+        path: 'active-user-home-branch-report',
+        loadChildren: () => import('./views/bs-user-home-branch-report/bs-user-home-branch-report.module').then(m => m.BsUserHomeBranchReportModule)
+      },
+      //  {
       //   path: 'active-user-home-branch-report',
       //   loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
-     //  },
+      //  },
       {
         path: 'clink-export-report',
         loadChildren: () => import('./views/clink-export/clink-export.module').then(m => m.CLinkExportModule)
@@ -423,7 +425,7 @@ const routes: Routes = [
         path: 'hod3-report',
         loadChildren: () => import('./views/mis-reports/hod3-report/hod3.module').then(m => m.HOD3Module)
       },
-        {
+      {
         path: 'fcubs-user-report',
         loadChildren: () => import('./views/bs-user-report/bs-user-report.module').then(m => m.BsUserReportModule)
       },
@@ -443,7 +445,7 @@ const routes: Routes = [
       {
         path: 'general-trial-conso',
         loadChildren: () => import('./views/mis-reports/general-trial-conso-report/general-trial-conso-report.module').then(m => m.GeneralTrialConsoReportModule)
-},{
+      }, {
         path: 'tagit-check-sum',
         loadChildren: () => import('./views/tagit/check-sum/check-sum.module').then(m => m.CheckSumModule)
       },
@@ -452,6 +454,12 @@ const routes: Routes = [
         loadChildren: () => import('./views/fcdb/cust-fcdb-fcubs/cust-fcdb-fcubs.module').then(m => m.CustFcdbFcubsModule)
 
       },
+
+      {
+        path: 'conso-expenditure',
+        loadChildren: () => import('./views/mis-reports/conso-expenditure/conso-expenditure.module').then(m => m.ConsoExpenditureModule)
+      },
+      // ,
       // {
       //   path: 'fcdb_fcubs_cust',
       //   loadChildren: () => import('./views/fcdb/fcdb-info2/fcdb-info2.module').then(m => m.FcdbInfo2Module)
@@ -459,7 +467,6 @@ const routes: Routes = [
       {
         path: 'journal-listing',
         loadChildren: () => import('./views/journal-listing/journal-listing.module').then(m => m.JournalListingModule)
-
       },
       // {
       //   path: 'gt-detail-trial-report',
@@ -481,8 +488,38 @@ const routes: Routes = [
         path: 'general-trial-report',
         loadChildren: () => import('./views/latest-trial-report/general-trial-report/general-trial-report.module').then(m => m.GeneralTrialReportModule)
       },
-      
-
+      {
+        path: 'bank-cash',
+        loadChildren: () => import('./views/mis-reports/bank-cash/bank-cash.module').then(m => m.BankCashModule)
+      },
+      {
+        path: 'clean-cash',
+        loadChildren: () => import('./views/mis-reports/clean-cash/clean-cash.module').then(m => m.CleanCashModule)
+      },
+      {
+        path: 'transfer-scroll',
+        loadChildren: () => import('./views/mis-reports/transfer-scroll/transfer-scroll.module').then(m => m.TransferScrollModule)
+      },
+      {
+        path: 'trial-sheet',
+        loadChildren: () => import('./views/mis-reports/trial-sheet/trial-sheet.module').then(m => m.TrialSheetModule)
+      },
+      {
+        path: 'form-one',
+        loadChildren: () => import('./views/mis-reports/form-one/form-one.module').then(m => m.FormOneModule)
+      },
+      {
+        path: 'form-two',
+        loadChildren: () => import('./views/mis-reports/form-two/form-two.module').then(m => m.FormTwoModule)
+      },
+      {
+        path: 'all-branch-detail-trial',
+        loadChildren: () => import('./views/mis-reports/all-branch-detail-trial/all-branch-detail-trial.module').then(m => m.AllBranchDetailTrialModule)
+      },
+      {
+        path: 'dmd-report-one',
+        loadChildren: () => import('./views/mis-reports/dmd-report-one/dmd-report-one.module').then(m => m.DmdReportOneModule)
+      },
     ]
   },
   {

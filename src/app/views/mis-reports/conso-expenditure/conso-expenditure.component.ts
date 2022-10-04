@@ -1,7 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
-import { map } from 'rxjs/operators';
 import { CommonUtil } from 'src/app/shared/common-util';
 import { PickDateAdapter } from 'src/models/PickDateAdapter';
 import { HttpService } from 'src/services/HttpService';
@@ -17,15 +15,15 @@ export const PICK_FORMATS = {
 };
 
 @Component({
-  selector: 'app-conso-income',
-  templateUrl: './conso-income.component.html',
-  styleUrls: ['./conso-income.component.css'],
+  selector: 'app-conso-expenditure',
+  templateUrl: './conso-expenditure.component.html',
+  styleUrls: ['./conso-expenditure.component.css'],
   providers: [
     {provide: DateAdapter, useClass: PickDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
 ]
 })
-export class ConsoIncomeComponent implements OnInit {
+export class ConsoExpenditureComponent implements OnInit {
 
   loading;
   error;
@@ -180,28 +178,28 @@ export class ConsoIncomeComponent implements OnInit {
     this.loading = true;
     let reportCriteria = {"t1":fDate,"t2":tDate, "t3":this.branchCode, "t4":this.ccy, "t5":this.type, "t6":this.printby, "t8":"E"};
     this.clearProperties();
-   // this.cdf.reattach();
 
-    //let params = 'fromdate='+fDate+'&todate='+tDate+'&branch='+ this.branchCode + '&ccy='+this.ccy+'&type='+this.type+"&printby="+this.printby+"&formtype=A";
     this.http.doPost('/misreport/getConsoIncomeDataset', reportCriteria).subscribe(res=>{
-     // this.cdf.detach();
+     
       this._showData = true;
       if(res != null){
         this._datalist = res.datalist;
         this.g_datalist = this.groupBy(this._datalist, rpts1 => (rpts1.rpts1 +"|" + rpts1.gl_group));
        
-        this._rptTitle = "STATEMENT OF INCOME FOR THE MONTH OF ("+this._util.getMonthName(this.toDate.getMonth(),'L')+") year ("+this.ccy+" - "+ this.type+")";
+        this._rptTitle = "STATEMENT OF EXPENDITURE FOR THE MONTH OF ("+this._util.getMonthName(this.toDate.getMonth(),'L')+") year ("+this.ccy+" - "+ this.type+")";
         this._branchData = res.branchInfo;
       }
       this.loading = false;
     },
     error => {
       this.loading = false;
-      console.log("Read Conso Income List Error >>> "+error)
+      console.log("Read Conso Expenditure List Error >>> "+error)
       debugger;
     });
 
   }
+
+  public keepOriginalOrder = (a, b) => a.key;
 
   groupBy(list, keyGetter) {
     const map = new Map();
@@ -231,46 +229,46 @@ export class ConsoIncomeComponent implements OnInit {
     return (map);
 }
 
-//right
+
 exportExcel(){
  
   let fDate = this._util.getDDMMMYYYY(this.fromDate);
   let tDate = this._util.getDDMMMYYYY(this.toDate);
   this.loading = true;
-  let reportCriteria = {"t1":fDate,"t2":tDate, "t3":this.branchCode, "t4":this.ccy, "t5":this.type, "t6":this.printby,"t7":"xlsx", "t8":"I"};
+  let reportCriteria = {"t1":fDate,"t2":tDate, "t3":this.branchCode, "t4":this.ccy, "t5":this.type, "t6":this.printby,"t7":"xlsx", "t8":"E"};
 
   //let reportCriteria = {"t1":fDate,"t2":this.ccyCode,"t3":"xlsx"};
   let url = '/misreport/downloadConsoIncomeFile';
-  this.http.downloadFile(url, reportCriteria, 'ConsoIncome', 'xlsx').subscribe(res => { 
+  this.http.downloadFile(url, reportCriteria, 'Statement of Expenditure', 'xlsx').subscribe(res => { 
     this.loading = false;
   },
     error => {
-      console.log("Conso Income Excel Error >>> "+error)
+      console.log("Conso Expenditure Excel Error >>> "+error)
       debugger;
       if(error != ""){
-      this.error = "(The system cannot cannot generate conso Income Excel!.. Have the error)";
+      this.error = "(The system cannot cannot generate conso Expenditure Excel!.. Have the error)";
         }
       this.loading = false;
     });
 }
 
-//right
+
 exportPDF(){
   let fDate = this._util.getDDMMMYYYY(this.fromDate);
   let tDate = this._util.getDDMMMYYYY(this.toDate);
   this.loading = true;
-  let reportCriteria = {"t1":fDate,"t2":tDate, "t3":this.branchCode, "t4":this.ccy, "t5":this.type, "t6":this.printby,"t7":"pdf","t8":"I"};
+  let reportCriteria = {"t1":fDate,"t2":tDate, "t3":this.branchCode, "t4":this.ccy, "t5":this.type, "t6":this.printby,"t7":"pdf","t8":"E"};
 
   //let reportCriteria = {"t1":fDate,"t2":this.ccyCode,"t3":"pdf"};
   let url = '/misreport/downloadConsoIncomeFile';
-  this.http.downloadFile(url, reportCriteria, 'ConsoIncome', 'pdf').subscribe(res => { 
+  this.http.downloadFile(url, reportCriteria, 'Statement of Expenditure', 'pdf').subscribe(res => { 
     this.loading = false;
   },
     error => {
-      console.log("Conso Income PDF Error >>> "+error)
+      console.log("Conso Expenditure PDF Error >>> "+error)
       debugger;
       if(error != ""){
-      this.error = "(The system cannot cannot generate conso Income PDF!.. Have the error)";
+      this.error = "(The system cannot cannot generate conso Expenditure PDF!.. Have the error)";
         }
       this.loading = false;
     });

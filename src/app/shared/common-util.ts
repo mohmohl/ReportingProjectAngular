@@ -36,12 +36,20 @@ export class CommonUtil{
        return '';
     }
 
+    //dd-MMM-yyyy to dd/MM/yyyy
     getDDMMYYYY(objDT: Date){
        
         if(objDT != null){
             return this.datepipe.transform(objDT, 'dd/MM/yyyy');
         }
        return '';
+    }
+
+    //yyyyMMdd
+    formatDDMMYYYY(pDate){
+        if(pDate != null){
+            return pDate.substring(6)+"/"+pDate.substring(4, 6) + "/"+ pDate.substring(0, 4);
+        }
     }
 
     getDDMMMYYYY(objDT: Date){

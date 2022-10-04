@@ -131,11 +131,26 @@ export class ConsoLiabilitiesComponent implements OnInit {
 
   }
 
+  
+  clearProperties(){
+    this._totOPN    = 0;
+    this._totDrCash    = 0;
+    this._totDrTransfer    = 0;
+    this._totDrClearing    = 0;
+    this._totDr    = 0;
+    this._totCrCash    = 0;
+    this._totCrTransfer    = 0;
+    this._totCrClearing    = 0;
+    this._totCr    = 0;
+    this._totCLO    = 0;
+  }
+
+
   showData(){
     let fDate = this._util.getDDMMMYYYY(this.fromDate);
     let tDate = this._util.getDDMMMYYYY(this.toDate);
-
-
+    this.loading = true;
+    this.clearProperties();
     let params = 'fromdate='+fDate+'&todate='+tDate+'&branch='+ this.branchCode + '&ccy='+this.ccy+'&type='+this.type+"&printby="+this.printby+"&formtype=L";
     this.http.doGet('/misreport/getConsoAssetDataset?'+params).subscribe(res=>{
       this._showData = true;
@@ -143,9 +158,12 @@ export class ConsoLiabilitiesComponent implements OnInit {
         this._rptTitle = "RETURN OF GENERAL LEDGER (LIABILITIES) FOR THE MONTH OF ("+this._util.getMonthName(this.toDate.getMonth(),'L')+") " + `${this.toDate.getFullYear()}` + " ("+this.ccy+" - "+this.type+")";
         this._branchData = res.branchData;
         this._datalist = res.consoDataList;
+        this.calculateTotal( this._datalist);
       }
+      this.loading = false;
     },
     error => {
+      this.loading = false;
       console.log("Read General Ledger Liabilities(ByCurrency) List Error >>> "+error)
       debugger;
     });
@@ -155,7 +173,7 @@ export class ConsoLiabilitiesComponent implements OnInit {
   exportPDF(){
     let fDate = this._util.getDDMMMYYYY(this.fromDate);
     let tDate = this._util.getDDMMMYYYY(this.toDate);
-
+    this.loading = true;
 
     let params = 'fromdate='+fDate+'&todate='+tDate+'&branch='+ this.branchCode + '&ccy='+this.ccy+'&type='+this.type+"&printby="+this.printby+"&filetype=.pdf"+"&formtype=L";
     this.http.export_PDF("/misreport/downloadConsoAssetFile?"+params).pipe(
@@ -189,7 +207,7 @@ export class ConsoLiabilitiesComponent implements OnInit {
   exportExcel(){
     let fDate = this._util.getDDMMMYYYY(this.fromDate);
     let tDate = this._util.getDDMMMYYYY(this.toDate);
-
+    this.loading = true;
 
     let params = 'fromdate='+fDate+'&todate='+tDate+'&branch='+ this.branchCode + '&ccy='+this.ccy+'&type='+this.type+"&printby="+this.printby+"&filetype=.xlsx"+"&formtype=L";
     this.http.export_PDF("/misreport/downloadConsoAssetFile?"+params).pipe(
@@ -220,44 +238,19 @@ export class ConsoLiabilitiesComponent implements OnInit {
         });
   }
 
-  calculateOPNTotal(amount){
-      this._totOPN = this._totOPN + amount;
-  }
-
-  calculateCLOTotal(amount){
-    this._totCLO = this._totCLO + amount;
-  }
-
-  calculateDrCashTotal(amount){
-    this._totDrCash = this._totDrCash + amount;
-  }
-
-  calculateDrTransferTotal(amount){
-    this._totDrTransfer = this._totDrTransfer + amount;
-  }
-  
-  calculateDrClearingTotal(amount){
-    this._totDrClearing = this._totDrClearing + amount;
-  }
-
-  calculateDrTotal(amount){
-    this._totDr = this._totDr + amount;
-  }
-
-  calculateCrCashTotal(amount){
-    this._totCrCash = this._totCrCash + amount;
-  }
-
-  calculateCrTransferTotal(amount){
-    this._totCrTransfer = this._totCrTransfer + amount;
-  }
-  
-  calculateCrClearingTotal(amount){
-    this._totCrClearing = this._totCrClearing + amount;
-  }
-
-  calculateCrTotal(amount){
-    this._totCr = this._totCr + amount;
+  calculateTotal(datalist){
+    datalist.forEach(data => {
+      this._totOPN = this._totOPN + data.opn;
+      this._totCLO = this._totCLO + data.clo;
+      this._totDrCash = this._totDrCash + Number(data.dr_cash);
+      this._totDrTransfer = this._totDrTransfer + Number(data.dr_trf);
+      this._totDrClearing = this._totDrClearing + Number(data.dr_clg);
+      this._totDr = this._totDr + Number(data.dr);
+      this._totCrCash = this._totCrCash + Number(data.cr_cash);
+      this._totCrTransfer = this._totCrTransfer + Number(data.cr_trf);
+      this._totCrClearing = this._totCrClearing + Number(data.cr_clg);
+      this._totCr = this._totCr + Number(data.cr);
+    });
   }
 
 }

@@ -75,7 +75,7 @@ export class HttpService {
 
     var api = environment.baseUrl+url;
     let params = JSON.stringify(obj);
-    var headers = new HttpHeaders({'Content-Type':'application/json','Accept': 'application/json',});
+    var headers = new HttpHeaders({'Content-Type':'application/json','Accept': 'application/octet-stream',});
     
       return this.http.post<any>(`${api}`, params,{headers : headers,responseType: 'arraybuffer' as 'json'}).pipe(
         map((data: any) => {

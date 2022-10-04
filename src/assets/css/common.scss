@@ -5,6 +5,15 @@
 }
 
 
+.pgtitleMMFontC5{
+    font-family: 'Myanmar3';
+    src:local('./customfonts/mmrtext.ttf');
+    font-size: 12px;
+    color: grey;
+    align-items: center;
+}
+
+
 .pgtitleMMFont{
     font-family: 'Myanmar3';
     src:local('./customfonts/mmrtext.ttf');
