@@ -20,7 +20,6 @@
                 <div class="table-responsive">
                     <code *ngIf="error">{{error}}</code>
 
-
                     <!-- Filter Data -->
                     <div class="container-fluid" style="margin-top: 1.5%;">
                         <div class="form-group row">
@@ -43,7 +42,7 @@
                             <div class="col-sm-2 date-picker">
 
                                 <mat-form-field>
-                                    <input #minmaxInput matInput [matDatepicker]="minmaxvalidation" [(ngModel)]="fromDate" readonly>
+                                    <input #minmaxInput matInput [matDatepicker]="minmaxvalidation" [(ngModel)]="reportDate" readonly>
                                     <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #minmaxvalidation></mat-datepicker>
