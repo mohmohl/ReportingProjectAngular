@@ -469,7 +469,7 @@ const routes: Routes = [
       {
         path: 'conso-expenditure',
         loadChildren: () => import('./views/mis-reports/conso-expenditure/conso-expenditure.module').then(m => m.ConsoExpenditureModule)
-      }
+      },
       // ,
       // {
       //   path: 'fcdb_fcubs_cust',
@@ -480,8 +480,12 @@ const routes: Routes = [
         loadChildren: () => import('./views/journal-listing/journal-listing.module').then(m => m.JournalListingModule)
 
       },
-      
 
+      {
+        path: 'bank-cash',
+        loadChildren: () => import('./views/mis-reports/bank-cash/bank-cash.module').then(m => m.BankCashModule)
+
+      },
     ]
   },
   {
