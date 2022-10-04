@@ -43,8 +43,7 @@ export class BankCashComponent implements OnInit {
   type;
   printby;
 
-  fromDate: Date;
-  toDate: Date;
+  reportDate: Date;
 
   minDate = new Date(2021, 5, 30);
   maxDate = new Date();
@@ -57,8 +56,7 @@ export class BankCashComponent implements OnInit {
 
     this._uname = '';
     this._loading = true;
-    this.fromDate = new Date();
-    this.toDate = new Date();
+    this.reportDate = new Date();
     this.readReferenceData();
   }
 
@@ -92,7 +90,7 @@ export class BankCashComponent implements OnInit {
   }
 
   exportExcel() {
-    let reportDate = this._util.getDDMMMYYYY(this.fromDate);
+    let reportDate = this._util.getDDMMMYYYY(this.reportDate);
     this.loading = true;
 
     let requestBody = {
