@@ -9,15 +9,6 @@
     border:2px solid #691c31 !important;
 }
 
-.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
-    color: #17c017 !important;
-}
-
-.mat-primary .mat-pseudo-checkbox-checked, 
-.mat-primary .mat-pseudo-checkbox-indeterminate {
-    background: #17c017 !important;
-}
-
 .autocomplete {
     width:100%;
     max-width: 600px;
