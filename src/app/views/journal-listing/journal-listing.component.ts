@@ -46,18 +46,19 @@ export const _filter = (opt: string[], value: string): string[] => {
 
   // <!-- autocomplete -->
   stateForm: FormGroup = this._formBuilder.group({
-    stateGroup: '',
+    //stateGroup: '',
+    stateGroup: new FormControl('', Validators.required)
   });
 
   stateGroups: StateGroup[] = [{
     letter: 'A',
-    names: ['All', 'ATM']
+    names: ['ALL', 'ATM']
   }, {
     letter: 'O',
     names: ['OBDX', 'OTC']
   }, {
     letter: 'S',
-    names: ['System']
+    names: ['SYSTEM']
   }];
 
   stateGroupOptions: Observable<StateGroup[]>;
@@ -90,15 +91,20 @@ export const _filter = (opt: string[], value: string): string[] => {
   dropdownSettings:IDropdownSettings={};
   dropdownCcySettings:IDropdownSettings={};
 
-  selectedUserID;
+  selectedUserID = 'ALL';
+
+  selectedOption = ['ALL'];
+
   
 
   form = new FormGroup({
     date: new FormControl('', Validators.required),
-    branchCode: new FormControl('', Validators.required),
+    branchCode: new FormControl(this.selectedOption, Validators.required),
+
+    //branchCode: [this.selectedOption, [Validators.required]],
     currencyCode: new FormControl(''),
     trnsCode: new FormControl(''),
-    status: new FormControl('', Validators.required),
+    status: new FormControl('A', Validators.required),
     selectedUserID: new FormControl(''),
     trnsRefNo: new FormControl(''),
   });
