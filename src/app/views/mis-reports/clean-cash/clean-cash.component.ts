@@ -39,8 +39,7 @@ export class CleanCashComponent implements OnInit {
   type;
   printby;
 
-  fromDate: Date;
-  toDate: Date;
+  reportDate: Date;
 
   minDate = new Date(2021, 5, 30);
   maxDate = new Date();
@@ -53,8 +52,7 @@ export class CleanCashComponent implements OnInit {
 
     this._uname = '';
     this._loading = true;
-    this.fromDate = new Date();
-    this.toDate = new Date();
+    this.reportDate = new Date();
     this.readReferenceData();
   }
 
@@ -88,7 +86,7 @@ export class CleanCashComponent implements OnInit {
   }
 
   exportExcel() {
-    let reportDate = this._util.getDDMMMYYYY(this.fromDate);
+    let reportDate = this._util.getDDMMMYYYY(this.reportDate);
     this.loading = true;
 
     // let params = 'reportDate=' + reportDate + '&c=' + this.branchCode + '&ccy=' + this.ccy + '&fileType=' + this.type;
@@ -97,8 +95,19 @@ export class CleanCashComponent implements OnInit {
       reportDate: reportDate,
       branchCode: this.branchCode,
       ccy: this.ccy,
-      fileType: this.type
+      fileType: 'xlsx'
     };
+
+    this.http.downloadFile("/misreport/downloadCleanCashFile", requestBody, `CleanCash_${reportDate}`, 'xlsx').subscribe(
+      (data: any) => {
+        this.loading = false;
+      },error => {
+        console.log("Clean Cash Scroll Excel Exporting Error >>> " + error)
+        if (error != "") {
+          this.error = "(The system cannot cannot export clean cash scroll excel file!.. Have the error)";
+        }
+        this.loading = false;
+      });
 
   }
 }
