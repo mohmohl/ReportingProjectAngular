@@ -136,7 +136,7 @@ export const _filter = (opt: string[], value: string): string[] => {
       limitSelection: -1,
       clearSearchFilter: true,
       maxHeight: 197,
-      itemsShowLimit: 3,
+      itemsShowLimit: 2,
       searchPlaceholderText: 'Search',
       noDataAvailablePlaceholderText: 'No Data Available',
       closeDropDownOnSelection: false,
