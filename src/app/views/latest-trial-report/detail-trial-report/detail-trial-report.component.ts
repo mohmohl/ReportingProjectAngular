@@ -9,6 +9,7 @@ import { formatNumber } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { LatestTrialReportService } from 'src/services/LatestTrialReportService';
+import { TrialRequestData } from 'src/models/TrialRequestData';
 
 export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
@@ -36,7 +37,6 @@ export class DetailTrialReportComponent implements OnInit {
   from_date:Date;
   loading = false;
   data:TrialReport;
-  bCode:string;
   minDate = new Date(2021, 4, 30);
   maxDate = new Date();
   totalDebit:number=0;
@@ -48,8 +48,12 @@ export class DetailTrialReportComponent implements OnInit {
   totalCreditstr:string;
   totalCredit_lcystr:string;
   trialList:TrialData[];
-  branchList:string[] = ['Agency', 'Branches', 'Department'];;
-  currencyList:string[];
+
+  pattern2branchList:string[] = ['REGION_1', 'REGION_2', 'REGION_3', 'REGION_4','REGION_5', 'REGION_6', 'REGION_7', 'REGION_8', 'REGION_9'];
+  pattern3branchList:string[];
+  currencyList:string[] = ['HHH','CCC'];
+  
+  branchCode: string;
   currencyCode='MMK';
   ccyCode = false;
   data_message='';
@@ -59,11 +63,14 @@ export class DetailTrialReportComponent implements OnInit {
   selectedCcyItems = [];
   isAllBranch;
   isAllCcy;
+  branch = 'pattern1';
 
   form = new FormGroup({
-    from_date: new FormControl('', Validators.required),
+    from_date: new FormControl(new Date(), Validators.required),
     branch: new FormControl('pattern1', Validators.required),
-    branchCode:new FormControl('', Validators.required),
+    branchCode1:new FormControl(''),
+    branchCode2:new FormControl(''),
+    branchCode3:new FormControl(''),
     currencyCode:new FormControl('MMK', Validators.required)
   });
 
@@ -72,31 +79,22 @@ export class DetailTrialReportComponent implements OnInit {
     this.loading = true;
     service.getCurrencyList().subscribe((res:string[])=>{
       this.loading = false;
-      this.currencyList = res;
+      console.log(res)
+      //this.currencyList = res;
+    });
+
+    this.loading = true;
+    service.getBranchList().subscribe((res:string[])=>{
+          this.loading = false;
+          console.log(res)
+         // this.pattern3branchList = res;
     });
 
    }
 
   changeBranch(e) {
-    //alert(e.target.value)
-    var branch = e.target.value;
-    this.branchList = [];
+    this.branch = e.target.value;
     this.selectedBrItems = [];
-
-    if(branch == 'pattern1') {
-      this.branchList = ['Agency', 'Branches', 'Department'];
-    
-    } else if(branch == 'pattern2') {
-      this.branchList = ['Region 1', 'Region 2', 'Region 3', 'Region 4','Region 5', 'Region 6', 'Region 7', 'Region 8'];
-    
-    } else if(branch == 'pattern3') {
-      this.loading = true;
-      this.service.getBranchList().subscribe((res:string[])=>{
-          this.loading = false;
-          this.branchList = res;
-      });
-    }
-    
   }
 
   ngOnInit() {
@@ -125,7 +123,7 @@ export class DetailTrialReportComponent implements OnInit {
   // For Branch
   onBrItemSelect(item:any){
     //console.log(item);   
-    //console.log(this.selectedBrItems);
+    console.log(this.selectedBrItems);
   }
   
   onBrItemDeSelect(item:any){
@@ -145,7 +143,7 @@ export class DetailTrialReportComponent implements OnInit {
   // For ccy 
   onCcyItemSelect(item:any){
     //console.log(item);   
-    //console.log(this.selectedCcyItems);
+    console.log(this.selectedCcyItems);
   }
   
   onCcyItemDeSelect(item:any){
@@ -162,7 +160,6 @@ export class DetailTrialReportComponent implements OnInit {
     this.isAllCcy = false;
   }
 
-
   isNegitive(val: number): boolean {
     if (val < 0) {
      return true;
@@ -170,6 +167,13 @@ export class DetailTrialReportComponent implements OnInit {
      return false
     }
    }
+
+  comboData() {
+
+
+
+
+  }
    
   submit(){
     this.trialList=null;
@@ -185,8 +189,8 @@ export class DetailTrialReportComponent implements OnInit {
   this.from_date = this.form.get(["from_date"])!.value;
   this.loading = true;
   let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
-  this.bCode=this.form.get(["branchCode"])!.value;
-  this.currencyCode = this.form.get(["currencyCode"])!.value;
+  // this.bCode=this.form.get(["branchCode"])!.value;
+  // this.currencyCode = this.form.get(["currencyCode"])!.value;
   
   if(this.currencyCode == "Base" || this.currencyCode == "MMK"){
     this.ccyCode = false;
@@ -194,8 +198,38 @@ export class DetailTrialReportComponent implements OnInit {
   else{
     this.ccyCode = true;
   }
-  this.bCode=this.form.get(["branchCode"])!.value;
-  this.service.getTrialReportData(fDate,this.bCode,this.currencyCode, 1).subscribe((res:TrialReport)=>{
+
+  
+  if(this.isAllBranch){
+    if(this.branch == 'pattern2') {
+      this.branchCode = 'ALL_REGION';
+    } else {
+      this.branchCode = 'ALL_BRANCH';
+    }
+  }
+  else{
+    if(this.branch == 'pattern2' || this.branch == 'pattern3') {
+      this.branchCode = this.selectedBrItems.join("','");
+    } else {
+      this.branchCode = this.form.get(["branchCode"])!.value;
+    }
+    //this.branchCode = "'"+ this.branchCode+ "'";
+  }
+
+  if(this.isAllCcy){
+    this.currencyCode = "ALL";
+  }else{
+    this.currencyCode = this.selectedCcyItems.join("','");
+    //this.currencyCode = "'"+ this.currencyCode+ "'";
+  }
+
+  const comboData = new TrialRequestData();
+  comboData.date = fDate;
+  comboData.branchCode =  this.branchCode;
+  comboData.currencyCode = this.currencyCode;
+
+  this.service.getDetailTrialReportData(comboData).subscribe((res:TrialReport)=>{
+
     this.loading = false;
    
     if(res != null){
@@ -254,19 +288,47 @@ isNegitiveTransform(value: any, args?: any): any {
 }
 
 exportExcel(): void 
-  {
+{
+  debugger
     if (this.form.invalid) {
       this.error = "Data is required";
       return;
-  }
+    }
   this.error="";
   this.loading = true;
   this.from_date = this.form.get(["from_date"])!.value;
-  let f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
-  this.bCode=this.form.get(["branchCode"])!.value;
-  this.currencyCode = this.form.get(["currencyCode"])!.value;
+  let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
+  
+  if(this.isAllBranch){
+    if(this.branch == 'pattern2') {
+      this.branchCode = 'ALL_REGION';
+    } else {
+      this.branchCode = 'ALL_BRANCH';
+    }
+  }
+  else{
+    if(this.branch == 'pattern2' || this.branch == 'pattern3') {
+      this.branchCode = this.selectedBrItems.join("','");
+    } else {
+      this.branchCode = this.form.get(["branchCode"])!.value;
+    }
+    //this.branchCode = "'"+ this.branchCode+ "'";
+  }
 
-  this.service.exportDetailTrialExcel(f_Date,this.bCode,this.currencyCode, 1)
+  if(this.isAllCcy){
+    this.currencyCode = "ALL";
+  }else{
+    this.currencyCode = this.selectedCcyItems.join("','");
+    //this.currencyCode = "'"+ this.currencyCode+ "'";
+  }
+
+  const comboData = new TrialRequestData();
+  comboData.date = fDate;
+  comboData.branchCode =  this.branchCode;
+  comboData.currencyCode = this.currencyCode;
+
+
+  this.service.exportDetailTrialExcel(comboData)
   .pipe(
     map((data: any) => {
       debugger;
@@ -275,7 +337,7 @@ exportExcel(): void
       });
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = 'DetailTrial_'+this.bCode+'_'+this.currencyCode+'.xlsx';
+        link.download = 'DetailTrial_'+this.branchCode+'_'+this.currencyCode+'.xlsx';
         link.click();
         window.URL.revokeObjectURL(link.href);
       
@@ -301,11 +363,29 @@ exportExcel(): void
   this.error="";
   this.loading = true;
   this.from_date = this.form.get(["from_date"])!.value;
-  let f_date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
-  this.bCode=this.form.get(["branchCode"])!.value;
-  this.currencyCode = this.form.get(["currencyCode"])!.value;
+  let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
 
-  this.service.exportDetailTrialPDF(f_date,this.bCode,this.currencyCode, 1)
+  if(this.isAllBranch){
+    this.branchCode = 'ALL';
+  }
+  else{
+    this.branchCode = this.selectedBrItems.join("','");
+    //this.branchCode = "'"+ this.branchCode+ "'";
+  }
+
+  if(this.isAllCcy){
+    this.currencyCode = "ALL";
+  }else{
+    this.currencyCode = this.selectedCcyItems.join("','");
+    //this.currencyCode = "'"+ this.currencyCode+ "'";
+  }
+
+  const comboData = new TrialRequestData();
+  comboData.date = fDate;
+  comboData.branchCode =  this.branchCode;
+  comboData.currencyCode = this.currencyCode;
+
+  this.service.exportDetailTrialPDF(comboData)
   .pipe(
     map((data: any) => {
       let blob = new Blob([data], {
@@ -317,7 +397,7 @@ exportExcel(): void
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
       a.target = '_blank'; 
-      a.download = 'DetailTrial_'+this.bCode+'_'+this.currencyCode+'.pdf';
+      a.download = 'DetailTrial_'+this.branchCode+'_'+this.currencyCode+'.pdf';
       a.click();
       
       this.loading = false;
