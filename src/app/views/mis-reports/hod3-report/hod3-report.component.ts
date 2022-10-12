@@ -68,6 +68,10 @@ export class Hod3ReportComponent implements OnInit {
 
   }
 
+  formatDate(pDate){
+    return this._util.formatDDMMYYYY(pDate);
+  }
+
   showData(){
     let fDate = this._util.getDDMMMYYYY(this.fromDate);
     let tDate = this._util.getDDMMMYYYY(this.toDate);
