@@ -37,8 +37,7 @@ export class TrialSheetComponent implements OnInit {
   type;
   printby;
 
-  fromDate: Date;
-  toDate: Date;
+  reportDate: Date;
 
   minDate = new Date(2021, 5, 30);
   maxDate = new Date();
@@ -51,8 +50,7 @@ export class TrialSheetComponent implements OnInit {
 
     this._uname = '';
     this._loading = true;
-    this.fromDate = new Date();
-    this.toDate = new Date();
+    this.reportDate = new Date();
     this.readReferenceData();
   }
 
@@ -86,17 +84,27 @@ export class TrialSheetComponent implements OnInit {
   }
 
   exportExcel() {
-    let reportDate = this._util.getDDMMMYYYY(this.fromDate);
+   
+    let reportDate = this._util.getDDMMMYYYY(this.reportDate);
     this.loading = true;
 
-    // let params = 'reportDate=' + reportDate + '&c=' + this.branchCode + '&ccy=' + this.ccy + '&fileType=' + this.type;
-
     let requestBody = {
-      reportDate: reportDate,
-      branchCode: this.branchCode,
-      ccy: this.ccy,
-      fileType: this.type
+      t1: reportDate,
+      t2: this.branchCode,
+      t3: this.ccy,
+      t4: 'xlsx'
     };
+
+    this.http.downloadFile("/misreport/downloadTrialSheetFile", requestBody, `TrialSheet_${reportDate}`, 'xlsx').subscribe(
+      (data: any) => {
+        this.loading = false;
+      },error => {
+        console.log("Trial Sheet Excel Exporting Error >>> " + error)
+        if (error != "") {
+          this.error = "(The system cannot cannot export trial sheet excel file!.. Have the error)";
+        }
+        this.loading = false;
+      });
 
   }
 }

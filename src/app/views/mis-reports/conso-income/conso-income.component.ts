@@ -241,7 +241,7 @@ exportExcel(){
 
   //let reportCriteria = {"t1":fDate,"t2":this.ccyCode,"t3":"xlsx"};
   let url = '/misreport/downloadConsoIncomeFile';
-  this.http.downloadFile(url, reportCriteria, 'ConsoIncome', 'xlsx').subscribe(res => { 
+  this.http.downloadFile(url, reportCriteria, 'Statement of Comprehensive Income(ByCurrency)', 'xlsx').subscribe(res => { 
     this.loading = false;
   },
     error => {
@@ -263,7 +263,7 @@ exportPDF(){
 
   //let reportCriteria = {"t1":fDate,"t2":this.ccyCode,"t3":"pdf"};
   let url = '/misreport/downloadConsoIncomeFile';
-  this.http.downloadFile(url, reportCriteria, 'ConsoIncome', 'pdf').subscribe(res => { 
+  this.http.downloadFile(url, reportCriteria, 'Statement of Comprehensive Income(ByCurrency)', 'pdf').subscribe(res => { 
     this.loading = false;
   },
     error => {

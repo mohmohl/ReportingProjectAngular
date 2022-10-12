@@ -165,7 +165,7 @@ export class ConsoAssetsComponent implements OnInit {
     },
     error => {
       this.loading = false;
-      console.log("Read Currency List Error >>> "+error)
+      console.log("Read General Ledger Assets(By Currency) List Error >>> "+error)
       debugger;
     });
 
@@ -188,7 +188,7 @@ export class ConsoAssetsComponent implements OnInit {
         var fileURL = URL.createObjectURL(file);
         a.href = fileURL;
         a.target     = '_blank'; 
-        a.download = "ConsoAsset.pdf";
+        a.download = "General Ledger Assets(By Currency).pdf";
         document.body.appendChild(a);
         a.click();
         
@@ -196,10 +196,10 @@ export class ConsoAssetsComponent implements OnInit {
       })).subscribe(
         res => { },
         error => {
-          console.log("Detail Trial Error >>> "+error)
+          console.log("General Ledger Assets(By Currency) Error >>> "+error)
           debugger;
           if(error != ""){
-          this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
+          this.error = "(The system cannot cannot generate General Ledger Assets(By Currency)!.. Have the error)";
             }
           this.loading = false;
         });
@@ -222,7 +222,7 @@ export class ConsoAssetsComponent implements OnInit {
         var fileURL = URL.createObjectURL(file);
         a.href = fileURL;
         a.target     = '_blank'; 
-        a.download = "ConsoAsset.xlsx";
+        a.download = "General Ledger Assets(By Currency).xlsx";
         document.body.appendChild(a);
         a.click();
         
@@ -230,10 +230,10 @@ export class ConsoAssetsComponent implements OnInit {
       })).subscribe(
         res => { },
         error => {
-          console.log("Detail Trial Error >>> "+error)
+          console.log("General Ledger Assets(By Currency) Error >>> "+error)
           debugger;
           if(error != ""){
-          this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
+          this.error = "(The system cannot cannot generate General Ledger Assets(By Currency)!.. Have the error)";
             }
           this.loading = false;
         });

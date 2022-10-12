@@ -70,32 +70,33 @@ export class FormOneComponent implements OnInit {
         console.log("Read getAllBranchesByUser err");
       });
 
-    //ccy list
-    this.http.doGet("/misreport/getAllCurrency").subscribe(resp => {
-      this._loading = false;
-      this._ccyList = resp;
-      if (this._ccyList != null && this._ccyList.length > 0) {
-        this.ccy = this._ccyList[0].t1;
-      }
-    },
-      err => {
-        this._loading = false;
-        console.log("Read getAllCurrency err");
-      });
+  
   }
 
   exportExcel() {
-    let reportDate = this._util.getDDMMMYYYY(this.fromDate);
+   
+    let fromDate = this._util.getDDMMMYYYY(this.fromDate);
+    let toDate = this._util.getDDMMMYYYY(this.toDate);
     this.loading = true;
 
-    // let params = 'reportDate=' + reportDate + '&c=' + this.branchCode + '&ccy=' + this.ccy + '&fileType=' + this.type;
-
     let requestBody = {
-      reportDate: reportDate,
-      branchCode: this.branchCode,
-      ccy: this.ccy,
-      fileType: this.type
+      t1: fromDate,
+      t2: toDate,
+      t3: this.branchCode,
+      t4: 'xlsx'
     };
 
+    this.http.downloadFile("/misreport/downloadForm1File", requestBody, `Form1_${toDate}`, 'xlsx').subscribe(
+      (data: any) => {
+        this.loading = false;
+      },error => {
+        console.log("Form1 Excel Exporting Error >>> " + error)
+        if (error != "") {
+          this.error = "(The system cannot export form1 excel file!.. Have the error)";
+        }
+        this.loading = false;
+      });
+
   }
+
 }

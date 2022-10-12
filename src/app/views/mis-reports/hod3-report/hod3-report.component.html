@@ -73,14 +73,14 @@
                             <!-- Page Title -->
                             <div class="title">
                                 <div>
-                                    <p class="pgtitleMMFont">လျို့ဝှက်</p>
+                                    <p class="pgtitleMMFontC5">လျို့ဝှက်</p>
                                 </div>
                                 <div>
-                                    <p class="pgtitleMMFont">{{_branchData.bank_name}} ၏ နေ့စဥ်ဆောင်ရွက်မှုတိုးတက်မှတ်တမ်း</p>
+                                    <p class="pgtitleMMFont">{{_branchData.bankname}} ၏ နေ့စဥ်ဆောင်ရွက်မှုတိုးတက်မှတ်တမ်း</p>
                                 </div>
     
                                 <div>
-                                    <p class="pgsubtitle">{{_branchData.branch_name}}</p>
+                                    <p class="pgsubtitle">{{_branchData.branchname}}</p>
                                 </div>
     
                                 <div>
@@ -103,9 +103,9 @@
                                         <th colspan="3" style="text-align: center;">ငွေအဝင်</th>
                                         <th colspan="3" style="text-align: center;">ငွေအထွက်</th>
                                         <th colspan="3" style="text-align: center;">ချေးငွေအဝင်</th>
-                                       <!--
-                                        <th colspan="3" style="vertical-align: middle;">ချေးငွေအထွက်</th>
-                                       --> 
+                                       
+                                        <th colspan="3" style="text-align: center;">ချေးငွေအထွက်</th>
+                                       
                                         <th rowspan="2" style="vertical-align: middle;">ငွေသားလက်ကျန်</th>
                                         <!-- <th rowspan="2" style="vertical-align: middle;">မှတ်ချက်</th> -->
                                     </tr>
@@ -121,17 +121,17 @@
                                         <th style="text-align: center;">ငွေသား</th>
                                         <th style="text-align: center;">Transfer</th>
                                         <th style="text-align: center;">ပေါင်း</th>
-                                        <!--
+                                        
                                         <th style="text-align: center;">ငွေသား</th>
                                         <th style="text-align: center;">Transfer</th>
                                         <th style="text-align: center;">ပေါင်း</th>
-                                        -->
+                                       
                                         
                                     </tr>
                                     <tbody>
                                     
                                         <tr *ngFor="let data of _datalist; let i = index;">
-                                            <td> </td>
+                                            <td> {{formatDate(data.p_Date)}} </td>
                                             <td class="number"> {{data.n2 | number:'1.2-3'}} </td>
                                             <td class="number"> {{data.n3 | number:'1.2-3'}} </td>
                                             <td class="number"> {{data.n4 | number:'1.2-3'}} </td>
@@ -140,9 +140,16 @@
                                             <td class="number"> {{data.n6 | number:'1.2-3'}} </td>
                                             <td class="number"> {{data.n7 | number:'1.2-3'}}  </td>
                                             <td class="number"> {{ (data.n6 + data.n7) | number:'1.2-3'}} </td>
-                                            <td class="number"> {{ (data.n9 - data.n8) | number : '1.2-3'}} </td>
-                                            <td class="number"> {{ (data.n11 - data.n10) | number : '1.2-3'}} </td>
-                                            <td class="number"> {{ (data.n9 - data.n8) + (data.n11 - data.n10) | number : '1.2-3'}} </td>
+
+                                            <td class="number"> {{ (data.n9) | number : '1.2-3'}} </td>
+                                            <td class="number"> {{ (data.n11 ) | number : '1.2-3'}} </td>
+                                            <td class="number"> {{ (data.n9  + data.n11) | number : '1.2-3'}} </td>
+
+                                            
+                                            <td class="number"> {{ (data.n8 ) | number : '1.2-3'}} </td>
+                                            <td class="number"> {{ (data.n10 ) | number : '1.2-3'}} </td>
+                                            <td class="number"> {{ (data.n8  + data.n10 ) | number : '1.2-3'}} </td>
+
                                             <td class="number"> {{data.n12 | number:'1.2-3'}} </td>
                                         </tr>                
                                     </tbody>                           
