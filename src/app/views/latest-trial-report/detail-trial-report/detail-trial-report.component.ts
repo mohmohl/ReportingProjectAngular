@@ -37,8 +37,6 @@ export class DetailTrialReportComponent implements OnInit {
   from_date:Date;
   loading = false;
   data:TrialReport;
-  minDate = new Date(2021, 4, 30);
-  maxDate = new Date();
   totalDebit:number=0;
   totalDebit_lcy:number=0;
   totalCredit:number=0;
@@ -51,7 +49,7 @@ export class DetailTrialReportComponent implements OnInit {
 
   pattern2branchList:string[] = ['REGION_1', 'REGION_2', 'REGION_3', 'REGION_4','REGION_5', 'REGION_6', 'REGION_7', 'REGION_8', 'REGION_9'];
   pattern3branchList:string[];
-  currencyList:string[] = ['HHH','CCC'];
+  currencyList:string[];
   
   branchCode: string;
   currencyCode='MMK';
@@ -68,9 +66,7 @@ export class DetailTrialReportComponent implements OnInit {
   form = new FormGroup({
     from_date: new FormControl(new Date(), Validators.required),
     branch: new FormControl('pattern1', Validators.required),
-    branchCode1:new FormControl(''),
-    branchCode2:new FormControl(''),
-    branchCode3:new FormControl(''),
+    branchCode:new FormControl(''),
     currencyCode:new FormControl('MMK', Validators.required)
   });
 
@@ -80,14 +76,14 @@ export class DetailTrialReportComponent implements OnInit {
     service.getCurrencyList().subscribe((res:string[])=>{
       this.loading = false;
       console.log(res)
-      //this.currencyList = res;
+      this.currencyList = res;
     });
 
     this.loading = true;
     service.getBranchList().subscribe((res:string[])=>{
           this.loading = false;
           console.log(res)
-         // this.pattern3branchList = res;
+         this.pattern3branchList = res;
     });
 
    }
@@ -167,13 +163,6 @@ export class DetailTrialReportComponent implements OnInit {
      return false
     }
    }
-
-  comboData() {
-
-
-
-
-  }
    
   submit(){
     this.trialList=null;
@@ -348,7 +337,7 @@ exportExcel(): void
         console.log("Detail Trial Error >>> "+error)
         debugger;
         if(error != ""){
-        this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
+        this.error = "(The system cannot generate detail trial!.. Have the error)";
           }
         this.loading = false;
       });
@@ -407,7 +396,7 @@ exportExcel(): void
         console.log("Detail Trial Error >>> "+error)
         debugger;
         if(error != ""){
-        this.error = "(The system cannot cannot generate detail trial!.. Have the error)";
+        this.error = "(The system cannot generate detail trial!.. Have the error)";
           }
         this.loading = false;
       });
