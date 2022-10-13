@@ -4,7 +4,7 @@
         <div class="card">
 
             <div class="card-header">
-                <h5>All Branch Detail Trial</h5>
+                <h5>Branches Detail Trial</h5>
                 <div *ngIf="loading" class="d-flex justify-content-center">
                     <div class="spinner-border spinner-border-sm text-warning"></div>
                     <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -34,8 +34,7 @@
 
                             <label class="col-sm-1 col-form-label">Date</label>
                             <div class="col-sm-2 date-picker">
-                                <!-- [min]="minDate"
-                                            [max]="maxDate" -->
+                              
                                 <mat-form-field>
                                     <input #minmaxInput matInput [matDatepicker]="minmaxvalidation"
                                         [(ngModel)]="fromDate" readonly>
@@ -44,26 +43,10 @@
                                     <mat-datepicker #minmaxvalidation></mat-datepicker>
                                 </mat-form-field>
                             </div>
-                            <label class="col-sm-1 col-form-label" style="text-align:center">-</label>
-                            <div class="col-sm-2 date-picker">
-                                <mat-form-field>
-                                    <input #minmaxInput matInput [matDatepicker]="minmaxvalidation2"
-                                        [(ngModel)]="toDate" readonly>
-                                    <mat-datepicker-toggle matSuffix [for]="minmaxvalidation2">
-                                    </mat-datepicker-toggle>
-                                    <mat-datepicker #minmaxvalidation2></mat-datepicker>
-                                </mat-form-field>
-                            </div>
+                            
 
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-1 col-form-label"> Currency </label>
-                            <div class="col-sm-2">
-                                <select class="form-control" [(ngModel)]="ccy">
-                                    <option *ngFor="let arr of _ccyList" value="{{arr.t1}}">{{arr.t1}}</option>
-                                </select>
-                            </div>
-                        </div>
+                       
                     </div>
                     <!-- Filter Data -->
                 </div>
