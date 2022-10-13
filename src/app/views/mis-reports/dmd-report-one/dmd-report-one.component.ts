@@ -31,16 +31,9 @@ export class DmdReportOneComponent implements OnInit {
   _uname;
   _loading;
   _branchList;
-  _ccyList;
-  _printCcyTypeList;
-  _printByList;
   branchCode: string = '';
-  ccy;
-  type;
-  printby;
 
   fromDate: Date;
-  toDate: Date;
 
   minDate = new Date(2021, 5, 30);
   maxDate = new Date();
@@ -54,7 +47,6 @@ export class DmdReportOneComponent implements OnInit {
     this._uname = '';
     this._loading = true;
     this.fromDate = new Date();
-    this.toDate = new Date();
     this.readReferenceData();
   }
 
@@ -73,32 +65,29 @@ export class DmdReportOneComponent implements OnInit {
         console.log("Read getAllBranchesByUser err");
       });
 
-    //ccy list
-    this.http.doGet("/misreport/getAllCurrency").subscribe(resp => {
-      this._loading = false;
-      this._ccyList = resp;
-      if (this._ccyList != null && this._ccyList.length > 0) {
-        this.ccy = this._ccyList[0].t1;
-      }
-    },
-      err => {
-        this._loading = false;
-        console.log("Read getAllCurrency err");
-      });
+    
   }
 
   exportExcel() {
     let reportDate = this._util.getDDMMMYYYY(this.fromDate);
     this.loading = true;
 
-    // let params = 'reportDate=' + reportDate + '&c=' + this.branchCode + '&ccy=' + this.ccy + '&fileType=' + this.type;
-
     let requestBody = {
-      reportDate: reportDate,
-      branchCode: this.branchCode,
-      ccy: this.ccy,
-      fileType: this.type
+      t1: this.branchCode ,
+      t2: reportDate,
+      t4: 'xlsx'
     };
+
+    this.http.downloadFile("/misreport/downloadDMDReport1File", requestBody, `DMDReport1_${reportDate}`, 'xlsx').subscribe(
+      (data: any) => {
+        this.loading = false;
+      },error => {
+        console.log("DMD Report 1 Excel Exporting Error >>> " + error)
+        if (error != "") {
+          this.error = "(The system cannot cannot export DMD Report 1 excel file!.. Have the error)";
+        }
+        this.loading = false;
+      });
 
   }
 }
