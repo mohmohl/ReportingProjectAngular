@@ -52,22 +52,22 @@ export class DetailTrialReportComponent implements OnInit {
   currencyList:string[];
   
   branchCode: string;
-  currencyCode='MMK';
+  currencyCode=[];
   ccyCode = false;
   data_message='';
-
+  ccy_dropdownSettings:IDropdownSettings={};
   dropdownSettings:IDropdownSettings={};
   selectedBrItems = [];
   selectedCcyItems = [];
   isAllBranch;
   isAllCcy;
-  branch = 'pattern1';
+  branch = '';
 
   form = new FormGroup({
     from_date: new FormControl(new Date(), Validators.required),
-    branch: new FormControl('pattern1', Validators.required),
+    branch: new FormControl('pattern2', Validators.required),
     branchCode:new FormControl(''),
-    currencyCode:new FormControl('MMK', Validators.required)
+    currencyCode:new FormControl([], Validators.required)
   });
 
   constructor(private service: LatestTrialReportService){
@@ -113,13 +113,13 @@ export class DetailTrialReportComponent implements OnInit {
       showSelectedItemsAtTop: false,
       defaultOpen: false,
     };
-
+    this.selectedCcyItems = []
   }
 
   // For Branch
   onBrItemSelect(item:any){
     //console.log(item);   
-    console.log(this.selectedBrItems);
+    console.log("Branch= "+this.selectedBrItems);
   }
   
   onBrItemDeSelect(item:any){
@@ -139,13 +139,15 @@ export class DetailTrialReportComponent implements OnInit {
   // For ccy 
   onCcyItemSelect(item:any){
     //console.log(item);   
-    console.log(this.selectedCcyItems);
+    console.log("CCY= "+this.selectedCcyItems);
+    console.log("CCY2= "+this.form.get(["currencyCode"])!.value);
+    
   }
   
   onCcyItemDeSelect(item:any){
     //console.log(item);
     this.isAllCcy = false;
-    //console.log(this.selectedCcyItems);
+   
   }
   
   onCcySelectAll(items: any){
@@ -163,7 +165,19 @@ export class DetailTrialReportComponent implements OnInit {
      return false
     }
    }
-   
+   branchOnChange(event:any){
+    this.branch = event.target.value;
+    this.selectedBrItems = [];
+    if(this.branch == "BY_REGION"){
+      this.branch="pattern2";
+    }
+    else if(this.branch == "BY_BRANCH"){
+      this.branch="pattern3";
+    }
+    else{
+      this.branch="";
+    }
+   }
   submit(){
     this.trialList=null;
     this.totalDebit=0;
@@ -181,14 +195,10 @@ export class DetailTrialReportComponent implements OnInit {
   // this.bCode=this.form.get(["branchCode"])!.value;
   // this.currencyCode = this.form.get(["currencyCode"])!.value;
   
-  if(this.currencyCode == "Base" || this.currencyCode == "MMK"){
-    this.ccyCode = false;
-  }
+if(this.branch ==""){
+  this.branchCode=this.form.get(["branch"])!.value
+}
   else{
-    this.ccyCode = true;
-  }
-
-  
   if(this.isAllBranch){
     if(this.branch == 'pattern2') {
       this.branchCode = 'ALL_REGION';
@@ -198,24 +208,36 @@ export class DetailTrialReportComponent implements OnInit {
   }
   else{
     if(this.branch == 'pattern2' || this.branch == 'pattern3') {
-      this.branchCode = this.selectedBrItems.join("','");
+      this.branchCode = this.selectedBrItems.join(",");
     } else {
       this.branchCode = this.form.get(["branchCode"])!.value;
     }
     //this.branchCode = "'"+ this.branchCode+ "'";
   }
-
-  if(this.isAllCcy){
-    this.currencyCode = "ALL";
-  }else{
-    this.currencyCode = this.selectedCcyItems.join("','");
-    //this.currencyCode = "'"+ this.currencyCode+ "'";
   }
-
+  if(this.isAllCcy){
+    this.currencyCode = ["BASE"];
+    this.ccyCode = false;
+  }else{
+    //this.currencyCode = this.selectedCcyItems.join("','");
+    this.currencyCode =  this.form.get(["currencyCode"])!.value;
+    if(this.currencyCode.length == 1){
+      if(this.currencyCode[0] != "MMK"){
+        this.ccyCode = true;
+      }
+      else{
+        this.ccyCode = false;
+      }
+    }
+    else{
+      this.ccyCode = false;
+    }
+  }
+ 
   const comboData = new TrialRequestData();
   comboData.date = fDate;
   comboData.branchCode =  this.branchCode;
-  comboData.currencyCode = this.currencyCode;
+  comboData.currencyCodelist = this.currencyCode;
 
   this.service.getDetailTrialReportData(comboData).subscribe((res:TrialReport)=>{
 
@@ -288,33 +310,50 @@ exportExcel(): void
   this.from_date = this.form.get(["from_date"])!.value;
   let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
   
-  if(this.isAllBranch){
-    if(this.branch == 'pattern2') {
-      this.branchCode = 'ALL_REGION';
-    } else {
-      this.branchCode = 'ALL_BRANCH';
-    }
+  if(this.branch ==""){
+    this.branchCode=this.form.get(["branch"])!.value
   }
-  else{
-    if(this.branch == 'pattern2' || this.branch == 'pattern3') {
-      this.branchCode = this.selectedBrItems.join("','");
-    } else {
-      this.branchCode = this.form.get(["branchCode"])!.value;
+    else{
+    if(this.isAllBranch){
+      if(this.branch == 'pattern2') {
+        this.branchCode = 'ALL_REGION';
+      } else {
+        this.branchCode = 'ALL_BRANCH';
+      }
     }
-    //this.branchCode = "'"+ this.branchCode+ "'";
-  }
+    else{
+      if(this.branch == 'pattern2' || this.branch == 'pattern3') {
+        this.branchCode = this.selectedBrItems.join(",");
+      } else {
+        this.branchCode = this.form.get(["branchCode"])!.value;
+      }
+      //this.branchCode = "'"+ this.branchCode+ "'";
+    }
+    }
 
   if(this.isAllCcy){
-    this.currencyCode = "ALL";
+    this.currencyCode = ["BASE"];
+    this.ccyCode = false;
   }else{
-    this.currencyCode = this.selectedCcyItems.join("','");
-    //this.currencyCode = "'"+ this.currencyCode+ "'";
+    //this.currencyCode = this.selectedCcyItems.join("','");
+    this.currencyCode =  this.form.get(["currencyCode"])!.value;
+    if(this.currencyCode.length == 1){
+      if(this.currencyCode[0] != "MMK"){
+        this.ccyCode = true;
+      }
+      else{
+        this.ccyCode = false;
+      }
+    }
+    else{
+      this.ccyCode = false;
+    }
   }
 
   const comboData = new TrialRequestData();
   comboData.date = fDate;
   comboData.branchCode =  this.branchCode;
-  comboData.currencyCode = this.currencyCode;
+  comboData.currencyCodelist = this.currencyCode;
 
 
   this.service.exportDetailTrialExcel(comboData)
@@ -354,25 +393,50 @@ exportExcel(): void
   this.from_date = this.form.get(["from_date"])!.value;
   let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
 
-  if(this.isAllBranch){
-    this.branchCode = 'ALL';
+  if(this.branch ==""){
+    this.branchCode=this.form.get(["branch"])!.value
   }
-  else{
-    this.branchCode = this.selectedBrItems.join("','");
-    //this.branchCode = "'"+ this.branchCode+ "'";
-  }
+    else{
+    if(this.isAllBranch){
+      if(this.branch == 'pattern2') {
+        this.branchCode = 'ALL_REGION';
+      } else {
+        this.branchCode = 'ALL_BRANCH';
+      }
+    }
+    else{
+      if(this.branch == 'pattern2' || this.branch == 'pattern3') {
+        this.branchCode = this.selectedBrItems.join(",");
+      } else {
+        this.branchCode = this.form.get(["branchCode"])!.value;
+      }
+      //this.branchCode = "'"+ this.branchCode+ "'";
+    }
+    }
 
   if(this.isAllCcy){
-    this.currencyCode = "ALL";
+    this.currencyCode = ["BASE"];
+    this.ccyCode = false;
   }else{
-    this.currencyCode = this.selectedCcyItems.join("','");
-    //this.currencyCode = "'"+ this.currencyCode+ "'";
+    //this.currencyCode = this.selectedCcyItems.join("','");
+    this.currencyCode =  this.form.get(["currencyCode"])!.value;
+    if(this.currencyCode.length == 1){
+      if(this.currencyCode[0] != "MMK"){
+        this.ccyCode = true;
+      }
+      else{
+        this.ccyCode = false;
+      }
+    }
+    else{
+      this.ccyCode = false;
+    }
   }
 
   const comboData = new TrialRequestData();
   comboData.date = fDate;
   comboData.branchCode =  this.branchCode;
-  comboData.currencyCode = this.currencyCode;
+  comboData.currencyCodelist = this.currencyCode;
 
   this.service.exportDetailTrialPDF(comboData)
   .pipe(
