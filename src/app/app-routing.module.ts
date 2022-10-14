@@ -520,6 +520,10 @@ const routes: Routes = [
         path: 'dmd-report-one',
         loadChildren: () => import('./views/mis-reports/dmd-report-one/dmd-report-one.module').then(m => m.DmdReportOneModule)
       },
+      {
+        path: 'migration-export-report',
+        loadChildren: () => import('./views/migration/migration-report/migration-report.module').then(m => m.MigrationReportModule)
+      }
     ]
   },
   {

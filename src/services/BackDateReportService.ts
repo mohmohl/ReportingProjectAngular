@@ -24,4 +24,16 @@ export class BackDateReportService{
         var api = environment.baseUrl+'/backDateTrial/searchBackDateTrial?branch='+branch+"&searchDate="+searchDate+"&fileName="+fileName;
         return this.http.get<any>(`${api}`, {responseType: 'arraybuffer' as 'json'});
     }
+
+    public getBranchListForMigration(): Observable<any>{
+      return this.http.get<any>(`${environment.baseUrl}`+'/backDateTrial/migrationBranch');
+  }
+  public getReportListForMigration(): Observable<any>{
+    return this.http.get<any>(`${environment.baseUrl}`+'/backDateTrial/migrationReportTitle');
+}
+  
+  public exportMigration_report(report_name:string,branch:string,version:string): Observable<any>{
+    var api = environment.baseUrl+`/backDateTrial/download/export_migration_report?report_name=`+report_name+'&branch='+branch+'&version='+version;
+    return this.http.post<any>(`${api}`,null,{responseType: 'arraybuffer' as 'json'});
+  }
 }
