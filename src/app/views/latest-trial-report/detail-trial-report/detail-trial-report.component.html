@@ -38,18 +38,21 @@
 
                   <div class="col-md-6">
                     <div class="row form-group col-md-12">
-                      <label class="col-sm-3 col-form-label">Currency</label>
+                      <label class="col-sm-3 col-form-label">Currency<code>*</code></label>
                       <div style="width:50%;">
-                        <ng-multiselect-dropdown 
-                            [settings]="dropdownSettings" style="background: maroon;"
-                            [data]="currencyList"
-                            (onSelect)="onCcyItemSelect($event)" 
-                            (onDeSelect)="onCcyItemDeSelect($event)"
-                            (onSelectAll)="onCcySelectAll($event)"
-                            (onDeSelectAll)="onCcyDeSelectAll($event)"
-                            [(ngModel)]="selectedCcyItems"
-                            formControlName="currencyCode">
-                      </ng-multiselect-dropdown>
+                        
+
+                      <ng-multiselect-dropdown 
+                      [settings]="dropdownSettings" style="background: maroon;"
+                      [data]="currencyList"
+                      (onSelect)="onCcyItemSelect($event)" 
+                      (onDeSelect)="onCcyItemDeSelect($event)"
+                      (onSelectAll)="onCcySelectAll($event)"
+                      (onDeSelectAll)="onCcyDeSelectAll($event)"
+                      formControlName="currencyCode"
+                      [(ngModel)]="selectedCcyItems">
+                  </ng-multiselect-dropdown>
+
                       </div>
                     </div>
                   </div>
@@ -59,7 +62,7 @@
                   <div class="col-md-6">
                     <div class="row form-group col-md-12">
                       <label class="col-sm-2 col-form-label">Branch<code>*</code></label>
-                      <div class="col-sm-3">
+                      <!--<div class="col-sm-3">
                         <input type="radio"  formControlName="branch" value="pattern1" (change)="changeBranch($event)" /> Pattern 1
                       </div> 
                       
@@ -69,10 +72,19 @@
 
                       <div class="col-sm-3">
                         <input type="radio"  formControlName="branch" value="pattern3" (change)="changeBranch($event)" /> Pattern 3
-                      </div> 
+                      </div> -->
+                      <div class="col-sm-6">
+                      <select formControlName="branch" class="form-control" (change)="branchOnChange($event)">
+                        <option value="AGENCY" selected>AGENCY</option>
+                        <option value="CURRENCY">CURRENCY</option>
+                        <option value="DEPARTMENT">DEPARTMENT</option>
+                        <option value="BY_REGION">BY REGION</option>
+                        <option value="BY_BRANCH">BY_BRANCH</option>
+                      </select> 
+                      </div>
                     </div>
                   </div>
-
+              <!--
                   <div class="col-md-6" *ngIf="branch==='pattern1'" >
                     <div class="row form-group col-md-12">
                       <label class="col-sm-3 col-form-label">Branch Code<code>*</code></label>
@@ -89,11 +101,11 @@
                     </div>
                     </div>
                   </div>
-
-                  <div class="col-md-6" *ngIf="branch=== 'pattern2'">
+                -->
+                  <div class="col-md-6" >
                     <div class="row form-group col-md-12">
-                      <label class="col-sm-3 col-form-label">Branch Code<code>*</code></label>
-                      <div style="width:50%;">
+                      <label *ngIf="branch != ''" class="col-sm-3 col-form-label">Branch Code<code>*</code></label>
+                      <div style="width:50%;" *ngIf="branch=== 'pattern2'">
                         <ng-multiselect-dropdown 
                             [settings]="dropdownSettings" style="background: maroon;"
                             [data]="pattern2branchList"
@@ -105,16 +117,7 @@
                             [(ngModel)]="selectedBrItems">
                         </ng-multiselect-dropdown>
                       </div>
-                      <div class="col-sm-3">
-                        <button type="submit" class="btn-primary">Search</button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6" *ngIf="branch=== 'pattern3'">
-                    <div class="row form-group col-md-12">
-                      <label class="col-sm-3 col-form-label">Branch Code<code>*</code></label>
-                      <div style="width:50%;">
+                      <div style="width:50%;" *ngIf="branch=== 'pattern3'">
                         <ng-multiselect-dropdown 
                             [settings]="dropdownSettings" style="background: maroon;"
                             [data]="pattern3branchList"
@@ -132,8 +135,15 @@
                     </div>
                   </div>
 
-
-
+                 <!-- <div class="col-md-6" *ngIf="branch=== 'pattern3'">
+                    <div class="row form-group col-md-12">
+                      <label class="col-sm-3 col-form-label">Branch Code<code>*</code></label>
+                      
+                      <div class="col-sm-3">
+                        <button type="submit" class="btn-primary">Search</button>
+                      </div>
+                    </div>
+                  </div>-->
                 </div>
 
               </div>
