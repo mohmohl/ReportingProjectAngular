@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { LatestTrialReportService } from 'src/services/LatestTrialReportService';
 import { TrialRequestData } from 'src/models/TrialRequestData';
+import { CommonUtil } from 'src/app/shared/common-util';
 
 export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
@@ -50,6 +51,7 @@ export class DetailTrialReportComponent implements OnInit {
   pattern2branchList:string[] = ['REGION_1', 'REGION_2', 'REGION_3', 'REGION_4','REGION_5', 'REGION_6', 'REGION_7', 'REGION_8', 'REGION_9'];
   pattern3branchList:string[];
   currencyList:string[];
+  dataExist: Boolean = true;
   
   branchCode: string;
   currencyCode=[];
@@ -62,15 +64,16 @@ export class DetailTrialReportComponent implements OnInit {
   isAllBranch;
   isAllCcy;
   branch = '';
+  //reportDate: Date;
 
   form = new FormGroup({
-    from_date: new FormControl(new Date(), Validators.required),
+    from_date: new FormControl(Validators.required), //new Date(),
     branch: new FormControl('pattern2', Validators.required),
     branchCode:new FormControl(''),
     currencyCode:new FormControl([], Validators.required)
   });
 
-  constructor(private service: LatestTrialReportService){
+  constructor(private service: LatestTrialReportService, private _util: CommonUtil){
     
     this.loading = true;
     service.getCurrencyList().subscribe((res:string[])=>{
@@ -87,6 +90,30 @@ export class DetailTrialReportComponent implements OnInit {
     });
 
    }
+
+  changeDate(e) {
+    this.selectedBrItems = [];
+    console.log("Hello date changed")
+    this.form = new FormGroup({
+      from_date: new FormControl(this.form.get(["from_date"])!.value,Validators.required), 
+      branch: new FormControl('', Validators.required),
+      branchCode:new FormControl(''),
+      currencyCode:new FormControl([], Validators.required)
+    });
+
+    let from_date = e.target.value;
+    let reportDate = this._util.getDDMMMYYYY(from_date);
+    //console.log("Final Date: " + reportDate)
+
+    const comboData = new TrialRequestData();
+    comboData.date = reportDate;
+    this.loading = true;
+    this.service.check802Data(comboData).subscribe((res)=>{
+          this.loading = false;
+          console.log(res)
+         this.dataExist = res;
+    });
+  } 
 
   changeBranch(e) {
     this.branch = e.target.value;

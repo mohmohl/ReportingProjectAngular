@@ -26,8 +26,8 @@
                     <div class="row form-group col-md-12">
                       <label class="col-sm-2 col-form-label">Date<code>*</code></label>
                       <div class="col-sm-4">
-                        <mat-form-field >
-                          <input #minmaxInput matInput [matDatepicker]="from_date" formControlName="from_date" readonly>
+                        <mat-form-field>
+                          <input #minmaxInput matInput [matDatepicker]="from_date" formControlName="from_date" readonly (dateChange)="changeDate($event)">  
                           <mat-datepicker-toggle matSuffix [for]="from_date">
                              </mat-datepicker-toggle>
                           <mat-datepicker #from_date></mat-datepicker>
@@ -40,25 +40,22 @@
                     <div class="row form-group col-md-12">
                       <label class="col-sm-3 col-form-label">Currency<code>*</code></label>
                       <div style="width:50%;">
-                        
-
-                      <ng-multiselect-dropdown 
-                      [settings]="dropdownSettings" style="background: maroon;"
-                      [data]="currencyList"
-                      (onSelect)="onCcyItemSelect($event)" 
-                      (onDeSelect)="onCcyItemDeSelect($event)"
-                      (onSelectAll)="onCcySelectAll($event)"
-                      (onDeSelectAll)="onCcyDeSelectAll($event)"
-                      formControlName="currencyCode"
-                      [(ngModel)]="selectedCcyItems">
-                  </ng-multiselect-dropdown>
-
+                        <ng-multiselect-dropdown 
+                            [settings]="dropdownSettings" style="background: maroon;"
+                            [data]="currencyList"
+                            (onSelect)="onCcyItemSelect($event)" 
+                            (onDeSelect)="onCcyItemDeSelect($event)"
+                            (onSelectAll)="onCcySelectAll($event)"
+                            (onDeSelectAll)="onCcyDeSelectAll($event)"
+                            formControlName="currencyCode"
+                            [(ngModel)]="selectedCcyItems"> 
+                        </ng-multiselect-dropdown>
                       </div>
                     </div>
                   </div>
                 </div>   
 
-                <div class="form-group row">
+                <div class="form-group row" *ngIf="dataExist">
                   <div class="col-md-6">
                     <div class="row form-group col-md-12">
                       <label class="col-sm-2 col-form-label">Branch<code>*</code></label>
@@ -84,24 +81,7 @@
                       </div>
                     </div>
                   </div>
-              <!--
-                  <div class="col-md-6" *ngIf="branch==='pattern1'" >
-                    <div class="row form-group col-md-12">
-                      <label class="col-sm-3 col-form-label">Branch Code<code>*</code></label>
-                      <div style="width:50%;">
-                        <select formControlName="branchCode" class="form-control">
-                          <option value="AGENCY" selected>AGENCY</option>
-                          <option value="CURRENCY">CURRENCY</option>
-                          <option value="DEPARTMENT">DEPARTMENT</option>
-                        </select> 
-                    </div>
-                      
-                    <div class="col-sm-3">
-                        <button type="submit" class="btn-primary">Search</button>
-                    </div>
-                    </div>
-                  </div>
-                -->
+
                   <div class="col-md-6" >
                     <div class="row form-group col-md-12">
                       <label *ngIf="branch != ''" class="col-sm-3 col-form-label">Branch Code<code>*</code></label>
@@ -117,6 +97,7 @@
                             [(ngModel)]="selectedBrItems">
                         </ng-multiselect-dropdown>
                       </div>
+
                       <div style="width:50%;" *ngIf="branch=== 'pattern3'">
                         <ng-multiselect-dropdown 
                             [settings]="dropdownSettings" style="background: maroon;"
@@ -129,21 +110,43 @@
                             [(ngModel)]="selectedBrItems">
                         </ng-multiselect-dropdown>
                       </div>
+
+                      <div class="col-sm-3">
+                        <button type="submit" class="btn-primary">Search</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group row" *ngIf="!dataExist">
+                  <div class="col-md-6">
+                    <div class="row form-group col-md-12">
+                      <label class="col-sm-2 col-form-label">Branch<code>*</code></label>
+                      <div class="col-sm-6">
+                      <select formControlName="branch" class="form-control">
+                        <option value="BY_BRANCH" selected>BY_BRANCH</option>
+                      </select> 
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6" >
+                    <div class="row form-group col-md-12">
+                      <label class="col-sm-3 col-form-label">Branch Code<code>*</code></label>
+                      <div style="width:50%;">
+                        <select class="form-control" formControlName="branchCode" (change)="branchOnChange($event)">
+                          <option value="" selected>-- Select --</option>
+                          <option value="ALL_BRANCH" selected>All</option>
+                          <option *ngFor="let b of pattern3branchList" value="{{b}}">{{b}}</option>
+                        </select>
+                      </div>
+                     
                       <div class="col-sm-3">
                         <button type="submit" class="btn-primary">Search</button>
                       </div>
                     </div>
                   </div>
 
-                 <!-- <div class="col-md-6" *ngIf="branch=== 'pattern3'">
-                    <div class="row form-group col-md-12">
-                      <label class="col-sm-3 col-form-label">Branch Code<code>*</code></label>
-                      
-                      <div class="col-sm-3">
-                        <button type="submit" class="btn-primary">Search</button>
-                      </div>
-                    </div>
-                  </div>-->
                 </div>
 
               </div>
