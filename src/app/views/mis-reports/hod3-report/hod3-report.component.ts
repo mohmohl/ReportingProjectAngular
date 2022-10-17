@@ -112,7 +112,7 @@ export class Hod3ReportComponent implements OnInit {
         var fileURL = URL.createObjectURL(file);
         a.href = fileURL;
         a.target     = '_blank'; 
-        a.download = "HOD3.pdf";
+        a.download = "Form2_"+fDate+".pdf";
         document.body.appendChild(a);
         a.click();
         
@@ -146,7 +146,7 @@ export class Hod3ReportComponent implements OnInit {
         var fileURL = URL.createObjectURL(file);
         a.href = fileURL;
         a.target     = '_blank'; 
-        a.download = "HOD3.xlsx";
+        a.download = "Form2_"+fDate+".xlsx";
         document.body.appendChild(a);
         a.click();
         

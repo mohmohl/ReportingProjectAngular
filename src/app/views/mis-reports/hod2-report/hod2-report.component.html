@@ -4,7 +4,7 @@
             <div class="card">
                 
                 <div class="card-header">
-                    <h5 class="h5MyanmarFont">ဘဏ္ဍာရေး‌အခြေအနေ(HOD2)</h5>
+                    <h5 class="h5MyanmarFont">Form3</h5>
                     <div *ngIf="loading" class="d-flex justify-content-center">
                         <div class="spinner-border spinner-border-sm text-warning"></div>
                         <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -72,21 +72,34 @@
 
                             <!-- Page Title -->
                             <div  class="title">
-                                <div>
+                                <!-- <div>
                                     <p class="pgtitleMMFontC5">လျို့ဝှက်</p>
                                 </div>
                                 <div>
                                     <p class="pgtitleMMFont">မြန်မာ့ရှေ့ဆောင်ဘဏ်၏ဘဏ္ဍာရေး‌အခြေအနေ</p>
+                                </div> -->
+
+                                <div>
+                                    <p class="pgtitle">{{_branchData.bankname}}</p>
+                                </div>
+    
+                                <div>
+                                    <p class="pgsubtitle">{{_branchData.branchname}}</p>
+                                </div>
+    
+                                <div>
+                                    <p class="pgsubtitle">Form3</p>
                                 </div>
 
                                 <div>
-                                    <p class="pgsubtitle">{{_branchData.branch_name}}</p>
+                                    <p class="pgsubtitle">{{p_toDate | date : 'dd/MM/yyyy'}}</p>
                                 </div>
 
+                                
+
                                 <div>
-                                <p class="subpgtitle"> D3 </p> 
-                                <p class="subpgtitle"> {{p_toDate | date : 'dd/MM/yyyy'}} </p> 
-                                <p class="subpgtitle">(ကျပ်သန်းပေါင်း)</p>
+                                <!-- <p class="subpgtitle"> D3 </p>  -->
+                                <p class="subpgtitle">Million of Kyats</p>
                                 </div>
                         </div>
                             <!-- Page Title -->
@@ -96,29 +109,33 @@
                             <div style="margin-top: 1.5%;">
                                 <table class="table table table-hover" id="content" #content>
                                     <tr class="text-uppercase">
-                                        <th rowspan="2" style="vertical-align: middle;">ရက်စွဲ</th>
-                                        <th rowspan="2" style="vertical-align: middle;">ထည့်ဝင်ပီးမတည်ငွေရင်း</th>
-                                        <th colspan="5" style="vertical-align: middle;">အပ်ငွေများ</th>
-                                        <th rowspan="2" style="vertical-align: middle;">စုစုပေါင်းချေးငွေ</th>
-                                        <th rowspan="2" style="vertical-align: middle;">ချေးငွေနှင့်အပ်ငွေအချိုး(%)</th>
-                                        <th rowspan="2" style="vertical-align: middle;">ဝင်ငွေ</th>                                     
-                                        <th rowspan="2" style="vertical-align: middle;">သုံးငွေ</th>
-                                        <th rowspan="2" style="vertical-align: middle;">အကြမ်း အမြတ်/အရှုံး(+)(-)</th>
+                                        <th rowspan="2" style="vertical-align: middle;">Sr. No.</th>
+                                        <th rowspan="2" style="vertical-align: middle;">Bank</th>
+                                        <th rowspan="2" style="vertical-align: middle;">Date</th>
+                                        <th rowspan="2" style="vertical-align: middle;">Paid-up Capital</th>
+                                        <th colspan="5" style="vertical-align: middle;">Total Deposits</th>
+                                        <th rowspan="2" style="vertical-align: middle;">Total Loans</th>
+                                        <th rowspan="2" style="vertical-align: middle;">Loan To Deposit Ratio(%)</th>
+                                        <th rowspan="2" style="vertical-align: middle;">Income</th>                                     
+                                        <th rowspan="2" style="vertical-align: middle;">Expenditure</th>
+                                        <th rowspan="2" style="vertical-align: middle;">Gross Profit/Loss(+)(-)</th>
                                         <th rowspan="2" style="vertical-align: middle;">Free T-bond</th>
                                         <th rowspan="2" style="vertical-align: middle;">Cash</th>
                                         <th rowspan="2" style="vertical-align: middle;">CBM</th>
-                                        <th rowspan="2" style="vertical-align: middle;">စုစုပေါင်း</th>
+                                        <th rowspan="2" style="vertical-align: middle;">Total</th>
                                     </tr>
                                     <tr>
-                                        <th style="text-align: center;">စာရင်းရှင်</th>
-                                        <th style="text-align: center;">ငွေစုဘဏ်</th>
-                                        <th style="text-align: center;">စာရင်းသေ</th>
-                                        <th style="text-align: center;">ခေါ်ယူအပ်နှံငွေစာရင်း</th>
-                                        <th style="text-align: center;">စုစုပေါင်း</th>                                        
+                                        <th style="text-align: center;">Current Deposit</th>
+                                        <th style="text-align: center;">Saving Deposit</th>
+                                        <th style="text-align: center;">Fixed Deposit</th>
+                                        <th style="text-align: center;">Call Deposit</th>
+                                        <th style="text-align: center;">Total</th>                                        
                                     </tr>
                                     <tbody>
                                     
                                         <tr *ngFor="let data of _datalist; let i = index;">
+                                            <td>{{(i+1)}}</td>
+                                            <td>{{_branchData.bankname}}</td>
                                             <td> {{formatDate(data.p_Date)}} </td>
                                             <td class="number"> {{data.n2 | number:'1.2-3'}} </td>
                                             <td class="number"> {{data.n3 | number:'1.2-3'}} </td>
