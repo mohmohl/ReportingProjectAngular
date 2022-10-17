@@ -21,6 +21,11 @@ export class LatestTrialReportService {
       return this.http.get<any>(`${environment.baseUrl}`+'/latest-trial/get_currencyList');
     }
 
+    public check802Data(data: TrialRequestData): Observable<any>{
+      let api = environment.baseUrl + `/latest-trial/check_802Data`; 
+      return this.http.post<any>(`${api}`,data);
+    }
+
     // detail trial
     public getDetailTrialReportData(data: TrialRequestData): Observable<any>{
       let api = environment.baseUrl + `/latest-trial/get_detail_trial_report`; 
