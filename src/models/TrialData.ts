@@ -13,4 +13,13 @@ export class TrialData{
 	  gl_desc:string;
 	  t_date:string;
 	  old_gl:string;
+	  //for period trial
+	  asset_debit:number;
+	  asset_credit:number;
+	  liab_debit:number;
+	  liab_credit:number;
+	  income_debit:number;
+	  income_credit:number;
+	  exp_debit:number;
+	  exp_credit:number;
 }

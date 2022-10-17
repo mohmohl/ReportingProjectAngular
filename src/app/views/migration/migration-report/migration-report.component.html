@@ -20,7 +20,7 @@
 
                       <div class="row form-group col-md-12">
                         <label class="col-sm-2 col-form-label">Report Name <code>*</code></label>
-                        <select class="col-sm-4 form-control" [(ngModel)]="value" formControlName="report_name" >
+                        <select class="col-sm-4 form-control" formControlName="report_name" >
                           <option value="" selected>-- Select --</option>
                           <option *ngFor="let r of report_list" value="{{r.report_name}}">{{r.report_no}}-{{r.report_name}}</option>
                         </select>

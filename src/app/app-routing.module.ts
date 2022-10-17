@@ -468,18 +468,19 @@ const routes: Routes = [
         path: 'journal-listing',
         loadChildren: () => import('./views/journal-listing/journal-listing.module').then(m => m.JournalListingModule)
       },
-      // {
-      //   path: 'gt-detail-trial-report',
-      //   loadChildren: () => import('./views/TrialReport/detail-trial-report/trial-report.module').then(m => m.TrialReportModule), canActivate: [AuthGuard]
-      // },
-      // {
-      //   path: 'general-trial-report',
-      //   loadChildren: () => import('./views/TrialReport/general-trial-report/general-trial-report.module').then(m => m.GeneralTrialReportModule), canActivate: [AuthGuard]
-      // },
+       {
+         path: 'gt-detail-trial-report',
+         loadChildren: () => import('./views/TrialReport/detail-trial-report/trial-report.module').then(m => m.TrialReportModule), canActivate: [AuthGuard]
+       },
+       {
+         path: 'general-trial-report',
+         loadChildren: () => import('./views/TrialReport/general-trial-report/general-trial-report.module').then(m => m.GeneralTrialReportModule), canActivate: [AuthGuard]
+       },
       {
         path: 'mis-trial-report',
         loadChildren: () => import('./views/TrialReport/mis-trial-report/mis-trial-report.module').then(m => m.MisTrialReportModule)
       },
+      /*//for v14
       {
         path: 'gt-detail-trial-report',
         loadChildren: () => import('./views/latest-trial-report/detail-trial-report/detail-trial-report.module').then(m => m.DetailTrialReportModule)
@@ -487,7 +488,7 @@ const routes: Routes = [
       {
         path: 'general-trial-report',
         loadChildren: () => import('./views/latest-trial-report/general-trial-report/general-trial-report.module').then(m => m.GeneralTrialReportModule)
-      },
+      },*/
       {
         path: 'bank-cash',
         loadChildren: () => import('./views/mis-reports/bank-cash/bank-cash.module').then(m => m.BankCashModule)

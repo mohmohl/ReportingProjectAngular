@@ -74,7 +74,7 @@ export class DetailTrialConsoReportComponent implements OnInit {
   
     this.loading = true;
     
-    service.getBranchList().subscribe((res:string[])=>{
+    service.getBranchList(1).subscribe((res:string[])=>{
       this.loading = false;
       this.branchList = res;
     });
