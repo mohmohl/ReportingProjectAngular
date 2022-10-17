@@ -59,7 +59,7 @@ denonbd10000:new FormControl('', Validators.required)
   });
   constructor(private denoService: DenominationService,private service:TrialReportService) { 
     this.loading = true;
-    service.getBranchList().subscribe((res:string[])=>{
+    service.getBranchList(1).subscribe((res:string[])=>{
       this.loading = false;
       this.branchList = res;
     });

@@ -2,7 +2,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-              <h5>Trial Report</h5>
+              <h5>Detail Trial Report</h5>
               <div *ngIf="loading" class="d-flex justify-content-center">
                 <div class="spinner-border spinner-border-sm text-warning"></div>
                   <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -18,10 +18,20 @@
             </div>
             <div class="card-body">
               <code *ngIf="error">{{error}}</code>
-              <form [formGroup]="form" (ngSubmit)="submit()">
+              
                   
                 <div class="container-fluid">
-                <div class="form-group row">
+                  <div class="form-group row">
+                    <div class="col-sm-3">
+                      <input type="radio"  name="period" value="date" (change)="changePeriodfilter($event)" checked/>By Date
+                    </div> 
+                    <div class="col-sm-3">
+                      <input type="radio" name="period" value="fincycle" (change)="changePeriodfilter($event)" /> BY FIN CYCLE
+                    </div>  
+                  </div>
+                  <hr>
+                  <form [formGroup]="form" (ngSubmit)="submit()">
+                <div *ngIf="filter1" class="form-group row">
                     <label class="col-sm-1 col-form-label">Date</label>
                     <div class="col-sm-2 date-picker">
                          <!-- [min]="minDate"
@@ -53,9 +63,44 @@
                       <button type="submit" class="btn-primary">Search</button>
                     </div>
                   </div>
-                  
+                </form>
+
+                <form [formGroup]="form2" (ngSubmit)="periodSubmit()">
+                  <div *ngIf="!filter1" class="form-group row">
+                    <label class="col-sm-1">Branch</label>
+                    <div class="col-sm-2">
+                      <select class="" formControlName="branchCode" >
+                        <option value="" selected>-- Select --</option>
+                        <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
+                      </select>
+                    </div>
+                      <label class="col-sm-2 col-form-label">Finance Year</label>
+                      <div class="col-sm-2 ">
+                        
+                        <select class="" formControlName="finYear" (change)="onChangeYear($event)">
+                          <option value="" selected>-- Select --</option>
+                          <option *ngFor="let y of yearList" value="{{y}}">{{y}}</option>
+                        </select>
+                      </div>
+                      
+                    <label class="col-sm-1.5">Period Code</label>
+                    <div class="col-sm-2">
+                      <select class="" formControlName="periodCode" >
+                        <option value="" selected>-- Select --</option>
+                        <option *ngFor="let p of periodList" value="{{p}}">{{ p }}</option>
+                      </select>
+                    </div>
+                    
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn-primary">Search</button>
+                      </div>
+                    </div>
+                  </form>
+
+
+
                 </div>
-            </form>
+            
                 
             <p *ngIf="data_message" class="text-danger">{{data_message}}</p>
              
@@ -121,6 +166,63 @@
                   </tr>
                 </tbody>
               </table>
+
+              <table *ngIf="!filter1" class="table table table-hover" style="width:500px" id="export-table">
+                <thead>
+                <tr class="text-uppercase table-header-txt">
+                  <th>Summary</th>
+                  <th>Debit</th>
+                  <th>Credit</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td class="txt">Assets</td>
+                    <td class="num-txt">
+                      {{totalasset_debit < 0 ? totalasset_debitstr : totalasset_debit === 0 ? "" :  totalasset_debit | number: '1.2-2'}}
+                   </td>
+                   <td class="num-txt">
+                    {{totalasset_credit < 0 ? totalasset_creditstr : totalasset_credit === 0 ? "" :  totalasset_credit | number: '1.2-2'}}
+                  </td>
+                  </tr>
+                  <tr>
+                    <td class="txt">Liabilities</td>
+                    <td class="num-txt">
+                      {{totalliab_debit < 0 ? totalliab_debitstr : totalliab_debit === 0 ? "" :  totalliab_debit | number: '1.2-2'}}
+                   </td>
+                   <td class="num-txt">
+                    {{totalliab_credit < 0 ? totalliab_creditstr : totalliab_credit === 0 ? "" :  totalliab_credit | number: '1.2-2'}}
+                  </td>
+                  </tr>
+                  <tr>
+                    <td class="txt">Income</td>
+                    <td class="num-txt">
+                      {{totalincome_debit < 0 ? totalincome_debitstr : totalincome_debit === 0 ? "" :  totalincome_debit | number: '1.2-2'}}
+                   </td>
+                   <td class="num-txt">
+                    {{totalincome_credit < 0 ? totalincome_creditstr : totalincome_credit === 0 ? "" :  totalincome_credit | number: '1.2-2'}}
+                  </td>
+                  </tr>
+                  <tr>
+                    <td class="txt">Expenditure</td>
+                    <td class="num-txt">
+                      {{totalexp_debit < 0 ? totalexp_debitstr : totalexp_debit === 0 ? "" :  totalexp_debit | number: '1.2-2'}}
+                   </td>
+                   <td class="num-txt">
+                    {{totalexp_credit < 0 ? totalexp_creditstr : totalexp_credit === 0 ? "" :  totalexp_credit | number: '1.2-2'}}
+                  </td>
+                  </tr>
+                  <tr>
+                    <td class="txt">Total Summary </td>
+                    <td class="num-txt">
+                      {{miantotalDebit < 0 ? miantotalDebitstr : miantotalDebit === 0 ? "" :  miantotalDebit | number: '1.2-2'}}
+                   </td>
+                   <td class="num-txt">
+                    {{miantotalCredit < 0 ? miantotalCreditstr : miantotalCredit === 0 ? "" :  miantotalCredit | number: '1.2-2'}}
+                  </td>
+                  </tr>
+            </tbody>
+            </table>
             </div>
           </div>
         </div>

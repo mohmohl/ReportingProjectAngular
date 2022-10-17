@@ -74,7 +74,7 @@ totalCredit_lcystr:string;
   constructor(private service:TrialReportService, private http: HttpService, private _util:CommonUtil){//,private dateAdapter: DateAdapter<Date>) {
     //this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
     this.loading = true;
-    service.getBranchList().subscribe((res:string[])=>{
+    service.getBranchList(1).subscribe((res:string[])=>{
       this.loading = false;
       this.branchList = res;
     });
