@@ -64,7 +64,6 @@ export class DetailTrialReportComponent implements OnInit {
   isAllBranch;
   isAllCcy;
   branch = '';
-  //reportDate: Date;
 
   form = new FormGroup({
     from_date: new FormControl(Validators.required), //new Date(),
@@ -74,7 +73,6 @@ export class DetailTrialReportComponent implements OnInit {
   });
 
   constructor(private service: LatestTrialReportService, private _util: CommonUtil){
-    
     this.loading = true;
     service.getCurrencyList().subscribe((res:string[])=>{
       this.loading = false;
@@ -88,12 +86,11 @@ export class DetailTrialReportComponent implements OnInit {
           console.log(res)
          this.pattern3branchList = res;
     });
-
    }
 
   changeDate(e) {
     this.selectedBrItems = [];
-    console.log("Hello date changed")
+    //console.log("Hello date changed")
     this.form = new FormGroup({
       from_date: new FormControl(this.form.get(["from_date"])!.value,Validators.required), 
       branch: new FormControl('', Validators.required),
@@ -108,9 +105,9 @@ export class DetailTrialReportComponent implements OnInit {
     const comboData = new TrialRequestData();
     comboData.date = reportDate;
     this.loading = true;
-    this.service.check802Data(comboData).subscribe((res)=>{
+    this.service.checkSettingsDate(comboData).subscribe((res)=>{
           this.loading = false;
-          console.log(res)
+          console.log("Check Settings : " + res)
          this.dataExist = res;
     });
   } 
@@ -168,7 +165,6 @@ export class DetailTrialReportComponent implements OnInit {
     //console.log(item);   
     console.log("CCY= "+this.selectedCcyItems);
     console.log("CCY2= "+this.form.get(["currencyCode"])!.value);
-    
   }
   
   onCcyItemDeSelect(item:any){
