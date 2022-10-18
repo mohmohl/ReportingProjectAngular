@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { LatestTrialReportService } from 'src/services/LatestTrialReportService';
 import { TrialRequestData } from 'src/models/TrialRequestData';
+import { CommonUtil } from 'src/app/shared/common-util';
 
 export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
@@ -62,6 +63,7 @@ export class GeneralTrialReportComponent implements OnInit {
   isAllBranch;
   isAllCcy;
   branch = '';
+  dataExist: Boolean = true;
 
   form = new FormGroup({
     from_date: new FormControl(new Date(), Validators.required),
@@ -70,7 +72,7 @@ export class GeneralTrialReportComponent implements OnInit {
     currencyCode:new FormControl([], Validators.required)
   });
 
-  constructor(private service: LatestTrialReportService){
+  constructor(private service: LatestTrialReportService, private _util: CommonUtil){
     
     this.loading = true;
     service.getCurrencyList().subscribe((res:string[])=>{
@@ -92,6 +94,30 @@ export class GeneralTrialReportComponent implements OnInit {
     this.branch = e.target.value;
     this.selectedBrItems = [];
   }
+
+  changeDate(e) {
+    this.selectedBrItems = [];
+    //console.log("Hello date changed")
+    this.form = new FormGroup({
+      from_date: new FormControl(this.form.get(["from_date"])!.value,Validators.required), 
+      branch: new FormControl('', Validators.required),
+      branchCode:new FormControl(''),
+      currencyCode:new FormControl([], Validators.required)
+    });
+
+    let from_date = e.target.value;
+    let reportDate = this._util.getDDMMMYYYY(from_date);
+    //console.log("Final Date: " + reportDate)
+
+    const comboData = new TrialRequestData();
+    comboData.date = reportDate;
+    this.loading = true;
+    this.service.checkSettingsDate(comboData).subscribe((res)=>{
+          this.loading = false;
+          console.log("Check Settings : " + res)
+         this.dataExist = res;
+    });
+  } 
 
   ngOnInit() {
     

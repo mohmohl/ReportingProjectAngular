@@ -47,8 +47,9 @@
                             (onDeSelect)="onCcyItemDeSelect($event)"
                             (onSelectAll)="onCcySelectAll($event)"
                             (onDeSelectAll)="onCcyDeSelectAll($event)"
-                            formControlName="currencyCode"
+                            [formControl]="form.controls['currencyCode']"
                             [(ngModel)]="selectedCcyItems"> 
+                            <!-- formControlName="currencyCode" -->
                         </ng-multiselect-dropdown>
                       </div>
                     </div>
