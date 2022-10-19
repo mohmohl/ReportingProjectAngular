@@ -193,7 +193,7 @@ this.currencyCode = this.form2.get(["periodCode"])!.value;
 
 
 this.loading = true;
-this.service.getTrialReportData(year,this.bCode,this.currencyCode, 3).subscribe((res:TrialReport)=>{
+this.service.getGeneralTrialReportData(year,this.bCode,this.currencyCode, 3).subscribe((res:TrialReport)=>{
   this.loading = false;
  
   if(res != null){
