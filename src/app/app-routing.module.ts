@@ -522,9 +522,23 @@ const routes: Routes = [
         loadChildren: () => import('./views/mis-reports/dmd-report-one/dmd-report-one.module').then(m => m.DmdReportOneModule)
       },
       {
+        path: 'due-to-how7',
+        loadChildren: () => import('./views/mis-reports/due-to-how7/due-to-how7.module').then(m => m.DueToHOW7Module)
+      },
+      {
+        path: 'due-from-how8',
+        loadChildren: () => import('./views/mis-reports/due-from-how8/due-from-how8.module').then(m => m.DueFromHOW8Module)
+      },
+      {
+        path: 'meb-how6',
+        loadChildren: () => import('./views/mis-reports/meb-how6/meb-how6.module').then(m => m.MEBHOW6Module)
+      },
+
+      {
         path: 'migration-export-report',
         loadChildren: () => import('./views/migration/migration-report/migration-report.module').then(m => m.MigrationReportModule)
-      }
+      },
+      
     ]
   },
   {

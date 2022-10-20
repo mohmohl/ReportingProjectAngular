@@ -178,7 +178,7 @@ export class ConsoIncomeComponent implements OnInit {
     let fDate = this._util.getDDMMMYYYY(this.fromDate);
     let tDate = this._util.getDDMMMYYYY(this.toDate);
     this.loading = true;
-    let reportCriteria = {"t1":fDate,"t2":tDate, "t3":this.branchCode, "t4":this.ccy, "t5":this.type, "t6":this.printby, "t8":"E"};
+    let reportCriteria = {"t1":fDate,"t2":tDate, "t3":this.branchCode, "t4":this.ccy, "t5":this.type, "t6":this.printby, "t8":"I"};
     this.clearProperties();
    // this.cdf.reattach();
 
