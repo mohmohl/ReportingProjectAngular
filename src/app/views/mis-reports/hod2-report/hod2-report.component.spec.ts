@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Hod2ReportComponent } from './hod2-report.component';
 
-import { Hod3ReportComponent } from './hod3-report.component';
 
-describe('Hod3ReportComponent', () => {
-  let component: Hod3ReportComponent;
-  let fixture: ComponentFixture<Hod3ReportComponent>;
+describe('Hod2ReportComponent', () => {
+  let component: Hod2ReportComponent;
+  let fixture: ComponentFixture<Hod2ReportComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ Hod3ReportComponent ]
+      declarations: [ Hod2ReportComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(Hod3ReportComponent);
+    fixture = TestBed.createComponent(Hod2ReportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

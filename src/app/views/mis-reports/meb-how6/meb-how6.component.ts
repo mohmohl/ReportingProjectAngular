@@ -13,16 +13,19 @@ export const PICK_FORMATS = {
 };
 
 @Component({
-  selector: 'app-due-to-how7',
-  templateUrl: './due-to-how7.component.html',
-  styleUrls: ['./due-to-how7.component.css']
+  selector: 'app-meb-how6',
+  templateUrl: './meb-how6.component.html',
+  styleUrls: ['./meb-how6.component.css']
 })
-export class DueToHOW7Component implements OnInit {
+export class MebHOW6Component implements OnInit {
   loading;
   error;
   _loading;
   _branchList;
   branchCode: string = ''; 
+
+  currencyList;
+  ccyCode;
 
   fromDate: Date;
   toDate: Date;
@@ -57,7 +60,20 @@ export class DueToHOW7Component implements OnInit {
         console.log("Read getAllBranchesByUser err");
       });
 
-  
+      this.http.doGet("/misreport/getAllMISCurrency").subscribe( resp => {
+        this.loading = false;
+        this.currencyList = resp;
+        
+        if(this.currencyList != null && this.currencyList.length>0){
+          this.ccyCode = this.currencyList[0];
+        }
+        
+    },
+    err => {
+      this.loading = false;
+      debugger;
+      console.log("Read getAllMISCurrency err");
+    });
   }
 
   exportExcel() {
@@ -71,16 +87,18 @@ export class DueToHOW7Component implements OnInit {
       t2: toDate,
       t3: this.branchCode,
       t4: 'xlsx',
-      t5: 'HOW7'
+      t5: 'HOW6',
+      t6:this.ccyCode
     };
 
-    this.http.downloadFile("/misreport/downloadDueToHOW7File", requestBody, `Due To (HOW7)_${toDate}`, 'xlsx').subscribe(
+    this.http.downloadFile("/misreport/downloadDueToHOW7File", requestBody, `MEB (HOW6)_${toDate}`, 'xlsx').subscribe(
+
       (data: any) => {
         this.loading = false;
       },error => {
-        console.log("Due To (HOW7) Excel Exporting Error >>> " + error)
+        console.log("MEB (HOW6) Excel Exporting Error >>> " + error)
         if (error != "") {
-          this.error = "(The system cannot export Due To (HOW7) excel file!.. Have the error)";
+          this.error = "(The system cannot export MEB (HOW6) excel file!.. Have the error)";
         }
         this.loading = false;
       });

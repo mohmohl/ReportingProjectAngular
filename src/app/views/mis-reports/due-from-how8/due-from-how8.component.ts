@@ -13,11 +13,11 @@ export const PICK_FORMATS = {
 };
 
 @Component({
-  selector: 'app-due-to-how7',
-  templateUrl: './due-to-how7.component.html',
-  styleUrls: ['./due-to-how7.component.css']
+  selector: 'app-due-from-how8',
+  templateUrl: './due-from-how8.component.html',
+  styleUrls: ['./due-from-how8.component.css']
 })
-export class DueToHOW7Component implements OnInit {
+export class DueFromHOW8Component implements OnInit {
   loading;
   error;
   _loading;
@@ -71,16 +71,16 @@ export class DueToHOW7Component implements OnInit {
       t2: toDate,
       t3: this.branchCode,
       t4: 'xlsx',
-      t5: 'HOW7'
+      t5: 'HOW8'
     };
 
-    this.http.downloadFile("/misreport/downloadDueToHOW7File", requestBody, `Due To (HOW7)_${toDate}`, 'xlsx').subscribe(
+    this.http.downloadFile("/misreport/downloadDueToHOW7File", requestBody, `Due From (HOW8)_${toDate}`, 'xlsx').subscribe(
       (data: any) => {
         this.loading = false;
       },error => {
-        console.log("Due To (HOW7) Excel Exporting Error >>> " + error)
+        console.log("Due From (HOW8) Excel Exporting Error >>> " + error)
         if (error != "") {
-          this.error = "(The system cannot export Due To (HOW7) excel file!.. Have the error)";
+          this.error = "(The system cannot export Due From (HOW8) excel file!.. Have the error)";
         }
         this.loading = false;
       });
