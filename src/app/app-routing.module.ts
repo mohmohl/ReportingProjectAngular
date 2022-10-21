@@ -481,16 +481,6 @@ const routes: Routes = [
         path: 'mis-trial-report',
         loadChildren: () => import('./views/TrialReport/mis-trial-report/mis-trial-report.module').then(m => m.MisTrialReportModule)
       },
-    /*
-      {
-        path: 'detail-trial-conso',
-        loadChildren: () => import('./views/latest-trial-report/detail-trial-report/detail-trial-report.module').then(m => m.DetailTrialReportModule)
-      },
-      {
-        path: 'general-trial-conso',
-        loadChildren: () => import('./views/latest-trial-report/general-trial-report/general-trial-report.module').then(m => m.GeneralTrialReportModule)
-      }
-      */,
       {
         path: 'bank-cash',
         loadChildren: () => import('./views/mis-reports/bank-cash/bank-cash.module').then(m => m.BankCashModule)
@@ -543,6 +533,10 @@ const routes: Routes = [
       {
         path: 'migration-export-report',
         loadChildren: () => import('./views/migration/migration-report/migration-report.module').then(m => m.MigrationReportModule)
+      },
+      {
+        path: 'passbook-printing',
+        loadChildren: () => import('./views/passbook-printing/passbook-printing.module').then(m => m.PassbookPrintingModule)
       },
       
     ]
