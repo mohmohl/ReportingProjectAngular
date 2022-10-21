@@ -436,8 +436,7 @@ const routes: Routes = [
       {
         path: 'conso-income',
         loadChildren: () => import('./views/mis-reports/conso-income/conso-income.module').then(m => m.ConsoIncomeModule)
-      }
-      ,
+      },
       {
         path: 'detail-trial-conso',
         loadChildren: () => import('./views/mis-reports/detail-trial-conso-report/detail-trial-conso-report.module').then(m => m.DetailTrialConsoReportModule)
@@ -489,8 +488,8 @@ const routes: Routes = [
       {
         path: 'general-trial-conso',
         loadChildren: () => import('./views/latest-trial-report/general-trial-report/general-trial-report.module').then(m => m.GeneralTrialReportModule)
-      }
-      */,
+      },
+      */
       {
         path: 'bank-cash',
         loadChildren: () => import('./views/mis-reports/bank-cash/bank-cash.module').then(m => m.BankCashModule)
