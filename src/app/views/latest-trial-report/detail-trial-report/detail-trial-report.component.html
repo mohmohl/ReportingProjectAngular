@@ -47,8 +47,9 @@
                             (onDeSelect)="onCcyItemDeSelect($event)"
                             (onSelectAll)="onCcySelectAll($event)"
                             (onDeSelectAll)="onCcyDeSelectAll($event)"
-                            [formControl]="form.controls['currencyCode']"
+                            formControlName="currencyCode"
                             [(ngModel)]="selectedCcyItems"> 
+                            <!-- [formControl]="form.controls['currencyCode']" -->
                             <!-- formControlName="currencyCode" -->
                         </ng-multiselect-dropdown>
                       </div>
@@ -124,8 +125,8 @@
                     <div class="row form-group col-md-12">
                       <label class="col-sm-2 col-form-label">Branch<code>*</code></label>
                       <div class="col-sm-6">
-                      <select formControlName="branch" class="form-control">
-                        <option value="BY_BRANCH" selected>BY_BRANCH</option>
+                      <select formControlName="branch" class="form-control" (change)="branchOnChange($event)">
+                        <option value="BY_BRANCH_2" selected>BY_BRANCH</option>
                       </select> 
                       </div>
                     </div>
@@ -135,7 +136,7 @@
                     <div class="row form-group col-md-12">
                       <label class="col-sm-3 col-form-label">Branch Code<code>*</code></label>
                       <div style="width:50%;">
-                        <select class="form-control" formControlName="branchCode" (change)="branchOnChange($event)">
+                        <select class="form-control" formControlName="branchCode">
                           <option value="" selected>-- Select --</option>
                           <option value="ALL_BRANCH" selected>All</option>
                           <option *ngFor="let b of pattern3branchList" value="{{b}}">{{b}}</option>

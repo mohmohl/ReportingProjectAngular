@@ -87,16 +87,10 @@ export class DetailTrialReportComponent implements OnInit {
          this.pattern3branchList = res;
     });
    }
-
+  
   changeDate(e) {
     this.selectedBrItems = [];
-    //console.log("Hello date changed")
-    this.form = new FormGroup({
-      from_date: new FormControl(this.form.get(["from_date"])!.value,Validators.required), 
-      branch: new FormControl('', Validators.required),
-      branchCode:new FormControl(''),
-      currencyCode:new FormControl([], Validators.required)
-    });
+    console.log("Hello date changed")
 
     let from_date = e.target.value;
     let reportDate = this._util.getDDMMMYYYY(from_date);
@@ -111,11 +105,6 @@ export class DetailTrialReportComponent implements OnInit {
          this.dataExist = res;
     });
   } 
-
-  changeBranch(e) {
-    this.branch = e.target.value;
-    this.selectedBrItems = [];
-  }
 
   ngOnInit() {
     
@@ -143,7 +132,10 @@ export class DetailTrialReportComponent implements OnInit {
   // For Branch
   onBrItemSelect(item:any){
     //console.log(item);   
+    //console.log("Branch= "+this.selectedBrItems);
+    console.log("Hello Muti branch selected");
     console.log("Branch= "+this.selectedBrItems);
+    console.log("Branch2= "+this.form.get(["branchCode"])!.value);
   }
   
   onBrItemDeSelect(item:any){
@@ -170,7 +162,6 @@ export class DetailTrialReportComponent implements OnInit {
   onCcyItemDeSelect(item:any){
     //console.log(item);
     this.isAllCcy = false;
-   
   }
   
   onCcySelectAll(items: any){
@@ -188,6 +179,7 @@ export class DetailTrialReportComponent implements OnInit {
      return false
     }
    }
+
    branchOnChange(event:any){
     this.branch = event.target.value;
     this.selectedBrItems = [];
@@ -196,12 +188,16 @@ export class DetailTrialReportComponent implements OnInit {
     }
     else if(this.branch == "BY_BRANCH"){
       this.branch="pattern3";
-    }
-    else{
+    } else if(this.branch == "BY_BRANCH_2"){
+      this.branch="pattern4";
+    } else{
       this.branch="";
     }
    }
+
   submit(){
+    debugger
+    console.log("Hi submit now")
     this.trialList=null;
     this.totalDebit=0;
     this.totalDebit_lcy=0;
@@ -217,27 +213,31 @@ export class DetailTrialReportComponent implements OnInit {
   let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
   // this.bCode=this.form.get(["branchCode"])!.value;
   // this.currencyCode = this.form.get(["currencyCode"])!.value;
-  
+console.log("After Search: " + this.branch)  
 if(this.branch ==""){
   this.branchCode=this.form.get(["branch"])!.value
+  console.log("Branch is Blank condition")
+} else{
+    if(this.isAllBranch){
+      console.log("Hello ALL Branch condition")
+      if(this.branch == 'pattern2') {
+        this.branchCode = 'ALL_REGION';
+      } else {
+        this.branchCode = 'ALL_BRANCH';
+      }
+    }
+    else{
+      if(this.branch == 'pattern2' || this.branch == 'pattern3') {
+        this.branchCode = this.selectedBrItems.join(",");
+      } else {
+        this.branchCode = this.form.get(["branchCode"])!.value;
+        console.log("Hello else condition")
+        console.log("var value " + this.branchCode)
+        console.log("form var value :" + this.form.get(["branchCode"])!.value)
+      }
+      //this.branchCode = "'"+ this.branchCode+ "'";
+    }
 }
-  else{
-  if(this.isAllBranch){
-    if(this.branch == 'pattern2') {
-      this.branchCode = 'ALL_REGION';
-    } else {
-      this.branchCode = 'ALL_BRANCH';
-    }
-  }
-  else{
-    if(this.branch == 'pattern2' || this.branch == 'pattern3') {
-      this.branchCode = this.selectedBrItems.join(",");
-    } else {
-      this.branchCode = this.form.get(["branchCode"])!.value;
-    }
-    //this.branchCode = "'"+ this.branchCode+ "'";
-  }
-  }
   if(this.isAllCcy){
     this.currencyCode = ["BASE"];
     this.ccyCode = false;
@@ -323,7 +323,7 @@ isNegitiveTransform(value: any, args?: any): any {
 
 exportExcel(): void 
 {
-  debugger
+  
     if (this.form.invalid) {
       this.error = "Data is required";
       return;
@@ -382,7 +382,7 @@ exportExcel(): void
   this.service.exportDetailTrialExcel(comboData)
   .pipe(
     map((data: any) => {
-      debugger;
+      ;
       let blob = new Blob([data], {
         type: "application/vnd.ms-excel"
       });
@@ -397,7 +397,7 @@ exportExcel(): void
       res => { },
       error => {
         console.log("Detail Trial Error >>> "+error)
-        debugger;
+        ;
         if(error != ""){
         this.error = "(The system cannot generate detail trial!.. Have the error)";
           }
@@ -481,7 +481,7 @@ exportExcel(): void
       res => { },
       error => {
         console.log("Detail Trial Error >>> "+error)
-        debugger;
+        ;
         if(error != ""){
         this.error = "(The system cannot generate detail trial!.. Have the error)";
           }
