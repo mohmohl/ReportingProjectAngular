@@ -445,7 +445,8 @@ const routes: Routes = [
       {
         path: 'general-trial-conso',
         loadChildren: () => import('./views/mis-reports/general-trial-conso-report/general-trial-conso-report.module').then(m => m.GeneralTrialConsoReportModule)
-      }, {
+      }, 
+      {
         path: 'tagit-check-sum',
         loadChildren: () => import('./views/tagit/check-sum/check-sum.module').then(m => m.CheckSumModule)
       },
@@ -480,15 +481,16 @@ const routes: Routes = [
         path: 'mis-trial-report',
         loadChildren: () => import('./views/TrialReport/mis-trial-report/mis-trial-report.module').then(m => m.MisTrialReportModule)
       },
-      /*//for v14
+    /*
       {
-        path: 'gt-detail-trial-report',
+        path: 'detail-trial-conso',
         loadChildren: () => import('./views/latest-trial-report/detail-trial-report/detail-trial-report.module').then(m => m.DetailTrialReportModule)
       },
       {
-        path: 'general-trial-report',
+        path: 'general-trial-conso',
         loadChildren: () => import('./views/latest-trial-report/general-trial-report/general-trial-report.module').then(m => m.GeneralTrialReportModule)
-      },*/
+      }
+      */,
       {
         path: 'bank-cash',
         loadChildren: () => import('./views/mis-reports/bank-cash/bank-cash.module').then(m => m.BankCashModule)
@@ -532,6 +534,10 @@ const routes: Routes = [
       {
         path: 'meb-how6',
         loadChildren: () => import('./views/mis-reports/meb-how6/meb-how6.module').then(m => m.MEBHOW6Module)
+      },
+      {
+        path: 'hod9',
+        loadChildren: () => import('./views/mis-reports/cashinhand-hod9/cashinhand-hod9.module').then(m => m.HOD9Module)
       },
 
       {
