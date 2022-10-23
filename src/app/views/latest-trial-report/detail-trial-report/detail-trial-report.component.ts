@@ -478,12 +478,15 @@ export class DetailTrialReportComponent implements OnInit {
   }
 
   exportExcel(): void 
-{
-  
+  {
     if (this.form1.invalid) {
       this.error = "Data is required";
       return;
-    }
+} else if(!this.beforeSettingsDate && this.selectedBrItems.length >1) {
+      this.error = "Multi branch allow only for back date!";
+      return;
+  }
+    
   this.error="";
   this.loading = true;
   this.from_date = this.form1.get(["from_date"])!.value;
@@ -533,7 +536,7 @@ export class DetailTrialReportComponent implements OnInit {
   comboData.date = fDate;
   comboData.branchCode =  this.branchCode;
   comboData.currencyCodelist = this.currencyCode;
-
+  comboData.format = "1"
 
   this.service.exportDetailTrialExcel(comboData)
   .pipe(
@@ -616,6 +619,7 @@ export class DetailTrialReportComponent implements OnInit {
   comboData.date = fDate;
   comboData.branchCode =  this.branchCode;
   comboData.currencyCodelist = this.currencyCode;
+  comboData.format = "1"
 
   this.service.exportDetailTrialPDF(comboData)
   .pipe(
