@@ -469,7 +469,6 @@ const routes: Routes = [
         path: 'journal-listing',
         loadChildren: () => import('./views/journal-listing/journal-listing.module').then(m => m.JournalListingModule)
       },
-      //  {
       //    path: 'gt-detail-trial-report',
       //    loadChildren: () => import('./views/TrialReport/detail-trial-report/trial-report.module').then(m => m.TrialReportModule), canActivate: [AuthGuard]
       //  },
