@@ -465,12 +465,36 @@ debugger
        this.totalDebit_lcy+= data[j].debit_lcy;
        this.totalCredit+= data[j].credit;
        this.totalCredit_lcy+= data[j].credit_lcy;
+
+       this.totalasset_debit += data[j].asset_debit;
+       this.totalasset_credit+= data[j].asset_credit;
+       this.totalliab_debit+= data[j].liab_debit;
+       this.totalliab_credit+= data[j].liab_credit;
+       this.totalincome_debit+= data[j].income_debit;
+       this.totalincome_credit+= data[j].income_credit;
+       this.totalexp_debit+= data[j].exp_debit;
+       this.totalexp_credit+= data[j].exp_credit;
       
   }
+  this.miantotalDebit=this.totalasset_debit+this.totalliab_debit+ this.totalincome_debit+this.totalexp_debit;
+  this.miantotalCredit=this.totalasset_credit+this.totalliab_credit+ this.totalincome_credit+this.totalexp_credit;
+
   if(this.totalDebit < 0 )this.totalDebitstr = this.isNegitiveTransform(this.totalDebit);
   if(this.totalDebit_lcy < 0 )this.totalDebit_lcystr = this.isNegitiveTransform(this.totalDebit_lcy);
   if(this.totalCredit < 0 )this.totalCreditstr = this.isNegitiveTransform(this.totalCredit);
   if(this.totalCredit_lcy < 0 )this.totalCredit_lcystr = this.isNegitiveTransform(this.totalCredit_lcy);
+  //for period
+if(this.totalasset_debit < 0 )this.totalasset_debitstr = this.isNegitiveTransform(this.totalasset_debit);
+if(this.totalasset_credit < 0 )this.totalasset_creditstr = this.isNegitiveTransform(this.totalasset_credit);
+if(this.totalliab_debit < 0 )this.totalliab_debitstr = this.isNegitiveTransform(this.totalliab_debit);
+if(this.totalliab_credit < 0 )this.totalliab_creditstr = this.isNegitiveTransform(this.totalliab_credit);
+if(this.totalincome_debit < 0 )this.totalincome_debitstr = this.isNegitiveTransform(this.totalincome_debit);
+if(this.totalincome_credit < 0 )this.totalincome_creditstr = this.isNegitiveTransform(this.totalincome_credit);
+if(this.totalexp_debit < 0 )this.totalexp_debitstr = this.isNegitiveTransform(this.totalexp_debit);
+if(this.totalexp_credit < 0 )this.totalexp_creditstr = this.isNegitiveTransform(this.totalexp_credit);
+
+if(this.miantotalDebit < 0 )this.miantotalDebitstr = this.isNegitiveTransform(this.miantotalDebit);
+if(this.miantotalCredit < 0 )this.miantotalCreditstr = this.isNegitiveTransform(this.miantotalCredit);
   } 
 
   isNegitiveTransform(value: any, args?: any): any {
