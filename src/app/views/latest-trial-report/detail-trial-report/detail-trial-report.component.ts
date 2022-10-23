@@ -273,6 +273,12 @@ export class DetailTrialReportComponent implements OnInit {
     if(e.target.value == 'date'){
       this.filter1=true;
       this.loading=true;
+      this.form1 = new FormGroup({
+        from_date: new FormControl(Validators.required), //new Date(),
+        branch: new FormControl('pattern2', Validators.required),
+        branchCode:new FormControl(''),
+        currencyCode:new FormControl([], Validators.required)
+      });
       this.service.getBranchList(1).subscribe((res:string[])=>{
         this.loading = false;
         this.pattern3branchList = res;
@@ -313,7 +319,7 @@ export class DetailTrialReportComponent implements OnInit {
     this.totalDebit_lcy=0;
     this.totalCredit=0;
     this.totalCredit_lcy=0;
-
+debugger
   if (this.form1.invalid) {
       this.error = "Data is required";
       return;

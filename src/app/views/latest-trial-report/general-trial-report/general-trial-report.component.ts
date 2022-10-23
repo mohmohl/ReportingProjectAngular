@@ -273,6 +273,12 @@ export class GeneralTrialReportComponent implements OnInit {
     if(e.target.value == 'date'){
       this.filter1=true;
       this.loading=true;
+      this.form1 = new FormGroup({
+        from_date: new FormControl(Validators.required), //new Date(),
+        branch: new FormControl('pattern2', Validators.required),
+        branchCode:new FormControl(''),
+        currencyCode:new FormControl([], Validators.required)
+      });
       this.service.getBranchList(1).subscribe((res:string[])=>{
         this.loading = false;
         this.pattern3branchList = res;
@@ -480,14 +486,125 @@ export class GeneralTrialReportComponent implements OnInit {
   exportExcel(): void 
 {
   
+  this.error="";
+  var f_Date="";
+  var fromat="1";
+  var period_code="";
+  if(this.filter1){
+  if (this.form1.invalid) {
+    this.error = "Data is required";
+    return;
+  } else if(!this.beforeSettingsDate && this.selectedBrItems.length >1) {
+    this.error = "Multi branch allow only for back date!";
+    return;
+}
+this.from_date = this.form1.get(["from_date"])!.value;
+f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
+
+if(this.branch ==""){
+  this.branchCode=this.form1.get(["branch"])!.value
+}
+  else{
+  if(this.isAllBranch){
+    if(this.branch == 'pattern2') {
+      this.branchCode = 'ALL_REGION';
+    } else {
+      this.branchCode = 'ALL_BRANCH';
+    }
+  }
+  else{
+    if(this.branch == 'pattern2' || this.branch == 'pattern3') {
+      this.branchCode = this.selectedBrItems.join(",");
+    } else {
+      this.branchCode = this.form1.get(["branchCode"])!.value;
+    }
+    //this.branchCode = "'"+ this.branchCode+ "'";
+  }
+  }
+
+if(this.isAllCcy){
+  this.currencyCode = ["BASE"];
+  this.ccyCode = false;
+}else{
+  //this.currencyCode = this.selectedCcyItems.join("','");
+  this.currencyCode =  this.form1.get(["currencyCode"])!.value;
+  if(this.currencyCode.length == 1){
+    if(this.currencyCode[0] != "MMK"){
+      this.ccyCode = true;
+    }
+    else{
+      this.ccyCode = false;
+    }
+  }
+  else{
+    this.ccyCode = false;
+  }
+}
+fromat="1";
+}
+//for period
+else{
+if (this.form2.invalid) {
+  this.error = "Data is required";
+  return;
+}
+f_Date = this.form2.get(["finYear"])!.value;
+this.branchCode=this.form2.get(["branchCode"])!.value;
+period_code = this.form2.get(["periodCode"])!.value;
+fromat="3";
+}
+
+this.loading = true;
+
+
+const comboData = new TrialRequestData();
+comboData.date = f_Date;
+comboData.branchCode =  this.branchCode;
+comboData.currencyCode = period_code;
+comboData.currencyCodelist=this.currencyCode
+comboData.format = fromat;
+  this.service.exportGeneralTrialExcel(comboData)
+  .pipe(
+    map((data: any) => {
+      ;
+      let blob = new Blob([data], {
+        type: "application/vnd.ms-excel"
+      });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'GeneralTrial_'+this.branchCode+'_'+this.currencyCode+'.xlsx';
+        link.click();
+        window.URL.revokeObjectURL(link.href);
+      
+      this.loading = false;
+    })).subscribe(
+      res => { },
+      error => {
+        console.log("General Trial Error >>> "+error)
+        ;
+        if(error != ""){
+        this.error = "(The system cannot generate general trial!.. Have the error)";
+          }
+        this.loading = false;
+      });
+  }
+
+  exportPDF(): void 
+  {
+    this.error="";
+    var f_Date="";
+    var fromat="1";
+    var period_code="";
+    if(this.filter1){
     if (this.form1.invalid) {
       this.error = "Data is required";
       return;
-    }
-  this.error="";
-  this.loading = true;
+    } else if(!this.beforeSettingsDate && this.selectedBrItems.length >1) {
+      this.error = "Multi branch allow only for back date!";
+      return;
+  }
   this.from_date = this.form1.get(["from_date"])!.value;
-  let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
+  f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
   
   if(this.branch ==""){
     this.branchCode=this.form1.get(["branch"])!.value
@@ -528,95 +645,29 @@ export class GeneralTrialReportComponent implements OnInit {
       this.ccyCode = false;
     }
   }
-
-  const comboData = new TrialRequestData();
-  comboData.date = fDate;
-  comboData.branchCode =  this.branchCode;
-  comboData.currencyCodelist = this.currencyCode;
-
-
-  this.service.exportGeneralTrialExcel(comboData)
-  .pipe(
-    map((data: any) => {
-      ;
-      let blob = new Blob([data], {
-        type: "application/vnd.ms-excel"
-      });
-        var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'GeneralTrial_'+this.branchCode+'_'+this.currencyCode+'.xlsx';
-        link.click();
-        window.URL.revokeObjectURL(link.href);
-      
-      this.loading = false;
-    })).subscribe(
-      res => { },
-      error => {
-        console.log("General Trial Error >>> "+error)
-        ;
-        if(error != ""){
-        this.error = "(The system cannot generate general trial!.. Have the error)";
-          }
-        this.loading = false;
-      });
+  fromat="1";
+}
+//for period
+else{
+  if (this.form2.invalid) {
+    this.error = "Data is required";
+    return;
   }
-
-  exportPDF(): void 
-  {
-    if (this.form1.invalid) {
-      this.error = "Data is required";
-      return;
-  }
-  this.error="";
+  f_Date = this.form2.get(["finYear"])!.value;
+  this.branchCode=this.form2.get(["branchCode"])!.value;
+  period_code = this.form2.get(["periodCode"])!.value;
+  fromat="3";
+}
+  
   this.loading = true;
-  this.from_date = this.form1.get(["from_date"])!.value;
-  let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
-
-  if(this.branch ==""){
-    this.branchCode=this.form1.get(["branch"])!.value
-  }
-    else{
-    if(this.isAllBranch){
-      if(this.branch == 'pattern2') {
-        this.branchCode = 'ALL_REGION';
-      } else {
-        this.branchCode = 'ALL_BRANCH';
-      }
-    }
-    else{
-      if(this.branch == 'pattern2' || this.branch == 'pattern3') {
-        this.branchCode = this.selectedBrItems.join(",");
-      } else {
-        this.branchCode = this.form1.get(["branchCode"])!.value;
-      }
-      //this.branchCode = "'"+ this.branchCode+ "'";
-    }
-    }
-
-  if(this.isAllCcy){
-    this.currencyCode = ["BASE"];
-    this.ccyCode = false;
-  }else{
-    //this.currencyCode = this.selectedCcyItems.join("','");
-    this.currencyCode =  this.form1.get(["currencyCode"])!.value;
-    if(this.currencyCode.length == 1){
-      if(this.currencyCode[0] != "MMK"){
-        this.ccyCode = true;
-      }
-      else{
-        this.ccyCode = false;
-      }
-    }
-    else{
-      this.ccyCode = false;
-    }
-  }
+  
 
   const comboData = new TrialRequestData();
-  comboData.date = fDate;
+  comboData.date = f_Date;
   comboData.branchCode =  this.branchCode;
-  comboData.currencyCodelist = this.currencyCode;
-
+  comboData.currencyCode = period_code;
+  comboData.currencyCodelist=this.currencyCode
+  comboData.format = fromat;
   this.service.exportGeneralTrialPDF(comboData)
   .pipe(
     map((data: any) => {
