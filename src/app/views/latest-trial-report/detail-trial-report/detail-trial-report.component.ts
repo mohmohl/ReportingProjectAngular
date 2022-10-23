@@ -479,18 +479,20 @@ export class DetailTrialReportComponent implements OnInit {
 
   exportExcel(): void 
   {
+    this.error="";
+    var f_Date="";
+    var fromat="1";
+    var period_code="";
+    if(this.filter1){
     if (this.form1.invalid) {
       this.error = "Data is required";
       return;
-} else if(!this.beforeSettingsDate && this.selectedBrItems.length >1) {
+    } else if(!this.beforeSettingsDate && this.selectedBrItems.length >1) {
       this.error = "Multi branch allow only for back date!";
       return;
   }
-    
-  this.error="";
-  this.loading = true;
   this.from_date = this.form1.get(["from_date"])!.value;
-  let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
+  f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
   
   if(this.branch ==""){
     this.branchCode=this.form1.get(["branch"])!.value
@@ -531,12 +533,29 @@ export class DetailTrialReportComponent implements OnInit {
       this.ccyCode = false;
     }
   }
+  fromat="1";
+}
+//for period
+else{
+  if (this.form2.invalid) {
+    this.error = "Data is required";
+    return;
+  }
+  f_Date = this.form2.get(["finYear"])!.value;
+  this.branchCode=this.form2.get(["branchCode"])!.value;
+  period_code = this.form2.get(["periodCode"])!.value;
+  fromat="3";
+}
+  
+  this.loading = true;
+  
 
   const comboData = new TrialRequestData();
-  comboData.date = fDate;
+  comboData.date = f_Date;
   comboData.branchCode =  this.branchCode;
-  comboData.currencyCodelist = this.currencyCode;
-  comboData.format = "1"
+  comboData.currencyCode = period_code;
+  comboData.currencyCodelist=this.currencyCode
+  comboData.format = fromat;
 
   this.service.exportDetailTrialExcel(comboData)
   .pipe(
@@ -566,15 +585,21 @@ export class DetailTrialReportComponent implements OnInit {
 
   exportPDF(): void 
   {
+    this.error="";
+    var f_Date="";
+    var fromat="1";
+    var period_code="";
+    if(this.filter1){
     if (this.form1.invalid) {
       this.error = "Data is required";
       return;
+    } else if(!this.beforeSettingsDate && this.selectedBrItems.length >1) {
+      this.error = "Multi branch allow only for back date!";
+      return;
   }
-  this.error="";
-  this.loading = true;
   this.from_date = this.form1.get(["from_date"])!.value;
-  let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
-
+  f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
+  
   if(this.branch ==""){
     this.branchCode=this.form1.get(["branch"])!.value
   }
@@ -614,12 +639,29 @@ export class DetailTrialReportComponent implements OnInit {
       this.ccyCode = false;
     }
   }
+  fromat="1";
+}
+//for period
+else{
+  if (this.form2.invalid) {
+    this.error = "Data is required";
+    return;
+  }
+  f_Date = this.form2.get(["finYear"])!.value;
+  this.branchCode=this.form2.get(["branchCode"])!.value;
+  period_code = this.form2.get(["periodCode"])!.value;
+  fromat="3";
+}
+  
+  this.loading = true;
+  
 
   const comboData = new TrialRequestData();
-  comboData.date = fDate;
+  comboData.date = f_Date;
   comboData.branchCode =  this.branchCode;
-  comboData.currencyCodelist = this.currencyCode;
-  comboData.format = "1"
+  comboData.currencyCode = period_code;
+  comboData.currencyCodelist=this.currencyCode
+  comboData.format = fromat;
 
   this.service.exportDetailTrialPDF(comboData)
   .pipe(
