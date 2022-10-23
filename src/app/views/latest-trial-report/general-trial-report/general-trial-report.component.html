@@ -2,7 +2,7 @@
   <div class="col-sm-12">
       <div class="card">
           <div class="card-header">
-            <h5>General Trial Report 123</h5>
+            <h5>General Trial Report</h5>
             <div *ngIf="loading" class="d-flex justify-content-center">
               <div class="spinner-border spinner-border-sm text-warning"></div>
                 <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -20,18 +20,6 @@
           <div class="card-body">
             <code *ngIf="error">{{error}}</code>
               <div class="container-fluid">
-		<div class="form-group row">
-                  <div class="col-sm-3">
-                    <input type="radio"  name="period" value="date" (change)="changePeriodfilter($event)" checked/>By Date
-                  </div> 
-                  <div class="col-sm-3">
-                    <input type="radio" name="period" value="fincycle" (change)="changePeriodfilter($event)" /> BY FIN CYCLE
-                  </div>  
-                </div>
-                <hr>
-
-                <form [formGroup]="form1" (ngSubmit)="submit()" *ngIf="filter1">
-                    
                 <div class="form-group row">
                   <div class="col-sm-3">
                     <input type="radio"  name="period" value="date" (change)="changePeriodfilter($event)" checked/>By Date
@@ -57,7 +45,6 @@
                           </div>
                         </div>
                       </div>
-<<<<<<< HEAD
     
                       <div class="col-md-6">
                         <div class="row form-group col-md-12">
@@ -89,43 +76,6 @@
                           </select> 
                           </div>
                         </div>
-=======
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div class="row form-group col-md-12">
-                      <label class="col-sm-3 col-form-label">Currency<code>*</code></label>
-                      <div style="width:50%;">
-                        
-
-                  <ng-multiselect-dropdown 
-                      [settings]="dropdownSettings" style="background: maroon;"
-                      [data]="currencyList"
-                      (onSelect)="onCcyItemSelect($event)" 
-                      (onDeSelect)="onCcyItemDeSelect($event)"
-                      (onSelectAll)="onCcySelectAll($event)"
-                      (onDeSelectAll)="onCcyDeSelectAll($event)"
-                      formControlName="currencyCode"
-                      [(ngModel)]="selectedCcyItems">
-                  </ng-multiselect-dropdown>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>   
-
-                <div class="form-group row">
-                  <div class="col-md-6">
-                    <div class="row form-group col-md-12">
-                      <label class="col-sm-2 col-form-label">Branch<code>*</code></label>
-                      
-                      <div class="col-sm-6">
-                          <select formControlName="branch" class="form-control" (change)="branchOnChange($event)">
-                            <option value="" selected>-- Select --</option>
-                            <option *ngFor="let b of branch_typeList" value="{{b.value}}">{{b.desc}}</option>
-			  </select> 	
->>>>>>> 87125a8a4257e57664e20c10adf793d21c22a30d
                       </div>
     
                       <div class="col-md-6" >
@@ -166,11 +116,6 @@
     
                 </form>
 
-<<<<<<< HEAD
-=======
-                </form>
-
->>>>>>> 87125a8a4257e57664e20c10adf793d21c22a30d
                 <form [formGroup]="form2" (ngSubmit)="periodSubmit()" *ngIf="!filter1" >
                 <div class="form-group row">
                     <label class="col-sm-1">Branch</label>
@@ -202,12 +147,8 @@
                     </div>
                     </div>
                 </form>
-<<<<<<< HEAD
               </div>
 
-=======
-             </div>
->>>>>>> 87125a8a4257e57664e20c10adf793d21c22a30d
 
             <p *ngIf="data_message" class="text-danger">{{data_message}}</p>
 
@@ -242,11 +183,7 @@
                           {{list.debit_lcy < 0 ? list.debit_lcystr : list.debit_lcy === 0 ? "" :list.debit_lcy | number: '1.2-2'}}
                         </td>
                         <td class="txt">{{list.account}}</td>
-<<<<<<< HEAD
                         <td class="des-txt">{{list.gl_desc}}</td>
-=======
-			<td class="des-txt">{{list.gl_desc}}</td>
->>>>>>> 87125a8a4257e57664e20c10adf793d21c22a30d
                         <td class="num-txt" *ngIf="ccyCode">
                           {{list.credit < 0 ? list.creditstr : list.credit === 0 ? "" :list.credit | number: '1.2-2'}}
                         </td>
