@@ -73,7 +73,7 @@ export class DetailTrialReportComponent implements OnInit {
   trialList:TrialData[];
 
   pattern2branchList:string[] = ['REGION_1', 'REGION_2', 'REGION_3', 'REGION_4','REGION_5', 'REGION_6', 'REGION_7', 'REGION_8', 'REGION_9'];
-  pattern3branchList:string[];
+  pattern3branchList:string[] = [];
   currencyList:string[];
   beforeSettingsDate: Boolean = true;
   
@@ -93,8 +93,8 @@ export class DetailTrialReportComponent implements OnInit {
   branch_typeList = [];
 
   form1 = new FormGroup({
-    from_date: new FormControl(Validators.required), //new Date(),
-    branch: new FormControl('pattern2', Validators.required),
+    from_date: new FormControl(Validators.required), 
+    branch: new FormControl('', Validators.required),
     branchCode:new FormControl(''),
     currencyCode:new FormControl([], Validators.required)
   });
@@ -109,17 +109,10 @@ export class DetailTrialReportComponent implements OnInit {
     this.loading = true;
     service.getCurrencyList().subscribe((res:string[])=>{
       this.loading = false;
-      console.log(res)
       this.currencyList = res;
     });
 
     this.loading = true;
-    service.getBranchList(1).subscribe((res:string[])=>{
-          this.loading = false;
-          console.log(res)
-         this.pattern3branchList = res;
-    });
-
     service.get_finance_cycle_List().subscribe((res:string[])=>{
       this.loading = false;
       this.yearList = res;
@@ -129,7 +122,6 @@ export class DetailTrialReportComponent implements OnInit {
   
   changeDate(e) {
     this.selectedBrItems = [];
-    console.log("Hello date changed")
 
     let from_date = e.target.value;
     let reportDate = this._util.getDDMMMYYYY(from_date);
@@ -148,7 +140,6 @@ export class DetailTrialReportComponent implements OnInit {
 
   intializeBranchType(isBefore){
     if(isBefore){
-      this.branch="";
       this.branch_typeList = [
         {"value":"AGENCY", "desc" : "AGENCY"},
 
@@ -160,9 +151,7 @@ export class DetailTrialReportComponent implements OnInit {
 
         {"value":"BY_BRANCH", "desc" : "BY BRANCH"}
       ]
-
     }else{
-      this.branch="pattern3";
       this.branch_typeList = [{"value":"BY_BRANCH", "desc" : "BY BRANCH"}]
     }
   }
@@ -195,9 +184,6 @@ export class DetailTrialReportComponent implements OnInit {
   onBrItemSelect(item:any){
     //console.log(item);   
     //console.log("Branch= "+this.selectedBrItems);
-    console.log("Hello Muti branch selected");
-    console.log("Branch= "+this.selectedBrItems);
-    console.log("Branch2= "+this.form1.get(["branchCode"])!.value);
   }
   
   onBrItemDeSelect(item:any){
@@ -217,8 +203,7 @@ export class DetailTrialReportComponent implements OnInit {
   // For ccy 
   onCcyItemSelect(item:any){
     //console.log(item);   
-    console.log("CCY= "+this.selectedCcyItems);
-    console.log("CCY2= "+this.form1.get(["currencyCode"])!.value);
+    // console.log("CCY= "+this.selectedCcyItems);
   }
   
   onCcyItemDeSelect(item:any){
@@ -250,6 +235,15 @@ export class DetailTrialReportComponent implements OnInit {
     }
     else if(this.branch == "BY_BRANCH"){
       this.branch="pattern3";
+      // console.log(" pattern3 : " + this.pattern3branchList.length);
+      if(this.pattern3branchList.length == 0) {
+        this.loading = true;
+        this.service.getBranchList(1).subscribe((res:string[])=>{
+              this.loading = false;
+             this.pattern3branchList = res;
+        });
+      }
+
     } else{
       this.branch="";
     }
@@ -264,7 +258,6 @@ export class DetailTrialReportComponent implements OnInit {
   }
 
   changePeriodfilter(e:any){
-    //console.log("Hello change period filter")
     this.amount_clear();
     this.pattern3branchList =null;
     this.ccyCode = false;
@@ -313,13 +306,11 @@ export class DetailTrialReportComponent implements OnInit {
   }
 
   submit(){
-    //console.log("Hi submit now")
     this.trialList=null;
     this.totalDebit=0;
     this.totalDebit_lcy=0;
     this.totalCredit=0;
     this.totalCredit_lcy=0;
-debugger
   if (this.form1.invalid) {
       this.error = "Data is required";
       return;
@@ -333,13 +324,10 @@ debugger
   this.loading = true;
   let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
 
-  console.log("After Search: " + this.branch)  
   if(this.branch ==""){
     this.branchCode=this.form1.get(["branch"])!.value
-    console.log("Branch is Blank condition")
   } else{
       if(this.isAllBranch){
-        console.log("Hello ALL Branch condition")
         if(this.branch == 'pattern2') {
           this.branchCode = 'ALL_REGION';
         } else {
@@ -351,9 +339,6 @@ debugger
           this.branchCode = this.selectedBrItems.join(",");
         } else {
           this.branchCode = this.form1.get(["branchCode"])!.value;
-          console.log("Hello else condition")
-          console.log("var value " + this.branchCode)
-          console.log("form var value :" + this.form1.get(["branchCode"])!.value)
         }
         //this.branchCode = "'"+ this.branchCode+ "'";
       }
@@ -406,8 +391,6 @@ debugger
   }
 
   periodSubmit(){
-  console.log("Hello Period Submit")  
-  debugger
   this.error ="";
   this.amount_clear();
 
