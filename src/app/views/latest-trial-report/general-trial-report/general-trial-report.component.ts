@@ -579,7 +579,30 @@ comboData.format = fromat;
       });
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = 'GeneralTrial_'+this.branchCode+'_'+this.currencyCode+'.xlsx';
+
+        // update file name
+        //console.log("Branch List: " + this.branchCode)
+        var b = this.branchCode.split(",");
+        var bName = "";
+        if(b.length > 3) {
+          for (let i = 0; i < 3; i++) {
+            bName += "'" + b[i] + "'";
+            if ((3 - i) != 1) {
+              bName += ",";
+            }
+          }
+
+          bName += ", more";
+        } else {
+          bName = this.branchCode;
+        }
+
+        if(this.filter1) {
+          link.download = 'GeneralTrial_'+bName+'_'+this.currencyCode+'.xlsx';
+        } else {
+          link.download = 'GeneralTrial_'+bName+'_'+period_code+'.xlsx';
+        }
+        //console.log("File Name: " + link.download);
         link.click();
         window.URL.revokeObjectURL(link.href);
       
@@ -687,7 +710,31 @@ else{
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
       a.target = '_blank'; 
-      a.download = 'GeneralTrial_'+this.branchCode+'_'+this.currencyCode+'.pdf';
+
+      // update file name
+      //console.log("Branch List: " + this.branchCode)
+      var b = this.branchCode.split(",");
+      var bName = "";
+      if(b.length > 3) {
+        for (let i = 0; i < 3; i++) {
+          bName += "'" + b[i] + "'";
+          if ((3 - i) != 1) {
+            bName += ",";
+          }
+        }
+
+        bName += ", more";
+      } else {
+        bName = this.branchCode;
+      }
+
+      if(this.filter1) {
+        a.download = 'GeneralTrial_'+bName+'_'+this.currencyCode+'.pdf';
+      } else {
+        a.download = 'GeneralTrial_'+bName+'_'+period_code+'.pdf';
+      }
+      //console.log("File Name: " + link.download);
+
       a.click();
       
       this.loading = false;
