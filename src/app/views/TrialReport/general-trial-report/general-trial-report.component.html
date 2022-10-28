@@ -1,226 +1,231 @@
 <div class="row">
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header">
-              <h5>Genereal Trial Report</h5>
-              <div *ngIf="loading" class="d-flex justify-content-center">
-                <div class="spinner-border spinner-border-sm text-warning"></div>
-                  <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
-              </div>
-              <div class="page-header-breadcrumb">
-                <button type="button" class="btn-success" (click)="exportexcel()">
-                  <i class="ti-printer"></i>Excel
-                </button> 
-                <button type="button" class="btn-danger" (click)="exportPDF()">
-                  <i class="ti-printer"></i>PDF
-                </button> 
-              </div>
+  <div class="col-sm-12">
+      <div class="card">
+          <div class="card-header">
+            <h5>General Trial Report</h5>
+            <div *ngIf="loading" class="d-flex justify-content-center">
+              <div class="spinner-border spinner-border-sm text-warning"></div>
+                <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
             </div>
-            <div class="card-body">
-              <code *ngIf="error">{{error}}</code>
-               
-                  
-                    <div class="container-fluid">
-                      <div class="form-group row">
-                        <div class="col-sm-3">
-                          <input type="radio"  name="period" value="date" (change)="changePeriodfilter($event)" checked/>By Date
-                        </div> 
-                        <div class="col-sm-3">
-                          <input type="radio" name="period" value="fincycle" (change)="changePeriodfilter($event)" /> BY FIN CYCLE
-                        </div>  
-                      </div>
-                      <hr>
-                      <form [formGroup]="form" (ngSubmit)="submit()">
-                    <div *ngIf="filter1" class="form-group row">
-                        <label class="col-sm-1 col-form-label">Date</label>
-                        <div class="col-sm-2 date-picker">
-                              <mat-form-field style="width:100px;">
-                                <input #minmaxInput matInput 
-                                  [matDatepicker]="minmaxvalidation" formControlName="fromDate" readonly>
-                                <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
-                                   </mat-datepicker-toggle>
-                                <mat-datepicker #minmaxvalidation></mat-datepicker>
-                              </mat-form-field>
-                        </div>
-                        <label class="col-sm-1">Branch</label>
-                      <div class="col-sm-2">
-                        <select class="" formControlName="branchCode" id="exampleFormControlSelect1">
-                          <option value="" selected>-- Select --</option>
-                          <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
-                        </select>
-                      </div>
-                      <label class="col-sm-1.5">Currency</label>
-                      <div class="col-sm-2">
-                        <select class="" formControlName="currencyCode" id="exampleFormControlSelect1">
-                          <option value="" selected>-- Select --</option>
-                          <option *ngFor="let c of currencyList" value="{{c}}">{{ c }}</option>
-                        </select>
-                      </div>
-                      
-                      <div class="col-sm-2">
-                          <button type="submit" class="btn-primary">Search</button>
-                        </div>
-                      </div>
-                    </form>
-
-                    <form [formGroup]="form2" (ngSubmit)="periodSubmit()">
-                      <div *ngIf="!filter1" class="form-group row">
-                        <label class="col-sm-1">Branch</label>
-                        <div class="col-sm-2">
-                          <select class="" formControlName="branchCode" >
-                            <option value="" selected>-- Select --</option>
-                            <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
-                          </select>
-                        </div>
-                          <label class="col-sm-2 col-form-label">Finance Year</label>
-                          <div class="col-sm-2 ">
-                            
-                            <select class="" formControlName="finYear" (change)="onChangeYear($event)">
-                              <option value="" selected>-- Select --</option>
-                              <option *ngFor="let y of yearList" value="{{y}}">{{y}}</option>
-                            </select>
-                          </div>
-                          
-                        <label class="col-sm-1.5">Period Code</label>
-                        <div class="col-sm-2">
-                          <select class="" formControlName="periodCode" >
-                            <option value="" selected>-- Select --</option>
-                            <option *ngFor="let p of periodList" value="{{p}}">{{ p }}</option>
-                          </select>
-                        </div>
-                        
-                        <div class="col-sm-2">
-                            <button type="submit" class="btn-primary">Search</button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
-              
+            <div class="page-header-breadcrumb">
+              <button type="button" class="btn-success" (click)="exportexcel()">
+                <i class="ti-printer"></i>Excel
+              </button> 
+              <button type="button" class="btn-danger" (click)="exportPDF()">
+                <i class="ti-printer"></i>PDF
+              </button> 
+            </div>
+          </div>
+          <div class="card-body">
+            <code *ngIf="error">{{error}}</code>
+            
                 
-                <p *ngIf="data_message" class="text-danger">{{data_message}}</p>
-             
-            <div class="table-responsive">
-              <div *ngIf="data" class="col-sm-12 text-center">
-                <p>{{data.companyName}}</p>
-                <p>{{data.branchName}}</p>
-                <p>{{data.title}}</p>
-              </div>
-              <table class="table table table-hover" id="export-table">
-                <thead>
-                <tr class="text-uppercase table-header-txt" width="100%">
-                  <th [attr.colspan]="ccyCode == true ? '2' : ''">Debit</th>
-                  <th rowspan="2" width="80px">Account</th>
-                  <!-- <th rowspan="2">Old GL</th> - For UAT2 Version -->
-                  <th rowspan="2">Description</th>
-                  <th [attr.colspan]="ccyCode == true ? '2' : ''">Credit</th>
-                </tr>
-                <tr *ngIf="ccyCode" class="text-uppercase table-header-txt">
+              <div class="container-fluid">
+                <div class="form-group row">
+                  <div class="col-sm-3">
+                    <input type="radio"  name="period" value="date" (change)="changePeriodfilter($event)" checked/>By Date
+                  </div> 
+                  <div class="col-sm-3">
+                    <input type="radio" name="period" value="fincycle" (change)="changePeriodfilter($event)" /> BY FIN CYCLE
+                  </div>  
+                </div>
+                <hr>
+                <form [formGroup]="form" (ngSubmit)="submit()">
+              <div *ngIf="filter1" class="form-group row">
+                  <label class="col-sm-1 col-form-label">Date</label>
+                  <div class="col-sm-2 date-picker">
+                       <!-- [min]="minDate"
+                            [max]="maxDate" -->
+                        <mat-form-field style="width:100px;">
+                          <input #minmaxInput matInput
+                            [matDatepicker]="minmaxvalidation" formControlName="fromDate" readonly>
+                          <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                             </mat-datepicker-toggle>
+                          <mat-datepicker #minmaxvalidation></mat-datepicker>
+                        </mat-form-field>
+                  </div>
+                  <label class="col-sm-1">Branch</label>
+                <div class="col-sm-2">
+                  <select class="" formControlName="branchCode" id="exampleFormControlSelect1">
+                    <option value="" selected>-- Select --</option>
+                    <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
+                  </select>
+                </div>
+                <label class="col-sm-1.5">Currency</label>
+                <div class="col-sm-2">
+                  <select class="" formControlName="currencyCode" id="exampleFormControlSelect1">
+                    <option value="" selected>-- Select --</option>
+                    <option *ngFor="let c of currencyList" value="{{c}}">{{ c }}</option>
+                  </select>
+                </div>
+                
+                <div class="col-sm-2">
+                    <button type="submit" class="btn-primary">Search</button>
+                  </div>
+                </div>
+              </form>
+
+              <form [formGroup]="form2" (ngSubmit)="periodSubmit()">
+                <div *ngIf="!filter1" class="form-group row">
+                  <label class="col-sm-1">Branch</label>
+                  <div class="col-sm-2">
+                    <select class="" formControlName="branchCode" >
+                      <option value="" selected>-- Select --</option>
+                      <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
+                    </select>
+                  </div>
+                    <label class="col-sm-2 col-form-label">Finance Year</label>
+                    <div class="col-sm-2 ">
+                      
+                      <select class="" formControlName="finYear" (change)="onChangeYear($event)">
+                        <option value="" selected>-- Select --</option>
+                        <option *ngFor="let y of yearList" value="{{y}}">{{y}}</option>
+                      </select>
+                    </div>
+                    
+                  <label class="col-sm-1.5">Period Code</label>
+                  <div class="col-sm-2">
+                    <select class="" formControlName="periodCode" >
+                      <option value="" selected>-- Select --</option>
+                      <option *ngFor="let p of periodList" value="{{p}}">{{ p }}</option>
+                    </select>
+                  </div>
                   
-                  <th width="150px">{{currencyCode}}</th>
-                  <th width="150px">Kyats</th>
-                  <th width="150px">{{currencyCode}}</th>
-                  <th width="150px">Kyats</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let list of trialList">
-                        <td *ngIf="ccyCode" class="num-txt">
-                          {{list.debit < 0 ? list.debitstr : list.debit === 0 ? "" :list.debit | number: '1.2-2'}}
-                        </td>
-                        <td class="num-txt">
-                          {{list.debit_lcy < 0 ? list.debit_lcystr : list.debit_lcy === 0 ? "" :list.debit_lcy | number: '1.2-2'}}
-                        </td>
-                        <td class="txt">{{list.account}}</td>
-                        <!-- <td class="txt">{{list.old_gl}}</td> - For UAT2 Version -->
-                        <td class="des-txt">{{list.gl_desc}}</td>
-                        <td class="num-txt" *ngIf="ccyCode">
-                          {{list.credit < 0 ? list.creditstr : list.credit === 0 ? "" :list.credit | number: '1.2-2'}}
-                        </td>
-                        <td class="num-txt" >
-                          {{list.credit_lcy < 0 ? list.credit_lcystr : list.credit_lcy === 0 ? "" :list.credit_lcy | number: '1.2-2'}}
-                        </td>
-                        
-                    </tr>
-                    <tr>
-                      <td *ngIf="ccyCode" class="num-txt">
-                        {{totalDebit < 0 ? totalDebitstr : totalDebit === 0 ? "" :  totalDebit | number: '1.2-2'}}
-                      </td>
-                      <td class="num-txt">
-                         {{totalDebit_lcy < 0 ? totalDebit_lcystr : totalDebit_lcy === 0 ? "" :  totalDebit_lcy | number: '1.2-2'}}
-                      </td>
-                      <td class="txt" colspan="2"> Grand Total</td> 
-                      <!-- <td class="txt" colspan="3"> Grand Total</td>  UAT2 Version -->
-                      
-                      <td class="num-txt" *ngIf="ccyCode">
-                        {{totalCredit < 0 ? totalCreditstr : totalCredit === 0 ? "" :  totalCredit | number: '1.2-2'}}
-                      </td>
-                      <td class="num-txt" >
-                         {{totalCredit_lcy < 0 ? totalCredit_lcystr : totalCredit_lcy === 0 ? "" :  totalCredit_lcy | number: '1.2-2'}}
-                      </td>
-                      
-                  </tr>
-                </tbody>
-              </table>
-              <table *ngIf="!filter1" class="table table table-hover" style="width:500px" id="export-table">
-                <thead>
-                <tr class="text-uppercase table-header-txt">
-                  <th>Summary</th>
-                  <th>Debit</th>
-                  <th>Credit</th>
-                </tr>
+                  <div class="col-sm-2">
+                      <button type="submit" class="btn-primary">Search</button>
+                    </div>
+                  </div>
+              </form>
+
+
+
+              </div>
+          
+              
+          <p *ngIf="data_message" class="text-danger">{{data_message}}</p>
+           
+          <div class="table-responsive">
+            <div *ngIf="data" class="col-sm-12 text-center">
+              <p>{{data.companyName}}</p>
+              <p>{{data.branchName}}</p>
+              <p>{{data.title}}</p>
+            </div>
+            <table class="table table table-hover" id="export-table">
+              <thead>
+              <tr class="text-uppercase table-header-txt" width="100%">
+                <th [attr.colspan]="ccyCode == true ? '2' : ''">Debit</th>
+                <th rowspan="2" width="80px">Account</th>
+                <!-- <th rowspan="2" >Old GL</th> - For UAT2 Version -->
+                <th rowspan="2">Description</th>
+                <th [attr.colspan]="ccyCode == true ? '2' : ''">Credit</th>
+              </tr>
+              <tr *ngIf="ccyCode" class="text-uppercase table-header-txt">
+                
+                <th width="150px">{{currencyCode}}</th>
+                <th width="150px">Kyats</th>
+                <th width="150px">{{currencyCode}}</th>
+                <th width="150px">Kyats</th>
+              </tr>
               </thead>
               <tbody>
-                  <tr>
-                    <td class="txt">Assets</td>
-                    <td class="num-txt">
-                      {{totalasset_debit < 0 ? totalasset_debitstr : totalasset_debit === 0 ? "" :  totalasset_debit | number: '1.2-2'}}
-                   </td>
-                   <td class="num-txt">
-                    {{totalasset_credit < 0 ? totalasset_creditstr : totalasset_credit === 0 ? "" :  totalasset_credit | number: '1.2-2'}}
-                  </td>
+                  <tr *ngFor="let list of trialList">
+                      <td *ngIf="ccyCode" class="num-txt">
+                        {{list.debit < 0 ? list.debitstr : list.debit === 0 ? "" :list.debit | number: '1.2-2'}}
+                      </td>
+                      <td class="num-txt">
+                        {{list.debit_lcy < 0 ? list.debit_lcystr : list.debit_lcy === 0 ? "" :list.debit_lcy | number: '1.2-2'}}
+                      </td>
+                      <td class="txt">{{list.account}}</td>
+                      <!-- <td class="txt">{{list.old_gl}}</td> - For UAT2 Version -->
+                      <td class="des-txt">{{list.gl_desc}}</td>
+                      <td class="num-txt" *ngIf="ccyCode">
+                        {{list.credit < 0 ? list.creditstr : list.credit === 0 ? "" :list.credit | number: '1.2-2'}}
+                      </td>
+                      <td class="num-txt" >
+                        {{list.credit_lcy < 0 ? list.credit_lcystr : list.credit_lcy === 0 ? "" :list.credit_lcy | number: '1.2-2'}}
+                      </td>
+                      
                   </tr>
                   <tr>
-                    <td class="txt">Liabilities</td>
+                    <td *ngIf="ccyCode" class="num-txt">
+                      {{totalDebit < 0 ? totalDebitstr : totalDebit === 0 ? "" :  totalDebit | number: '1.2-2'}}
+                    </td>
                     <td class="num-txt">
-                      {{totalliab_debit < 0 ? totalliab_debitstr : totalliab_debit === 0 ? "" :  totalliab_debit | number: '1.2-2'}}
-                   </td>
-                   <td class="num-txt">
-                    {{totalliab_credit < 0 ? totalliab_creditstr : totalliab_credit === 0 ? "" :  totalliab_credit | number: '1.2-2'}}
-                  </td>
-                  </tr>
-                  <tr>
-                    <td class="txt">Income</td>
-                    <td class="num-txt">
-                      {{totalincome_debit < 0 ? totalincome_debitstr : totalincome_debit === 0 ? "" :  totalincome_debit | number: '1.2-2'}}
-                   </td>
-                   <td class="num-txt">
-                    {{totalincome_credit < 0 ? totalincome_creditstr : totalincome_credit === 0 ? "" :  totalincome_credit | number: '1.2-2'}}
-                  </td>
-                  </tr>
-                  <tr>
-                    <td class="txt">Expenditure</td>
-                    <td class="num-txt">
-                      {{totalexp_debit < 0 ? totalexp_debitstr : totalexp_debit === 0 ? "" :  totalexp_debit | number: '1.2-2'}}
-                   </td>
-                   <td class="num-txt">
-                    {{totalexp_credit < 0 ? totalexp_creditstr : totalexp_credit === 0 ? "" :  totalexp_credit | number: '1.2-2'}}
-                  </td>
-                  </tr>
-                  <tr>
-                    <td class="txt">Total Summary </td>
-                    <td class="num-txt">
-                      {{miantotalDebit < 0 ? miantotalDebitstr : miantotalDebit === 0 ? "" :  miantotalDebit | number: '1.2-2'}}
-                   </td>
-                   <td class="num-txt">
-                    {{miantotalCredit < 0 ? miantotalCreditstr : miantotalCredit === 0 ? "" :  miantotalCredit | number: '1.2-2'}}
-                  </td>
-                  </tr>
-            </tbody>
+                       {{totalDebit_lcy < 0 ? totalDebit_lcystr : totalDebit_lcy === 0 ? "" :  totalDebit_lcy | number: '1.2-2'}}
+                    </td>
+                    <td class="txt" colspan="2"> Grand Total</td>
+                    <!-- <td class="txt" colspan="3"> Grand Total</td>  UAT2 Version -->
+                    
+                    <td class="num-txt" *ngIf="ccyCode">
+                      {{totalCredit < 0 ? totalCreditstr : totalCredit === 0 ? "" :  totalCredit | number: '1.2-2'}}
+                    </td>
+                    <td class="num-txt" >
+                       {{totalCredit_lcy < 0 ? totalCredit_lcystr : totalCredit_lcy === 0 ? "" :  totalCredit_lcy | number: '1.2-2'}}
+                    </td>
+                    
+                </tr>
+              </tbody>
             </table>
-            </div>
+
+            <table *ngIf="!filter1" class="table table table-hover" style="width:500px" id="export-table">
+              <thead>
+              <tr class="text-uppercase table-header-txt">
+                <th>Summary</th>
+                <th>Debit</th>
+                <th>Credit</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td class="txt">Assets</td>
+                  <td class="num-txt">
+                    {{totalasset_debit < 0 ? totalasset_debitstr : totalasset_debit === 0 ? "" :  totalasset_debit | number: '1.2-2'}}
+                 </td>
+                 <td class="num-txt">
+                  {{totalasset_credit < 0 ? totalasset_creditstr : totalasset_credit === 0 ? "" :  totalasset_credit | number: '1.2-2'}}
+                </td>
+                </tr>
+                <tr>
+                  <td class="txt">Liabilities</td>
+                  <td class="num-txt">
+                    {{totalliab_debit < 0 ? totalliab_debitstr : totalliab_debit === 0 ? "" :  totalliab_debit | number: '1.2-2'}}
+                 </td>
+                 <td class="num-txt">
+                  {{totalliab_credit < 0 ? totalliab_creditstr : totalliab_credit === 0 ? "" :  totalliab_credit | number: '1.2-2'}}
+                </td>
+                </tr>
+                <tr>
+                  <td class="txt">Income</td>
+                  <td class="num-txt">
+                    {{totalincome_debit < 0 ? totalincome_debitstr : totalincome_debit === 0 ? "" :  totalincome_debit | number: '1.2-2'}}
+                 </td>
+                 <td class="num-txt">
+                  {{totalincome_credit < 0 ? totalincome_creditstr : totalincome_credit === 0 ? "" :  totalincome_credit | number: '1.2-2'}}
+                </td>
+                </tr>
+                <tr>
+                  <td class="txt">Expenditure</td>
+                  <td class="num-txt">
+                    {{totalexp_debit < 0 ? totalexp_debitstr : totalexp_debit === 0 ? "" :  totalexp_debit | number: '1.2-2'}}
+                 </td>
+                 <td class="num-txt">
+                  {{totalexp_credit < 0 ? totalexp_creditstr : totalexp_credit === 0 ? "" :  totalexp_credit | number: '1.2-2'}}
+                </td>
+                </tr>
+                <tr>
+                  <td class="txt">Total Summary </td>
+                  <td class="num-txt">
+                    {{miantotalDebit < 0 ? miantotalDebitstr : miantotalDebit === 0 ? "" :  miantotalDebit | number: '1.2-2'}}
+                 </td>
+                 <td class="num-txt">
+                  {{miantotalCredit < 0 ? miantotalCreditstr : miantotalCredit === 0 ? "" :  miantotalCredit | number: '1.2-2'}}
+                </td>
+                </tr>
+          </tbody>
+          </table>
           </div>
         </div>
       </div>
-  </div>
+    </div>
+</div>
 
- 

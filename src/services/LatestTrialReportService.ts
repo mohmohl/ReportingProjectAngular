@@ -12,13 +12,20 @@ export class LatestTrialReportService {
    
     constructor(private http: HttpClient,private authService : AuthenticationService) { }
 
-    public getBranchList(): Observable<any>{
+    public getBranchList(formatType: number): Observable<any>{
       var userId=this.authService.currentUserValue.userId;
-      return this.http.get<any>(`${environment.baseUrl}`+'/latest-trial/get_branchList?userId='+userId);
+      return this.http.get<any>(`${environment.baseUrl}`+'/latest-trial/get_branchList?userId='+userId + '&formatType=' + formatType);
     }
 
     public getCurrencyList(): Observable<any>{
       return this.http.get<any>(`${environment.baseUrl}`+'/latest-trial/get_currencyList');
+    }
+
+    public get_finance_cycle_List(): Observable<any>{
+      return this.http.get<any>(`${environment.baseUrl}`+'/latest-trial/get_finance_cycle_List');
+    }
+    public get_period_code_List(f_year:string): Observable<any>{
+      return this.http.get<any>(`${environment.baseUrl}`+'/latest-trial/get_period_code_List?f_year='+f_year);
     }
 
     public checkSettingsDate(data: TrialRequestData): Observable<any>{

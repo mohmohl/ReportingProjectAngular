@@ -46,15 +46,41 @@ export class DetailTrialReportComponent implements OnInit {
   totalDebit_lcystr:string;
   totalCreditstr:string;
   totalCredit_lcystr:string;
+
+  //for period
+  filter1:Boolean=true;
+  totalasset_debit:number=0;
+  totalasset_credit:number=0;
+  totalliab_debit:number=0;
+  totalliab_credit:number=0;
+  totalincome_debit:number=0;
+  totalincome_credit:number=0;
+  totalexp_debit:number=0;
+  totalexp_credit:number=0;
+  totalasset_debitstr:string;
+  totalasset_creditstr:string;
+  totalliab_debitstr:string;
+  totalliab_creditstr:string;
+  totalincome_debitstr:string;
+  totalincome_creditstr:string;
+  totalexp_debitstr:string;
+  totalexp_creditstr:string;
+  miantotalDebit:number=0;
+  miantotalCredit:number=0;
+  miantotalDebitstr:string;
+  miantotalCreditstr:string;
+
   trialList:TrialData[];
 
   pattern2branchList:string[] = ['REGION_1', 'REGION_2', 'REGION_3', 'REGION_4','REGION_5', 'REGION_6', 'REGION_7', 'REGION_8', 'REGION_9'];
-  pattern3branchList:string[];
+  pattern3branchList:string[] = [];
   currencyList:string[];
-  dataExist: Boolean = true;
+  beforeSettingsDate: Boolean = true;
   
   branchCode: string;
   currencyCode=[];
+  yearList:string[];
+  periodList:string[];
   ccyCode = false;
   data_message='';
   ccy_dropdownSettings:IDropdownSettings={};
@@ -64,33 +90,38 @@ export class DetailTrialReportComponent implements OnInit {
   isAllBranch;
   isAllCcy;
   branch = '';
+  branch_typeList = [];
 
-  form = new FormGroup({
-    from_date: new FormControl(Validators.required), //new Date(),
-    branch: new FormControl('pattern2', Validators.required),
+  form1 = new FormGroup({
+    from_date: new FormControl(Validators.required), 
+    branch: new FormControl('', Validators.required),
     branchCode:new FormControl(''),
     currencyCode:new FormControl([], Validators.required)
+  });
+
+  form2 = new FormGroup({
+    finYear: new FormControl('', Validators.required),
+    branchCode:new FormControl('', Validators.required),
+    periodCode:new FormControl(Validators.required)
   });
 
   constructor(private service: LatestTrialReportService, private _util: CommonUtil){
     this.loading = true;
     service.getCurrencyList().subscribe((res:string[])=>{
       this.loading = false;
-      console.log(res)
       this.currencyList = res;
     });
 
     this.loading = true;
-    service.getBranchList().subscribe((res:string[])=>{
-          this.loading = false;
-          console.log(res)
-         this.pattern3branchList = res;
+    service.get_finance_cycle_List().subscribe((res:string[])=>{
+      this.loading = false;
+      this.yearList = res;
     });
+
    }
   
   changeDate(e) {
     this.selectedBrItems = [];
-    console.log("Hello date changed")
 
     let from_date = e.target.value;
     let reportDate = this._util.getDDMMMYYYY(from_date);
@@ -102,12 +133,32 @@ export class DetailTrialReportComponent implements OnInit {
     this.service.checkSettingsDate(comboData).subscribe((res)=>{
           this.loading = false;
           console.log("Check Settings : " + res)
-         this.dataExist = res;
+         this.beforeSettingsDate = res;
+         this.intializeBranchType(this.beforeSettingsDate);
     });
   } 
 
+  intializeBranchType(isBefore){
+    if(isBefore){
+      this.branch_typeList = [
+        {"value":"AGENCY", "desc" : "AGENCY"},
+
+        {"value":"CURRENCY", "desc" : "CURRENCY"},
+
+        {"value":"DEPARTMENT", "desc" : "DEPARTMENT"},
+
+        {"value":"BY_REGION", "desc" : "BY REGION"},
+
+        {"value":"BY_BRANCH", "desc" : "BY BRANCH"}
+      ]
+    }else{
+      this.branch_typeList = [{"value":"BY_BRANCH", "desc" : "BY BRANCH"}]
+    }
+  }
+
   ngOnInit() {
-    
+    this.intializeBranchType(true);
+
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
@@ -133,9 +184,6 @@ export class DetailTrialReportComponent implements OnInit {
   onBrItemSelect(item:any){
     //console.log(item);   
     //console.log("Branch= "+this.selectedBrItems);
-    console.log("Hello Muti branch selected");
-    console.log("Branch= "+this.selectedBrItems);
-    console.log("Branch2= "+this.form.get(["branchCode"])!.value);
   }
   
   onBrItemDeSelect(item:any){
@@ -155,8 +203,7 @@ export class DetailTrialReportComponent implements OnInit {
   // For ccy 
   onCcyItemSelect(item:any){
     //console.log(item);   
-    console.log("CCY= "+this.selectedCcyItems);
-    console.log("CCY2= "+this.form.get(["currencyCode"])!.value);
+    // console.log("CCY= "+this.selectedCcyItems);
   }
   
   onCcyItemDeSelect(item:any){
@@ -188,62 +235,120 @@ export class DetailTrialReportComponent implements OnInit {
     }
     else if(this.branch == "BY_BRANCH"){
       this.branch="pattern3";
-    } else if(this.branch == "BY_BRANCH_2"){
-      this.branch="pattern4";
+      // console.log(" pattern3 : " + this.pattern3branchList.length);
+      if(this.pattern3branchList.length == 0) {
+        this.loading = true;
+        this.service.getBranchList(1).subscribe((res:string[])=>{
+              this.loading = false;
+             this.pattern3branchList = res;
+        });
+      }
+
     } else{
       this.branch="";
     }
    }
 
-  submit(){
-    debugger
-    console.log("Hi submit now")
+   onChangeYear(e:any){
+    this.loading = true;
+    this.service.get_period_code_List(e.target.value).subscribe((res:string[])=>{
+      this.loading = false;
+      this.periodList = res;
+    });
+  }
+
+  changePeriodfilter(e:any){
+    this.amount_clear();
+    this.pattern3branchList =null;
+    this.ccyCode = false;
+    this.error = '';
+
+    if(e.target.value == 'date'){
+      this.filter1=true;
+      this.loading=true;
+      this.form1 = new FormGroup({
+        from_date: new FormControl(Validators.required), //new Date(),
+        branch: new FormControl('pattern2', Validators.required),
+        branchCode:new FormControl(''),
+        currencyCode:new FormControl([], Validators.required)
+      });
+      this.service.getBranchList(1).subscribe((res:string[])=>{
+        this.loading = false;
+        this.pattern3branchList = res;
+      });
+    }
+    else{
+      this.filter1=false;
+      this.loading=true;
+      this.service.getBranchList(3).subscribe((res:string[])=>{
+        this.loading = false;
+        this.pattern3branchList = res;
+      });
+    }
+  }
+
+  amount_clear(){
     this.trialList=null;
     this.totalDebit=0;
     this.totalDebit_lcy=0;
     this.totalCredit=0;
     this.totalCredit_lcy=0;
-    if (this.form.invalid) {
+    this.totalasset_debit=0;
+    this.totalasset_credit=0;
+    this.totalliab_debit=0;
+    this.totalliab_credit=0;
+    this.totalincome_debit=0;
+    this.totalincome_credit=0;
+    this.totalexp_debit=0;
+    this.totalexp_credit=0;
+    this.miantotalDebit=0;
+    this.miantotalCredit=0;
+  }
+
+  submit(){
+    this.trialList=null;
+    this.totalDebit=0;
+    this.totalDebit_lcy=0;
+    this.totalCredit=0;
+    this.totalCredit_lcy=0;
+  if (this.form1.invalid) {
       this.error = "Data is required";
       return;
+  } else if(!this.beforeSettingsDate && this.selectedBrItems.length >1) {
+      this.error = "Multi branch allow only for back date!";
+      return;
   }
+
   this.error="";
-  this.from_date = this.form.get(["from_date"])!.value;
+  this.from_date = this.form1.get(["from_date"])!.value;
   this.loading = true;
   let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
-  // this.bCode=this.form.get(["branchCode"])!.value;
-  // this.currencyCode = this.form.get(["currencyCode"])!.value;
-console.log("After Search: " + this.branch)  
-if(this.branch ==""){
-  this.branchCode=this.form.get(["branch"])!.value
-  console.log("Branch is Blank condition")
-} else{
-    if(this.isAllBranch){
-      console.log("Hello ALL Branch condition")
-      if(this.branch == 'pattern2') {
-        this.branchCode = 'ALL_REGION';
-      } else {
-        this.branchCode = 'ALL_BRANCH';
+
+  if(this.branch ==""){
+    this.branchCode=this.form1.get(["branch"])!.value
+  } else{
+      if(this.isAllBranch){
+        if(this.branch == 'pattern2') {
+          this.branchCode = 'ALL_REGION';
+        } else {
+          this.branchCode = 'ALL_BRANCH';
+        }
       }
-    }
-    else{
-      if(this.branch == 'pattern2' || this.branch == 'pattern3') {
-        this.branchCode = this.selectedBrItems.join(",");
-      } else {
-        this.branchCode = this.form.get(["branchCode"])!.value;
-        console.log("Hello else condition")
-        console.log("var value " + this.branchCode)
-        console.log("form var value :" + this.form.get(["branchCode"])!.value)
+      else{
+        if(this.branch == 'pattern2' || this.branch == 'pattern3') {
+          this.branchCode = this.selectedBrItems.join(",");
+        } else {
+          this.branchCode = this.form1.get(["branchCode"])!.value;
+        }
+        //this.branchCode = "'"+ this.branchCode+ "'";
       }
-      //this.branchCode = "'"+ this.branchCode+ "'";
-    }
-}
+  }
   if(this.isAllCcy){
     this.currencyCode = ["BASE"];
     this.ccyCode = false;
   }else{
     //this.currencyCode = this.selectedCcyItems.join("','");
-    this.currencyCode =  this.form.get(["currencyCode"])!.value;
+    this.currencyCode =  this.form1.get(["currencyCode"])!.value;
     if(this.currencyCode.length == 1){
       if(this.currencyCode[0] != "MMK"){
         this.ccyCode = true;
@@ -261,11 +366,10 @@ if(this.branch ==""){
   comboData.date = fDate;
   comboData.branchCode =  this.branchCode;
   comboData.currencyCodelist = this.currencyCode;
+  comboData.format = "1"
 
   this.service.getDetailTrialReportData(comboData).subscribe((res:TrialReport)=>{
-
     this.loading = false;
-   
     if(res != null){
       this.data_message="";
       this.data = res;
@@ -284,9 +388,50 @@ if(this.branch ==""){
     this.error="Internal Server Error";
     
   });
-}
+  }
 
-findsum(data:TrialData[]){    
+  periodSubmit(){
+  this.error ="";
+  this.amount_clear();
+
+  if (this.form2.invalid) {
+      this.error = "Data is required";
+      return;
+  }
+  this.error="";
+
+  this.ccyCode = false;
+  this.loading = true;
+
+  const comboData = new TrialRequestData();
+  comboData.date = this.form2.get(["finYear"])!.value;
+  comboData.branchCode =  this.form2.get(["branchCode"])!.value;
+  comboData.currencyCode = this.form2.get(["periodCode"])!.value;
+  comboData.format = "3";
+
+  this.service.getDetailTrialReportData(comboData).subscribe((res:TrialReport)=>{
+    this.loading = false;
+   
+    if(res != null){
+      this.data_message="";
+      this.data = res;
+      this.trialList = this.data.trialList;
+      this.findsum(this.trialList);
+    }
+    else{
+      this.data_message="No Record Found";
+    }
+    if(this.trialList == null){
+      this.data_message="No Record Found";
+    }
+  },(error) => {
+    this.data=null;
+    this.loading = false;
+    this.error="Internal Server Error";
+  });
+  }
+
+  findsum(data:TrialData[]){    
  
   for(let j=0;j<data.length;j++){  
     if(data[j].debit < 0 ){
@@ -303,15 +448,39 @@ findsum(data:TrialData[]){
        this.totalDebit_lcy+= data[j].debit_lcy;
        this.totalCredit+= data[j].credit;
        this.totalCredit_lcy+= data[j].credit_lcy;
+
+       this.totalasset_debit += data[j].asset_debit;
+       this.totalasset_credit+= data[j].asset_credit;
+       this.totalliab_debit+= data[j].liab_debit;
+       this.totalliab_credit+= data[j].liab_credit;
+       this.totalincome_debit+= data[j].income_debit;
+       this.totalincome_credit+= data[j].income_credit;
+       this.totalexp_debit+= data[j].exp_debit;
+       this.totalexp_credit+= data[j].exp_credit;
       
   }
+  this.miantotalDebit=this.totalasset_debit+this.totalliab_debit+ this.totalincome_debit+this.totalexp_debit;
+  this.miantotalCredit=this.totalasset_credit+this.totalliab_credit+ this.totalincome_credit+this.totalexp_credit;
+
   if(this.totalDebit < 0 )this.totalDebitstr = this.isNegitiveTransform(this.totalDebit);
   if(this.totalDebit_lcy < 0 )this.totalDebit_lcystr = this.isNegitiveTransform(this.totalDebit_lcy);
   if(this.totalCredit < 0 )this.totalCreditstr = this.isNegitiveTransform(this.totalCredit);
   if(this.totalCredit_lcy < 0 )this.totalCredit_lcystr = this.isNegitiveTransform(this.totalCredit_lcy);
-} 
+  //for period
+if(this.totalasset_debit < 0 )this.totalasset_debitstr = this.isNegitiveTransform(this.totalasset_debit);
+if(this.totalasset_credit < 0 )this.totalasset_creditstr = this.isNegitiveTransform(this.totalasset_credit);
+if(this.totalliab_debit < 0 )this.totalliab_debitstr = this.isNegitiveTransform(this.totalliab_debit);
+if(this.totalliab_credit < 0 )this.totalliab_creditstr = this.isNegitiveTransform(this.totalliab_credit);
+if(this.totalincome_debit < 0 )this.totalincome_debitstr = this.isNegitiveTransform(this.totalincome_debit);
+if(this.totalincome_credit < 0 )this.totalincome_creditstr = this.isNegitiveTransform(this.totalincome_credit);
+if(this.totalexp_debit < 0 )this.totalexp_debitstr = this.isNegitiveTransform(this.totalexp_debit);
+if(this.totalexp_credit < 0 )this.totalexp_creditstr = this.isNegitiveTransform(this.totalexp_credit);
 
-isNegitiveTransform(value: any, args?: any): any {
+if(this.miantotalDebit < 0 )this.miantotalDebitstr = this.isNegitiveTransform(this.miantotalDebit);
+if(this.miantotalCredit < 0 )this.miantotalCreditstr = this.isNegitiveTransform(this.miantotalCredit);
+  } 
+
+  isNegitiveTransform(value: any, args?: any): any {
   var data;
   if(value < 0){
     value=value * -1;
@@ -319,22 +488,27 @@ isNegitiveTransform(value: any, args?: any): any {
 
   }
   return data;
-}
+  }
 
-exportExcel(): void 
-{
-  
-    if (this.form.invalid) {
+  exportExcel(): void 
+  {
+    this.error="";
+    var f_Date="";
+    var fromat="1";
+    var period_code="";
+    if(this.filter1){
+    if (this.form1.invalid) {
       this.error = "Data is required";
       return;
-    }
-  this.error="";
-  this.loading = true;
-  this.from_date = this.form.get(["from_date"])!.value;
-  let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
+    } else if(!this.beforeSettingsDate && this.selectedBrItems.length >1) {
+      this.error = "Multi branch allow only for back date!";
+      return;
+  }
+  this.from_date = this.form1.get(["from_date"])!.value;
+  f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
   
   if(this.branch ==""){
-    this.branchCode=this.form.get(["branch"])!.value
+    this.branchCode=this.form1.get(["branch"])!.value
   }
     else{
     if(this.isAllBranch){
@@ -348,7 +522,7 @@ exportExcel(): void
       if(this.branch == 'pattern2' || this.branch == 'pattern3') {
         this.branchCode = this.selectedBrItems.join(",");
       } else {
-        this.branchCode = this.form.get(["branchCode"])!.value;
+        this.branchCode = this.form1.get(["branchCode"])!.value;
       }
       //this.branchCode = "'"+ this.branchCode+ "'";
     }
@@ -359,7 +533,7 @@ exportExcel(): void
     this.ccyCode = false;
   }else{
     //this.currencyCode = this.selectedCcyItems.join("','");
-    this.currencyCode =  this.form.get(["currencyCode"])!.value;
+    this.currencyCode =  this.form1.get(["currencyCode"])!.value;
     if(this.currencyCode.length == 1){
       if(this.currencyCode[0] != "MMK"){
         this.ccyCode = true;
@@ -372,12 +546,29 @@ exportExcel(): void
       this.ccyCode = false;
     }
   }
+  fromat="1";
+}
+//for period
+else{
+  if (this.form2.invalid) {
+    this.error = "Data is required";
+    return;
+  }
+  f_Date = this.form2.get(["finYear"])!.value;
+  this.branchCode=this.form2.get(["branchCode"])!.value;
+  period_code = this.form2.get(["periodCode"])!.value;
+  fromat="3";
+}
+  
+  this.loading = true;
+  
 
   const comboData = new TrialRequestData();
-  comboData.date = fDate;
+  comboData.date = f_Date;
   comboData.branchCode =  this.branchCode;
-  comboData.currencyCodelist = this.currencyCode;
-
+  comboData.currencyCode = period_code;
+  comboData.currencyCodelist=this.currencyCode
+  comboData.format = fromat;
 
   this.service.exportDetailTrialExcel(comboData)
   .pipe(
@@ -407,17 +598,23 @@ exportExcel(): void
 
   exportPDF(): void 
   {
-    if (this.form.invalid) {
+    this.error="";
+    var f_Date="";
+    var fromat="1";
+    var period_code="";
+    if(this.filter1){
+    if (this.form1.invalid) {
       this.error = "Data is required";
       return;
+    } else if(!this.beforeSettingsDate && this.selectedBrItems.length >1) {
+      this.error = "Multi branch allow only for back date!";
+      return;
   }
-  this.error="";
-  this.loading = true;
-  this.from_date = this.form.get(["from_date"])!.value;
-  let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
-
+  this.from_date = this.form1.get(["from_date"])!.value;
+  f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
+  
   if(this.branch ==""){
-    this.branchCode=this.form.get(["branch"])!.value
+    this.branchCode=this.form1.get(["branch"])!.value
   }
     else{
     if(this.isAllBranch){
@@ -431,7 +628,7 @@ exportExcel(): void
       if(this.branch == 'pattern2' || this.branch == 'pattern3') {
         this.branchCode = this.selectedBrItems.join(",");
       } else {
-        this.branchCode = this.form.get(["branchCode"])!.value;
+        this.branchCode = this.form1.get(["branchCode"])!.value;
       }
       //this.branchCode = "'"+ this.branchCode+ "'";
     }
@@ -442,7 +639,7 @@ exportExcel(): void
     this.ccyCode = false;
   }else{
     //this.currencyCode = this.selectedCcyItems.join("','");
-    this.currencyCode =  this.form.get(["currencyCode"])!.value;
+    this.currencyCode =  this.form1.get(["currencyCode"])!.value;
     if(this.currencyCode.length == 1){
       if(this.currencyCode[0] != "MMK"){
         this.ccyCode = true;
@@ -455,11 +652,29 @@ exportExcel(): void
       this.ccyCode = false;
     }
   }
+  fromat="1";
+}
+//for period
+else{
+  if (this.form2.invalid) {
+    this.error = "Data is required";
+    return;
+  }
+  f_Date = this.form2.get(["finYear"])!.value;
+  this.branchCode=this.form2.get(["branchCode"])!.value;
+  period_code = this.form2.get(["periodCode"])!.value;
+  fromat="3";
+}
+  
+  this.loading = true;
+  
 
   const comboData = new TrialRequestData();
-  comboData.date = fDate;
+  comboData.date = f_Date;
   comboData.branchCode =  this.branchCode;
-  comboData.currencyCodelist = this.currencyCode;
+  comboData.currencyCode = period_code;
+  comboData.currencyCodelist=this.currencyCode
+  comboData.format = fromat;
 
   this.service.exportDetailTrialPDF(comboData)
   .pipe(
