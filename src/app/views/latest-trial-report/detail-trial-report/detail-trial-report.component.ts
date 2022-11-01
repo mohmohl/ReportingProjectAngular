@@ -92,6 +92,9 @@ export class DetailTrialReportComponent implements OnInit {
   branch = '';
   branch_typeList = [];
 
+  oldGLFlag: boolean = true; 
+  //oldGLFlag: boolean = false; 
+
   form1 = new FormGroup({
     from_date: new FormControl(Validators.required), 
     branch: new FormControl('', Validators.required),
