@@ -178,6 +178,24 @@ export class GeneralTrialReportComponent implements OnInit {
       showSelectedItemsAtTop: false,
       defaultOpen: false,
     };
+    this.ccy_dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      enableCheckAll: true,
+      selectAllText: 'BASE',
+      unSelectAllText: 'BASE',
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      maxHeight: 197,
+      itemsShowLimit: 2,
+      searchPlaceholderText: 'Search',
+      noDataAvailablePlaceholderText: 'No Data Available',
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false,
+    };
     this.selectedCcyItems = []
   }
 
