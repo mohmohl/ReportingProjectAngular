@@ -77,7 +77,7 @@ export class MigrationReportComponent implements OnInit {
       })).subscribe(
         res => { },
           error => {
-            this.error =  "Branch Code - " + this.branch + " /File Name - " + this.fileName  + "(The system cannot find the file specified)";
+            this.error =  "There is no ( " + this.fileName  + ".csv ) record";
             this.loading = false;
           });
 
