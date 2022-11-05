@@ -5,12 +5,13 @@ import { DateAdapter} from '@angular/material/core';
 import { TrialData } from 'src/models/TrialData';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { PickDateAdapter } from 'src/models/PickDateAdapter';
-import { formatNumber } from '@angular/common';
+import { formatDate, formatNumber } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { LatestTrialReportService } from 'src/services/LatestTrialReportService';
 import { TrialRequestData } from 'src/models/TrialRequestData';
 import { CommonUtil } from 'src/app/shared/common-util';
+import { TrialDateSettings } from 'src/models/TrialDateSettings';
 
 export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
@@ -95,6 +96,11 @@ export class DetailTrialReportComponent implements OnInit {
   oldGLFlag: boolean = true; 
   //oldGLFlag: boolean = false; 
 
+  WHdate: string;
+  MISdate: string;
+
+  settingsDate: TrialDateSettings;
+
   form1 = new FormGroup({
     from_date: new FormControl(Validators.required), 
     branch: new FormControl('', Validators.required),
@@ -122,6 +128,11 @@ export class DetailTrialReportComponent implements OnInit {
       this.yearList = res;
     });
 
+    this.loading = true;
+    service.getSettingsDate().subscribe((res)=>{
+      this.loading = false;
+      this.settingsDate = res;
+    });
    }
   
   changeDate(e) {
@@ -133,13 +144,30 @@ export class DetailTrialReportComponent implements OnInit {
 
     const comboData = new TrialRequestData();
     comboData.date = reportDate;
-    this.loading = true;
-    this.service.checkSettingsDate(comboData).subscribe((res)=>{
-          this.loading = false;
-          console.log("Check Settings : " + res)
-         this.beforeSettingsDate = res;
-         this.intializeBranchType(this.beforeSettingsDate);
-    });
+    //this.loading = true;
+    // this.service.checkSettingsDate(comboData).subscribe((res)=>{
+    //       this.loading = false;
+    //       console.log("Check Settings : " + res)
+    //      this.beforeSettingsDate = res;
+    //      this.intializeBranchType(this.beforeSettingsDate);
+    // });
+
+  var WHdate = new Date(this.settingsDate.whDate);
+  var MISdate = new Date(this.settingsDate.misDate);
+  //console.log("WHdate : " + WHdate);
+  //console.log("MISdate : " + MISdate);
+    
+  if(WHdate >= from_date) {
+    this.beforeSettingsDate = true;
+  } else {
+    if(MISdate >= from_date) {
+      this.beforeSettingsDate = true;
+    } else {
+      this.beforeSettingsDate = false;
+    }
+  }
+  console.log("Check Settings : " + this.beforeSettingsDate)
+  this.intializeBranchType(this.beforeSettingsDate);
   } 
 
   intializeBranchType(isBefore){
