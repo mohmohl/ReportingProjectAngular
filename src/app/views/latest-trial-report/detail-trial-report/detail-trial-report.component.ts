@@ -92,6 +92,9 @@ export class DetailTrialReportComponent implements OnInit {
   branch = '';
   branch_typeList = [];
 
+  oldGLFlag: boolean = true; 
+  //oldGLFlag: boolean = false; 
+
   form1 = new FormGroup({
     from_date: new FormControl(Validators.required), 
     branch: new FormControl('', Validators.required),
@@ -110,6 +113,7 @@ export class DetailTrialReportComponent implements OnInit {
     service.getCurrencyList().subscribe((res:string[])=>{
       this.loading = false;
       this.currencyList = res;
+      this.currencyList = this._util.RemoveElementFromStringArray(this.currencyList, 'Base');
     });
 
     this.loading = true;
@@ -166,6 +170,24 @@ export class DetailTrialReportComponent implements OnInit {
       enableCheckAll: true,
       selectAllText: 'ALL',
       unSelectAllText: 'ALL',
+      allowSearchFilter: true,
+      limitSelection: -1,
+      clearSearchFilter: true,
+      maxHeight: 197,
+      itemsShowLimit: 2,
+      searchPlaceholderText: 'Search',
+      noDataAvailablePlaceholderText: 'No Data Available',
+      closeDropDownOnSelection: false,
+      showSelectedItemsAtTop: false,
+      defaultOpen: false,
+    };
+    this.ccy_dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      enableCheckAll: true,
+      selectAllText: 'BASE',
+      unSelectAllText: 'BASE',
       allowSearchFilter: true,
       limitSelection: -1,
       clearSearchFilter: true,
@@ -579,7 +601,31 @@ else{
       });
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = 'DetailTrial_'+this.branchCode+'_'+this.currencyCode+'.xlsx';
+
+        // update file name
+        //console.log("Branch List: " + this.branchCode)
+        var b = this.branchCode.split(",");
+        var bName = "";
+        if(b.length > 3) {
+          for (let i = 0; i < 3; i++) {
+            bName += "'" + b[i] + "'";
+            if ((3 - i) != 1) {
+              bName += ",";
+            }
+          }
+
+          bName += ", more";
+        } else {
+          bName = this.branchCode;
+        }
+
+        if(this.filter1) {
+          link.download = 'DetailTrial_'+bName+'_'+this.currencyCode+'.xlsx';
+        } else {
+          link.download = 'DetailTrial_'+bName+'_'+period_code+'.xlsx';
+        }
+        //console.log("File Name: " + link.download);
+
         link.click();
         window.URL.revokeObjectURL(link.href);
       
@@ -688,7 +734,31 @@ else{
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
       a.target = '_blank'; 
-      a.download = 'DetailTrial_'+this.branchCode+'_'+this.currencyCode+'.pdf';
+
+        // update file name
+        //console.log("Branch List: " + this.branchCode)
+        var b = this.branchCode.split(",");
+        var bName = "";
+        if(b.length > 3) {
+          for (let i = 0; i < 3; i++) {
+            bName += "'" + b[i] + "'";
+            if ((3 - i) != 1) {
+              bName += ",";
+            }
+          }
+
+          bName += ", more";
+        } else {
+          bName = this.branchCode;
+        }
+
+        if(this.filter1) {
+          a.download = 'DetailTrial_'+bName+'_'+this.currencyCode+'.pdf';
+        } else {
+          a.download = 'DetailTrial_'+bName+'_'+period_code+'.pdf';
+        }
+        //console.log("File Name: " + link.download);
+      
       a.click();
       
       this.loading = false;

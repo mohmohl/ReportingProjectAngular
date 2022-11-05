@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 import { HttpService } from 'src/services/HttpService';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { CommonUtil } from 'src/app/shared/common-util';
+import { LatestTrialReportService } from 'src/services/LatestTrialReportService';
 
  export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
@@ -71,15 +72,15 @@ totalCredit_lcystr:string;
     currencyCode:new FormControl('', Validators.required)
   });
 
-  constructor(private service:TrialReportService, private http: HttpService, private _util:CommonUtil){//,private dateAdapter: DateAdapter<Date>) {
+  constructor(private latestService: LatestTrialReportService, private service:TrialReportService, private http: HttpService, private _util:CommonUtil){//,private dateAdapter: DateAdapter<Date>) {
     //this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
     this.loading = true;
-    service.getBranchList(1).subscribe((res:string[])=>{
+    latestService.getBranchList(1).subscribe((res:string[])=>{
       this.loading = false;
       this.branchList = res;
     });
     this.loading = true;
-    service.getCurrencyList().subscribe((res:string[])=>{
+    latestService.getCurrencyList().subscribe((res:string[])=>{
       this.loading = false;
       this.currencyList = res;
       this.currencyList = this._util.RemoveElementFromStringArray(this.currencyList, 'Base');

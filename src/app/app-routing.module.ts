@@ -436,8 +436,7 @@ const routes: Routes = [
       {
         path: 'conso-income',
         loadChildren: () => import('./views/mis-reports/conso-income/conso-income.module').then(m => m.ConsoIncomeModule)
-      }
-      ,
+      },
       {
         path: 'detail-trial-conso',
         loadChildren: () => import('./views/mis-reports/detail-trial-conso-report/detail-trial-conso-report.module').then(m => m.DetailTrialConsoReportModule)
@@ -546,7 +545,10 @@ const routes: Routes = [
         path: 'passbook-printing',
         loadChildren: () => import('./views/passbook-printing/passbook-printing.module').then(m => m.PassbookPrintingModule)
       },
-      
+      {
+        path: 'monthlysummarycash',
+        loadChildren: () => import('./views/mis-reports/monthly-summary-cash/monthly-summary-cash.module').then(m => m.MonthlySummaryCashTrModule)
+      }
     ]
   },
   {
