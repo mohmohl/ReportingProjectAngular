@@ -162,17 +162,21 @@
                 <thead>
                 <tr class="text-uppercase table-header-txt" width="100%">
                   <th [attr.colspan]="ccyCode == true ? '2' : ''">Debit</th>
-                  <th rowspan="2" width="80px">Account</th>
+                  <th rowspan="2">Account</th>
                   <th rowspan="2" *ngIf="oldGLFlag">Old GL</th>  
                   <th rowspan="2">Description</th>
                   <th [attr.colspan]="ccyCode == true ? '2' : ''">Credit</th>
                 </tr>
                 <tr *ngIf="ccyCode" class="text-uppercase table-header-txt">
                   
-                  <th width="150px">{{currencyCode}}</th>
+                  <!-- <th width="150px">{{currencyCode}}</th>
                   <th width="150px">Kyats</th>
                   <th width="150px">{{currencyCode}}</th>
-                  <th width="150px">Kyats</th>
+                  <th width="150px">Kyats</th> -->
+                  <th>{{currencyCode}}</th>
+                  <th>Kyats</th>
+                  <th>{{currencyCode}}</th>
+                  <th>Kyats</th>
                 </tr>
                 </thead>
                 <tbody>

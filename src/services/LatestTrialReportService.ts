@@ -33,6 +33,10 @@ export class LatestTrialReportService {
       return this.http.post<any>(`${api}`,data);
     }
 
+    public getSettingsDate(): Observable<any>{
+      return this.http.get<any>(`${environment.baseUrl}`+'/latest-trial/get_Setting_Date');
+    }
+
     // detail trial
     public getDetailTrialReportData(data: TrialRequestData): Observable<any>{
       let api = environment.baseUrl + `/latest-trial/get_detail_trial_report`; 
