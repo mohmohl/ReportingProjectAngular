@@ -285,7 +285,7 @@ exportexcel(): void
       });
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
-        link.download = 'GeneralTrial_'+f_Date+'.xlsx';
+        link.download = 'Consolidated Trial_'+f_Date+'.xlsx';
         link.click();
         window.URL.revokeObjectURL(link.href);
       
@@ -293,10 +293,10 @@ exportexcel(): void
     })).subscribe(
       res => { },
       error => {
-        console.log("General Trial Error >>> "+error)
+        console.log("Consolidated Trial Error >>> "+error)
         debugger;
         if(error != ""){
-        this.error = "(The system cannot cannot generate general trial!.. Have the error)";
+        this.error = "(The system cannot cannot generate Consolidated trial!.. Have the error)";
           }
         this.loading = false;
       });
@@ -343,17 +343,17 @@ exportexcel(): void
       var fileURL = URL.createObjectURL(file);
       a.href = fileURL;
       a.target     = '_blank'; 
-      a.download = 'GeneralTrial_'+f_date+'.pdf';
+      a.download = 'Consolidated Trial_'+f_date+'.pdf';
       a.click();
       
       this.loading = false;
     })).subscribe(
       res => { },
       error => {
-        console.log("General Trial Error >>> "+error)
+        console.log("Consolidated Trial Error >>> "+error)
         debugger;
         if(error != ""){
-        this.error = "(The system cannot cannot generate general trial!.. Have the error)";
+        this.error = "(The system cannot cannot generate Consolidated trial!.. Have the error)";
           }
         this.loading = false;
       });
