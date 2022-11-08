@@ -146,22 +146,29 @@ export class GeneralTrialReportComponent implements OnInit {
     //      this.intializeBranchType(this.beforeSettingsDate);
     // });
 
-    var WHdate = new Date(this.settingsDate.whDate);
-    var MISdate = new Date(this.settingsDate.misDate);
-    //console.log("WHdate : " + WHdate);
-    //console.log("MISdate : " + MISdate);
+  var minDate = new Date(this.settingsDate.minDate);
+  var maxDate = new Date(this.settingsDate.maxDate);
+  // console.log("minDate : " + minDate);
+  // console.log("maxDate : " + maxDate);
 
-    if(WHdate >= from_date) {
-      this.beforeSettingsDate = true;
-    } else {
-      if(MISdate >= from_date) {
-        this.beforeSettingsDate = true;
-      } else {
-        this.beforeSettingsDate = false;
-      }
-    }
-    console.log("Check Settings : " + this.beforeSettingsDate)
-    this.intializeBranchType(this.beforeSettingsDate);
+  // if(WHdate >= from_date) {
+  //   this.beforeSettingsDate = true;
+  // } else {
+  //   if(MISdate >= from_date) {
+  //     this.beforeSettingsDate = true;
+  //   } else {
+  //     this.beforeSettingsDate = false;
+  //   }
+  // }
+    
+  if(from_date >= minDate && from_date <= maxDate) {
+    this.beforeSettingsDate = true;
+  } else {
+    this.beforeSettingsDate = false;
+  }
+
+  console.log("Check Settings : " + this.beforeSettingsDate)
+  this.intializeBranchType(this.beforeSettingsDate);
   } 
 
   intializeBranchType(isBefore){
@@ -350,6 +357,7 @@ export class GeneralTrialReportComponent implements OnInit {
   }
 
   submit(){
+    this.from_date = this.form1.get(["from_date"])!.value;
     this.trialList=null;
     this.totalDebit=0;
     this.totalDebit_lcy=0;
@@ -360,12 +368,12 @@ export class GeneralTrialReportComponent implements OnInit {
       this.error = "Data is required";
       return;
   } else if(!this.beforeSettingsDate && this.selectedBrItems.length >1) {
-      this.error = "Multi branch allow only for back date!";
+      this.error = "Multi branch does not allow for "+ this._util.getDDMMMYYYY(this.from_date) +"!";
       return;
   }
 
   this.error="";
-  this.from_date = this.form1.get(["from_date"])!.value;
+  
   this.loading = true;
   let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
 
@@ -536,7 +544,7 @@ if(this.miantotalCredit < 0 )this.miantotalCreditstr = this.isNegitiveTransform(
 
   exportExcel(): void 
 {
-  
+  this.from_date = this.form1.get(["from_date"])!.value;
   this.error="";
   var f_Date="";
   var fromat="1";
@@ -546,10 +554,9 @@ if(this.miantotalCredit < 0 )this.miantotalCreditstr = this.isNegitiveTransform(
     this.error = "Data is required";
     return;
   } else if(!this.beforeSettingsDate && this.selectedBrItems.length >1) {
-    this.error = "Multi branch allow only for back date!";
+    this.error = "Multi branch does not allow for "+ this._util.getDDMMMYYYY(this.from_date) +"!";
     return;
 }
-this.from_date = this.form1.get(["from_date"])!.value;
 f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
 
 if(this.branch ==""){
@@ -665,6 +672,7 @@ comboData.format = fromat;
 
   exportPDF(): void 
   {
+    this.from_date = this.form1.get(["from_date"])!.value;
     this.error="";
     var f_Date="";
     var fromat="1";
@@ -674,10 +682,9 @@ comboData.format = fromat;
       this.error = "Data is required";
       return;
     } else if(!this.beforeSettingsDate && this.selectedBrItems.length >1) {
-      this.error = "Multi branch allow only for back date!";
+      this.error = "Multi branch does not allow for "+ this._util.getDDMMMYYYY(this.from_date) +"!";
       return;
   }
-  this.from_date = this.form1.get(["from_date"])!.value;
   f_Date = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
   
   if(this.branch ==""){
