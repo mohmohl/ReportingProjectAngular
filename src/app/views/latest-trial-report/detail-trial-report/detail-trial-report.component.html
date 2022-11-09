@@ -21,6 +21,11 @@
             <code *ngIf="error">{{error}}</code>
               <div class="container-fluid">
                 <div class="form-group row">
+                   <span style="color: red;">Multi Branch allow only {{ this.settingsDate.minDate | date :  "dd-MMM-yyyy" }} to {{ this.settingsDate.maxDate | date :  "dd-MMM-yyyy" }}</span>
+                </div>
+                <br>
+
+                <div class="form-group row">
                   <div class="col-sm-3">
                     <input type="radio"  name="period" value="date" (change)="changePeriodfilter($event)" checked/>By Date
                   </div> 
