@@ -2,7 +2,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-header">
-              <h5>General Trial Report</h5>
+              <h5>Consolidated Trial Report</h5>
               <div *ngIf="loading" class="d-flex justify-content-center">
                 <div class="spinner-border spinner-border-sm text-warning"></div>
                   <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -99,6 +99,7 @@
                 <p>{{data.branchName}}</p>
                 <p>{{data.title}}</p>
               </div>
+              <div style="text-align: right;">{{currencyCode}}</div>
               <table class="table table table-hover" id="export-table">
                 <thead>
                 <tr class="text-uppercase table-header-txt" width="100%">

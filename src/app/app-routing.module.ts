@@ -552,6 +552,10 @@ const routes: Routes = [
       {
         path: 'monthlysummarycash',
         loadChildren: () => import('./views/mis-reports/monthly-summary-cash/monthly-summary-cash.module').then(m => m.MonthlySummaryCashTrModule)
+      },
+      {
+        path: 'automation-rpt',
+        loadChildren: () => import('./views/mis-reports/automation-report/automation-report.module').then(m => m.AutomationReportModule)
       }
     ]
   },
