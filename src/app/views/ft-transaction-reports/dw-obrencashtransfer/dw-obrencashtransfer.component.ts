@@ -98,7 +98,8 @@ export class DwObrencashtransferComponent implements OnInit {
       data => {
         if(data != null){
           this.totNoOfTrans = data.length;
-          this.g_obrencashtransferdatalist  = this.groupBy(data, otherbranch => (otherbranch.trn_dt +"|" + otherbranch.internal_remarks + "|" +otherbranch.other_branch));
+          //this.g_obrencashtransferdatalist  = this.groupBy(data, otherbranch => (otherbranch.trn_dt +"|" + otherbranch.internal_remarks + "|" +otherbranch.other_branch));
+          this.g_obrencashtransferdatalist  = this.groupBy(data, otherbranch => (otherbranch.trn_dt + "|" +otherbranch.other_branch));
        
           this.loading = false;
           this._showData = true;
