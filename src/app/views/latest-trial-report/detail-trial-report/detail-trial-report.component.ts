@@ -94,7 +94,8 @@ export class DetailTrialReportComponent implements OnInit {
   branch_typeList = [];
 
   oldGLFlag: boolean = true; 
-  //oldGLFlag: boolean = false; 
+  //oldGLFlag: boolean = false;
+  byDateFlag: boolean = true; 
 
   WHdate: string;
   MISdate: string;
@@ -321,6 +322,7 @@ export class DetailTrialReportComponent implements OnInit {
     this.error = '';
 
     if(e.target.value == 'date'){
+      this.byDateFlag = true;
       this.filter1=true;
       this.loading=true;
       this.form1 = new FormGroup({
@@ -335,6 +337,7 @@ export class DetailTrialReportComponent implements OnInit {
       });
     }
     else{
+      this.byDateFlag = false;
       this.filter1=false;
       this.loading=true;
       this.service.getBranchList(3).subscribe((res:string[])=>{
