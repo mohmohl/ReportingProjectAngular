@@ -21,7 +21,7 @@
             <code *ngIf="error">{{error}}</code>
               <div class="container-fluid">
                 <div class="form-group row">
-                   <span style="color: red;">Multi Branch allow only {{ this.settingsDate.minDate | date :  "dd-MMM-yyyy" }} to {{ this.settingsDate.maxDate | date :  "dd-MMM-yyyy" }}</span>
+                   <span style="color: DarkSalmon;">Note: Multi Branch allow only {{ this.settingsDate.minDate | date :  "dd-MMM-yyyy" }} to {{ this.settingsDate.maxDate | date :  "dd-MMM-yyyy" }}</span>
                 </div>
                 <br>
 
@@ -168,7 +168,7 @@
                 <tr class="text-uppercase table-header-txt" width="100%">
                   <th [attr.colspan]="ccyCode == true ? '2' : ''">Debit</th>
                   <th rowspan="2">Account</th>
-                  <th rowspan="2" *ngIf="oldGLFlag">Old GL</th>  
+                  <th rowspan="2" *ngIf="oldGLFlag && byDateFlag">Old GL</th>  
                   <th rowspan="2">Description</th>
                   <th [attr.colspan]="ccyCode == true ? '2' : ''">Credit</th>
                 </tr>
@@ -193,7 +193,7 @@
                           {{list.debit_lcy < 0 ? list.debit_lcystr : list.debit_lcy === 0 ? "" :list.debit_lcy | number: '1.2-2'}}
                         </td>
                         <td class="txt">{{list.account}}</td>
-                        <td class="txt" *ngIf="oldGLFlag">{{list.old_gl}}</td> 
+                        <td class="txt" *ngIf="oldGLFlag && byDateFlag">{{list.old_gl}}</td> 
                         
                         <td class="des-txt">{{list.gl_desc}}</td>
                         <td class="num-txt" *ngIf="ccyCode">
@@ -211,9 +211,10 @@
                       <td class="num-txt">
                          {{totalDebit_lcy < 0 ? totalDebit_lcystr : totalDebit_lcy === 0 ? "" :  totalDebit_lcy | number: '1.2-2'}}
                       </td>
-                      <td class="txt" colspan="2" *ngIf="!oldGLFlag"> Grand Total</td>
-                       <td class="txt" colspan="3" *ngIf="oldGLFlag"> Grand Total</td> 
                       
+                      <td class="txt" colspan="2" *ngIf="!oldGLFlag || (oldGLFlag && !byDateFlag)"> Grand Total</td>
+                      <td class="txt" colspan="3" *ngIf="oldGLFlag && byDateFlag"> Grand Total</td> 
+
                       <td class="num-txt" *ngIf="ccyCode">
                         {{totalCredit < 0 ? totalCreditstr : totalCredit === 0 ? "" :  totalCredit | number: '1.2-2'}}
                       </td>
