@@ -36,6 +36,7 @@ export class BankStatementComponent implements OnInit {
   print_date: string;
   yearList: PassYears[] = [];
   error = '';
+  disableFlag = false;
   /*form = new FormGroup({
     accno: new FormArray([new FormControl('')]),
     years: new FormControl('',),
@@ -97,6 +98,7 @@ export class BankStatementComponent implements OnInit {
     }
   }
   submit() {
+    this.disableFlag = true;
     if (this.form.invalid) {
       this.error = "Account No is required";
       return;
@@ -152,6 +154,7 @@ export class BankStatementComponent implements OnInit {
    
               }
             this.loading = false;
+            this.disableFlag = false;
           })).subscribe(
             res => { },
             error => {
@@ -161,6 +164,7 @@ export class BankStatementComponent implements OnInit {
               this.error = this.acc_no + "(The system cannot find the file specified)";
                 }
               this.loading = false;
+              this.disableFlag = false;
             });
           }
      });
@@ -202,6 +206,7 @@ export class BankStatementComponent implements OnInit {
             }
             
             this.loading = false;
+            this.disableFlag = false;
           })).subscribe(
             res => {
 
@@ -209,6 +214,7 @@ export class BankStatementComponent implements OnInit {
             error => {
               this.error = this.acc_no + "(The system cannot find the file specified)";
               this.loading = false;
+              this.disableFlag = false;
             });
           }
         });

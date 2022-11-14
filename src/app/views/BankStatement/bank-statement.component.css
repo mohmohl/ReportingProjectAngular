@@ -1,0 +1,3 @@
+.btn-primary:disabled {
+  background-color: gray!important;
+}
