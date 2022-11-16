@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-sm-12">
+      <form [formGroup]="form" (ngSubmit)="submit(form.value)">
+        <div class="card">
+            <div class="card-header">
+              <h5>Denomination</h5>
+              <h5 style="color:red;">Cash IN Hand = {{cash_in_hand}}</h5>
+              <h5 style="color:#4caf50;">Changes = {{deno_in_hand}}</h5>
+              <div class="page-header-breadcrumb">
+                <button type="submit" class="btn-primary">
+                 Send
+                </button> 
+              </div>
+            </div>
+            <div class="card-body">
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+                  <code *ngIf="error">{{error}}</code>
+                  <p class="text-success" *ngIf="successMsg">{{successMsg}}</p>
+                  <div class="container-fluid">
+              
+                  <div class="form-group row">
+                    <label class="col-sm-1 col-form-label"> Import Date</label>
+                    <div class="col-sm-2">
+                        <mat-form-field style="width:100px;">
+                            <input #minmaxInput matInput  [max]="maxDate" [matDatepicker]="minmaxvalidation"
+                                formControlName="trn_dt" readonly (change)="import_date_change()">
+                            <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #minmaxvalidation></mat-datepicker>
+                        </mat-form-field>
+                     
+                    </div>
+                    <label class="col-sm-1 col-form-label">Branch</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" formControlName="branch_code" (change)="branch_change()">
+                          <option value="" selected>-- Select --</option>
+                          <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 col-form-label">Currency</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" formControlName="ccy" (change)="ccy_change()">
+                          <option value="MMK" selected>MMK</option>
+                          <option value="EUR" selected>EUR</option>
+                          <option value="USD" selected>USD</option>
+                          <option value="SGD" selected>SGD</option>
+                          <option value="THB" selected>THB</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                    <button type="button" class="btn-primary" (click)="searchCashInHand()">
+                      Search
+                     </button> 
+                    </div>
+                </div>
+
+                <div  class="row" formArrayName="detailList" *ngFor="let item of field_list; let i = index;">
+                  <label class="col-sm-3 ">{{item.deno_code}}</label>
+                  <div class="col-sm-4" [formGroupName]="i">
+                      <input type="hidden" formControlName="deno_code" value="{{item.deno_code}}">
+                      <input type="hidden" formControlName="deno_code_value" value="{{item.deno_code_value}}">
+                      <input  type="number" formControlName="deno_count" placeholder="0" (change)="valueChanges()">
+                  </div>
+                  
+              </div>
+
+              
+
+
+
+
+
+                
+                
+                
+                
+
+                
+
+              
+              
+              </div>
+            </div>
+        </div>
+    </form>
+</div>
+</div>

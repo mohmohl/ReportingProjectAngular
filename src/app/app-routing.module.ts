@@ -556,7 +556,12 @@ const routes: Routes = [
       {
         path: 'automation-rpt',
         loadChildren: () => import('./views/mis-reports/automation-report/automation-report.module').then(m => m.AutomationReportModule)
+      },
+      {
+        path: 'daily_deno_record',
+        loadChildren: () => import('./views/daily-deno-record/daily-deno-record.module').then(m => m.DailyDenoRecordModule)
       }
+     
     ]
   },
   {
