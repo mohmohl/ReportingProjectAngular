@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-sm-12">
+     
+        <div class="card">
+            <div class="card-header">
+              <h5>Denomination Report</h5>
+              <h5 style="color:rgb(17, 0, 255);">Cash IN Hand = {{cash_in_hand}}</h5>
+            </div>
+            <div class="card-body">
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                      <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                  </div>
+                  <code *ngIf="error">{{error}}</code>
+                  <p class="text-success" *ngIf="successMsg">{{successMsg}}</p>
+                  <div class="container-fluid">
+            <form [formGroup]="form" (ngSubmit)="searchDenoReport()">
+                  <div class="form-group row">
+                    <label class="col-sm-1 col-form-label"> Import Date</label>
+                    <div class="col-sm-2">
+                        <mat-form-field style="width:100px;">
+                            <input #minmaxInput matInput  [max]="maxDate" [matDatepicker]="minmaxvalidation"
+                                formControlName="trn_dt" readonly (change)="import_date_change()">
+                            <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #minmaxvalidation></mat-datepicker>
+                        </mat-form-field>
+                     
+                    </div>
+                    <label class="col-sm-1 col-form-label">Branch</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" formControlName="branch_code" (change)="branch_change()">
+                          <option value="" selected>-- Select --</option>
+                          <option *ngFor="let b of branchList" value="{{b}}">{{b}}</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 col-form-label">Currency</label>
+                    <div class="col-sm-2">
+                        <select class="form-control" formControlName="ccy" (change)="ccy_change()">
+                          <option *ngFor="let c of ccyList" value="{{c}}">{{c}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                    <button type="submit" class="btn-primary" >
+                      Search
+                     </button> 
+                    </div>
+                </div>
+</form>
+                
+              </div>
+              <div class="table-responsive">
+                <table class="table table table-hover" id="export-table">
+                  <thead>
+                  <tr class="text-uppercase table-header-txt" width="100%">
+                    <th>Deno Code</th>
+                    <th>Deno Count</th>
+                    <th>Currency</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let list of field_list">
+                    <td>{{list.deno_code}}</td>
+                      <td>{{list.deno_count}}</td>
+                      <td>{{list.ccy}}</td>
+                    </tr>
+                  </tbody>
+                  </table>
+            </div>
+
+            </div>
+        </div>
+</div>
+</div>
