@@ -34,4 +34,18 @@ public deno_data_daily_update(data:Deno_Header){
 debugger
   return this.http.post<any>(`${environment.baseUrl}`+'/denomination/saveDenominationData',data);
 }
+
+public getCCYListForDeno(): Observable<any>{
+
+  return this.http.post<any>(`${environment.baseUrl}`+'/denomination/getCCYListForDeno',null);
+}
+
+public getCodeAndValueListForDeno(ccy:string): Observable<any>{
+  return this.http.post<any>(`${environment.baseUrl}`+'/denomination/getCodeAndValueListForDeno?ccy='+ccy,null);
+}
+
+public getDenoReport(data:DenoCashInHand){
+
+  return this.http.post<any>(`${environment.baseUrl}`+'/denomination/getDeno_data_list',data);
+}
 }

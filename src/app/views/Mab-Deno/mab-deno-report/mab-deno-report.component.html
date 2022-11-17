@@ -1,16 +1,10 @@
 <div class="row">
     <div class="col-sm-12">
-      <form [formGroup]="form" (ngSubmit)="submit(form.value)">
+     
         <div class="card">
             <div class="card-header">
-              <h5>Denomination</h5>
-              <h5 style="color:red;">Cash IN Hand = {{cash_in_hand}}</h5>
-              <h5 style="color:#4caf50;">Changes = {{deno_in_hand}}</h5>
-              <div class="page-header-breadcrumb">
-                <button type="submit" class="btn-primary">
-                 Send
-                </button> 
-              </div>
+              <h5>Denomination Report</h5>
+              <h5 style="color:rgb(17, 0, 255);">Cash IN Hand = {{cash_in_hand}}</h5>
             </div>
             <div class="card-body">
                 <div *ngIf="loading" class="d-flex justify-content-center">
@@ -20,7 +14,7 @@
                   <code *ngIf="error">{{error}}</code>
                   <p class="text-success" *ngIf="successMsg">{{successMsg}}</p>
                   <div class="container-fluid">
-              
+            <form [formGroup]="form" (ngSubmit)="searchDenoReport()">
                   <div class="form-group row">
                     <label class="col-sm-1 col-form-label"> Import Date</label>
                     <div class="col-sm-2">
@@ -37,54 +31,44 @@
                     <div class="col-sm-2">
                         <select class="form-control" formControlName="branch_code" (change)="branch_change()">
                           <option value="" selected>-- Select --</option>
-                          <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
+                          <option *ngFor="let b of branchList" value="{{b}}">{{b}}</option>
                         </select>
                     </div>
                     <label class="col-sm-1 col-form-label">Currency</label>
                     <div class="col-sm-2">
                         <select class="form-control" formControlName="ccy" (change)="ccy_change()">
-                          <option value="MMK" selected>MMK</option>
-                          <option value="EUR" selected>EUR</option>
-                          <option value="USD" selected>USD</option>
-                          <option value="SGD" selected>SGD</option>
-                          <option value="THB" selected>THB</option>
+                          <option *ngFor="let c of ccyList" value="{{c}}">{{c}}</option>
                         </select>
                     </div>
                     <div class="col-sm-2">
-                    <button type="button" class="btn-primary" (click)="searchCashInHand()">
+                    <button type="submit" class="btn-primary" >
                       Search
                      </button> 
                     </div>
                 </div>
-
-                <div  class="row" formArrayName="detailList" *ngFor="let item of field_list; let i = index;">
-                  <label class="col-sm-3 ">{{item.deno_code}}</label>
-                  <div class="col-sm-4" [formGroupName]="i">
-                      <input type="hidden" formControlName="deno_code" value="{{item.deno_code}}">
-                      <input type="hidden" formControlName="deno_code_value" value="{{item.deno_code_value}}">
-                      <input  type="number" formControlName="deno_count" placeholder="0" (change)="valueChanges()">
-                  </div>
-                  
+</form>
+                
               </div>
+              <div class="table-responsive">
+                <table class="table table table-hover" id="export-table">
+                  <thead>
+                  <tr class="text-uppercase table-header-txt" width="100%">
+                    <th>Deno Code</th>
+                    <th>Deno Count</th>
+                    <th>Currency</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let list of field_list">
+                    <td>{{list.deno_code}}</td>
+                      <td>{{list.deno_count}}</td>
+                      <td>{{list.ccy}}</td>
+                    </tr>
+                  </tbody>
+                  </table>
+            </div>
 
-              
-
-
-
-
-
-                
-                
-                
-                
-
-                
-
-              
-              
-              </div>
             </div>
         </div>
-    </form>
 </div>
 </div>

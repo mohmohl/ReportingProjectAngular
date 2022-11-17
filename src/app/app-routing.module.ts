@@ -559,7 +559,11 @@ const routes: Routes = [
       },
       {
         path: 'daily_deno_record',
-        loadChildren: () => import('./views/daily-deno-record/daily-deno-record.module').then(m => m.DailyDenoRecordModule)
+        loadChildren: () => import('./views/Mab-Deno/daily-deno-record/daily-deno-record.module').then(m => m.DailyDenoRecordModule)
+      },
+      {
+        path: 'mab_deno_report',
+        loadChildren: () => import('./views/Mab-Deno/mab-deno-report/mab-deno-report.module').then(m => m.MabDenoReportModule)
       }
      
     ]

@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DailyDenoRecordRoutingModule } from './daily-deno-record-routing.module';
-import { DailyDenoRecordComponent } from './daily-deno-record.component';
-import { SharedModule } from '../../shared/shared.module';
+import { MabDenoReportRoutingModule } from './mab-deno-report-routing.module';
+import { MabDenoReportComponent } from './mab-deno-report.component';
+import { SharedModule } from '../../../shared/shared.module';
 import { MatDatepickerModule, MatFormFieldModule, MatInputModule, MatNativeDateModule } from '@angular/material';
 
 @NgModule({
   imports: [
     CommonModule,
-    DailyDenoRecordRoutingModule,
+    MabDenoReportRoutingModule,
     SharedModule,
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule
   ],
-  declarations: [DailyDenoRecordComponent]
+  declarations: [MabDenoReportComponent]
 })
-export class DailyDenoRecordModule { }
+export class MabDenoReportModule { }
