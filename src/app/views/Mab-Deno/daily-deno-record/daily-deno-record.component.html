@@ -25,7 +25,7 @@
                     <label class="col-sm-1 col-form-label"> Import Date</label>
                     <div class="col-sm-2">
                         <mat-form-field style="width:100px;">
-                            <input #minmaxInput matInput  [max]="maxDate" [matDatepicker]="minmaxvalidation"
+                            <input #minmaxInput matInput [min]="maxDate" [max]="maxDate" [matDatepicker]="minmaxvalidation"
                                 formControlName="trn_dt" readonly (change)="import_date_change()">
                             <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
                             </mat-datepicker-toggle>
