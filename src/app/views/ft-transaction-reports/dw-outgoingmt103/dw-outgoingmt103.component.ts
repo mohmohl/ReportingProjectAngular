@@ -149,6 +149,7 @@ export class DwOutgoingmt103Component implements OnInit {
 exportPDF(){
   this.error="";
     this.loading = true;
+    this.clearProperties();
     //exportOutgoingMT103PDF
     let fileName = "OutgoingMT103_"+this.currency+"_" + this.branch+"_"+this.month + ".pdf";
     this.http.generatePost_PDF("/fttransaction/exportOutgoingMT103PDF?date="+this.month+"&ccy="+this.currency+"&rcvBank="+this.rcvbank+"&status="+this.authStatus,this.branchData,
