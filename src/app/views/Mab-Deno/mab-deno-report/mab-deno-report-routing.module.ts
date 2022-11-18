@@ -9,7 +9,7 @@ const routes: Routes = [
     component: MabDenoReportComponent,
     canActivate: [AuthGuard],
     data: {
-      breadcrumb: 'Loan Contract',
+      breadcrumb: 'Deno Report',
       icon: 'icofont icofont-file-document bg-c-pink',
       breadcrumb_caption: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit - Sample Page',
       status: true

@@ -9,7 +9,7 @@ const routes: Routes = [
     component: DailyDenoRecordComponent,
     canActivate: [AuthGuard],
     data: {
-      breadcrumb: 'Loan Contract',
+      breadcrumb: 'Daily Deno Record',
       icon: 'icofont icofont-file-document bg-c-pink',
       breadcrumb_caption: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit - Sample Page',
       status: true

@@ -22,7 +22,7 @@ export class DenominationService {
   }
   public getBranchList(formatType: number): Observable<any>{
     var userId=this.authService.currentUserValue.userId;
-    return this.http.get<any>(`${environment.baseUrl}`+'/latest-trial/get_branchList?userId='+userId + '&formatType=' + formatType);
+    return this.http.get<any>(`${environment.baseUrl}`+'/denomination/getHomeBranchForDeno?userId='+userId);
   }
 
   public getCashInHand(data:DenoCashInHand){
