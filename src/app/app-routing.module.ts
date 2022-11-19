@@ -564,6 +564,10 @@ const routes: Routes = [
       {
         path: 'mab_deno_report',
         loadChildren: () => import('./views/Mab-Deno/mab-deno-report/mab-deno-report.module').then(m => m.MabDenoReportModule)
+      },
+      {
+        path: 'depositbalance1',
+        loadChildren: () => import('./views/mis-reports/deposit-balance-1/deposit-balance-1.module').then(m => m.DepositBalance1Module)
       }
      
     ]
