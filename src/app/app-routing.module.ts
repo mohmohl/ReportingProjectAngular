@@ -558,16 +558,16 @@ const routes: Routes = [
         loadChildren: () => import('./views/mis-reports/automation-report/automation-report.module').then(m => m.AutomationReportModule)
       },
       {
+        path: 'depositbalance1',
+        loadChildren: () => import('./views/mis-reports/deposit-balance-1/deposit-balance-1.module').then(m => m.DepositBalance1Module)
+      },
+      {
         path: 'daily_deno_record',
         loadChildren: () => import('./views/Mab-Deno/daily-deno-record/daily-deno-record.module').then(m => m.DailyDenoRecordModule)
       },
       {
         path: 'mab_deno_report',
         loadChildren: () => import('./views/Mab-Deno/mab-deno-report/mab-deno-report.module').then(m => m.MabDenoReportModule)
-      },
-      {
-        path: 'depositbalance1',
-        loadChildren: () => import('./views/mis-reports/deposit-balance-1/deposit-balance-1.module').then(m => m.DepositBalance1Module)
       }
      
     ]
