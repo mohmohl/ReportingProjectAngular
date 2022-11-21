@@ -94,10 +94,10 @@ export class DepositBalance1Component implements OnInit {
     this.loading = true;
 
     let requestBody = {
-      reportDate: reportDate,
-      branchCode: this.branchCode,
-      ccy: this.ccy,
-      fileType: 'xlsx'
+      t1: reportDate,
+      t2: this.branchCode,
+      t3: this.ccy,
+      t4: 'xlsx'
     };
 
     this.http.downloadFile("/misreport/downloadDepositBalance1ReportFile", requestBody, `DepositBalance1_${this.branchCode}_${this.ccy}_${reportDate}`, 'xlsx').subscribe(
