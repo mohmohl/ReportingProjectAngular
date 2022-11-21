@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="card-header">
+              <h5>Voucher Printing</h5>
+              <div *ngIf="loading" class="d-flex justify-content-center">
+                <div class="spinner-border spinner-border-sm text-warning"></div>
+                  <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+              </div>
+              <div class="page-header-breadcrumb">
+                <button type="submit" class="btn-primary">
+                  Print
+                </button> 
+              </div>
+            </div>
+            <div class="card-body">
+              <code *ngIf="error">{{error}}</code>
+              
+                    <div class="container-fluid">
+                      <div class="row form-group col-md-12">
+                        <label class="col-sm-2 col-form-label">Branch <code>*</code></label>
+                        <select class="col-sm-4 form-control" formControlName="branch" id="exampleFormControlSelect1">
+                          <option value="" selected>-- Select --</option>
+                          <option *ngFor="let b of branch_list" value="{{b}}">{{ b}}</option>
+                        </select>
+                      </div>
+
+                    </div>
+          </div>
+        </form>
+        </div>
+      </div>
+  </div>
+
+ 

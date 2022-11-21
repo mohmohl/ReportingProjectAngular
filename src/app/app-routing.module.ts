@@ -564,7 +564,11 @@ const routes: Routes = [
       {
         path: 'mab_deno_report',
         loadChildren: () => import('./views/Mab-Deno/mab-deno-report/mab-deno-report.module').then(m => m.MabDenoReportModule)
-      }
+      },
+      {
+        path: 'voucher_printing',
+        loadChildren: () => import('./views/DE_Printing/voucher_printing/voucher-print.module').then(m => m.VoucherPrintModule)
+      },
      
     ]
   },
