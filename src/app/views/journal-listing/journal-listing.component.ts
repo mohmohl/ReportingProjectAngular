@@ -9,6 +9,7 @@ import { JournalListingService } from 'src/services/JournalListingService';
 import { JournalListingData } from 'src/models/JournalListingData';
 import {Observable} from 'rxjs';
 import {startWith, map} from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
 
  export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
@@ -92,7 +93,8 @@ export const _filter = (opt: string[], value: string): string[] => {
   selectedOption = ['ALL'];
 
   form = new FormGroup({
-    date: new FormControl('', Validators.required),
+    //date: new FormControl('', Validators.required),
+    date: new FormControl(new Date,),
     branchCode: new FormControl(this.selectedOption, Validators.required),
     //branchCode: [this.selectedOption, [Validators.required]],
     currencyCode: new FormControl(''),
@@ -102,10 +104,12 @@ export const _filter = (opt: string[], value: string): string[] => {
     trnsRefNo: new FormControl(''),
   });
 
-  constructor(private service: JournalListingService, private http: HttpService,private _formBuilder: FormBuilder){
+  constructor(private service: JournalListingService, private http: HttpService,private _formBuilder: FormBuilder,public datepipe: DatePipe){
     
     this.loading = true;
-    service.getBranchList().subscribe((res:string[])=>{
+    //service.getBranchList().subscribe((res:string[])=>{//all branch
+    //service.getBranchListForMigration().subscribe((res:string[])=>{//home branch
+    service.getBranchList(1).subscribe((res:string[])=>{//access branch
       this.loading = false;
       this.branchList = res;
     });
@@ -116,11 +120,11 @@ export const _filter = (opt: string[], value: string): string[] => {
       this.currencyList = res;
     });
 
-    this.loading = true;
+   /* this.loading = true;
     service.getTransCodeList().subscribe((res:string[])=>{
       this.loading = false;
       this.transCodeList = res;
-    });
+    });*/
 
    }
 
@@ -226,6 +230,67 @@ export const _filter = (opt: string[], value: string): string[] => {
   }
 
   exportExcel(): void {
+    if (this.form.invalid) {
+      this.error = "Data is required";
+      return;
+    }
+
+    this.error="";
+    this.loading = true;
+
+    this.branchCode = this.form.get(["branchCode"])!.value;
+
+    if(this.isAllCcy){
+      this.currencyCode = "ALL";
+    }else{
+      this.currencyCode = this.selectedCcyItems.join("','");
+      this.currencyCode = "'"+ this.currencyCode+ "'";
+    }
+
+    this.from_date = this.form.get(["date"])!.value;
+    let fDate = this.datepipe.transform(this.from_date,'dd-MMM-yyyy');
+    //let fDate = `${this.from_date.getFullYear()}-${this.from_date.getMonth()+1}-${this.from_date.getDate()}`;
+
+    const comboData = new JournalListingData();
+    comboData.date = fDate;
+    comboData.branchCode = this.branchCode;
+    comboData.currencyCode = this.currencyCode;
+    //comboData.transCode = this.transCode;
+    comboData.status = this.form.get(["status"])!.value;
+    comboData.userId = this.selectedUserID;
+    comboData.transRefNo = this.form.get(["trnsRefNo"])!.value;
+
+    console.log("excel >>>>" + JSON.stringify(comboData));
+
+    this.service.exportJournalListingExcel(comboData)
+    .pipe(
+    map((data: any) => {
+      debugger;
+      let blob = new Blob([data], {
+        type: "application/vnd.ms-excel"
+      });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        //link.download = 'JournalListing_'+ " " +'.xlsx';
+        link.download = 'JournalListing.xlsx';
+        link.click();
+        window.URL.revokeObjectURL(link.href);
+      
+      this.loading = false;
+    })).subscribe(
+      res => { },
+      error => {
+        console.log("Journal Listing Error >>> "+error)
+        debugger;
+        if(error != ""){
+        this.error = "(The system cannot cannot generate Journal Listing Report!.. Have the error)";
+          }
+        this.loading = false;
+      });
+
+  }
+  /*
+  exportExcel(): void {
   if (this.form.invalid) {
     this.error = "Data is required";
     return;
@@ -293,7 +358,7 @@ export const _filter = (opt: string[], value: string): string[] => {
           }
         this.loading = false;
       });
-  }
+  }*/
 
   // <!-- autocomplete -->
   clearSelection() {
