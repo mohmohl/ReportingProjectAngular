@@ -36,7 +36,10 @@ export class BackDateReportService{
     var api = environment.baseUrl+`/backDateTrial/download/export_migration_report?report_name=`+report_name+'&branch='+branch+'&version='+version;
     return this.http.post<any>(`${api}`,null,{responseType: 'arraybuffer' as 'json'});
   }
-
+  public getBranchListForTTPrint(): Observable<any>{
+    var userId=this.authService.currentUserValue.userId;
+    return this.http.get<any>(`${environment.baseUrl}`+'/denomination/getHomeBranchForDeno?userId='+userId);
+  }
   public export_tt_print(branch:string): Observable<any>{
     var api = environment.baseUrl+'/ttprinting/export_tt_voucher?branch='+branch;
     return this.http.get<any>(`${api}`, {responseType: 'arraybuffer' as 'json'});

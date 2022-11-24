@@ -573,6 +573,10 @@ const routes: Routes = [
         path: 'voucher_printing',
         loadChildren: () => import('./views/DE_Printing/voucher_printing/voucher-print.module').then(m => m.VoucherPrintModule)
       },
+      {
+        path: 'po_number_record',
+        loadChildren: () => import('./views/DE_Printing/po-invoice/po-invoice-record.module').then(m => m.PoInvoiceModule)
+      }
      
     ]
   },

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { CommonModel } from 'src/models/CommonModel';
 import { BackDateReportService } from 'src/services/BackDateReportService';
+import { CommomBranchService } from 'src/services/CommonBranchServcie';
 
 @Component({
   selector: 'app-migration-report',
@@ -23,14 +24,14 @@ export class VoucherPrintComponent implements OnInit {
     branch: new FormControl('',Validators.required)
   });
 
-  constructor(private bdService:BackDateReportService) { 
+  constructor(private bdService:BackDateReportService,private b_service:CommomBranchService) { 
   
   }
 
   ngOnInit() {
     
     this.loading = true
-    this.bdService.getBranchListForMigration().subscribe(res =>{
+    this.b_service.get_home_branch().subscribe(res =>{
       this.loading = false
     
       this.branch_list=res;
