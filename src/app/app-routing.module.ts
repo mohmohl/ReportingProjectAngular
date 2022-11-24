@@ -576,6 +576,28 @@ const routes: Routes = [
       {
         path: 'po_number_record',
         loadChildren: () => import('./views/DE_Printing/po-invoice/po-invoice-record.module').then(m => m.PoInvoiceModule)
+      },
+
+      // 134 Deposit Reports
+      {
+        path: 'deposit_summary',
+        loadChildren: () => import('./views/deposit-report/deposit-summary/deposit-summary.module').then(m => m.DepositSummaryModule)
+      },
+      {
+        path: 'detail_trial_regional',
+        loadChildren: () => import('./views/deposit-report/detail-trial-regional/detail-trial-regional.module').then(m => m.DetailTrialRegionalModule)
+      },
+      {
+        path: 'loan_summary',
+        loadChildren: () => import('./views/deposit-report/loan-summary/loan-summary.module').then(m => m.LoanSummaryModule)
+      },
+      {
+        path: 'regional_deposit',
+        loadChildren: () => import('./views/deposit-report/regional-deposit/regional-deposit.module').then(m => m.RegionalDepositModule)
+      },
+      {
+        path: 'regional_loan',
+        loadChildren: () => import('./views/deposit-report/regional-loan/regional-loan.module').then(m => m.RegionalLoanModule)
       }
      
     ]
