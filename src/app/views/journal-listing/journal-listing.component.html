@@ -20,6 +20,135 @@
             <form [formGroup]="form">
               <div class="container-fluid">
                 <div class="form-group row">
+
+                  <div class="col-md-6">
+                    <div class="row form-group col-md-12">
+                      <label class="col-sm-6 col-form-label">Date<code>*</code></label>
+                      <div class="col-sm-6" >
+                        <mat-form-field>
+                          <input #minmaxInput matInput [matDatepicker]="date" formControlName="date" >
+                          <mat-datepicker-toggle matSuffix [for]="date" >
+                             </mat-datepicker-toggle>
+                          <mat-datepicker #date></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="row form-group col-md-12">
+                      <label class="col-sm-6 col-form-label">Status<code>*</code></label>
+                      <select class="col-sm-6 form-control" formControlName="status" id="exampleFormControlSelect1">
+                        <option value="A">Authorized</option>
+                        <option value="U">Unauthorized</option>
+                      </select>
+                    </div>
+                    
+                  </div>
+                </div>   
+
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <div class="row form-group col-md-12">
+                      <label class="col-sm-6 col-form-label">Branch Code<code>*</code></label>
+                        <select class="col-sm-6 form-control" formControlName="branchCode" id="exampleFormControlSelect1">
+                          <option value="" selected>-- Select --</option>
+                          <option *ngFor="let b of branchList" value="{{b}}">{{b}}</option>
+                        </select>
+                    </div>
+                    
+                  </div>
+
+                    <div class="col-md-6">
+                      <div class="row form-group col-md-12">
+                        <label class="col-sm-6 col-form-label">Trn Ref No: </label>
+                        <input class="col-sm-6" type="text" formControlName="trnsRefNo" >
+                      </div>  
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-6">
+                      <div class="row form-group col-md-12">
+                        <label class="col-sm-6 col-form-label">Currency</label>
+                        <div style="width:50%;">
+                          <ng-multiselect-dropdown 
+                                [settings]="dropdownSettings" style="background: maroon;"
+                                [data]="currencyList"
+                                (onSelect)="onCcyItemSelect($event)" 
+                                (onDeSelect)="onCcyItemDeSelect($event)"
+                                (onSelectAll)="onCcySelectAll($event)"
+                                (onDeSelectAll)="onCcyDeSelectAll($event)"
+                                [(ngModel)]="selectedCcyItems"
+                                formControlName="currencyCode">
+                          </ng-multiselect-dropdown>
+                        </div>
+                      </div>
+                      
+                    </div>
+
+                    <div class="col-md-6">
+                      <form [formGroup]="stateForm">
+                            <div class="container-fluid">
+                              <div class="form-group row">
+                                <div class="row form-group col-md-12">
+                                  <label class="col-sm-5 col-form-label">User ID<code>*</code></label>
+                                  <div class="col-sm-6" style="margin-left:20px;">
+                                    <mat-form-field>
+                                      <input type="text" matInput placeholder="" [(ngModel)]="selectedUserID" formControlName="stateGroup" required [matAutocomplete]="autoGroup">
+                                      <button mat-button *ngIf="selectedUserID" matSuffix mat-icon-button aria-label="Clear" (click)="clearSelection()">
+                                        <mat-icon>X</mat-icon>
+                                      </button> 
+                                
+                                      <mat-autocomplete [panelWidth]="400" #autoGroup="matAutocomplete">
+                                          <mat-optgroup *ngFor="let group of stateGroupOptions | async" [label]="group.letter"> 
+                                            <mat-option *ngFor="let name of group.names" [value]="name">
+                                              {{name}}
+                                          </mat-option>
+                                        </mat-optgroup>
+                                      </mat-autocomplete>
+                                    </mat-form-field>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                      </form>
+                    </div>
+                    
+                </div>
+
+              </div>
+
+            </form>
+          </div>
+              
+          <p *ngIf="data_message" class="text-danger">{{data_message}}</p>
+      </div>
+        
+  </div>
+</div>
+<!--
+<div class="row">
+  <div class="col-sm-12">
+      <div class="card">
+          <div class="card-header">
+            <h5>Journal Listing Report</h5>
+            <div *ngIf="loading" class="d-flex justify-content-center">
+              <div class="spinner-border spinner-border-sm text-warning"></div>
+                <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+            </div>
+            <div class="page-header-breadcrumb">
+              <button type="button" class="btn-success" (click)="exportExcel()">
+                <i class="ti-printer"></i>Excel
+              </button> 
+            </div>
+          </div>
+
+          <div class="card-body">
+            <code *ngIf="error">{{error}}</code>
+            <form [formGroup]="form">
+              <div class="container-fluid">
+                <div class="form-group row">
                   <div class="col-md-6">
                     <div class="row form-group col-md-12">
                       <label class="col-sm-6 col-form-label">Date<code>*</code></label>
@@ -152,4 +281,4 @@
       </div>
         
   </div>
-</div>
+</div>-->
