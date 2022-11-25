@@ -7,7 +7,7 @@
               <h5 style="color:red;">Cash IN Hand = {{cash_in_hand}}</h5>
               <h5 style="color:#4caf50;">Changes = {{deno_in_hand}}</h5>
               <div class="page-header-breadcrumb">
-                <button type="submit" class="btn-primary">
+                <button type="submit" class="btn-primary" [disabled]="sub_disable_flag">
                  Send
                 </button> 
               </div>

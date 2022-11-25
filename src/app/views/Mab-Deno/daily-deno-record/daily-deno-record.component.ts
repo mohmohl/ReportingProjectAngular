@@ -6,6 +6,7 @@ import { DenoCashInHand } from 'src/models/denoCashInHand';
 import { Deno_Detail } from 'src/models/Deno_Detail';
 import { Deno_Header } from 'src/models/Deno_Header';
 import { PickDateAdapter } from 'src/models/PickDateAdapter';
+import { CommomBranchService } from 'src/services/CommonBranchServcie';
 import { DenominationService } from 'src/services/DenominationService';
 export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
@@ -30,6 +31,7 @@ export class DailyDenoRecordComponent implements OnInit {
   Importdate:Date;
   successMsg='';
   loading = false;
+  sub_disable_flag=false;
   field_list:Deno_Detail[];
   maxDate = new Date();
   branchList:string[];
@@ -43,10 +45,11 @@ export class DailyDenoRecordComponent implements OnInit {
     ccy:new FormControl('MMK', Validators.required),
     detailList: []
   });
-  constructor(private fb:FormBuilder,private denoService: DenominationService,private _util: CommonUtil) { 
+  constructor(private branch:CommomBranchService, private fb:FormBuilder,private denoService: DenominationService,private _util: CommonUtil) { 
     this.loading = true;
     this.field_list=[];
-    denoService.getBranchList(1).subscribe((res:string[])=>{
+    branch.get_access_branch().subscribe((res:string[])=>{
+   // denoService.getBranchList(1).subscribe((res:string[])=>{
       this.loading = false;
       this.branchList = res;
     });
@@ -89,19 +92,24 @@ export class DailyDenoRecordComponent implements OnInit {
   ngOnInit() {
   }
   submit(formdata: Deno_Header){
+    debugger
+    this.sub_disable_flag=true;
     this.error="";
     this.successMsg="";
     if (this.form.invalid) {
       this.form.getError
       this.error = "Data is required !....";
+      this.sub_disable_flag=false;
       return;
   }
   if( this.cash_in_hand != this.deno_in_hand){
     this.error = "Amount is not balance!....";
+    this.sub_disable_flag=false;
     return;
   }
   else if(this.cash_in_hand==0 && this.deno_in_hand==0){
     this.error = "Amount is not 0!....";
+    this.sub_disable_flag=false;
     return;
   }
 
@@ -116,6 +124,7 @@ export class DailyDenoRecordComponent implements OnInit {
 
   this.denoService.deno_data_daily_update(formdata).subscribe((res:Boolean)=>{
     this.loading = false;
+    this.sub_disable_flag=false;
     if(res){
       this.successMsg="Data is successful saved!....";
     }
@@ -126,6 +135,7 @@ export class DailyDenoRecordComponent implements OnInit {
   },(error) => {
     this.successMsg="";
     this.loading = false;
+    this.sub_disable_flag=false;
     this.error="Internal Server Error";
     console.log(error);
   });
