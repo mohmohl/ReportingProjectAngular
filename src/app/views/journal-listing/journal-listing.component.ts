@@ -65,7 +65,6 @@ export const _filter = (opt: string[], value: string): string[] => {
   stateGroupOptions: Observable<StateGroup[]>;
  // <!-- autocomplete -->
 
-
   error='';
   from_date:Date;
   loading = false;
@@ -94,11 +93,11 @@ export const _filter = (opt: string[], value: string): string[] => {
 
   form = new FormGroup({
     //date: new FormControl('', Validators.required),
-    date: new FormControl(new Date,),
-    branchCode: new FormControl(this.selectedOption, Validators.required),
+    date: new FormControl(new Date, Validators.required),
+    branchCode: new FormControl(Validators.required), //this.selectedOption, 
     //branchCode: [this.selectedOption, [Validators.required]],
-    currencyCode: new FormControl(''),
-    trnsCode: new FormControl(''),
+    currencyCode: new FormControl(Validators.required),
+    //trnsCode: new FormControl(''),
     status: new FormControl('A', Validators.required),
     selectedUserID: new FormControl(''),
     trnsRefNo: new FormControl(''),
@@ -168,7 +167,24 @@ export const _filter = (opt: string[], value: string): string[] => {
   }
   // <!-- autocomplete -->
 
+  /*
+  // For TransCode
+  onTrnsItemSelect(item:any){ }
   
+  onTrnsItemDeSelect(item:any){
+    //console.log(item);
+    this.isAllTrns=false;
+    //console.log(this.selectedTrnsItems);
+  }
+  
+  onTrnsSelectAll(items: any){
+    this.isAllTrns = true;
+  }
+  
+  onTrnsDeSelectAll(items: any){
+    this.isAllTrns = false;
+  }
+
   // For Branch
   onBrItemSelect(item:any){
     //console.log(item);   
@@ -209,25 +225,7 @@ export const _filter = (opt: string[], value: string): string[] => {
     this.isAllCcy = false;
   }
 
-  // For TransCode
-  onTrnsItemSelect(item:any){
-    //console.log(item);   
-    //console.log(this.selectedTrnsItems);
-  }
-  
-  onTrnsItemDeSelect(item:any){
-    //console.log(item);
-    this.isAllTrns=false;
-    //console.log(this.selectedTrnsItems);
-  }
-  
-  onTrnsSelectAll(items: any){
-    this.isAllTrns = true;
-  }
-  
-  onTrnsDeSelectAll(items: any){
-    this.isAllTrns = false;
-  }
+  */
 
   exportExcel(): void {
     if (this.form.invalid) {
@@ -239,13 +237,7 @@ export const _filter = (opt: string[], value: string): string[] => {
     this.loading = true;
 
     this.branchCode = this.form.get(["branchCode"])!.value;
-
-    if(this.isAllCcy){
-      this.currencyCode = "ALL";
-    }else{
-      this.currencyCode = this.selectedCcyItems.join("','");
-      this.currencyCode = "'"+ this.currencyCode+ "'";
-    }
+    this.currencyCode = this.form.get(["currencyCode"])!.value;
 
     this.from_date = this.form.get(["date"])!.value;
     let fDate = this.datepipe.transform(this.from_date,'dd-MMM-yyyy');
@@ -260,9 +252,7 @@ export const _filter = (opt: string[], value: string): string[] => {
     comboData.userId = this.selectedUserID;
     comboData.transRefNo = this.form.get(["trnsRefNo"])!.value;
 
-    console.log("excel >>>>" + JSON.stringify(comboData));
-
-    this.service.exportJournalListingExcel(comboData)
+   this.service.exportJournalListingExcel(comboData)
     .pipe(
     map((data: any) => {
       debugger;
@@ -287,8 +277,13 @@ export const _filter = (opt: string[], value: string): string[] => {
           }
         this.loading = false;
       });
-
   }
+
+  // <!-- autocomplete -->
+  clearSelection() {
+    this.selectedUserID = "";
+  }
+
   /*
   exportExcel(): void {
   if (this.form.invalid) {
@@ -360,14 +355,10 @@ export const _filter = (opt: string[], value: string): string[] => {
       });
   }*/
 
-  // <!-- autocomplete -->
-  clearSelection() {
-    this.selectedUserID = "";
-  }
+  
 
   // click() {
   //   alert(this.selectedUserID)
   // }
-// <!-- autocomplete -->
 
 }
