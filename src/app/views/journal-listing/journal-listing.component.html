@@ -69,9 +69,15 @@
 
                 <div class="form-group row">
                     <div class="col-md-6">
-                      <div class="row form-group col-md-12">
-                        <label class="col-sm-6 col-form-label">Currency</label>
-                        <div style="width:50%;">
+                        <div class="row form-group col-md-12">
+                          <label class="col-sm-6 col-form-label">Currency<code>*</code></label>
+                            <select class="col-sm-6 form-control" formControlName="currencyCode" id="exampleFormControlSelect1">
+                              <option value="ALL" selected>-- Select --</option>
+                              <option *ngFor="let c of currencyList" value="{{c}}">{{c}}</option>
+                            </select>
+                        </div>
+
+                        <!-- <div style="width:50%;">
                           <ng-multiselect-dropdown 
                                 [settings]="dropdownSettings" style="background: maroon;"
                                 [data]="currencyList"
@@ -82,9 +88,7 @@
                                 [(ngModel)]="selectedCcyItems"
                                 formControlName="currencyCode">
                           </ng-multiselect-dropdown>
-                        </div>
-                      </div>
-                      
+                        </div> -->
                     </div>
 
                     <div class="col-md-6">
