@@ -31,6 +31,7 @@ export class VoucherPrintComponent implements OnInit {
   ngOnInit() {
     
     this.loading = true
+    //this.b_service.get_access_branch().subscribe(res =>{
     this.b_service.get_home_branch().subscribe(res =>{
       this.loading = false
     
