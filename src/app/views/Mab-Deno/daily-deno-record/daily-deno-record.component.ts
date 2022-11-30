@@ -48,8 +48,8 @@ export class DailyDenoRecordComponent implements OnInit {
   constructor(private branch:CommomBranchService, private fb:FormBuilder,private denoService: DenominationService,private _util: CommonUtil) { 
     this.loading = true;
     this.field_list=[];
-    //branch.get_access_branch().subscribe((res:string[])=>{
-   denoService.getBranchList(1).subscribe((res:string[])=>{
+    branch.get_access_branch().subscribe((res:string[])=>{
+   //denoService.getBranchList(1).subscribe((res:string[])=>{
       this.loading = false;
       this.branchList = res;
     });
