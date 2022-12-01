@@ -85,27 +85,31 @@ export class TrialSheetComponent implements OnInit {
 
   exportExcel() {
    
-    let reportDate = this._util.getDDMMMYYYY(this.reportDate);
-    this.loading = true;
+    
+  if(this.reportDate = new Date()){
+    this.error = "Allow only Back Date";
+  }else{
+      let reportDate = this._util.getDDMMMYYYY(this.reportDate);
+      this.loading = true;
 
-    let requestBody = {
-      t1: reportDate,
-      t2: this.branchCode,
-      t3: this.ccy,
-      t4: 'xlsx'
-    };
+      let requestBody = {
+        t1: reportDate,
+        t2: this.branchCode,
+        t3: this.ccy,
+        t4: 'xlsx'
+      };
 
-    this.http.downloadFile("/misreport/downloadTrialSheetFile", requestBody, `TrialSheet_${reportDate}`, 'xlsx').subscribe(
-      (data: any) => {
-        this.loading = false;
-      },error => {
-        console.log("Trial Sheet Excel Exporting Error >>> " + error)
-        if (error != "") {
-          this.error = "(The system cannot cannot export trial sheet excel file!.. Have the error)";
-        }
-        this.loading = false;
-      });
-
-  }
+      this.http.downloadFile("/misreport/downloadTrialSheetFile", requestBody, `TrialSheet_${reportDate}`, 'xlsx').subscribe(
+        (data: any) => {
+          this.loading = false;
+        },error => {
+          console.log("Trial Sheet Excel Exporting Error >>> " + error)
+          if (error != "") {
+            this.error = "(The system cannot cannot export trial sheet excel file!.. Have the error)";
+          }
+          this.loading = false;
+        });
+      }
+    }
 }
 

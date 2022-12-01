@@ -86,28 +86,32 @@ export class CleanCashComponent implements OnInit {
   }
 
   exportExcel() {
-    let reportDate = this._util.getDDMMMYYYY(this.reportDate);
-    this.loading = true;
+    if(this.reportDate = new Date()){
+      this.error = "Allow only Back Date";
+    }else{
+      let reportDate = this._util.getDDMMMYYYY(this.reportDate);
+      this.loading = true;
 
-    // let params = 'reportDate=' + reportDate + '&c=' + this.branchCode + '&ccy=' + this.ccy + '&fileType=' + this.type;
+      // let params = 'reportDate=' + reportDate + '&c=' + this.branchCode + '&ccy=' + this.ccy + '&fileType=' + this.type;
 
-    let requestBody = {
-      reportDate: reportDate,
-      branchCode: this.branchCode,
-      ccy: this.ccy,
-      fileType: 'xlsx'
-    };
+      let requestBody = {
+        reportDate: reportDate,
+        branchCode: this.branchCode,
+        ccy: this.ccy,
+        fileType: 'xlsx'
+      };
 
-    this.http.downloadFile("/misreport/downloadCleanCashFile", requestBody, `CleanCash_${reportDate}`, 'xlsx').subscribe(
-      (data: any) => {
-        this.loading = false;
-      },error => {
-        console.log("Clean Cash Scroll Excel Exporting Error >>> " + error)
-        if (error != "") {
-          this.error = "(The system cannot cannot export clean cash scroll excel file!.. Have the error)";
-        }
-        this.loading = false;
-      });
+      this.http.downloadFile("/misreport/downloadCleanCashFile", requestBody, `CleanCash_${reportDate}`, 'xlsx').subscribe(
+        (data: any) => {
+          this.loading = false;
+        },error => {
+          console.log("Clean Cash Scroll Excel Exporting Error >>> " + error)
+          if (error != "") {
+            this.error = "(The system cannot cannot export clean cash scroll excel file!.. Have the error)";
+          }
+          this.loading = false;
+        });
+      }
 
   }
 }

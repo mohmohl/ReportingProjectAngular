@@ -90,26 +90,32 @@ export class BankCashComponent implements OnInit {
   }
 
   exportExcel() {
-    let reportDate = this._util.getDDMMMYYYY(this.reportDate);
-    this.loading = true;
 
-    let requestBody = {
-      reportDate: reportDate,
-      branchCode: this.branchCode,
-      ccy: this.ccy,
-      fileType: 'xlsx'
-    };
+    if(this.reportDate = new Date()){
+      this.error = "Allow only Back Date";
+    }else{
 
-    this.http.downloadFile("/misreport/downloadBankCashScrollFile", requestBody, `BankCashScroll_${reportDate}`, 'xlsx').subscribe(
-      (data: any) => {
-        this.loading = false;
-      },error => {
-        console.log("Bank Cash Scroll Excel Exporting Error >>> " + error)
-        if (error != "") {
-          this.error = "(The system cannot cannot export bank cash scroll excel file!.. Have the error)";
-        }
-        this.loading = false;
-      });
+   
+      let reportDate = this._util.getDDMMMYYYY(this.reportDate);
+      this.loading = true;
 
+      let requestBody = {
+        reportDate: reportDate,
+        branchCode: this.branchCode,
+        ccy: this.ccy,
+        fileType: 'xlsx'
+      };
+
+      this.http.downloadFile("/misreport/downloadBankCashScrollFile", requestBody, `BankCashScroll_${reportDate}`, 'xlsx').subscribe(
+        (data: any) => {
+          this.loading = false;
+        },error => {
+          console.log("Bank Cash Scroll Excel Exporting Error >>> " + error)
+          if (error != "") {
+            this.error = "(The system cannot cannot export bank cash scroll excel file!.. Have the error)";
+          }
+          this.loading = false;
+        });
+      }
   }
 }
