@@ -91,10 +91,7 @@ export class BankCashComponent implements OnInit {
 
   exportExcel() {
 
-    if(this.reportDate = new Date()){
-      this.error = "Allow only Back Date";
-    }else{
-
+    
    
       let reportDate = this._util.getDDMMMYYYY(this.reportDate);
       this.loading = true;
@@ -117,5 +114,5 @@ export class BankCashComponent implements OnInit {
           this.loading = false;
         });
       }
-  }
+
 }
