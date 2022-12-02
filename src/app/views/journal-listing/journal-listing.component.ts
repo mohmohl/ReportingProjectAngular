@@ -92,11 +92,9 @@ export const _filter = (opt: string[], value: string): string[] => {
   selectedOption = ['ALL'];
 
   form = new FormGroup({
-    //date: new FormControl('', Validators.required),
     date: new FormControl(new Date, Validators.required),
-    branchCode: new FormControl(Validators.required), //this.selectedOption, 
-    //branchCode: [this.selectedOption, [Validators.required]],
-    currencyCode: new FormControl(Validators.required),
+    branchCode: new FormControl('001',Validators.required), //this.selectedOption, 
+    currencyCode: new FormControl('MMK',Validators.required),
     //trnsCode: new FormControl(''),
     status: new FormControl('A', Validators.required),
     selectedUserID: new FormControl(''),
@@ -128,6 +126,7 @@ export const _filter = (opt: string[], value: string): string[] => {
    }
 
   ngOnInit() {
+    /*
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
@@ -145,7 +144,9 @@ export const _filter = (opt: string[], value: string): string[] => {
       closeDropDownOnSelection: false,
       showSelectedItemsAtTop: false,
       defaultOpen: false,
+      
     };
+    */
 
 // <!-- autocomplete -->
     this.stateGroupOptions = this.stateForm.get('stateGroup')!.valueChanges
