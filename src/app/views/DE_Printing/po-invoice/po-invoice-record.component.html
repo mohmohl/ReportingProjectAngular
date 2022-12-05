@@ -4,13 +4,7 @@
         <div class="card">
             <div class="card-header">
               <h5>Denomination</h5>
-              <h5 style="color:red;">Cash IN Hand = {{cash_in_hand}}</h5>
-              <h5 style="color:#4caf50;">Changes = {{deno_in_hand}}</h5>
-              <div class="page-header-breadcrumb">
-                <button type="submit" class="btn-primary">
-                 Send
-                </button> 
-              </div>
+              
             </div>
             <div class="card-body">
                 <div *ngIf="loading" class="d-flex justify-content-center">
@@ -22,62 +16,47 @@
                   <div class="container-fluid">
               
                   <div class="form-group row">
-                    <label class="col-sm-1 col-form-label"> Import Date</label>
+                    <label class="col-sm-1 col-form-label">PO No:</label>
                     <div class="col-sm-2">
-                        <mat-form-field style="width:100px;">
-                            <input #minmaxInput matInput [min]="maxDate" [max]="maxDate" [matDatepicker]="minmaxvalidation"
-                                formControlName="trn_dt" readonly (change)="import_date_change()">
-                            <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #minmaxvalidation></mat-datepicker>
-                        </mat-form-field>
-                     
+                      <input  type="text" formControlName="po_no">
                     </div>
-                    <label class="col-sm-1 col-form-label">Branch</label>
+                    
+                    
                     <div class="col-sm-2">
-                        <select class="form-control" formControlName="branch_code" (change)="branch_change()">
-                          <option value="" selected>-- Select --</option>
-                          <option *ngFor="let b of branchList" value="{{b}}">{{ b}}</option>
-                        </select>
-                    </div>
-                    <label class="col-sm-1 col-form-label">Currency</label>
-                    <div class="col-sm-2">
-                        <select class="form-control" formControlName="ccy" (change)="ccy_change()">
-                          <option *ngFor="let c of ccyList" value="{{c}}">{{c}}</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-2">
-                    <button type="button" class="btn-primary" (click)="searchCashInHand()">
+                    <button type="button" class="btn-primary" (click)="searchPORecord()">
                       Search
                      </button> 
                     </div>
-                </div>
-
-                <div  class="row" formArrayName="detailList" *ngFor="let item of field_list; let i = index;">
-                  <label class="col-sm-3 ">{{item.deno_code}}</label>
-                  <div class="col-sm-4" [formGroupName]="i">
-                      <input type="hidden" formControlName="deno_code" value="{{item.deno_code}}">
-                      <input type="hidden" formControlName="deno_code_value" value="{{item.deno_code_value}}">
-                      <input  type="number" formControlName="deno_count" placeholder="0" (change)="valueChanges()">
                   </div>
-                  
-              </div>
-
-              
-
-
-
-
-
-                
-                
-                
-                
-
-                
-
-              
-              
+                    <div class="form-group row">
+                    <label class="col-sm-1 col-form-label">Status:</label>
+                    <div class="col-sm-2">
+                    <select class="form-control" formControlName="status">
+                      <option value="I">Issue</option>
+                      <option value="L">LIQD</option>
+                    </select>
+                  </div>
+                  </div>
+                    <div class="form-group row">
+                    <label class="col-sm-1 col-form-label">Amount:</label>
+                    <div class="col-sm-2">
+                      <input  type="number" formControlName="amount" placeholder="0">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-1 col-form-label">Branch:</label>
+                    <div class="col-sm-2">
+                      <input  type="text" readonly formControlName="branch_code">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-2"></div>
+                  <div class="col-sm-2">
+                    <button type="submit" class="btn-primary">
+                      Send
+                     </button> 
+                  </div>
+                  </div>
               </div>
             </div>
         </div>
