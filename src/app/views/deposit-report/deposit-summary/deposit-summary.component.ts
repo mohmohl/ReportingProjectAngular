@@ -32,7 +32,7 @@ export class DepositSummaryComponent implements OnInit {
     this._branchList.push({"code":"MABMM893", "desc":"Regional Zone(8)"});
     this._branchList.push({"code":"MABMM899", "desc":"Regional Zone(9)"});
     this._branchList.push({"code":"MABMM301", "desc":"Agency Banking"});
-    this._branchList.push({"code":"MABMM996", "desc":"Foreign Banking TUP"});
+    this._branchList.push({"code":"MABMM996", "desc":"Foreign Banking TPU"});
     this._branchList.push({"code":"MABMM997", "desc":"Card Center (ATM)"});    
   }
 

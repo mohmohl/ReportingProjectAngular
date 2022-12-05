@@ -33,7 +33,7 @@ export class LoanSummaryComponent implements OnInit {
     this._branchList.push({"code":"MABMM893", "desc":"Regional Zone(8)"});
     this._branchList.push({"code":"MABMM899", "desc":"Regional Zone(9)"});
     this._branchList.push({"code":"MABMM993", "desc":"Treasury Department"});
-    this._branchList.push({"code":"MABMM996", "desc":"Foreign Banking TUP"});
+    this._branchList.push({"code":"MABMM996", "desc":"Foreign Banking TPU"});
     this._branchList.push({"code":"MABMM997", "desc":"Card Center (ATM)"});   
     this._branchList.push({"code":"MABMM998", "desc":"Corporate Banking Branch"});
     this._branchList.push({"code":"MABMM999", "desc":"Control Office HO"});
