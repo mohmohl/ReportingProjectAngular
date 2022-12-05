@@ -570,14 +570,13 @@ const routes: Routes = [
         loadChildren: () => import('./views/Mab-Deno/mab-deno-report/mab-deno-report.module').then(m => m.MabDenoReportModule)
       },
       {
-        path: 'voucher_printing',
-        loadChildren: () => import('./views/DE_Printing/voucher_printing/voucher-print.module').then(m => m.VoucherPrintModule)
-      },
-      {
         path: 'po_number_record',
         loadChildren: () => import('./views/DE_Printing/po-invoice/po-invoice-record.module').then(m => m.PoInvoiceModule)
       },
-
+      {
+        path: 'voucher_printing',
+        loadChildren: () => import('./views/DE_Printing/voucher_printing/voucher-print.module').then(m => m.VoucherPrintModule)
+      },
       // 134 Deposit Reports
       {
         path: 'deposit_summary',

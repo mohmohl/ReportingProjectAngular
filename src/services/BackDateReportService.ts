@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders,HttpErrorResponse, HttpParams } from '@angular/
 import { environment } from "src/environments/environment";
 import { Observable } from "rxjs";
 import { AuthenticationService } from 'src/services/AuthenticationService';
+import { PONumberObj } from "src/models/PONumberObj";
 @Injectable({
     providedIn: 'root'
   })
@@ -44,4 +45,12 @@ export class BackDateReportService{
     var api = environment.baseUrl+'/ttprinting/export_tt_voucher?branch='+branch;
     return this.http.get<any>(`${api}`, {responseType: 'arraybuffer' as 'json'});
   }
+
+  public get_po_data(po_no:string){
+    return this.http.get<any>(`${environment.baseUrl}`+'/ttprinting/get_po_no_record?po_no='+po_no);
+}
+
+public save_updae_po_number(po_no:PONumberObj){
+  return this.http.post<any>(`${environment.baseUrl}`+'/ttprinting/save_po_no_record',po_no);
+}
 }
