@@ -9,7 +9,7 @@ const routes: Routes = [
     component: InstrumentComponent,
     canActivate: [AuthGuard],
     data: {
-      breadcrumb: 'ByPass New Account',
+      breadcrumb: 'Duplicate TT',
       icon: 'icofont icofont-file-document bg-c-pink',
       breadcrumb_caption: 'Lorem Ipsum Dolor Sit Amet, Consectetur Adipisicing Elit - Sample Page',
       status: true
