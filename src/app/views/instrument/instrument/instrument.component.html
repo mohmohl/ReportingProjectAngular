@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>TT Update Form</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <code *ngIf="error" >{{error}}</code>
+                <label *ngIf="message" class="text-info margin-bottom: 10px">{{message}}</label>
+                
+                <form [formGroup]="form" (ngSubmit)="submit()" >
+                    <div class="form-group row" >
+                        <label class="col-sm-2">Remittance PO Number</label>
+                        <div class="col-xs-2">
+                            <input type="text" formControlName="instruNo" (keypress)="keyPressNumbers($event)" maxlength="6"> 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2">From Branch</label>
+                        <div class="col-xs-2">
+                            <input type="text" formControlName="fromBranch" (keypress)="keyPressNumbers($event)"> 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2">To Branch</label>
+                        <div class="col-xs-2">
+                            <input type="text" formControlName="toBranch" (keypress)="keyPressNumbers($event)"> 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-1">
+                            <button type="button" class="btn-primary" (click)="checkInstrument()" >Check</button>
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="submit" class="btn-primary" [disabled]="submitDisable">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

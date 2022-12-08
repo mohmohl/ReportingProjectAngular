@@ -597,6 +597,10 @@ const routes: Routes = [
       {
         path: 'regional_loan',
         loadChildren: () => import('./views/deposit-report/regional-loan/regional-loan.module').then(m => m.RegionalLoanModule)
+      },
+      {
+        path: 'duplicate-tt-update',
+        loadChildren: () => import('./views/instrument/instrument/instrument-module').then(m => m.InstrumentModule)
       }
      
     ]
