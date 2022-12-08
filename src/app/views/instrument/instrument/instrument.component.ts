@@ -16,19 +16,30 @@ export class InstrumentComponent implements OnInit {
   message = '';
   data : InstrumentAPIRequestMessage = new InstrumentAPIRequestMessage();
   response : InstrumentAPIResponseMessage = new InstrumentAPIResponseMessage();
-  login_user : User = new User();
   submitDisable =true;
   chkDisable = false;
+  po_count : number =0 ;
   form = new FormGroup({
-    instruNo : new FormControl('',[Validators.required,Validators.maxLength(6)]),
+    instruNo : new FormControl('',[Validators.required]),
     fromBranch : new FormControl('',Validators.required),
     toBranch : new FormControl('',Validators.required)
   });
-
   constructor(private service: InstrumentService) { }
 
   ngOnInit() {
-    
+    this.loading =true;
+    this.service.getPONoCount().subscribe( res =>{
+      this.loading = false;
+      this.po_count = res;
+      console.log("po_count>>>>>"+ JSON.stringify(this.po_count));
+      
+    },
+    error => {
+      this.loading = false;
+      this.error = "Internal Server Error";
+      console.log(error);
+    });
+
   }
 
   keyPressNumbers(event) {
@@ -52,8 +63,8 @@ export class InstrumentComponent implements OnInit {
     if(this.form.invalid){
       if(this.data.instruNo == "" || this.data.instruNo ==null || this.data.instruNo == "0" ){
         this.error = "Remittance PO Number is required.";
-      }else if(this.data.instruNo.length < 6 || this.data.instruNo.length > 6){
-        this.error = "Remittance PO Number must be have 6 digits.";
+      }else if(this.data.instruNo.length > this.po_count){
+        this.error = "Remittance PO Number must be have "+this.po_count+" digits.";
       }else if(this.data.toBranch == "" ){
         this.error = "From_Branch is required.";
       }else if(this.data.toBranch == ""){
@@ -66,18 +77,16 @@ export class InstrumentComponent implements OnInit {
     this.error ="";
     this.message = "";
     
-    this.login_user = JSON.parse(localStorage.getItem('currentUser'));
     this.response = new InstrumentAPIResponseMessage();
     this.service.checkInstrumentData(this.data).subscribe( res =>{
       this.loading = false;
       this.response = res;
-      
-      if(this.response.messageCode =="-1"){
-        this.message = this.response.message;
-      }else{
+      console.log("check response >>>>>"+ JSON.stringify(this.response));
+      if(this.response.messageCode =="1"){
         this.submitDisable= false;
+      }else{
+        this.message = this.response.message;
       }
-
     },
     error => {
       this.loading = false;
@@ -103,8 +112,8 @@ export class InstrumentComponent implements OnInit {
     if(this.form.invalid){
       if(this.data.instruNo == "" || this.data.instruNo ==null || this.data.instruNo == "0" ){
         this.error = "Remittance PO Number is required.";
-      }else if(this.data.instruNo.length < 6 || this.data.instruNo.length > 6){
-        this.error = "Remittance PO Number must be have 6 digits.";
+      }else if(this.data.instruNo.length > this.po_count){
+        this.error = "Remittance PO Number must be have "+this.po_count+" digits.";
       }else if(this.data.toBranch == "" ){
         this.error = "From_Branch is required.";
       }else if(this.data.toBranch == ""){
@@ -118,14 +127,13 @@ export class InstrumentComponent implements OnInit {
     this.message = "";
     this.submitDisable = true;
 
-    this.login_user = JSON.parse(localStorage.getItem('currentUser'));
-    //this.data.user_id = this.login_user.userId;
-    //console.log("u_id >>>>>>>>>>> " + this.data.user_id);
-    
     this.response = new InstrumentAPIResponseMessage();
     this.service.updateData(this.data).subscribe( res =>{
       this.response = res;
-      this.message = this.response.message;
+      console.log("update response >>>>>"+ JSON.stringify(this.response));
+      if(this.response !=null){
+        this.message = this.response.message;
+      }
       this.loading = false;
       this.submitDisable = false;
     },

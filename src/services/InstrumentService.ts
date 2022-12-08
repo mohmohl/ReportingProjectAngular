@@ -23,4 +23,8 @@ import { InstrumentAPIRequestMessage } from "src/models/InstrumentAPIRequestMess
         return this.http.post<any>(`${environment.baseUrl}`+'/tt_update/updateData',data);
     }
 
+    public getPONoCount() : Observable<any>{
+        return this.http.get<any>(`${environment.baseUrl}`+'/tt_update/getPONoCount');
+    }
+
 }
