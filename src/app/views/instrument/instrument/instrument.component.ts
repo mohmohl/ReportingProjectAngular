@@ -19,11 +19,13 @@ export class InstrumentComponent implements OnInit {
   submitDisable =true;
   chkDisable = false;
   po_count : number =0 ;
+  confirm_message : string;
   form = new FormGroup({
     instruNo : new FormControl('',[Validators.required]),
     fromBranch : new FormControl('',Validators.required),
     toBranch : new FormControl('',Validators.required)
   });
+  login_user : User = new User();
   constructor(private service: InstrumentService) { }
 
   ngOnInit() {
@@ -52,7 +54,7 @@ export class InstrumentComponent implements OnInit {
     }
   }
   checkInstrument(){
-    debugger;
+    //debugger;
     this.message = "";
     this.data.instruNo = this.form.get(["instruNo"])!.value;
     this.data.fromBranch     = this.form.get(["fromBranch"])!.value;
@@ -76,6 +78,8 @@ export class InstrumentComponent implements OnInit {
     this.loading = true;
     this.error ="";
     this.message = "";
+    this.login_user = JSON.parse(localStorage.getItem('currentUser'));
+    this.data.userId = this.login_user.userId;
     
     this.response = new InstrumentAPIResponseMessage();
     this.service.checkInstrumentData(this.data).subscribe( res =>{
@@ -83,10 +87,12 @@ export class InstrumentComponent implements OnInit {
       this.response = res;
       console.log("check response >>>>>"+ JSON.stringify(this.response));
       if(this.response.messageCode =="1"){
+        this.confirm_message = this.response.message;
         this.submitDisable= false;
       }else{
         this.message = this.response.message;
       }
+
     },
     error => {
       this.loading = false;
@@ -98,9 +104,9 @@ export class InstrumentComponent implements OnInit {
 
 
   submit(){
-    debugger;
+    //debugger;
 
-    if (window.confirm("Are you sure you want to proceed?")) { 
+    if (window.confirm(this.confirm_message)) { 
 
     this.message = "";
     this.data.instruNo = this.form.get(["instruNo"])!.value;
@@ -126,6 +132,8 @@ export class InstrumentComponent implements OnInit {
     this.error ="";
     this.message = "";
     this.submitDisable = true;
+    this.login_user = JSON.parse(localStorage.getItem('currentUser'));
+    this.data.userId = this.login_user.userId;
 
     this.response = new InstrumentAPIResponseMessage();
     this.service.updateData(this.data).subscribe( res =>{
@@ -135,7 +143,7 @@ export class InstrumentComponent implements OnInit {
         this.message = this.response.message;
       }
       this.loading = false;
-      this.submitDisable = false;
+      //this.submitDisable = false;
     },
     error => {
       this.loading = false;
