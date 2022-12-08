@@ -16,7 +16,7 @@
                     <div class="form-group row" >
                         <label class="col-sm-2">Remittance PO Number</label>
                         <div class="col-xs-2">
-                            <input type="text" formControlName="instruNo" (keypress)="keyPressNumbers($event)" maxlength="6"> 
+                            <input type="text" formControlName="instruNo" (keypress)="keyPressNumbers($event)"  [attr.maxLength]="po_count"> 
                         </div>
                     </div>
                     <div class="form-group row">
