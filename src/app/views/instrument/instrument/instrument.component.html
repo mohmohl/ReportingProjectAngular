@@ -16,19 +16,19 @@
                     <div class="form-group row" >
                         <label class="col-sm-2">Remittance PO Number</label>
                         <div class="col-xs-2">
-                            <input type="text" formControlName="instruNo" (keypress)="keyPressNumbers($event)"  [attr.maxLength]="po_count"> 
+                            <input type="text" class="form-control" formControlName="instruNo" (keypress)="keyPressNumbers($event)"  [attr.maxLength]="po_count"  [readonly]="isDisabled"> 
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2">From Branch</label>
                         <div class="col-xs-2">
-                            <input type="text" formControlName="fromBranch" (keypress)="keyPressNumbers($event)"> 
+                            <input type="text" class="form-control" formControlName="fromBranch" (keypress)="keyPressNumbers($event)"  [readonly]="isDisabled"> 
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2">To Branch</label>
                         <div class="col-xs-2">
-                            <input type="text" formControlName="toBranch" (keypress)="keyPressNumbers($event)"> 
+                            <input type="text" class="form-control" formControlName="toBranch" (keypress)="keyPressNumbers($event)"  [readonly]="isDisabled"> 
                         </div>
                     </div>
                     <div class="form-group row">
