@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,HostListener } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { InstrumentAPIRequestMessage } from 'src/models/InstrumentAPIRequestMessage';
 import {User} from 'src/models/User';
 import { InstrumentService } from 'src/services/InstrumentService';
 import {InstrumentAPIResponseMessage} from 'src/models/InstrumentAPIResponseMessage';
+
 
 @Component({
   selector: 'app-instrument',
@@ -26,15 +27,17 @@ export class InstrumentComponent implements OnInit {
     toBranch : new FormControl('',Validators.required)
   });
   login_user : User = new User();
+  isDisabled = false;
   constructor(private service: InstrumentService) { }
 
   ngOnInit() {
+    this.isDisabled = false;
+
     this.loading =true;
     this.service.getPONoCount().subscribe( res =>{
       this.loading = false;
       this.po_count = res;
       console.log("po_count>>>>>"+ JSON.stringify(this.po_count));
-      
     },
     error => {
       this.loading = false;
@@ -44,6 +47,18 @@ export class InstrumentComponent implements OnInit {
 
   }
 
+  @HostListener('paste', ['$event']) blockPaste(e: KeyboardEvent) {
+    e.preventDefault();
+  }
+
+  @HostListener('copy', ['$event']) blockCopy(e: KeyboardEvent) {
+    e.preventDefault();
+  }
+
+  @HostListener('cut', ['$event']) blockCut(e: KeyboardEvent) {
+    e.preventDefault();
+  }
+  
   keyPressNumbers(event) {
     var charCode = (event.which) ? event.which : event.keyCode;
     if ((charCode < 48 || charCode > 57)) {
@@ -87,6 +102,7 @@ export class InstrumentComponent implements OnInit {
       this.response = res;
       console.log("check response >>>>>"+ JSON.stringify(this.response));
       if(this.response.messageCode =="1"){
+        this.isDisabled = true;
         this.confirm_message = this.response.message;
         this.submitDisable= false;
       }else{
@@ -102,59 +118,90 @@ export class InstrumentComponent implements OnInit {
     
   }
 
-
   submit(){
     //debugger;
 
-    if (window.confirm(this.confirm_message)) { 
+        this.message = "";
+        this.data.instruNo = this.form.get(["instruNo"])!.value;
+        this.data.fromBranch  = this.form.get(["fromBranch"])!.value;
+        this.data.toBranch = this.form.get(["toBranch"])!.value;
+    
+        console.log("save data >>>>>>" + JSON.stringify(this.data));
+    
+      /*  if(this.form.invalid){
+          if(this.data.instruNo == "" || this.data.instruNo ==null || this.data.instruNo == "0" ){
+            this.error = "Remittance PO Number is required.";
+          }else if(this.data.instruNo.length > this.po_count){
+            this.error = "Remittance PO Number must be have "+this.po_count+" digits.";
+          }else if(this.data.toBranch == "" ){
+            this.error = "From_Branch is required.";
+          }else if(this.data.toBranch == ""){
+            this.error = "To_Branch is required.";
+          }
+          return;
+        }*/
 
-    this.message = "";
-    this.data.instruNo = this.form.get(["instruNo"])!.value;
-    this.data.fromBranch     = this.form.get(["fromBranch"])!.value;
-    this.data.toBranch = this.form.get(["toBranch"])!.value;
+    if(this.confirm_message =='' ||this.confirm_message ==null){
+        this.loading = true;
+        this.error ="";
+        this.message = "";
+        this.submitDisable = true;
+        this.login_user = JSON.parse(localStorage.getItem('currentUser'));
+        this.data.userId = this.login_user.userId;
+    
+        this.response = new InstrumentAPIResponseMessage();
+        this.service.updateData(this.data).subscribe( res =>{
+          this.response = res;
+          console.log("update response >>>>>"+ JSON.stringify(this.response));
+          if(this.response !=null){
+            this.message = this.response.message;
+            this.isDisabled = false;
+          }else{
+            this.message = "Updated Fail.";
+          }
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          this.submitDisable = false;
+          this.error = "Internal Server Error";
+          console.log(error);
+        });
+    }else{
 
-    console.log("save data >>>>>>" + JSON.stringify(this.data));
+      if (window.confirm(this.confirm_message)) { 
 
-    if(this.form.invalid){
-      if(this.data.instruNo == "" || this.data.instruNo ==null || this.data.instruNo == "0" ){
-        this.error = "Remittance PO Number is required.";
-      }else if(this.data.instruNo.length > this.po_count){
-        this.error = "Remittance PO Number must be have "+this.po_count+" digits.";
-      }else if(this.data.toBranch == "" ){
-        this.error = "From_Branch is required.";
-      }else if(this.data.toBranch == ""){
-        this.error = "To_Branch is required.";
+        this.loading = true;
+        this.error ="";
+        this.message = "";
+        this.submitDisable = true;
+        this.login_user = JSON.parse(localStorage.getItem('currentUser'));
+        this.data.userId = this.login_user.userId;
+    
+        this.response = new InstrumentAPIResponseMessage();
+        this.service.updateData(this.data).subscribe( res =>{
+          this.response = res;
+          console.log("double update response >>>>>"+ JSON.stringify(this.response));
+          if(this.response !=null){
+            this.message = this.response.message;
+            this.isDisabled = false;
+          }else{
+            this.message = "Updated Fail.";
+          }
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          this.submitDisable = false;
+          this.error = "Internal Server Error";
+          console.log(error);
+        });
+        
+      }else{
+        console.log("Updated Cancel.");
       }
-      return;
     }
-    
-    this.loading = true;
-    this.error ="";
-    this.message = "";
-    this.submitDisable = true;
-    this.login_user = JSON.parse(localStorage.getItem('currentUser'));
-    this.data.userId = this.login_user.userId;
 
-    this.response = new InstrumentAPIResponseMessage();
-    this.service.updateData(this.data).subscribe( res =>{
-      this.response = res;
-      console.log("update response >>>>>"+ JSON.stringify(this.response));
-      if(this.response !=null){
-        this.message = this.response.message;
-      }
-      this.loading = false;
-      //this.submitDisable = false;
-    },
-    error => {
-      this.loading = false;
-      this.submitDisable = false;
-      this.error = "Internal Server Error";
-      console.log(error);
-    });
-    
-  }else{
-    console.log("Update Cancelled.");
-  }
   }
 
 }
