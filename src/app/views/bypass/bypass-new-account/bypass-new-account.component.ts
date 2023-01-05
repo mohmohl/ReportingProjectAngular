@@ -19,17 +19,31 @@ export class BypassNewAccountComponent implements OnInit {
   recommended_by : string;
   checkStatus : false;
   login_user : User = new User();
-
+  channelList : string[];
+  channel_name : string;
+  submitDisable = false;
   form = new FormGroup({
     cust_ac_no : new FormControl('',[Validators.required,Validators.minLength(19)]),
     amount : new FormControl('',Validators.required),
     recommended_by : new FormControl('',Validators.required),
-    checkStatus : new FormControl('')
+    checkStatus : new FormControl(''),
+    channel_name : new FormControl('',Validators.required)
   });
-
   constructor(private service: CashWithdrawExpAccService) { }
 
   ngOnInit() {
+   //debugger;
+    this.service.getChannelList().subscribe( res =>{
+      this.channelList = res;
+      this.form.controls['channel_name'].setValue(this.channelList[0],{onlySelf:true});
+      
+      console.log("default channel >>>" + this.form.get(["channel_name"]).value);
+      console.log("channel list >>>" + JSON.stringify(this.channelList));
+    },
+    error => {
+      this.error = "Internal Server Error";
+      console.log(error);
+    });
   }
 
   keyPressNumbers(event) {
@@ -45,12 +59,15 @@ export class BypassNewAccountComponent implements OnInit {
   }
 
   submit(){
-    //debugger;
+    debugger;
     this.message = "";
     this.data.cust_ac_no = this.form.get(["cust_ac_no"])!.value;
     this.data.amount     = this.form.get(["amount"])!.value;
     this.data.recommended_by = this.form.get(["recommended_by"])!.value;
     this.data.checkStatus = this.form.get(["checkStatus"])!.value;
+    this.data.channel_name = this.form.get(["channel_name"])!.value;
+
+    console.log("save data >>>>>>" + JSON.stringify(this.data));
 
     if(this.form.invalid){
       if(this.data.cust_ac_no == ""){
@@ -61,6 +78,8 @@ export class BypassNewAccountComponent implements OnInit {
         this.error = "Amount is required.";
       }else if(this.data.recommended_by == ""){
         this.error = "Recommended By is required.";
+      }else if(this.data.channel_name == ""){
+        this.error = "Channel is required";
       }
       return;
     }
@@ -68,11 +87,11 @@ export class BypassNewAccountComponent implements OnInit {
     this.loading = true;
     this.error ="";
     this.message = "";
-
+    this.submitDisable = true;
     this.login_user = JSON.parse(localStorage.getItem('currentUser'));
     this.data.user_id = this.login_user.userId;
     //console.log("u_id >>>>>>>>>>> " + this.data.user_id);
-
+    
     this.service.saveData(this.data).subscribe( res =>{
       this.loading = false;
       if(res == true){
@@ -81,10 +100,12 @@ export class BypassNewAccountComponent implements OnInit {
         //this.message = "Save Fail."
         this.message = "This record is already exist."
       }
+      this.submitDisable = false;
     },
     error => {
       this.loading = false;
       this.error = "Internal Server Error";
+      this.submitDisable = false;
       console.log(error);
     });
     

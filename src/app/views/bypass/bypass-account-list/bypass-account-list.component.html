@@ -44,6 +44,7 @@
                                         <th>Recommended By</th>
                                         <th>Amount</th>
                                         <th>Status</th>
+                                        <th>Channel</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -55,6 +56,7 @@
                                         <td>{{list.recommended_by}}</td>
                                         <td align="right">{{list.amount | number:'1.0-3'}}</td>
                                         <td align="right">{{list.status}}</td>
+                                        <td>{{list.channel_name}}</td>
                                         <td align="right">
                                            <!--<a [routerLink]="['/bypass-edit-account']" [queryParams]="{cust_ac_no: list.cust_ac_no}" >Edit</a>--> 
                                             <a [routerLink]="['/bypass-edit-account',list.cust_ac_no]" >Edit</a>
