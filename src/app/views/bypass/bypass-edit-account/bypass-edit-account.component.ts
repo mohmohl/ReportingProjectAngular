@@ -20,6 +20,8 @@ export class BypassEditAccountComponent implements OnInit {
   validate = false;
   login_user : User = new User();
   cust_ac_no : string;
+  channelList : string [];
+  submitDisable = false;
   constructor(private service: CashWithdrawExpAccService,private router: Router,private activatedRoute: ActivatedRoute) { 
   }
 
@@ -27,7 +29,9 @@ export class BypassEditAccountComponent implements OnInit {
       this.activatedRoute.paramMap.subscribe(params => {
         this.cust_ac_no = params.get('param1'); 
         console.log("edit component >>>>>  " + this.cust_ac_no);
-      })
+      });
+
+      //get editData
     this.searchEditData(this.cust_ac_no); 
   }
 
@@ -36,7 +40,9 @@ export class BypassEditAccountComponent implements OnInit {
     this.data = new CashWithdrawExpAcc();
     this.service.searchEditData(cust_ac_no).subscribe( res =>{
       this.data = res;
-      //console.log("search edit data >>>>> " + JSON.stringify(this.data));
+      console.log("search edit data >>>>> " + JSON.stringify(this.data));
+      console.log("channel_name >>>" + this.data.channel_name);
+      this.channelList = this.data.channel_list;
       this.loading = false;
     },
     error => {
@@ -68,12 +74,17 @@ export class BypassEditAccountComponent implements OnInit {
     }else if(this.data.recommended_by == ""){
       this.error = "Recommended By is required.";
       this.validate = true;
+    }else if(this.data.channel_name ==""){
+      this.error ="Channel is required";
+      this.validate = true;
     }
 
     if(!this.validate){
       this.loading = true;
       this.error = "";
       this.message = "";
+
+      this.submitDisable = true;
 
       this.login_user = JSON.parse(localStorage.getItem('currentUser'));
       this.data.user_id = this.login_user.userId;
@@ -87,9 +98,11 @@ export class BypassEditAccountComponent implements OnInit {
           this.message = "This record is already exist.";
         }
         this.loading = false;
+        this.submitDisable = false;
       },
       error => {
         this.loading = false;
+        this.submitDisable = false;
         this.error = "Internal Server Error";
         console.log(error);
       });

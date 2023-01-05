@@ -34,4 +34,8 @@ import { CashWithdrawExpAcc } from "src/models/CashWithdrawExpAcc";
       return this.http.post<any>(`${environment.baseUrl}`+'/exp/saveEditData',data);
     }
 
+    public getChannelList(): Observable<any>{
+      return this.http.get<any>(`${environment.baseUrl}`+'/exp/getChannelList');
+    }
+
   }

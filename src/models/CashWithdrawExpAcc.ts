@@ -12,4 +12,6 @@ export class CashWithdrawExpAcc{
     cash : number;
     message : string;
     checked : boolean;
+    channel_name : string;
+    channel_list : string[];
 }
