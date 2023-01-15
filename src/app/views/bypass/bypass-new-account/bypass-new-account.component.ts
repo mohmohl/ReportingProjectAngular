@@ -37,12 +37,12 @@ export class BypassNewAccountComponent implements OnInit {
       this.channelList = res;
       this.form.controls['channel_name'].setValue(this.channelList[0],{onlySelf:true});
       
-      console.log("default channel >>>" + this.form.get(["channel_name"]).value);
-      console.log("channel list >>>" + JSON.stringify(this.channelList));
+      //console.log("default channel >>>" + this.form.get(["channel_name"]).value);
+      //console.log("channel list >>>" + JSON.stringify(this.channelList));
     },
     error => {
       this.error = "Internal Server Error";
-      console.log(error);
+      //(error);
     });
   }
 
@@ -67,7 +67,7 @@ export class BypassNewAccountComponent implements OnInit {
     this.data.checkStatus = this.form.get(["checkStatus"])!.value;
     this.data.channel_name = this.form.get(["channel_name"])!.value;
 
-    console.log("save data >>>>>>" + JSON.stringify(this.data));
+    //console.log("save data >>>>>>" + JSON.stringify(this.data));
 
     if(this.form.invalid){
       if(this.data.cust_ac_no == ""){
@@ -106,7 +106,7 @@ export class BypassNewAccountComponent implements OnInit {
       this.loading = false;
       this.error = "Internal Server Error";
       this.submitDisable = false;
-      console.log(error);
+      //console.log(error);
     });
     
   }

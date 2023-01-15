@@ -20,35 +20,44 @@ export class BypassEditAccountComponent implements OnInit {
   validate = false;
   login_user : User = new User();
   cust_ac_no : string;
+  channel_name : string;
   channelList : string [];
   submitDisable = false;
   constructor(private service: CashWithdrawExpAccService,private router: Router,private activatedRoute: ActivatedRoute) { 
   }
 
   ngOnInit() {
-      this.activatedRoute.paramMap.subscribe(params => {
-        this.cust_ac_no = params.get('param1'); 
-        console.log("edit component >>>>>  " + this.cust_ac_no);
-      });
+      // this.activatedRoute.paramMap.subscribe(params => {
+      //   this.cust_ac_no = params.get('param1'); 
+      //   console.log("edit component >>>>>  " + this.cust_ac_no);
+      //   this.channel_name = params.get('param2');
+      // });
+    
+    this.activatedRoute.queryParams
+    .subscribe(param =>{
+      //console.log ("params >>"+param);
+      this.cust_ac_no = param['cust_ac_no'];
+      this.channel_name = param['channel_name'];
+    });
 
       //get editData
-    this.searchEditData(this.cust_ac_no); 
+    this.searchEditData(this.cust_ac_no,this.channel_name); 
   }
 
-  searchEditData(cust_ac_no){
+  searchEditData(cust_ac_no,channel_name){
     this.loading = true;
     this.data = new CashWithdrawExpAcc();
-    this.service.searchEditData(cust_ac_no).subscribe( res =>{
+    this.service.searchEditData(cust_ac_no,channel_name).subscribe( res =>{
       this.data = res;
-      console.log("search edit data >>>>> " + JSON.stringify(this.data));
-      console.log("channel_name >>>" + this.data.channel_name);
+      //console.log("search edit data >>>>> " + JSON.stringify(this.data));
+      //console.log("channel_name >>>" + this.data.channel_name);
       this.channelList = this.data.channel_list;
       this.loading = false;
     },
     error => {
       this.loading = false;
       this.error = "Internal Server Error";
-      console.log(error);
+      //console.log(error);
     });
   }
 
@@ -74,7 +83,7 @@ export class BypassEditAccountComponent implements OnInit {
     }else if(this.data.recommended_by == ""){
       this.error = "Recommended By is required.";
       this.validate = true;
-    }else if(this.data.channel_name ==""){
+    }else if(this.data.channel_name =="" || this.data.channel_name ==null){
       this.error ="Channel is required";
       this.validate = true;
     }
@@ -104,7 +113,7 @@ export class BypassEditAccountComponent implements OnInit {
         this.loading = false;
         this.submitDisable = false;
         this.error = "Internal Server Error";
-        console.log(error);
+        //console.log(error);
       });
     
     }

@@ -103,9 +103,13 @@ const routes: Routes = [
         path: 'bypass-new-account',
         loadChildren: () => import('./views/bypass/bypass-new-account/bypass-new-account-module').then(m => m.ByPassNewAccountModule), canActivate: [AuthGuard]
       },
+      // {
+      //   path: 'bypass-edit-account/:param1/:param2',
+      //   loadChildren: () => import('./views/bypass/bypass-edit-account/bypass-edit-account.module').then(m => m.ByPassEditAccountModule), canActivate: [AuthGuard]
+      // },
       {
-        path: 'bypass-edit-account/:param1',
-        loadChildren: () => import('./views/bypass/bypass-edit-account/bypass-edit-account.module').then(m => m.ByPassEditAccountModule), canActivate: [AuthGuard]
+        path: 'bypass-edit-account',
+        loadChildren: () => import('./views/bypass/bypass-edit-account/bypass-edit-account.module').then(m => m.ByPassEditAccountModule)
       },
       {
         path: 'bank-statement-view',

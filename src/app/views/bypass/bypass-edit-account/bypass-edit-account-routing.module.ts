@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: BypassEditAccountComponent,
-    canActivate: [AuthGuard],
+    //canActivate: [AuthGuard],
     data: {
       breadcrumb: 'ByPass Edit Account',
       icon: 'icofont icofont-file-document bg-c-pink',

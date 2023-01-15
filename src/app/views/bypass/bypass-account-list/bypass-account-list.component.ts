@@ -41,7 +41,7 @@ export class BypassAccountListComponent implements OnInit {
       this.response.listData = null;
       this.loading = false;
       this.error = "Internal Server Error";
-      console.log(error);
+      //console.log(error);
     });
 
   }
@@ -69,7 +69,7 @@ export class BypassAccountListComponent implements OnInit {
       this.response.listData = null;
       this.loading = false;
       this.error = "Internal Server Error";
-      console.log(error);
+      //console.log(error);
     });
   }
 
