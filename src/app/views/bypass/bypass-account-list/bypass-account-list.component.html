@@ -58,8 +58,11 @@
                                         <td align="right">{{list.status}}</td>
                                         <td>{{list.channel_name}}</td>
                                         <td align="right">
-                                           <!--<a [routerLink]="['/bypass-edit-account']" [queryParams]="{cust_ac_no: list.cust_ac_no}" >Edit</a>--> 
-                                            <a [routerLink]="['/bypass-edit-account',list.cust_ac_no]" >Edit</a>
+                                           <a [routerLink]="['/bypass-edit-account']" 
+                                           [queryParams]="{cust_ac_no: list.cust_ac_no,channel_name:list.channel_name}" >Edit</a> 
+                                            <!-- <a [routerLink]="['/bypass-edit-account',list.cust_ac_no,list.channel_name]" >Edit</a> -->
+                                            <!-- <a [routerLink]="['/bypass-edit-account',list.cust_ac_no]" >Edit</a> -->
+                                            
                                         </td>
                                     </tr>
                                 </tbody>

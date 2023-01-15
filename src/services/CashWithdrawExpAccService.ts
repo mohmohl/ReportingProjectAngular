@@ -26,8 +26,8 @@ import { CashWithdrawExpAcc } from "src/models/CashWithdrawExpAcc";
       return this.http.post<any>(`${environment.baseUrl}`+'/exp/saveData',data);
     }
 
-    public searchEditData(cust_ac_no : string) : Observable<any>{
-      return this.http.post<any>(`${environment.baseUrl}`+'/exp/searchEditData',{cust_ac_no});
+    public searchEditData(cust_ac_no : string,channel_name : string) : Observable<any>{
+      return this.http.post<any>(`${environment.baseUrl}`+'/exp/searchEditData',{cust_ac_no,channel_name});
     }
 
     public saveEditData(data : CashWithdrawExpAcc) : Observable<any>{
