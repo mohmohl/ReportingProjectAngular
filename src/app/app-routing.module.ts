@@ -605,6 +605,14 @@ const routes: Routes = [
       {
         path: 'duplicate-tt-update',
         loadChildren: () => import('./views/instrument/instrument/instrument-module').then(m => m.InstrumentModule)
+      },
+      {
+        path: 'hom7-report',
+        loadChildren: () => import('./views/mis-reports/financial-position/financial-position.module').then(m => m.FinancialPositionModule)
+      },
+      {
+        path: 'gl-transaction',
+        loadChildren: () => import('./views/mis-reports/gl-transaction/gl-transaction.module').then(m => m.GLTransactionModule)
       }
      
     ]

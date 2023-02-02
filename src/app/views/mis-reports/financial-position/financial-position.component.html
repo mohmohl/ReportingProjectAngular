@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- <form [formGroup]="form" (ngSubmit)="submit()"> -->
+        <div class="card">
+
+            <div class="card-header">
+                <h5>Financial Position Report </h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+
+                <div class="page-header-breadcrumb">
+                    <button type="button" class="btn-success" (click)="exportExcel()">
+                        <i class="ti-printer"></i>Excel
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-t-0">
+                <div class="table-responsive">
+                    <code *ngIf="error">{{error}}</code>
+
+
+                    <!-- Filter Data -->
+                    <div class="container-fluid" style="margin-top: 1.5%;">
+                        <div class="form-group row">
+                            <label class="col-sm-1 col-form-label"> Branch</label>
+                            <div class="col-sm-2">
+                                <select class="form-control" [(ngModel)]="branchCode">
+                                    <option *ngFor="let arr of _branchList" value="{{arr}}" selected>{{arr}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <label class="col-sm-1 col-form-label">Date</label>
+                            <div class="col-sm-2 date-picker">
+                                <!-- [min]="minDate"
+                                            [max]="maxDate" -->
+                                <mat-form-field>
+                                    <input #minmaxInput matInput [matDatepicker]="minmaxvalidation"
+                                        [(ngModel)]="fromDate" readonly>
+                                    <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #minmaxvalidation></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Filter Data -->
+                </div>
+            </div>
+        </div>
+        <!-- </form> -->
+    </div>
+</div>
