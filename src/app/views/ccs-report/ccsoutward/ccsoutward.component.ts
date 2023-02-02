@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { ResponseEntity } from 'src/models/ResponseEntity';
 
 import { CCSReportService } from '../../../../services/CCSReportService';
+import { CCSStatus } from 'src/models/CCSStatus';
 
 @Component({
   selector: 'app-ccsoutward',
@@ -34,9 +35,9 @@ export class CcsoutwardComponent implements OnInit {
   count: number = 1;
   bankList: EBA_BANK[] = [];
   ccsTranList: CCS_TRAN[] = [];
-  ccsStatusList: CCS_STATUS[] = [];
+  //ccsStatusList: CCS_STATUS[] = [];
   ccsOutwardList: CCS_Outward[] = [];
-
+  ccsStatusList: CCSStatus[] = [];
   public startCount: number = 0;
 
   searchData: CCS_REPORT = null;
@@ -55,9 +56,9 @@ export class CcsoutwardComponent implements OnInit {
     ];
 
     //prepare combo
-    this.ccsStatusList = [
-      { status_id: "ALL", status_name: "ALL" },
-      { status_id: "CBMRE", status_name: "Failed" },
+   //// this.ccsStatusList = [
+      ////{ status_id: "ALL", status_name: "ALL" },
+     //// { status_id: "CBMRE", status_name: "Failed" },
       // {status_id:"N",status_name:"N - New"},
       // {status_id:"CBMRE",status_name:"CBM - Rejected Messages"},
       // {status_id:"F",status_name:"F - Transaction input fail"},
@@ -65,10 +66,11 @@ export class CcsoutwardComponent implements OnInit {
       // {status_id:"REVERSAL",status_name:"Reversal sent to CBM"},
       // {status_id:"SCMBN",status_name:"SCMBN - Sent to CBMNet"},
       // {status_id:"SRC",status_name:"Reverse at CBS"}
-    ];
+   //// ];
   }
 
   ngOnInit() {
+    //debugger;
     //trigger screen width
     this.getScreenSize();
     let todaydateStr = `${new Date().getMonth() + 1}-${new Date().getDate()}-${new Date().getFullYear()}`;
@@ -113,9 +115,37 @@ export class CcsoutwardComponent implements OnInit {
       this.bankList[0] = dump;
       console.log(error);
     });//end of ccs bank api fetching
+
+    //fetch CCSStatusList
+    this.service.getCCSStatusList().subscribe((res: CCSStatus[]) => {
+      let dump: CCSStatus = {
+        status_code: "ALL",
+        description: "ALL",
+        disable_status: "A"
+      };
+
+      if (res.length == 0) {
+        this.ccsStatusList.push(dump);
+      } else {
+        this.ccsStatusList.push(dump);
+        res.forEach((item, index, res) => {
+          this.ccsStatusList.push(item);
+        });
+      }
+
+    }, (error) => {
+      let dump: CCSStatus = {
+        status_code: "ALL",
+        description: "ALL",
+        disable_status: "A"
+      };
+      this.ccsStatusList[0] = dump;
+      console.log(error);
+    });//end of ccs status api
   }
 
   submit(formdata: CCS_REPORT) {
+    //debugger;
     this.loading = true;
     this.startCount = 0;
     if (this.form.invalid) {

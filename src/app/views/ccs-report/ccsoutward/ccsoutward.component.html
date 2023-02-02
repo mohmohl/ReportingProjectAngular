@@ -52,7 +52,7 @@
               <div class="col-sm-12 col-md-3">
                 <select [ngClass]="{'large-combo':scrWidth>deviceSmall}" formControlName="statusCode"
                   class="form-control">
-                  <option value="{{item.status_id}}" *ngFor='let item of ccsStatusList'>{{item.status_name}}</option>
+                  <option value="{{item.status_code}}" *ngFor='let item of ccsStatusList'>{{item.description}}</option>
                 </select>
               </div>
 
