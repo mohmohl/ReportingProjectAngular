@@ -62,6 +62,11 @@ export class CCSReportService {
     return this.http.get<any>(`${api}`);
   }
 
+  public getCCSStatusList(): Observable<any> {
+    var api = environment.baseUrl + '/ccs/status';
+    return this.http.get<any>(`${api}`);
+  }
+
   public exportCCSOutwardPdf(searchbody: CCS_REPORT) {
 
     let fromDateStr = `${searchbody.fromdate.getFullYear()}-${searchbody.fromdate.getMonth() + 1}-${searchbody.fromdate.getDate()}`;
@@ -72,6 +77,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code : searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -89,6 +95,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code : searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -105,6 +112,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code : searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -121,6 +129,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code : searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -139,6 +148,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code: searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -156,6 +166,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code : searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -173,6 +184,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code : searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -189,6 +201,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code : searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -207,6 +220,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code : searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -225,6 +239,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code: searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -243,6 +258,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code : searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -258,6 +274,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code : searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
@@ -274,6 +291,7 @@ export class CCSReportService {
       fromdate: fromDateStr,
       todate: toDateStr,
       status: this.renderCCSStatus(searchbody.statusCode),
+      status_code : searchbody.statusCode,
       transition_name: searchbody.ccsTranCode,
       bank_name: searchbody.bankCode
     }
