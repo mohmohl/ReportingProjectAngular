@@ -55,6 +55,8 @@ export class DwCctodrawingComponent implements OnInit {
           this.branchList = data;
           this.branch_code = this.branchList[0].branch_code;
           this.branch_name = this.branchList[0].branch_name;
+
+          this.branchList.push({"branch_code":"ALL","branch_name":"ALL","bank_name":"Myanma Apex Bank","branch_addr2":"","branch_addr3":"","selected":false});
         }
         this.loading = false;
       },
