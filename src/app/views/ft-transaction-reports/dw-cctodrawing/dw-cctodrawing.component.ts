@@ -208,4 +208,29 @@ changeBranchCombo(index){
         
   }
 
+  exportExcel() {
+   
+    this.loading = true;
+
+    let requestBody = {
+      date : this.month,
+      branch: this.branch_code,
+      t1: this.drawingtype,
+      t2: this.auth,
+      filetype:"xlsx"
+    };
+
+    this.http.downloadFile("/fttransaction/exportCCTODrawingFile", requestBody, `CCTO Drawing Schedule_${this.branch_code}_${this.month}`, 'xlsx').subscribe(
+      (data: any) => {
+        this.loading = false;
+      },error => {
+        console.log("CCTO Drawing Schedule Excel Exporting Error >>> " + error)
+        if (error != "") {
+          this.error = "(The system cannot export CCTO Drawing Schedule excel file!.. Have the error)";
+        }
+        this.loading = false;
+      });
+
+  }
+
 }

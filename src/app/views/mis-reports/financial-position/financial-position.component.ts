@@ -69,7 +69,7 @@ export class FinancialPositionComponent implements OnInit {
     let requestBody = {
       t1: fromDate,
       t2: this.branchCode,
-      t4:"xlsx"
+      filetype:"xlsx"
     };
 
     this.http.downloadFile("/misreport/downloadHOM7ReportFile", requestBody, `financial-position_${this.branchCode}_${fromDate}`, 'xlsx').subscribe(

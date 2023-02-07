@@ -93,7 +93,7 @@ export class GLTransactionComponent implements OnInit {
       filetype:"xlsx"
     };
 
-    this.http.downloadFile("/misreport/downloadGLTransactionReportFile", requestBody, `Gl Transaction_${this.branchCode}_${fromDate}`, 'xlsx').subscribe(
+    this.http.downloadFile("/misreport/downloadGLTransactionReportFile", requestBody, `GL Transaction_${this.branchCode}_${fromDate}`, 'xlsx').subscribe(
       (data: any) => {
         this.loading = false;
       },error => {
