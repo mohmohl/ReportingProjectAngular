@@ -53,6 +53,8 @@ export class DwObrencashccsiComponent implements OnInit {
           this.branchList = data;
           this.branch_code = this.branchList[0].branch_code;
           this.branch_name = this.branchList[0].branch_name;
+
+          this.branchList.push({"branch_code":"ALL","branch_name":"ALL","bank_name":"Myanma Apex Bank","branch_addr2":"","branch_addr3":"","selected":false});
         }
         this.loading = false;
       },
@@ -202,7 +204,30 @@ export class DwObrencashccsiComponent implements OnInit {
           this.loading = false;
         });
         
-        
+  }
+
+  exportExcel() {
+   
+    this.loading = true;
+
+    let requestBody = {
+      date : this.month,
+      branch: this.branch_code,
+      t1: this.cusID,
+      filetype:"xlsx"
+    };
+
+    this.http.downloadFile("/fttransaction/exportOBREncashCCSIFile", requestBody, `OBREncashCCSI_${this.branch_code}_${this.month}`, 'xlsx').subscribe(
+      (data: any) => {
+        this.loading = false;
+      },error => {
+        console.log("OBR Encash CCSI Excel Exporting Error >>> " + error)
+        if (error != "") {
+          this.error = "(The system cannot export OBR Encash CCSI excel file!.. Have the error)";
+        }
+        this.loading = false;
+      });
+
   }
 
 }

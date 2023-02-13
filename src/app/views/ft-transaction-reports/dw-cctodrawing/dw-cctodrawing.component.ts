@@ -181,6 +181,7 @@ changeBranchCombo(index){
   exportPDF(){
     this.error="";
     this.loading = true;
+    this.month = this.month_str;
   
     this.http.export_PDF("/fttransaction/exportCCTODrawingPDF?date="+this.month+"&auth="+this.auth+"&drawingtype="+this.drawingtype+"&branch="+
       this.branch_code+"&branchname="+this.branch_name).pipe(
@@ -213,6 +214,7 @@ changeBranchCombo(index){
   exportExcel() {
    
     this.loading = true;
+    this.month = this.month_str;
 
     let requestBody = {
       date : this.month,
