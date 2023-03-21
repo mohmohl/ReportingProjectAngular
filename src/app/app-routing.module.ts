@@ -613,6 +613,26 @@ const routes: Routes = [
       {
         path: 'gl-transaction',
         loadChildren: () => import('./views/mis-reports/gl-transaction/gl-transaction.module').then(m => m.GLTransactionModule)
+      },
+      {
+        path: 'eoy-detail-trail',
+        loadChildren: () => import('./views/eoy-report/eoy-detail-trial-report/eoy-detail-trial-report.module').then(m => m.EOYDetailTrialReportModule)
+      },
+      {
+        path: 'eoy-general-trail',
+        loadChildren: () => import('./views/eoy-report/eoy-general-trial-report/eoy-general-trial-report.module').then(m => m.EOYGeneralTrialReportModule)
+      },
+      {
+        path: 'eoy-general-trail-conso',
+        loadChildren: () => import('./views/eoy-report/eoy-general-trial-conso-report/eoy-general-trial-conso-report.module').then(m => m.EOYGeneralTrialConsoReportModule)
+      },
+      {
+        path: 'eoy-asset',
+        loadChildren: () => import('./views/eoy-report/eoy-gl-assets/eoy-assets.module').then(m => m.EOYConsoAssetsModule)
+      },
+      {
+        path: 'eoy-liabilities',
+        loadChildren: () => import('./views/eoy-report/eoy-gl-liabilities/eoy-liabilities.module').then(m => m.EOYLiabilitiesModule)
       }
      
     ]

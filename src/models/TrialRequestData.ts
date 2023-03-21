@@ -5,4 +5,6 @@ export class TrialRequestData {
     currencyCodelist:string[];
     branchCodelist:string[];
     format : string;
+    roundname : string;
+    formtype : string;
 }
