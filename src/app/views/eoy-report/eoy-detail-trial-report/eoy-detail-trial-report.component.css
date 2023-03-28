@@ -1,0 +1,51 @@
+.multiselect-dropdown .dropdown-btn .selected-item {
+    border: 1px solid maroon !important;
+    background:maroon !important;
+
+}
+
+.multiselect-item-checkbox input[type=checkbox]+div:before{
+    color:maroon !important;
+    border:2px solid #691c31 !important;
+}
+
+.autocomplete {
+    width:100%;
+    max-width: 600px;
+    display: table;
+}
+
+.form-group {
+    margin-bottom: 0.30em !important;
+}  
+
+.multiselect-dropdown .dropdown-btn .selected-item:hover{
+    box-shadow: 3px 3px rgb(188, 188, 188) !important;
+}
+
+.table-responsive{
+    max-height: 500px;
+ overflow-y: scroll;  
+}
+.num-txt{
+    text-align: right;
+}
+.txt{
+    text-align: center;
+}
+.des-txt{
+    text-align: left;
+    white-space: unset;
+}
+.table-header-txt{
+    text-align: center;
+}
+.table-responsive td{
+    max-width: 100px;
+}
+.setPerens:before {
+     content: '(';
+}
+.setPerens:after {
+     content: ')';
+    }
