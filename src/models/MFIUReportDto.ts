@@ -1,0 +1,39 @@
+export class MFIUReportDto {
+
+	trans_type:string;
+	payment_type:string;
+	lcy_amount:number;
+	fcy_amount:number;
+	narrative:string;
+	company_name:string;
+	company_reg_no:string;
+	business_type:string;
+	company_reg_country:string;
+	father_name:string;
+	dob:string;
+	nationality:string;
+	occupation:string;
+	gender:string;
+	phone_no:string;
+	buildingno:string;
+	street:string;
+	city:string;
+	township:string;
+	country:string;
+	address:string;
+	ac_no:string;
+	ac_open_date:string;
+	branch_name:string;
+	ac_ccy:string;
+	report_type:string;
+	trn_ref_no:string;
+	ac_branch:string;
+	drcr_ind:string;
+	trn_code:string;
+	trn_dt:string;
+	acc_class:string;
+	acc_type:string;
+	type:string;
+	ac_entry_sr_no:string;
+	status:string;
+}

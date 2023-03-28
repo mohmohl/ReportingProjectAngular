@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>MFIU Email Template</h5>
+                <div *ngIf="loading" class="d-flex justify-content-center">
+                    <div class="spinner-border spinner-border-sm text-warning"></div>
+                    <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <code *ngIf="error">{{error}}</code>
+                <label *ngIf="message" class="text-info">{{message}}</label>
+                
+                <form [formGroup]="form" (ngSubmit)="submit()">
+      
+                    <div class="form-group row"> 
+                        <label class="col-sm-2">To Email</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" formControlName="to_email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2">CC Email</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" formControlName="cc_email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2">BCC Email</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" formControlName="bcc_email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2">Subject</label>
+                        <div class="col-sm-4">
+                            <textarea class="form-control" formControlName="subject"> </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2">Body</label>
+                        <div class="col-sm-4">
+                            <textarea class="form-control" formControlName="body"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-1">
+                            <button type="submit" class="btn-primary">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

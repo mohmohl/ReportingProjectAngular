@@ -44,7 +44,14 @@ export class CommonUtil{
         }
        return '';
     }
-
+   //dd-MMM-yyyy to dd-MM-yyyy
+   getDD_MM_YYYY(objDT: Date){
+       
+    if(objDT != null){
+        return this.datepipe.transform(objDT, 'dd-MM-yyyy');
+    }
+   return '';
+}
     //yyyyMMdd
     formatDDMMYYYY(pDate){
         if(pDate != null){
