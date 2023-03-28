@@ -1,0 +1,212 @@
+<ng-template #mymodal let-modal >
+    <div class="modal-header btn-primary">
+        <h6 class="modal-title">Edit Form</h6>
+    
+        <button type="button" class="close color-white" data-dismiss="modal" aria-hidden="true" title="close"
+                (click)="modal.close('Close click')">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+        <form [formGroup]="editform" >
+            
+            <div class="form-group row">   
+                <label class="col-sm-4">Company REG No</label>
+                <div class="col-xs-2">
+                    <input type="text" formControlName="com_reg_no">
+                    <input type="hidden" formControlName="ac_entry_sr_no">
+                    <input type="hidden" formControlName="ac_branch">
+                </div>
+                <label class="col-sm-2">ac_entry_sr_no ({{editform.get('ac_entry_sr_no').value}})</label>
+               
+            </div>
+            <div class="form-group row">   
+                <label class="col-sm-4">Gender</label>
+                <div class="col-xs-2">
+                    <input type="text" formControlName="gender">
+                </div> 
+               
+            </div>
+            <div class="form-group row">   
+                <label class="col-sm-4">Phone No</label>
+                <div class="col-xs-2">
+                    <input type="text" formControlName="ph_no">
+                </div> 
+               
+            </div>
+            <div class="form-group row">   
+                <label class="col-sm-4">Address</label>
+                <div class="col-xs-2">
+                    <textarea type="text" formControlName="address"></textarea>
+                </div> 
+            </div>
+            <div class="form-group row">   
+                <label class="col-sm-4">Intension Of TXN</label>
+                <div class="col-xs-2">
+                    <textarea type="text" formControlName="inten_txn"></textarea>
+                </div> 
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn-primary" (click)="updateSubmit()">Edit</button>
+          <button type="button" class="btn-outline-dark" (click)="modal.close('Close click')">Cancel</button>
+        </div>
+    </ng-template>
+    
+    
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Search MFIU HO Data</h5>
+                    <div *ngIf="loading" class="d-flex justify-content-center">
+                        <div class="spinner-border spinner-border-sm text-warning"></div>
+                        <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <code *ngIf="error">{{error}}</code>
+                    <label *ngIf="message" class="text-info">{{message}}</label>
+                    
+                    <form [formGroup]="form" (ngSubmit)="submit()">
+                        <div class="form-group row">
+                    
+                            <label class="col-sm-1 col-form-label">Branch Code</label>
+                            <div class="col-sm-1 col-form-label">
+                                <select  formControlName="branch_code" >
+                                    <option *ngFor="let arr of _branchList"  value="{{arr}}" selected>{{arr}}</option>
+                                </select>
+                            </div> 
+                            <label class="col-sm-1 col-form-label">  Date</label>
+                            <div class="col-sm-2">
+                                <mat-form-field style="width:100px;">
+                                  <input #minmaxInput matInput                                     
+                                  [matDatepicker]="minmaxvalidation" formControlName="from_date" readonly>
+                                  <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                                     </mat-datepicker-toggle>
+                                  <mat-datepicker #minmaxvalidation></mat-datepicker>
+                                </mat-form-field>
+                              </div>
+                              <label class="col-form-label">-</label>
+                              <div class="col-sm-2">
+                                <mat-form-field style="width:100px;">
+                                  <input #minmaxInput matInput 
+                                    
+                                    [matDatepicker]="minmaxvalidation2" formControlName="to_date" readonly>
+                                  <mat-datepicker-toggle matSuffix [for]="minmaxvalidation2">
+                                     </mat-datepicker-toggle>
+                                  <mat-datepicker #minmaxvalidation2></mat-datepicker>
+                                </mat-form-field>
+                              </div>
+                            <div class="col-sm-2">
+                                <button type="submit" [disabled]="search_btn_flag" class="btn-primary">Search</button>
+                            </div>
+                        </div>
+                    </form>
+    
+                    <div class="row" *ngIf="listData != null"> 
+                        <div class="col-md-12">
+                            <div class="table-responsive" style="max-height: 300px;overflow-y: auto;">
+                                <table class="table table table-hover">
+                                    <thead>
+                                        <tr class="text-uppercase">
+                                            <th> # </th>
+                                            <th *ngIf="!send_btn_flag"> </th>
+                                            <th>Ac_entry_sr_no</th>
+                                            <th>TXN Type</th>
+                                            <th>Payment Type</th>
+                                            <th>Lcy_amount</th>
+                                            <th>Fcy_amount</th>
+                                            <th>Intension Of Txn</th>
+                                            <th>Company Name</th>
+                                            <th>Company Reg No</th>
+                                            <th>Gender</th>
+                                            <th>Phone Number</th>
+                                            <th>Address</th>
+                                            <th>Business Type</th>
+                                            <th>Company Reg Country</th>
+                                            <th>Father Name</th>
+                                            <th>Date of Birth</th>
+                                            <th>Nationality</th>
+                                            <th>Occupation</th>
+                                            <th>Building No</th>
+                                            <th>Street</th>
+                                            <th>City</th>
+                                            <th>Township</th>
+                                            <th>Country</th>
+                                            <th>Ac_no</th>
+                                            <th>Ac_open_date</th>
+                                            <th>Branch_name</th>
+                                            <th>Ac_ccy</th>
+                                            <th>Report Type</th>
+                                            <th>Trn_ref_no</th>
+                                            <th>Ac_branch</th>
+                                            <th>DrCr_ind</th>
+                                            <th>Trn_code</th>
+                                            <th>Trn_dt</th>
+                                            <th>Account_class</th>
+                                            <th>Account_type</th>
+                                            <th>Type</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let list of listData; let i = index">
+                                            <td> {{i+1}} </td>
+                                            <td *ngIf="!send_btn_flag">
+                                                <button type="button" *ngIf="list.status != '0'" class="btn-warning"(click)="call_edit_modal(mymodal,list.narrative,list.company_reg_no,list.gender,list.phone_no,list.address,list.ac_entry_sr_no,list.ac_branch)" >Edit</button> 
+                                                <button type="button" *ngIf="list.status != '0'" class="btn-primary"(click)="remove_record($event,0,list.ac_entry_sr_no)" >Remove</button>
+                                                <button type="button" *ngIf="list.status == '0'" class="btn-info"(click)="remove_record($event,2,list.ac_entry_sr_no)" >Recall</button>
+                                            </td>
+                                            <td>{{list.ac_entry_sr_no}}</td>
+                                            <td>{{list.trans_type}}</td>
+                                            <td>{{list.payment_type}}</td>
+                                            <td align="right">{{list.lcy_amount | number:'1.0-3'}}</td>
+                                            <td align="right">{{list.fcy_amount | number:'1.0-3'}}</td>
+                                            <td>{{list.narrative}}</td>
+                                            <td>{{list.company_name}}</td>
+                                            <td>{{list.company_reg_no}}</td>
+                                            <td>{{list.gender}}</td>
+                                            <td>{{list.phone_no}}</td>
+                                            <td>{{list.address}}</td>
+                                            <td>{{list.business_type}}</td>
+                                            <td>{{list.company_reg_country}}</td>
+                                            <td>{{list.father_name}}</td>
+                                            <td>{{list.dob}}</td>
+                                            <td>{{list.nationality}}</td>
+                                            <td>{{list.occupation}}</td>
+                                            <td>{{list.buildingno}}</td>
+                                            <td>{{list.street}}</td>
+                                            <td>{{list.city}}</td>
+                                            <td>{{list.township}}</td>
+                                            <td>{{list.country}}</td>
+                                            <td>{{list.ac_no}}</td>
+                                            <td>{{list.ac_open_date}}</td>
+                                            <td>{{list.branch_name}}</td>
+                                            <td>{{list.ac_ccy}}</td>
+                                            <td>{{list.report_type}}</td>
+                                            <td>{{list.trn_ref_no}}</td>
+                                            <td>{{list.ac_branch}}</td>
+                                            <td>{{list.drcr_ind}}</td>
+                                            <td>{{list.trn_code}}</td>
+                                            <td>{{list.trn_dt}}</td>
+                                            <td>{{list.acc_class}}</td>
+                                            <td>{{list.acc_type}}</td>
+                                            <td>{{list.type}}</td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-sm-8"></div>
+                            <div class="col-sm-2">
+                                <button type="button" class="btn-primary" [disabled]="send_btn_flag" (click)="send_to_CBM()">Send</button>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </div>
