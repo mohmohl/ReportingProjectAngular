@@ -17,11 +17,12 @@ export class MfiuBranchEmailSetupComponent implements OnInit {
   _branchList;
   form = this.fb.group({
     branch_code:new FormControl('', Validators.required),
-    from_email:new FormControl('', Validators.required),
-    email_pwd:new FormControl('', Validators.required),
+    //from_email:new FormControl('', Validators.required),
+    //email_pwd:new FormControl('', Validators.required),
     phone_no:new FormControl('', Validators.required),
     officer_name:new FormControl('', Validators.required),
     officer_title:new FormControl('', Validators.required),
+    email_signature:new FormControl('', Validators.required),
   });
   constructor(private fb:FormBuilder,private service: LatestTrialReportService,private mfiu_service:MFIUService) { }
 
@@ -44,11 +45,12 @@ export class MfiuBranchEmailSetupComponent implements OnInit {
       this.loading = false;
       this.form = this.fb.group({
         branch_code:new FormControl(res.ac_branch, Validators.required),
-        from_email:new FormControl(res.from_email, Validators.required),
-        email_pwd:new FormControl(res.email_pwd, Validators.required),
+        //from_email:new FormControl(res.from_email, Validators.required),
+       // email_pwd:new FormControl(res.email_pwd, Validators.required),
         phone_no:new FormControl(res.phone_no, Validators.required),
         officer_name:new FormControl(res.name, Validators.required),
         officer_title:new FormControl(res.title, Validators.required),
+        email_signature:new FormControl(res.email_signature, Validators.required),
       });
   },error =>{
     this.loading = false;
@@ -65,11 +67,12 @@ export class MfiuBranchEmailSetupComponent implements OnInit {
     }
     let data=new MFIUSetupDTO;
     data.ac_branch=this.form.get(["branch_code"])!.value;
-    data.from_email=this.form.get(["from_email"])!.value;
-    data.email_pwd=this.form.get(["email_pwd"])!.value;
+    //data.from_email=this.form.get(["from_email"])!.value;
+    //data.email_pwd=this.form.get(["email_pwd"])!.value;
     data.phone_no=this.form.get(["phone_no"])!.value;
     data.name=this.form.get(["officer_name"])!.value;
     data.title=this.form.get(["officer_title"])!.value;
+    data.email_signature=this.form.get(["email_signature"])!.value;
     this.loading = true;
     this.mfiu_service.save_mfiu_email_record(data).subscribe((res:MFIUResponseDto)=>{
       this.loading = false;

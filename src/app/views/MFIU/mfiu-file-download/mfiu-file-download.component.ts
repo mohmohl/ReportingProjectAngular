@@ -63,12 +63,14 @@ export class MfiuFileDownloadComponent implements OnInit {
     this.branch_code=this.form.get(["branch_code"])!.value;
     this.fromDate = this._util.getDD_MM_YYYY(this.form.get(["from_date"])!.value);
     this.file_type=this.form.get(["type"])!.value
+    this.loading = true;
     this.mfiu_service.get_download_file_type(this.branch_code,this.fromDate ,this.file_type)
     .pipe(
       map((data: any) => {
         let blob = new Blob([data], {
           type: "text/zip;charset=utf-8;" 
         });
+        this.loading = false;
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
         link.download = this.file_type+'.zip';

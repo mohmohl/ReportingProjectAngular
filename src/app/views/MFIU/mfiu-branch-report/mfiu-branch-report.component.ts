@@ -30,7 +30,12 @@ export class MfiuBranchReportComponent implements OnInit {
     com_reg_no:new FormControl(''),
     gender:new FormControl(''),
     ph_no:new FormControl(''),
-    address:new FormControl(''),
+    buildingno:new FormControl(''),
+	  street:new FormControl(''),
+	  city:new FormControl(''),
+	  township:new FormControl(''),
+	  country:new FormControl(''),
+    //address:new FormControl(''),
     inten_txn:new FormControl(''),
     ac_branch:new FormControl('')
   });
@@ -77,14 +82,19 @@ search_mfiu_data(branch:string){
           
       });
 }
-  call_edit_modal(content,inten_of_txn:string,com_reg_no:string,gender:string,phone_no:string,address:string,ac_entry_sr_no:string,branch:string){
+  call_edit_modal(content,inten_of_txn:string,com_reg_no:string,gender:string,phone_no:string,buildingno:string,street:string,city:string,township:string,country:string,ac_entry_sr_no:string,branch:string){
 
     this.editform=this.fb.group({
       ac_entry_sr_no:new FormControl(ac_entry_sr_no, Validators.required),
       com_reg_no:new FormControl(com_reg_no),
       gender:new FormControl(gender),
       ph_no:new FormControl(phone_no),
-      address:new FormControl(address),
+      buildingno:new FormControl(buildingno),
+      street:new FormControl(street),
+      city:new FormControl(city),
+      township:new FormControl(township),
+      country:new FormControl(country),
+      //address:new FormControl(''),
       inten_txn:new FormControl(inten_of_txn),
       ac_branch:new FormControl(branch)
     });
@@ -124,7 +134,11 @@ search_mfiu_data(branch:string){
     obj.company_reg_no=this.editform.get(["com_reg_no"])!.value
     obj.gender=this.editform.get(["gender"])!.value
     obj.phone_no=this.editform.get(["ph_no"])!.value
-    obj.address=this.editform.get(["address"])!.value
+    obj.buildingno=this.editform.get(["buildingno"])!.value
+    obj.street=this.editform.get(["street"])!.value
+    obj.city=this.editform.get(["city"])!.value
+    obj.township=this.editform.get(["township"])!.value
+    obj.country=this.editform.get(["country"])!.value
     obj.narrative=this.editform.get(["inten_txn"])!.value
     this.mfiu_service.update_field_mfiu(obj).subscribe((res:MFIUResponseDto)=>{
       this.loading = false;

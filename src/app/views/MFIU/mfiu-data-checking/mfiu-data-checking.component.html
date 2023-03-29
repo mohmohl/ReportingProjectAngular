@@ -18,7 +18,8 @@
                         <label class="col-sm-1 col-form-label">Branch Code</label>
                         <div class="col-sm-1 col-form-label">
                             <select  formControlName="branch_code" >
-                                <option *ngFor="let arr of _branchList"  value="{{arr}}" selected>{{arr}}</option>
+                                <option  value="ALL">ALL</option>
+                                <option *ngFor="let arr of _branchList"  value="{{arr}}">{{arr}}</option>
                             </select>
                         </div> 
                         <label class="col-sm-1 col-form-label">  Date</label>
