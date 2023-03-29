@@ -646,7 +646,26 @@ const routes: Routes = [
         path: 'mfiu_data_checking',
         loadChildren: () => import('./views/MFIU/mfiu-data-checking/mfiu-data-checking.module').then(m => m.MFIUDataCheckingModule)
       },
-      
+    {
+        path: 'eoy-detail-trail',
+        loadChildren: () => import('./views/eoy-report/eoy-detail-trial-report/eoy-detail-trial-report.module').then(m => m.EOYDetailTrialReportModule)
+      },
+      {
+        path: 'eoy-general-trail',
+        loadChildren: () => import('./views/eoy-report/eoy-general-trial-report/eoy-general-trial-report.module').then(m => m.EOYGeneralTrialReportModule)
+      },
+      {
+        path: 'eoy-general-trail-conso',
+        loadChildren: () => import('./views/eoy-report/eoy-general-trial-conso-report/eoy-general-trial-conso-report.module').then(m => m.EOYGeneralTrialConsoReportModule)
+      },
+      {
+        path: 'eoy-asset',
+        loadChildren: () => import('./views/eoy-report/eoy-gl-assets/eoy-assets.module').then(m => m.EOYConsoAssetsModule)
+      },
+      {
+        path: 'eoy-liabilities',
+        loadChildren: () => import('./views/eoy-report/eoy-gl-liabilities/eoy-liabilities.module').then(m => m.EOYLiabilitiesModule)
+      }
     ]
   },
   {

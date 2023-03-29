@@ -1,0 +1,288 @@
+<div class="row">
+  <div class="col-sm-12">
+      <div class="card">
+          <div class="card-header">
+            <h5>General Trial Report</h5>
+            <div *ngIf="loading" class="d-flex justify-content-center">
+              <div class="spinner-border spinner-border-sm text-warning"></div>
+                <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+            </div>
+            <div class="page-header-breadcrumb">
+              <button type="button" class="btn-success" (click)="exportExcel()">
+                <i class="ti-printer"></i>Excel
+              </button> 
+              <button type="button" class="btn-danger" (click)="exportPDF()">
+                <i class="ti-printer"></i>PDF
+              </button> 
+            </div>
+          </div>
+
+          <div class="card-body">
+            <code *ngIf="error">{{error}}</code>
+              <div class="container-fluid">
+                <div class="form-group row">
+                  <span style="color: DarkSalmon;">Note: Multi Branch allow only {{ this.settingsDate.minDate | date :  "dd-MMM-yyyy" }} to {{ this.settingsDate.maxDate | date :  "dd-MMM-yyyy" }}</span>
+               </div>
+               <br>
+               
+                
+
+                <form [formGroup]="form1" (ngSubmit)="submit()" *ngIf="filter1">
+                    <div class="form-group row"  >
+                      <div class="col-md-4">
+                        <div class="row form-group col-md-12">
+                          <label class="col-md-3 col-form-label">Round<code>*</code></label>
+                          <div class="col-md-9">
+                            <select class="form-control"  [(ngModel)]="roundSrno">
+                              <option value="" selected>-- Select --</option>
+                              <option *ngFor="let data of roundList" value="{{data.roundsrno}}">{{ data.roundname}}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="row form-group col-md-12">
+                          <label class="col-sm-2 col-form-label">Date<code>*</code></label>
+                          <div class="col-sm-4">
+                            <mat-form-field>
+                              <input #minmaxInput matInput [matDatepicker]="from_date" formControlName="from_date" readonly (dateChange)="changeDate($event)">  
+                              <mat-datepicker-toggle matSuffix [for]="from_date">
+                                 </mat-datepicker-toggle>
+                              <mat-datepicker #from_date></mat-datepicker>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="col-md-4">
+                        <div class="row form-group col-md-12">
+                          <label class="col-sm-3 col-form-label">Currency<code>*</code></label>
+                          <div style="width:60%;">
+                            <ng-multiselect-dropdown 
+                                [settings]="ccy_dropdownSettings" style="background: maroon;"
+                                [data]="currencyList"
+                                (onSelect)="onCcyItemSelect($event)" 
+                                (onDeSelect)="onCcyItemDeSelect($event)"
+                                (onSelectAll)="onCcySelectAll($event)"
+                                (onDeSelectAll)="onCcyDeSelectAll($event)"
+                                formControlName="currencyCode"
+                                [(ngModel)]="selectedCcyItems"> 
+                            </ng-multiselect-dropdown>
+                          </div>
+                        </div>
+                      </div>
+                    </div>   
+    
+                    <div class="form-group row">
+                      <div class="col-md-4">
+                        <div class="row form-group col-md-12">
+                          <label class="col-md-3 col-form-label">Branch<code>*</code></label>
+                          <div class="col-md-9">
+                          <select formControlName="branch" class="form-control" (change)="branchOnChange($event)">
+                            <option value="" selected>-- Select --</option>
+                            <option *ngFor="let b of branch_typeList" value="{{b.value}}">{{b.desc}}</option>
+                          </select> 
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="col-md-6" >
+                        <div class="row form-group col-md-12">
+                          <label *ngIf="branch != ''" class="col-sm-3 col-form-label">Branch Code<code>*</code></label>
+                          <div style="width:50%;" *ngIf="branch=== 'pattern2'">
+                            <ng-multiselect-dropdown 
+                                [settings]="dropdownSettings" style="background: maroon;"
+                                [data]="pattern2branchList"
+                                (onSelect)="onBrItemSelect($event)" 
+                                (onDeSelect)="onBrItemDeSelect($event)"
+                                (onSelectAll)="onBrSelectAll($event)"
+                                (onDeSelectAll)="onBrDeSelectAll($event)"
+                                formControlName="branchCode"
+                                [(ngModel)]="selectedBrItems">
+                            </ng-multiselect-dropdown>
+                          </div>
+    
+                          <div style="width:50%;" *ngIf="branch=== 'pattern3'">
+                            <ng-multiselect-dropdown 
+                                [settings]="dropdownSettings" style="background: maroon;"
+                                [data]="pattern3branchList"
+                                (onSelect)="onBrItemSelect($event)" 
+                                (onDeSelect)="onBrItemDeSelect($event)"
+                                (onSelectAll)="onBrSelectAll($event)"
+                                (onDeSelectAll)="onBrDeSelectAll($event)"
+                                formControlName="branchCode"
+                                [(ngModel)]="selectedBrItems">
+                            </ng-multiselect-dropdown>
+                          </div>
+    
+                          <div class="col-sm-3">
+                            <button type="submit" class="btn-primary">View</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+    
+                </form>
+
+                <form [formGroup]="form2" (ngSubmit)="periodSubmit()" *ngIf="!filter1" >
+                <div class="form-group row">
+                    <label class="col-sm-1">Branch</label>
+                    <div class="col-sm-2">
+                      <select class="" formControlName="branchCode" >
+                        <option value="" selected>-- Select --</option>
+                        <option *ngFor="let b of pattern3branchList" value="{{b}}">{{ b}}</option>
+                      </select>
+                    </div>
+
+                    <label class="col-sm-1.5">Finance Year</label>
+                    <div class="col-sm-2 ">
+                      <select class="" formControlName="finYear" (change)="onChangeYear($event)">
+                        <option value="" selected>-- Select --</option>
+                        <option *ngFor="let y of yearList" value="{{y}}">{{y}}</option>
+                      </select>
+                    </div>
+                    
+                    <label class="col-sm-1.5">Period Code</label>
+                    <div class="col-sm-2">
+                      <select class="" formControlName="periodCode" >
+                        <option value="" selected>-- Select --</option>
+                        <option *ngFor="let p of periodList" value="{{p}}">{{ p }}</option>
+                      </select>
+                    </div>
+                    
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn-primary">Search</button>
+                    </div>
+                    </div>
+                </form>
+              </div>
+
+
+            <p *ngIf="data_message" class="text-danger">{{data_message}}</p>
+
+            <div class="table-responsive">
+              <div *ngIf="data" class="col-sm-12 text-center">
+                <p>{{data.companyName}}</p>
+                <p>{{data.branchName}}</p>
+                <p>{{data.title}}</p>
+              </div>
+              <table class="table table table-hover" id="export-table">
+                <thead>
+                <tr class="text-uppercase table-header-txt" width="100%">
+                  <th [attr.colspan]="ccyCode == true ? '2' : ''">Debit</th>
+                  <th rowspan="2">Account</th>
+                  <th rowspan="2">Description</th>
+                  <th [attr.colspan]="ccyCode == true ? '2' : ''">Credit</th>
+                </tr>
+                <tr *ngIf="ccyCode" class="text-uppercase table-header-txt">
+                  
+                  <!-- <th width="150px">{{currencyCode}}</th>
+                  <th width="150px">Kyats</th>
+                  <th width="150px">{{currencyCode}}</th>
+                  <th width="150px">Kyats</th> -->
+                  <th>{{currencyCode}}</th>
+                  <th>Kyats</th>
+                  <th>{{currencyCode}}</th>
+                  <th>Kyats</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let list of trialList">
+                        <td *ngIf="ccyCode" class="num-txt">
+                          {{list.debit < 0 ? list.debitstr : list.debit === 0 ? "" :list.debit | number: '1.2-2'}}
+                        </td>
+                        <td class="num-txt">
+                          {{list.debit_lcy < 0 ? list.debit_lcystr : list.debit_lcy === 0 ? "" :list.debit_lcy | number: '1.2-2'}}
+                        </td>
+                        <td class="txt">{{list.account}}</td>
+                        <td class="des-txt">{{list.gl_desc}}</td>
+                        <td class="num-txt" *ngIf="ccyCode">
+                          {{list.credit < 0 ? list.creditstr : list.credit === 0 ? "" :list.credit | number: '1.2-2'}}
+                        </td>
+                        <td class="num-txt" >
+                          {{list.credit_lcy < 0 ? list.credit_lcystr : list.credit_lcy === 0 ? "" :list.credit_lcy | number: '1.2-2'}}
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                      <td *ngIf="ccyCode" class="num-txt">
+                        {{totalDebit < 0 ? totalDebitstr : totalDebit === 0 ? "" :  totalDebit | number: '1.2-2'}}
+                      </td>
+                      <td class="num-txt">
+                         {{totalDebit_lcy < 0 ? totalDebit_lcystr : totalDebit_lcy === 0 ? "" :  totalDebit_lcy | number: '1.2-2'}}
+                      </td>
+                      <td class="txt" colspan="2"> Grand Total</td>
+                      <td class="num-txt" *ngIf="ccyCode">
+                        {{totalCredit < 0 ? totalCreditstr : totalCredit === 0 ? "" :  totalCredit | number: '1.2-2'}}
+                      </td>
+                      <td class="num-txt" >
+                         {{totalCredit_lcy < 0 ? totalCredit_lcystr : totalCredit_lcy === 0 ? "" :  totalCredit_lcy | number: '1.2-2'}}
+                      </td>
+                      
+                  </tr>
+                </tbody>
+              </table>
+              <table *ngIf="!filter1" class="table table table-hover" style="width:500px" id="export-table">
+              <thead>
+              <tr class="text-uppercase table-header-txt">
+                <th>Summary</th>
+                <th>Debit</th>
+                <th>Credit</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                  <td class="txt">Assets</td>
+                  <td class="num-txt">
+                    {{totalasset_debit < 0 ? totalasset_debitstr : totalasset_debit === 0 ? "" :  totalasset_debit | number: '1.2-2'}}
+                 </td>
+                 <td class="num-txt">
+                  {{totalasset_credit < 0 ? totalasset_creditstr : totalasset_credit === 0 ? "" :  totalasset_credit | number: '1.2-2'}}
+                </td>
+                </tr>
+                <tr>
+                  <td class="txt">Liabilities</td>
+                  <td class="num-txt">
+                    {{totalliab_debit < 0 ? totalliab_debitstr : totalliab_debit === 0 ? "" :  totalliab_debit | number: '1.2-2'}}
+                 </td>
+                 <td class="num-txt">
+                  {{totalliab_credit < 0 ? totalliab_creditstr : totalliab_credit === 0 ? "" :  totalliab_credit | number: '1.2-2'}}
+                </td>
+                </tr>
+                <tr>
+                  <td class="txt">Income</td>
+                  <td class="num-txt">
+                    {{totalincome_debit < 0 ? totalincome_debitstr : totalincome_debit === 0 ? "" :  totalincome_debit | number: '1.2-2'}}
+                 </td>
+                 <td class="num-txt">
+                  {{totalincome_credit < 0 ? totalincome_creditstr : totalincome_credit === 0 ? "" :  totalincome_credit | number: '1.2-2'}}
+                </td>
+                </tr>
+                <tr>
+                  <td class="txt">Expenditure</td>
+                  <td class="num-txt">
+                    {{totalexp_debit < 0 ? totalexp_debitstr : totalexp_debit === 0 ? "" :  totalexp_debit | number: '1.2-2'}}
+                 </td>
+                 <td class="num-txt">
+                  {{totalexp_credit < 0 ? totalexp_creditstr : totalexp_credit === 0 ? "" :  totalexp_credit | number: '1.2-2'}}
+                </td>
+                </tr>
+                <tr>
+                  <td class="txt">Total Summary </td>
+                  <td class="num-txt">
+                    {{miantotalDebit < 0 ? miantotalDebitstr : miantotalDebit === 0 ? "" :  miantotalDebit | number: '1.2-2'}}
+                 </td>
+                 <td class="num-txt">
+                  {{miantotalCredit < 0 ? miantotalCreditstr : miantotalCredit === 0 ? "" :  miantotalCredit | number: '1.2-2'}}
+                </td>
+                </tr>
+          </tbody>
+          </table>
+            </div>
+          </div>
+
+      </div>
+        
+  </div>
+</div>
