@@ -66,12 +66,14 @@ export class MfiuDataCheckingComponent implements OnInit {
     this.fromDate = this._util.getDDMMMYYYY(this.form.get(["from_date"])!.value);
     this.toDate = this._util.getDDMMMYYYY(this.form.get(["to_date"])!.value);
     this.file_type=this.form.get(["type"])!.value
+    this.loading = true;
     this.mfiu_service.get_download_checking(this.branch_code,this.fromDate,this.toDate ,this.file_type)
     .pipe(
       map((data: any) => {
         let blob = new Blob([data], {
           type: "application/vnd.ms-excel;charset=utf-8;" 
         });
+        this.loading = false;
         var link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
         link.download = this.file_type+'.xlsx';

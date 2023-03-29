@@ -34,11 +34,41 @@
            
         </div>
         <div class="form-group row">   
-            <label class="col-sm-4">Address</label>
+            <label class="col-sm-4">Building No</label>
             <div class="col-xs-2">
-                <textarea type="text" formControlName="address"></textarea>
+                <input type="text" formControlName="buildingno">
             </div> 
+           
         </div>
+        <div class="form-group row">   
+            <label class="col-sm-4">Street</label>
+            <div class="col-xs-2">
+                <input type="text" formControlName="street">
+            </div> 
+           
+        </div>
+        <div class="form-group row">   
+            <label class="col-sm-4">City</label>
+            <div class="col-xs-2">
+                <input type="text" formControlName="city">
+            </div> 
+           
+        </div>
+        <div class="form-group row">   
+            <label class="col-sm-4">Township</label>
+            <div class="col-xs-2">
+                <input type="text" formControlName="township">
+            </div> 
+           
+        </div>
+        <div class="form-group row">   
+            <label class="col-sm-4">Country</label>
+            <div class="col-xs-2">
+                <input type="text" formControlName="country">
+            </div> 
+           
+        </div>
+     
         <div class="form-group row">   
             <label class="col-sm-4">Intension Of TXN</label>
             <div class="col-xs-2">
@@ -90,7 +120,7 @@
                                 <thead>
                                     <tr class="text-uppercase">
                                         <th> # </th>
-                                        <th> </th>
+                                        <th *ngIf="!send_btn_flag"> </th>
                                         <th>Ac_entry_sr_no</th>
                                         <th>TXN Type</th>
                                         <th>Payment Type</th>
@@ -132,7 +162,7 @@
                                 <tbody>
                                     <tr *ngFor="let list of listData; let i = index">
                                         <td> {{i+1}} </td>
-                                        <td><button type="button" class="btn-warning"(click)="call_edit_modal(mymodal,list.narrative,list.company_reg_no,list.gender,list.phone_no,list.address,list.ac_entry_sr_no,list.ac_branch)" >Edit</button> </td>
+                                        <td *ngIf="!send_btn_flag"><button type="button" class="btn-warning"(click)="call_edit_modal(mymodal,list.narrative,list.company_reg_no,list.gender,list.phone_no,list.buildingno,list.street,list.city,list.township,list.country,list.ac_entry_sr_no,list.ac_branch)" >Edit</button> </td>
                                         <td>{{list.ac_entry_sr_no}}</td>
                                         <td>{{list.trans_type}}</td>
                                         <td>{{list.payment_type}}</td>

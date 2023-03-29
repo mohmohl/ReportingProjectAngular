@@ -12,4 +12,5 @@ export class MFIUSetupDTO{
     bcc_email:string;
     email_subj:string;
     email_body:string;
+    email_signature:string;
 }
