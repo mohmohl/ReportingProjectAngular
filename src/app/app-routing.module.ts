@@ -613,6 +613,14 @@ const routes: Routes = [
       {
         path: 'gl-transaction',
         loadChildren: () => import('./views/mis-reports/gl-transaction/gl-transaction.module').then(m => m.GLTransactionModule)
+      },
+      {
+        path: 'excel-configuration-setup',
+        loadChildren: () => import('./views/meter-bill-automation/excel-configuration-setup/excel-configuration-setup.module').then(m => m.ExcelConfigurationSetupModule)
+      },
+      {
+        path: 'meter-bill-automation-upload',
+        loadChildren: () => import('./views/meter-bill-automation/meter-bill-upload/meter-bill-upload.module').then(m => m.MeterBillUploadModule)
       }
      
     ]

@@ -1,0 +1,92 @@
+<div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>Meter Bill Upload</h5>
+
+          <div class="page-header-breadcrumb">
+            <button type="button" class="btn btn-primary btn-sm" (click)="uploadFile()" [disabled]="editForm.invalid">Upload</button> 
+          </div>
+        </div>
+        <div class="card-body">
+          <div *ngIf="loading" class="d-flex justify-content-center">
+            <div class="spinner-border spinner-border-sm text-warning"></div>
+              <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+          </div>
+
+          <code *ngIf="error">{{error}}</code>
+          <code  *ngIf="message" class="text-info">{{message}}</code>
+
+
+          <form [formGroup]="editForm" >
+            
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2 col-form-label">Choose Month</label>
+              <!-- <input type="text" formControlName="uploadMonth" class="col-sm-4 form-control"> -->
+
+              <div class="col-sm-2">
+                <mat-form-field style="width:100px;">
+                    <input #minmaxInput matInput [matDatepicker]="uploadMonth" formControlName="uploadMonth" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="uploadMonth"></mat-datepicker-toggle>
+                    <mat-datepicker #uploadMonth  startView="multi-year" (monthSelected)="setMonthAndYear($event, uploadMonth)" ></mat-datepicker>
+                </mat-form-field>
+             
+            </div>
+
+            </div>
+
+            <div class="row form-group col-md-12">
+              <label class="col-sm-2 col-form-label">Choose Files</label>
+              <div class="col-sm-4">
+                <input #domUpload type="file" name="files" id="files" class="custom-file-input" (change)="selectFiles($event)"
+                accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple required>
+                    <label class="custom-file-label" for="customFile">Choose files</label>
+                    <!-- accept="application/pdf, 
+                      image/jpeg, image/png, 
+                      text/*,
+                      application/vnd.ms-excel, 
+                      application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, 
+                      application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" -->
+              </div>
+            </div>
+            <!-- *ngIf="fileList.length >0" -->
+            <div class="table-responsive"  style="margin-top: 30px; margin-bottom: 30px;" >
+
+              <table class="table table table-hover" id="export-table" style="width: 100%;">
+                <thead>
+                <tr class="text-uppercase">
+                  <th style="width: 10%;">No.</th>
+                  <th style="width: 10%;">Month</th>
+                  <th style="width: 10%;">Township</th>
+                  <th style="width: 10%;">Version</th>
+                  <th style="width: 20%;">File Name</th>
+                  <th style="width: 30%;">Excel Configuration</th>
+                  <th style="width: 10%;">REMOVE</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let file of fileList; let i = index">
+                    <td style="text-align: right; vertical-align: middle;">{{ (i + 1)}}</td>
+                    <td style="vertical-align: middle;">{{file.month}}</td>
+                    <td style="vertical-align: middle;">{{file.township}}</td>
+                    <td style="vertical-align: middle;">{{file.version}}</td>
+                    <td style="vertical-align: middle;">{{file.fileName}}</td>
+                    <td>
+                      <select class="form-control"  placeholder="Excel Configuration" 
+                          name="Excel Configuration" (change)="onConfigChange($event, i)">
+                        <option [value]="data.id" *ngFor="let data of configHeaderList;">{{ data.configName }}</option>
+                      </select>
+
+                    </td>
+                    <td style="vertical-align: middle;"><span title ="remove" (click)="removeFile(i)"><i class="icofont icofont-ui-close icon-theme"></i></span></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+                  
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

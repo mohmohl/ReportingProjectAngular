@@ -1,0 +1,77 @@
+
+<div class="modal-header bg-primary">
+  <h6 class="modal-title">Map Excel Columns</h6>
+
+  <button type="button" class="close color-white" data-dismiss="modal" aria-hidden="true" title="close"
+          (click)="cancel()">&times;</button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="editForm" >
+      <div class="form-group col-md-12">
+        <label class="col-form-label"><span style="color:red;">*</span>If one more column, please choose column separator</label>
+      </div>
+      <div class="form-group col-md-12">
+        <select class="form-control col-md-6" name="separator" formControlName="separator">
+          <option [ngValue]="data.value" *ngFor="let data of separatorList;">{{ data.caption }}</option>
+        </select>
+      </div>
+      <div class="form-group col-md-12" style="margin-top: 8px !important;">
+          <div class="table-responsive">
+            <table class="table table table-hover" id="export-table"  formArrayName="fieldList">
+              <thead>
+              <tr class="text-uppercase">
+                <th class="text-center" style="width: 60%">Add Column No.</th>
+                <th class="text-center" style="width: 40%">#</th>
+              </tr>
+              </thead>
+              <tbody>
+                
+                <tr *ngFor="let item of fieldList().controls; last as isLast; let i = index" [formGroupName]="i">
+                  <td>
+                    <!-- <input type="text" class="col-12 form-control" placeholder="LOV Value" formControlName="lovValue" /> -->
+
+                    <div class="input-group stylish-input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">COL</span>
+                      </div>
+                      <input type="text" #colNoInputs (keydown.enter)="addField()" (keypress)="validateNumber($event)"
+                        formControlName="colNo" class="form-control input-sm" style="height:auto; background:white;">
+                      <!-- <span class="input-group-btn input-sm"> 
+                        <i class="fa fa-plus icon-theme"></i>
+                      </span> -->
+                    </div>
+
+                    <div 
+                      *ngIf="fieldList().controls[i].get('colNo')!.invalid &&
+                        (fieldList().controls[i].get('colNo')!.dirty || fieldList().controls[i].get('colNo')!.touched)">
+                      <small class="form-text text-danger" *ngIf="fieldList().controls[i].get('colNo')?.errors?.required">
+                        This field is required.
+                      </small>
+                    </div> 
+                  </td>
+                  <td>
+                    <span title="Remove" (click)="removeField(i)">
+                      <i class="fa fa-minus icon-theme-minus"></i>
+                    </span>
+                    <span *ngIf="isLast" title="Add" (click)="addField()">
+                      <i class="fa fa-plus icon-theme-plus"></i>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+  </form>
+  
+
+</div>
+
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" (click)="cancel()">Cancel
+</button>
+
+<button [disabled]="editForm.invalid" type="button" class="btn btn-sm btn-primary" (click)="add()">Add
+</button>
+</div>

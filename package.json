@@ -1,5 +1,5 @@
 {
-  "name": "reporting-inq",
+  "name": "meterbill-inq",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -19,6 +19,7 @@
     "@angular/core": "~8.2.3",
     "@angular/forms": "~8.2.3",
     "@angular/material": "^8.2.3",
+    "@angular/material-moment-adapter": "^8.2.3",
     "@angular/platform-browser": "~8.2.3",
     "@angular/platform-browser-dynamic": "~8.2.3",
     "@angular/router": "~8.2.3",
@@ -37,6 +38,7 @@
     "jquery": "^3.3.1",
     "jquery-sparkline": "^2.4.0",
     "jquery-ui-dist": "^1.12.1",
+    "moment": "^2.29.4",
     "ng-click-outside": "^3.2.0",
     "ng-multiselect-dropdown": "^0.2.11",
     "ng2-toasty": "^4.0.3",

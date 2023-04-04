@@ -1,0 +1,64 @@
+.custom-card {
+
+    border: 1px solid #691c31;
+    padding: 16px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.file-upload {
+    cursor: pointer;
+    color:#000000;
+    background-color: inherit;
+    border: 1px solid #cccccc;
+    padding: 3px;
+  }
+
+  .row {
+    margin-bottom: 8px;
+  }
+
+
+
+  
+
+.icon-theme-plus {
+  cursor: pointer;
+  color: rgb(17, 199, 66);
+  background-color: #fcf6d6;
+  font-size: 20px;
+  border: 1px solid #ced4da;
+  background-color: #e9ecef;
+  padding: 5px 7px 3px 7px;
+  box-shadow: 0 0px 2px #a7a7a7;
+  margin: 2px;
+}
+
+
+.input-group-text {
+  font-size: 12px !important;
+  font-weight: bold;
+  border-radius: 0px !important;
+}
+
+.input-group {
+  padding: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.input-group-btn {
+  border: 1px solid #ced4da;
+  background-color: #e9ecef;
+}
+
+th {
+  font-size: 16px;
+  font-weight:bold;
+}
+
+
+.btn-primary:disabled {
+  background-color: #800008 !important;
+  border: 1px solid #800008 !important;
+  color: #ffffff !important;
+}
