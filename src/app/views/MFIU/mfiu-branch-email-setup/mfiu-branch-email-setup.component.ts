@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { MFIUResponseDto } from 'src/models/MFIUResponse';
 import { MFIUSetupDTO } from 'src/models/MFIUSetupDTO';
 import { LatestTrialReportService } from 'src/services/LatestTrialReportService';
@@ -11,6 +12,41 @@ import { MFIUService } from 'src/services/MFIUService';
   styleUrls: ['./mfiu-branch-email-setup.component.css']
 })
 export class MfiuBranchEmailSetupComponent implements OnInit {
+  config1: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    minHeight: '5rem',
+    maxHeight: '15rem',
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    sanitize: false,
+    // toolbarPosition: 'top',
+    outline: true,
+    defaultFontName: 'Arial',
+    defaultFontSize: '3',
+    // showToolbar: false,
+    defaultParagraphSeparator: 'p',
+    customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    toolbarHiddenButtons: [
+      ['insertImage','insertVideo'],
+      ['fontSize']
+    ]
+  };
+  
   error='';
   message='';
   loading = false;
