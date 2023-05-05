@@ -1,0 +1,202 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- <form [formGroup]="form" (ngSubmit)="submit()"> -->
+            <div class="card">
+                
+                <div class="card-header">
+                    <h5>Statement of Comprehensive Expenditure(ByCurrency)</h5>
+                    <div *ngIf="loading" class="d-flex justify-content-center">
+                        <div class="spinner-border spinner-border-sm text-warning"></div>
+                        <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
+                    </div>
+
+                    <div class="page-header-breadcrumb">
+                        <button type="button" class="btn-danger" (click)="exportPDF()">
+                        <i class="ti-printer"></i>PDF
+                        </button> 
+
+                        <button type="button" class="btn-success" (click)="exportExcel()">
+                            <i class="ti-printer"></i>Excel
+                        </button> 
+                    </div>
+                </div>
+                <div class="card-body p-t-0">
+                    <div class="table-responsive">
+                        <code *ngIf="error">{{error}}</code>
+
+                        
+                        <!-- Filter Data -->
+                            <div class="container-fluid"  style="margin-top: 1.5%;">
+                                <div class="form-group row">
+                                    <label class="col-sm-1 col-form-label"> Branch</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" [(ngModel)]="branchCode">
+                                            <option *ngFor="let arr of _branchList"  value="{{arr.code}}" selected>{{arr.code}}</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <label class="col-sm-1 col-form-label">Date</label>
+                                    <div class="col-sm-2 date-picker">
+                                        <!-- [min]="minDate"
+                                            [max]="maxDate" -->
+                                        <mat-form-field >
+                                            <input #minmaxInput matInput
+                                            [matDatepicker]="minmaxvalidation" [(ngModel)]="fromDate" readonly>
+                                            <mat-datepicker-toggle matSuffix [for]="minmaxvalidation">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #minmaxvalidation></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <label class="col-sm-1 col-form-label" style="text-align:center">-</label>
+                                    <div class="col-sm-2 date-picker">
+                                        <mat-form-field>
+                                            <input #minmaxInput matInput
+                                            [matDatepicker]="minmaxvalidation2" [(ngModel)]="toDate" readonly>
+                                            <mat-datepicker-toggle matSuffix [for]="minmaxvalidation2">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #minmaxvalidation2></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-1 col-form-label"> Currency </label>
+                                    <div class="col-sm-2">
+                                        <select  class="form-control" [(ngModel)]="ccy">                               
+                                            <option *ngFor="let arr of _ccyList" value="{{arr.t1}}">{{arr.t1}}</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <label class="col-sm-1 col-form-label">Type </label>
+                                    <div class="col-sm-3">
+                                    <select  class="form-control"  [(ngModel)]="type">
+                                        <option *ngFor="let arr of _printCcyTypeList"  value="{{arr.code}}">{{arr.code}}</option>
+                                    </select>
+                                    </div>
+            
+                                    <label class="col-sm-1 col-form-label"> Print By </label>
+                                    <div class="col-sm-3">
+                                    <select  class="form-control"  [(ngModel)]="printby">
+                                        <option  *ngFor="let arr of _printByList"  value="{{arr.code}}">{{arr.description}}</option>
+                                    </select>
+                                    </div>
+
+                                    <div class="col-sm-1">
+                                        <button   class="form-control" type="button" (click)="showData()" class="btn-primary">Show</button>                                    
+                                    </div>
+                                    
+                                </div>  
+                                
+                            </div>
+                                        
+                        <!-- Filter Data -->
+
+                        <div *ngIf="_showData">
+
+                            <!-- Page Title -->
+                            <div class="title">
+                                <div>
+                                    <p class="pgtitle">{{_branchData.bank_name}}</p>
+                                </div>
+    
+                                <div>
+                                    <p class="pgsubtitle">{{_branchData.branch_name}}</p>
+                                </div>
+    
+                                <div>
+                                    <p class="pgsubtitle">{{_rptTitle}}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Page Title -->
+
+                            
+                            <!-- Data List -->
+                            <div style="margin-top: 1.5%;">
+                                <table class="table table table-hover" id="content" #content>
+                                    <tr class="text-uppercase">
+                                        <th rowspan="2" style="vertical-align: middle;">Sr. No.</th>
+                                        <th rowspan="2" style="vertical-align: middle;">EXPENDITURE</th>
+                                        <th rowspan="2" style="vertical-align: middle;">OPENING BALANCE</th>
+                                        <th colspan="4" style="text-align: center;">DEBIT</th>
+                                        <th colspan="4" style="text-align: center;">CREDIT</th>
+                                        <th rowspan="2" style="vertical-align: middle;">CLOSING BALANCE</th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center;">Cash</th>
+                                        <th style="text-align: center;">Transfer</th>
+                                        <th style="text-align: center;">Clearing</th>
+                                        <th style="text-align: center;">Total</th>
+                                        <th style="text-align: center;">Cash</th>
+                                        <th style="text-align: center;">Transfer</th>
+                                        <th style="text-align: center;">Clearing</th>
+                                        <th style="text-align: center;">Total</th>
+                                    </tr>
+                                    <tbody  *ngFor="let m_data of g_datalist | keyvalue :keepOriginalOrder; let i = index;">
+                                            <td>{{ (i+1) }}</td>
+                                            <td style=" font-weight: bold;" colspan="11">{{ getGLGroup(m_data.key) }} {{calculateSubTotal(m_data.value)}}</td>
+                                            
+                                        <tr *ngFor="let data of m_data.value;">
+                                            <td></td>
+                                            <td> {{data.rdesc}}</td>
+                                            <td class="number"> {{data.opn | number:'1.2-3'}} </td>
+                                            <td class="number"> {{data.dr_cash | number:'1.2-3'}} </td>
+                                            <td class="number"> {{data.dr_trf | number:'1.2-3'}} </td>
+                                            <td class="number"> {{data.dr_clg | number:'1.2-3'}} </td>
+                                            <td class="number"> {{data.dr | number:'1.2-3'}} </td>
+                                            <td class="number"> {{data.cr_cash | number:'1.2-3'}} </td>
+                                            <td class="number"> {{data.cr_trf | number:'1.2-3'}} </td>
+                                            <td class="number"> {{data.cr_clg | number:'1.2-3'}}</td>
+                                            <td class="number"> {{data.cr | number : '1.2-3'}} </td>
+                                            <td class="number"> {{data.clo | number : '1.2-3'}} </td>
+                                        </tr>
+
+                                        
+                                        <tr>
+                                            <td class="title" colspan="2"> Sub Total </td>
+                                            <td class="stotal"> {{ _subTotOPN | number : '1.2-3'}} </td>
+                                            <td class="stotal"> {{ _subTotDrCash | number : '1.2-3'}} </td>
+                                            <td class="stotal"> {{ _subTotDrTransfer | number : '1.2-3'}} </td>
+                                            <td class="stotal"> {{ _subTotDrClearing | number : '1.2-3'}} </td>
+                                            <td class="stotal"> {{ _subTotDr | number : '1.2-3'}} </td>
+                                            <td class="stotal"> {{ _subTotCrCash | number : '1.2-3'}} </td>
+                                            <td class="stotal"> {{ _subTotCrTransfer | number : '1.2-3'}} </td>
+                                            <td class="stotal"> {{ _subTotCrClearing | number : '1.2-3'}} </td>
+                                            <td class="stotal"> {{ _subTotCr | number : '1.2-3'}} </td>
+                                            <td class="stotal"> {{ _subTotCLO | number : '1.2-3'}}</td>
+                                        </tr>  
+                                  
+                                    </tbody>   
+                                    
+                                    <tr>
+                                        <td class="title" colspan="2"> Grand Total </td>
+                                        <td class="stotal"> {{ _totOPN | number : '1.2-3'}} </td>
+                                        <td class="stotal"> {{ _totDrCash | number : '1.2-3'}} </td>
+                                        <td class="stotal"> {{ _totDrTransfer | number : '1.2-3'}} </td>
+                                        <td class="stotal"> {{ _totDrClearing | number : '1.2-3'}} </td>
+                                        <td class="stotal"> {{ _totDr | number : '1.2-3'}} </td>
+                                        <td class="stotal"> {{ _totCrCash | number : '1.2-3'}} </td>
+                                        <td class="stotal"> {{ _totCrTransfer | number : '1.2-3'}} </td>
+                                        <td class="stotal"> {{ _totCrClearing | number : '1.2-3'}} </td>
+                                        <td class="stotal"> {{ _totCr | number : '1.2-3'}} </td>
+                                        <td class="stotal"> {{ _totCLO | number : '1.2-3'}} </td>
+                                    </tr>                          
+                                </table>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+
+                    <div *ngIf="_noData">
+                        <p class="nodata"> No records found.</p>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        <!-- </form> -->
+    </div>
+</div>
+
+

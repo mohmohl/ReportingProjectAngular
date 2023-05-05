@@ -621,8 +621,58 @@ const routes: Routes = [
       {
         path: 'meter-bill-automation-upload',
         loadChildren: () => import('./views/meter-bill-automation/meter-bill-upload/meter-bill-upload.module').then(m => m.MeterBillUploadModule)
+      },
+       { path: 'mfiu_setup',
+        loadChildren: () => import('./views/MFIU/mfiu-setup/mfiu-setup.module').then(m => m.MFIUSetupModule)
+      },
+      {
+        path: 'mfiu_email_setup',
+        loadChildren: () => import('./views/MFIU/mfiu-branch-email-setup/mfiu-branch-email.module').then(m => m.MFIUBranchEmailSetupModule)
+      },
+      {
+        path: 'mfiu_email_template',
+        loadChildren: () => import('./views/MFIU/mfiu-email-template/mfiu-email-template.module').then(m => m.MFIUEmailTemplateModule)
+      },
+      {
+        path: 'mfiu_branch_report',
+        loadChildren: () => import('./views/MFIU/mfiu-branch-report/mfiu-branch-report.module').then(m => m.MFIUBranchReportModule)
+      },
+      {
+        path: 'mfiu_ho_report',
+        loadChildren: () => import('./views/MFIU/mfiu-ho-report/mfiu-ho-report.module').then(m => m.MFIUHOReportModule)
+      },
+      {
+        path: 'mfiu_ho_resend',
+        loadChildren: () => import('./views/MFIU/mfiu-ho-resend/mfiu-ho-resend.module').then(m => m.MFIUHOResendModule)
+      },
+      {
+        path: 'mfiu_file_download',
+        loadChildren: () => import('./views/MFIU/mfiu-file-download/mfiu-file-download.module').then(m => m.MFIUFileDownloadModule)
+      },
+      {
+        path: 'mfiu_data_checking',
+        loadChildren: () => import('./views/MFIU/mfiu-data-checking/mfiu-data-checking.module').then(m => m.MFIUDataCheckingModule)
+      },
+    {
+        path: 'eoy-detail-trail',
+        loadChildren: () => import('./views/eoy-report/eoy-detail-trial-report/eoy-detail-trial-report.module').then(m => m.EOYDetailTrialReportModule)
+      },
+      {
+        path: 'eoy-general-trail',
+        loadChildren: () => import('./views/eoy-report/eoy-general-trial-report/eoy-general-trial-report.module').then(m => m.EOYGeneralTrialReportModule)
+      },
+      {
+        path: 'eoy-general-trail-conso',
+        loadChildren: () => import('./views/eoy-report/eoy-general-trial-conso-report/eoy-general-trial-conso-report.module').then(m => m.EOYGeneralTrialConsoReportModule)
+      },
+      {
+        path: 'eoy-asset',
+        loadChildren: () => import('./views/eoy-report/eoy-gl-assets/eoy-assets.module').then(m => m.EOYConsoAssetsModule)
+      },
+      {
+        path: 'eoy-liabilities',
+        loadChildren: () => import('./views/eoy-report/eoy-gl-liabilities/eoy-liabilities.module').then(m => m.EOYLiabilitiesModule)
       }
-     
     ]
   },
   {
