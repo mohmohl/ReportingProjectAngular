@@ -43,10 +43,17 @@ export class MfiuBranchReportComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-        this.service.getBranchList(1).subscribe((res:string[])=>{
+    this.mfiu_service.getBranchList().subscribe((res:string[])=>{
+      this.loading = false;
+       this._branchList = res;
+  },error => {
+    this.loading = false;
+    this.error ="Syatem have the error!...";
+  });
+        /*this.service.getBranchList(1).subscribe((res:string[])=>{
             this.loading = false;
              this._branchList = res;
-        });
+        });*/
   }
   submit(){
     this.error ='';
@@ -80,6 +87,9 @@ search_mfiu_data(branch:string){
             this.send_btn_flag=true;
           }
           
+      },error => {
+        this.loading = false;
+        this.error ="Syatem have the error!...";
       });
 }
   call_edit_modal(content,inten_of_txn:string,com_reg_no:string,gender:string,phone_no:string,buildingno:string,street:string,city:string,township:string,country:string,ac_entry_sr_no:string,branch:string){

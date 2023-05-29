@@ -18,16 +18,15 @@ export const PICK_FORMATS = {
   }
 };
 @Component({
-  selector: 'app-mfiu-ho-report',
-  templateUrl: './mfiu-ho-report.component.html',
-  styleUrls: ['./mfiu-ho-report.component.css'],
+  selector: 'app-mfiu-remove-send',
+  templateUrl: './mfiu-remove-send.component.html',
+  styleUrls: ['./mfiu-remove-send.component.css'],
   providers: [
     {provide: DateAdapter, useClass: PickDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS}
 ]
 })
-export class MfiuHoReportComponent implements OnInit {
-
+export class MfiuRemoveSendComponent implements OnInit {
   error='';
   message='';
   loading = false;
@@ -81,7 +80,7 @@ export class MfiuHoReportComponent implements OnInit {
     this.branch_code=this.form.get(["branch_code"])!.value;
     this.fromDate = this._util.getDDMMMYYYY(this.form.get(["from_date"])!.value);
     this.toDate = this._util.getDDMMMYYYY(this.form.get(["to_date"])!.value);
-    this.search_mfiu_data(this.fromDate,this.toDate,this.branch_code,2,3);
+    this.search_mfiu_data(this.fromDate,this.toDate,this.branch_code,5,0);
 
   }
 search_mfiu_data(from:string,to:string,branch:string,status:number,resendStatus:number){
@@ -177,7 +176,7 @@ search_mfiu_data(from:string,to:string,branch:string,status:number,resendStatus:
       else{
         this.error =res.message;
       }
-      this.search_mfiu_data(this.fromDate,this.toDate,this.editform.get(["ac_branch"])!.value,2,3);
+      this.search_mfiu_data(this.fromDate,this.toDate,this.editform.get(["ac_branch"])!.value,5,0);
     },
       error => {
         this.loading = false;
@@ -190,7 +189,7 @@ search_mfiu_data(from:string,to:string,branch:string,status:number,resendStatus:
     this.error ='';
     this.message='';
     this.loading = true;
-    this.mfiu_service.send_mfiu(2,3,this.branch_code,this.fromDate,this.toDate).subscribe((res:MFIUResponseDto)=>{
+    this.mfiu_service.send_mfiu(5,6,this.branch_code,this.fromDate,this.toDate).subscribe((res:MFIUResponseDto)=>{
       this.loading = false;
       if(res.flag){
         this.message=res.message;
@@ -206,25 +205,24 @@ search_mfiu_data(from:string,to:string,branch:string,status:number,resendStatus:
       });
 
   }
-remove_record(event:any,status:number,ac_entry_sr_no:string){
-  event.target.disabled = true;
-
-  this.mfiu_service.updateMFIUByEntryNO(status,ac_entry_sr_no).subscribe((res:MFIUResponseDto)=>{
-    this.loading = false;
-    if(res.flag){
-      this.message=res.message;
-    }
-    else{
-      this.error =res.message;
-    }
-    this.search_mfiu_data(this.fromDate,this.toDate,this.branch_code,2,3);
-  },
-    error => {
+  remove_record(event:any,status:number,ac_entry_sr_no:string){
+    event.target.disabled = true;
+  
+    this.mfiu_service.updateMFIUByEntryNO(status,ac_entry_sr_no).subscribe((res:MFIUResponseDto)=>{
       this.loading = false;
-      this.error ="Syatem have the error!...";
-    });
-
-   
-}
-
+      if(res.flag){
+        this.message=res.message;
+      }
+      else{
+        this.error =res.message;
+      }
+      this.search_mfiu_data(this.fromDate,this.toDate,this.branch_code,5,0);
+    },
+      error => {
+        this.loading = false;
+        this.error ="Syatem have the error!...";
+      });
+  
+     
+  }
 }

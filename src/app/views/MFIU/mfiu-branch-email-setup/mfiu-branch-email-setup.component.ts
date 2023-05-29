@@ -64,14 +64,26 @@ export class MfiuBranchEmailSetupComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.service.getBranchList(1).subscribe((res:string[])=>{
-        this.loading = false;
-         this._branchList = res;
-         if(this._branchList.length>0)
-         this.get_mfiu_email_setup_data(this._branchList[0]);
-    },error =>{
+    this.mfiu_service.getBranchList().subscribe((res:string[])=>{
       this.loading = false;
-      this.error ="Syatem have the error!...";
+       this._branchList = res;
+       if(this.checkString("HO")){
+        this.get_mfiu_email_setup_data("HO");
+       }
+       else{
+        if(this._branchList.length>0){
+       this.get_mfiu_email_setup_data(this._branchList[0]);
+        }
+       }
+  },error => {
+    this.loading = false;
+    this.error ="Syatem have the error!...";
+  });
+
+  }
+   checkString(str) {    
+    return this._branchList.some(function(s) {
+      return s.indexOf(str) > -1;
     });
   }
   get_mfiu_email_setup_data(branch:string){

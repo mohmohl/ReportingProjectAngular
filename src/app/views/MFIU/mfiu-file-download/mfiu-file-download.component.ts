@@ -44,10 +44,13 @@ export class MfiuFileDownloadComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-        this.service.getBranchList(1).subscribe((res:string[])=>{
-            this.loading = false;
-             this._branchList = res;
-        });
+    this.mfiu_service.getBranchList().subscribe((res:string[])=>{
+      this.loading = false;
+       this._branchList = res;
+  },error => {
+    this.loading = false;
+    this.error ="Syatem have the error!...";
+  });
         this.mfiu_service.checking_role().subscribe((res:boolean)=>{
           this.loading = false;
            this.ho_role_flag = res;

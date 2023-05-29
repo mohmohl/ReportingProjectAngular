@@ -26,10 +26,13 @@ export class MfiuSetupComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-    this.service.getBranchList(1).subscribe((res:string[])=>{
-        this.loading = false;
-         this._branchList = res;
-    });
+    this.mfiu_service.getBranchList().subscribe((res:string[])=>{
+      this.loading = false;
+       this._branchList = res;
+  },error => {
+    this.loading = false;
+    this.error ="Syatem have the error!...";
+  });
     
     this.get_mfiu_setup_data();
   }

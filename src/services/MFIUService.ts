@@ -91,5 +91,7 @@ export class MFIUService {
         var api = environment.baseUrl + '/mfiureport/save_mfiu_email_template';
         return this.http.post<any>(`${api}`,obj);
       }
-
+      public getBranchList(): Observable<any>{
+        return this.http.get<any>(`${environment.baseUrl}`+'/mfiureport/get_mfiu_branch_data');
+      }
     }

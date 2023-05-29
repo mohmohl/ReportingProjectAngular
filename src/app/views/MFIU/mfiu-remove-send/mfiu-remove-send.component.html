@@ -87,7 +87,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Search MFIU Resend Data</h5>
+                    <h5>Search MFIU REMOVE Data</h5>
                     <div *ngIf="loading" class="d-flex justify-content-center">
                         <div class="spinner-border spinner-border-sm text-warning"></div>
                         <span class="text-warning">&nbsp;&nbsp;&nbsp;Loading...</span>
@@ -185,7 +185,7 @@
                                             <td *ngIf="!send_btn_flag">
                                                 <button type="button" *ngIf="list.status != '0'" class="btn-warning"(click)="call_edit_modal(mymodal,list.narrative,list.company_reg_no,list.gender,list.phone_no,list.buildingno,list.street,list.city,list.township,list.country,list.ac_entry_sr_no,list.ac_branch)" >Edit</button> 
                                                 <button type="button" *ngIf="list.status != '0'" class="btn-primary"(click)="remove_record($event,0,list.ac_entry_sr_no)" >Remove</button>
-                                                <button type="button" *ngIf="list.status == '0'" class="btn-info"(click)="remove_record($event,4,list.ac_entry_sr_no)" >Recall</button>
+                                                <button type="button" *ngIf="list.status == '0'" class="btn-info"(click)="remove_record($event,5,list.ac_entry_sr_no)" >Recall</button>
                                             </td>
                                             <td>{{list.ac_entry_sr_no}}</td>
                                             <td>{{list.trans_type}}</td>
@@ -234,10 +234,8 @@
                                 <button type="button" class="btn-primary" [disabled]="send_btn_flag" (click)="send_to_CBM()">Send</button>
                             </div>
                         </div>
-                    </div>
-    
+                    </div>    
                 </div>
-    
             </div>
         </div>
     </div>
