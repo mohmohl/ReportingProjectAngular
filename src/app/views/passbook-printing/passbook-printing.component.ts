@@ -10,6 +10,8 @@ export class PassbookPrintingComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  //var url = "http://172.30.10.86:9502/xmlpserver";
+//window.location.replace(url);
   }
 
 }

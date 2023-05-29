@@ -64,10 +64,13 @@ export class MfiuHoResendComponent implements OnInit {
 
   ngOnInit() {
     this.loading = true;
-        this.service.getBranchList(1).subscribe((res:string[])=>{
-            this.loading = false;
-             this._branchList = res;
-        });
+    this.mfiu_service.getBranchList().subscribe((res:string[])=>{
+      this.loading = false;
+       this._branchList = res;
+  },error => {
+    this.loading = false;
+    this.error ="Syatem have the error!...";
+  });
   }
   submit(){
     this.error ='';
@@ -215,7 +218,7 @@ remove_record(event:any,status:number,ac_entry_sr_no:string){
     else{
       this.error =res.message;
     }
-    this.search_mfiu_data(this.fromDate,this.toDate,this.branch_code,2,3);
+    this.search_mfiu_data(this.fromDate,this.toDate,this.branch_code,3,4);
   },
     error => {
       this.loading = false;

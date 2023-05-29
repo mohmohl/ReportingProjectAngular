@@ -638,6 +638,11 @@ const routes: Routes = [
         path: 'mfiu_ho_resend',
         loadChildren: () => import('./views/MFIU/mfiu-ho-resend/mfiu-ho-resend.module').then(m => m.MFIUHOResendModule)
       },
+      
+      {
+        path: 'mfiu_remove_report',
+        loadChildren: () => import('./views/MFIU/mfiu-remove-send/mfiu-remove-send.module').then(m => m.MFIUHORemoveSendModule)
+      },
       {
         path: 'mfiu_file_download',
         loadChildren: () => import('./views/MFIU/mfiu-file-download/mfiu-file-download.module').then(m => m.MFIUFileDownloadModule)

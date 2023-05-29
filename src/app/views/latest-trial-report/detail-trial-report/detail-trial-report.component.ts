@@ -658,10 +658,11 @@ else{
         }
 
         if(this.filter1) {
-          link.download = 'DetailTrial_'+bName+'_'+this.currencyCode+'.xlsx';
+          link.download = 'DetailTrial_'+bName+'_'+this.currencyCode+'_'+f_Date+'.xlsx';
         } else {
-          link.download = 'DetailTrial_'+bName+'_'+period_code+'.xlsx';
+          link.download = 'DetailTrial_'+bName+'_'+period_code+'_'+f_Date+'.xlsx';
         }
+        
         //console.log("File Name: " + link.download);
 
         link.click();
@@ -791,9 +792,9 @@ else{
         }
 
         if(this.filter1) {
-          a.download = 'DetailTrial_'+bName+'_'+this.currencyCode+'.pdf';
+          a.download = 'DetailTrial_'+bName+'_'+this.currencyCode+'_'+f_Date+'.pdf';
         } else {
-          a.download = 'DetailTrial_'+bName+'_'+period_code+'.pdf';
+          a.download = 'DetailTrial_'+bName+'_'+period_code+'_'+f_Date+'.pdf';
         }
         //console.log("File Name: " + link.download);
       
