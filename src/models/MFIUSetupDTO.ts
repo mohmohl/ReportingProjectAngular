@@ -1,5 +1,7 @@
 export class MFIUSetupDTO{
     serial_no:string;
+    org_serial_no:string;
+    currentFileNameCounter:number;
     reporting_entity_code:string;
     ac_branch:string;
     name:string;
