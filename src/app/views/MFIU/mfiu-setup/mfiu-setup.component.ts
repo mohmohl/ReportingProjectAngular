@@ -19,7 +19,9 @@ export class MfiuSetupComponent implements OnInit {
   form = this.fb.group({
     branch_code:new FormControl('', Validators.required),
     serial_no:new FormControl('', Validators.required),
+    org_serial_no:new FormControl('', Validators.required),
     entity_code:new FormControl('', Validators.required),
+    current_file_counter:new FormControl(0),
   });
   listData:MFIUSetupDTO[];
   constructor(private fb:FormBuilder,private service: LatestTrialReportService,private mfiu_service:MFIUService) { }
@@ -53,11 +55,13 @@ form_info_reset(){
 }
 
 
-  call_edit_form(serial_no:string,entity_code:string,ac_branch:string){
+  call_edit_form(serial_no:string,entity_code:string,ac_branch:string,org_serial_no:string,currentFileNameCounter:number){
     this.form = this.fb.group({
       branch_code:new FormControl(ac_branch, Validators.required),
       serial_no:new FormControl(serial_no, Validators.required),
+      org_serial_no:new FormControl(org_serial_no, Validators.required),
       entity_code:new FormControl(entity_code, Validators.required),
+      current_file_counter:new FormControl(currentFileNameCounter),
     });
   }
 
@@ -73,6 +77,8 @@ submit(){
   data.ac_branch=this.form.get(["branch_code"])!.value;
   data.serial_no=this.form.get(["serial_no"])!.value;
   data.reporting_entity_code=this.form.get(["entity_code"])!.value;
+  data.org_serial_no=this.form.get(["org_serial_no"])!.value;
+  data.currentFileNameCounter=this.form.get(["current_file_counter"])!.value;
   this.loading = true;
   this.mfiu_service.save_mfiu_setup(data).subscribe((res:MFIUResponseDto)=>{
     this.loading = false;
