@@ -85,7 +85,7 @@ export class AdminComponent implements OnInit {
         main: [
           {
             state: 'home',
-            name: 'Home',
+            name: '1Home',
             type: 'link',
             icon: 'icofont icofont-stylish-right text-danger'
           }
@@ -126,8 +126,10 @@ export class AdminComponent implements OnInit {
           });
           this.menuItems[0].main.push(mitem);
         }
-     
+        this.menuItems[0].main.sort((a,b) => a.name.localeCompare(b.name));
+
         });
+
    }
   
       
